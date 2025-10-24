@@ -38,7 +38,7 @@ const StringPopUpBody = (props) => {
             {translateContent.length > 0 && props.postDataFetchStatus ?
                 <>
                     {StringModalBodyNotice && <div className="lmat-page-translation-body-notice-wrapper"><StringModalBodyNotice /></div>}
-                    <div className="lmat_page_translation_translate_progress" key={props.modalRender}>{__("Automatic translation is in progress....", 'linguator-multilingual-chromeai-translation')}<br />{__("It will take few minutes, enjoy ☕ coffee in this time!", 'linguator-multilingual-chromeai-translation')}<br /><br />{__("Please do not leave this window or browser tab while translation is in progress...", 'linguator-multilingual-chromeai-translation')}</div>
+                    <div className="lmat_page_translation_translate_progress" key={props.modalRender}>{__("Automatic translation is in progress....", 'easy-web-translator')}<br />{__("It will take few minutes, enjoy ☕ coffee in this time!", 'easy-web-translator')}<br /><br />{__("Please do not leave this window or browser tab while translation is in progress...", 'easy-web-translator')}</div>
                     <div className={`translator-widget ${service}`} style={{ display: 'flex' }}>
                         <h3 className="choose-lang">{TranslateService({ Service: props.service }).heading} <span className="dashicons-before dashicons-translation"></span></h3>
 
@@ -51,9 +51,9 @@ const StringPopUpBody = (props) => {
                         <table className="scrolldown" id="stringTemplate">
                             <thead>
                                 <tr>
-                                    <th className="notranslate">{__("S.No", 'linguator-multilingual-chromeai-translation')}</th>
-                                    <th className="notranslate">{__("Source Text", 'linguator-multilingual-chromeai-translation')}</th>
-                                    <th className="notranslate">{__("Translation", 'linguator-multilingual-chromeai-translation')}</th>
+                                    <th className="notranslate">{__("S.No", 'easy-web-translator')}</th>
+                                    <th className="notranslate">{__("Source Text", 'easy-web-translator')}</th>
+                                    <th className="notranslate">{__("Translation", 'easy-web-translator')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,7 +87,7 @@ const StringPopUpBody = (props) => {
                     </div>
                 </> :
                 props.postDataFetchStatus ?
-                    <p>{__('No strings are available for translation', 'linguator-multilingual-chromeai-translation')}</p> :
+                    <p>{__('No strings are available for translation', 'easy-web-translator')}</p> :
 
                     <div className="lmat-page-translation-skeleton-loader-wrapper">
                         <div className="translate-widget">
@@ -97,9 +97,9 @@ const StringPopUpBody = (props) => {
                         <table>
                             <thead>
                                 <tr>
-                                    <th className="notranslate">{__("S.No", 'linguator-multilingual-chromeai-translation')}</th>
-                                    <th className="notranslate">{__("Source Text", 'linguator-multilingual-chromeai-translation')}</th>
-                                    <th className="notranslate">{__("Translation", 'linguator-multilingual-chromeai-translation')}</th>
+                                    <th className="notranslate">{__("S.No", 'easy-web-translator')}</th>
+                                    <th className="notranslate">{__("Source Text", 'easy-web-translator')}</th>
+                                    <th className="notranslate">{__("Translation", 'easy-web-translator')}</th>
                                 </tr>
                             </thead>
                             <tbody>

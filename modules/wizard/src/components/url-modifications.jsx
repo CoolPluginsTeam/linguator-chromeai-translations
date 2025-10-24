@@ -38,7 +38,7 @@ const URLModifications = () => {
             if (domain.value.includes("http://") || domain.value.includes("https://")) {
               final_domain[domain.code] = domain.value;
             } else {
-              throw new Error(__("Please enter valid URLs", "linguator-multilingual-chromeai-translation"))
+              throw new Error(__("Please enter valid URLs", "easy-web-translator"))
             }
 
           });
@@ -74,13 +74,13 @@ const URLModifications = () => {
         handleNavigate()
       }
     } catch (error) {
-      if (error.message.includes(__("Please enter valid URLs", "linguator-multilingual-chromeai-translation"))) {
+      if (error.message.includes(__("Please enter valid URLs", "easy-web-translator"))) {
         toast.warning(error.message)
-      } else if (error.message.includes(__("Linguator was unable to access", "linguator-multilingual-chromeai-translation"))) {
+      } else if (error.message.includes(__("Linguator was unable to access", "easy-web-translator"))) {
         toast.error(error.message)
       }
       else {
-        toast.error(__("Something went wrong", "linguator-multilingual-chromeai-translation"))
+        toast.error(__("Something went wrong", "easy-web-translator"))
       }
     } finally {
       setUrlLoader(false)
@@ -100,30 +100,30 @@ const URLModifications = () => {
 
   //label and descriptions of URL modifications
   const urlCheckboxes = [{
-    description: sprintf(__('Example1: %s/en/my-post', 'linguator-multilingual-chromeai-translation'), currentDomain),
-    description2: sprintf(__('Example2: %s/hi/my-post', 'linguator-multilingual-chromeai-translation'), currentDomain),
-    heading: __("Different languages in directories", 'linguator-multilingual-chromeai-translation'),
+    description: sprintf(__('Example1: %s/en/my-post', 'easy-web-translator'), currentDomain),
+    description2: sprintf(__('Example2: %s/hi/my-post', 'easy-web-translator'), currentDomain),
+    heading: __("Different languages in directories", 'easy-web-translator'),
     value: 1
   }, {
 
-    description: sprintf(__('Example1: %sen.%s/my-post', 'linguator-multilingual-chromeai-translation'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
-    description2: sprintf(__('Example2: %shi.%s/my-post', 'linguator-multilingual-chromeai-translation'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
-    heading: __("The language is set from the subdomain name ", 'linguator-multilingual-chromeai-translation'),
+    description: sprintf(__('Example1: %sen.%s/my-post', 'easy-web-translator'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
+    description2: sprintf(__('Example2: %shi.%s/my-post', 'easy-web-translator'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
+    heading: __("The language is set from the subdomain name ", 'easy-web-translator'),
     value: 2
   }, {
     description: '',
     description2: '',
-    heading: __("A different domain per language", 'linguator-multilingual-chromeai-translation'),
+    heading: __("A different domain per language", 'easy-web-translator'),
     value: 3
   }]
 
   const directoryNamesLinks = [{
-    description: sprintf(__('Example: %s/en/', 'linguator-multilingual-chromeai-translation'), currentDomain),
-    heading: __("Remove /language/ in pretty permalinks", 'linguator-multilingual-chromeai-translation'),
+    description: sprintf(__('Example: %s/en/', 'easy-web-translator'), currentDomain),
+    heading: __("Remove /language/ in pretty permalinks", 'easy-web-translator'),
     value: true
   }, {
-    description: sprintf(__('Example: %s/language/en', 'linguator-multilingual-chromeai-translation'), currentDomain),
-    heading: __("Keep /language/ in pretty permalinks", 'linguator-multilingual-chromeai-translation'),
+    description: sprintf(__('Example: %s/language/en', 'easy-web-translator'), currentDomain),
+    heading: __("Keep /language/ in pretty permalinks", 'easy-web-translator'),
     value: false
   },]
   return (
@@ -135,8 +135,8 @@ const URLModifications = () => {
           :
           <div className='mx-auto p-10 max-w-[600px] min-h-[40vh] bg-white shadow-sm flex flex-col'>
             <div className='flex-grow'>
-              <h2>{__("Format your site's URL", 'linguator-multilingual-chromeai-translation')}</h2>
-              <p className='text-justify text-sm/6'>{__('Linguator lets you display different languages using domains, directories, or URL parameters, while all content is managed in a single WordPress database. This gives visitors a seamless multilingual experience.', 'linguator-multilingual-chromeai-translation')}</p>
+              <h2>{__("Format your site's URL", 'easy-web-translator')}</h2>
+              <p className='text-justify text-sm/6'>{__('Linguator lets you display different languages using domains, directories, or URL parameters, while all content is managed in a single WordPress database. This gives visitors a seamless multilingual experience.', 'easy-web-translator')}</p>
               <div className='flex justify-between items-center p-6 rounded-lg' style={{ border: "1px solid #e5e7eb" }}>
                 <Container >
                   <Container.Item>
@@ -171,7 +171,7 @@ const URLModifications = () => {
                         forceLang === 1 &&
                         <Checkbox
                           label={{
-                            heading: __('Hide URL language information for default language', 'linguator-multilingual-chromeai-translation')
+                            heading: __('Hide URL language information for default language', 'easy-web-translator')
                           }}
                           size="sm"
                           className='cursor-pointer'
@@ -235,7 +235,7 @@ const URLModifications = () => {
                         forceLang === 2 &&
                         <Checkbox
                           label={{
-                            heading: __('Hide URL language information for default language', 'linguator-multilingual-chromeai-translation')
+                            heading: __('Hide URL language information for default language', 'easy-web-translator')
                           }}
                           size="sm"
                           className='cursor-pointer'

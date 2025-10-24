@@ -121,7 +121,7 @@ class LMAT_Admin_Notices {
 		}
 		
 		if ( empty( $allowed_screens ) ) {
-			$screen_id       = sanitize_title( __( 'Languages', 'linguator-multilingual-chromeai-translation' ) );
+			$screen_id       = sanitize_title( __( 'Languages', 'easy-web-translator' ) );
 			$allowed_screens = array(
 				'dashboard',
 				'plugins',
@@ -219,7 +219,7 @@ class LMAT_Admin_Notices {
 			'<a class="notice-dismiss" href="%s"><span class="screen-reader-text">%s</span></a>',
 			esc_url( wp_nonce_url( add_query_arg( 'lmat-hide-notice', $name ), $name, '_lmat_notice_nonce' ) ),
 			/* translators: accessibility text */
-			esc_html__( 'Dismiss this notice.', 'linguator-multilingual-chromeai-translation' )
+			esc_html__( 'Dismiss this notice.', 'easy-web-translator' )
 		);
 	}
 

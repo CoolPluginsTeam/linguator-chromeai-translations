@@ -314,12 +314,12 @@ const General = ({ data, setData }) => {
                 for (const domain of domains) {
                     // Check if domain is empty
                     if (!domain.value || domain.value.trim() === '') {
-                        throw new Error(__("Domain URL is required for all languages", "linguator-multilingual-chromeai-translation"));
+                        throw new Error(__("Domain URL is required for all languages", "easy-web-translator"));
                     }
                     
                     // Check if domain has proper protocol
                     if (!domain.value.includes("http://") && !domain.value.includes("https://")) {
-                        throw new Error(__("Please enter valid URLs with http:// or https://", "linguator-multilingual-chromeai-translation"));
+                        throw new Error(__("Please enter valid URLs with http:// or https://", "easy-web-translator"));
                     }
                     final_domain[domain.code] = domain.value;
                     
@@ -387,29 +387,29 @@ const General = ({ data, setData }) => {
                     if (error?.message) {
                         throw new Error(error.message);
                     }
-                    throw new Error(__("Something went wrong", 'linguator-multilingual-chromeai-translation'));
+                    throw new Error(__("Something went wrong", 'easy-web-translator'));
                 });
 
             toast.promise(response, {
-                loading: __('Saving Settings', 'linguator-multilingual-chromeai-translation'),
-                success: __('Settings Saved', 'linguator-multilingual-chromeai-translation'),
+                loading: __('Saving Settings', 'easy-web-translator'),
+                success: __('Settings Saved', 'easy-web-translator'),
                 error: (error) => error.message
             })
             setHandleButtonDisabled(true)
             
         } catch (error) {
             // Handle domain validation errors
-            if (error.message.includes(__("Please enter valid URLs", "linguator-multilingual-chromeai-translation")) ||
-                error.message.includes(__("Domain URL is required", "linguator-multilingual-chromeai-translation")) ||
-                error.message.includes(__("Invalid URL format", "linguator-multilingual-chromeai-translation")) ||
-                error.message.includes(__("Invalid domain format", "linguator-multilingual-chromeai-translation")) ||
-                error.message.includes(__("Duplicate domain host", "linguator-multilingual-chromeai-translation")) ||
+            if (error.message.includes(__("Please enter valid URLs", "easy-web-translator")) ||
+                error.message.includes(__("Domain URL is required", "easy-web-translator")) ||
+                error.message.includes(__("Invalid URL format", "easy-web-translator")) ||
+                error.message.includes(__("Invalid domain format", "easy-web-translator")) ||
+                error.message.includes(__("Duplicate domain host", "easy-web-translator")) ||
                 error.message.includes("domain") || error.message.includes("Domain")) {
                 toast.error(error.message);
-            } else if (error.message.includes(__("Linguator was unable to access", "linguator-multilingual-chromeai-translation"))) {
+            } else if (error.message.includes(__("Linguator was unable to access", "easy-web-translator"))) {
                 toast.error(error.message);
             } else {
-                toast.error(error.message || __("Something went wrong", "linguator-multilingual-chromeai-translation"));
+                toast.error(error.message || __("Something went wrong", "easy-web-translator"));
             }
         }
     }
@@ -417,30 +417,30 @@ const General = ({ data, setData }) => {
 
     //label and descriptions of URL modifications
     const urlCheckboxes = [{
-        description: sprintf(__('Example1: %s/en/my-post', 'linguator-multilingual-chromeai-translation'), currentDomain),
-        description2: sprintf(__('Example2: %s/hi/my-post', 'linguator-multilingual-chromeai-translation'), currentDomain),
-        heading: __("Different languages in directories", 'linguator-multilingual-chromeai-translation'),
+        description: sprintf(__('Example1: %s/en/my-post', 'easy-web-translator'), currentDomain),
+        description2: sprintf(__('Example2: %s/hi/my-post', 'easy-web-translator'), currentDomain),
+        heading: __("Different languages in directories", 'easy-web-translator'),
         value: 1
     }, {
         
-        description: sprintf(__('Example1: %sen.%s/my-post', 'linguator-multilingual-chromeai-translation'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
-        description2: sprintf(__('Example2: %shi.%s/my-post', 'linguator-multilingual-chromeai-translation'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
-        heading: __("The language is set from the subdomain name ", 'linguator-multilingual-chromeai-translation'),
+        description: sprintf(__('Example1: %sen.%s/my-post', 'easy-web-translator'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
+        description2: sprintf(__('Example2: %shi.%s/my-post', 'easy-web-translator'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
+        heading: __("The language is set from the subdomain name ", 'easy-web-translator'),
         value: 2
     }, {
         description: '',
         description2: '',
-        heading: __("A different domain per language", 'linguator-multilingual-chromeai-translation'),
+        heading: __("A different domain per language", 'easy-web-translator'),
         value: 3
     }]
 
     const directoryNamesLinks = [{
-        description: sprintf(__('Example: %s/en/', 'linguator-multilingual-chromeai-translation'), currentDomain),
-        heading: __("Remove /language/ in pretty permalinks", 'linguator-multilingual-chromeai-translation'),
+        description: sprintf(__('Example: %s/en/', 'easy-web-translator'), currentDomain),
+        heading: __("Remove /language/ in pretty permalinks", 'easy-web-translator'),
         value: true
     }, {
-        description: sprintf(__('Example: %s/language/en', 'linguator-multilingual-chromeai-translation'), currentDomain),
-        heading: __("Keep /language/ in pretty permalinks", 'linguator-multilingual-chromeai-translation'),
+        description: sprintf(__('Example: %s/language/en', 'easy-web-translator'), currentDomain),
+        heading: __("Keep /language/ in pretty permalinks", 'easy-web-translator'),
         value: false
     },]
     return (
@@ -459,7 +459,7 @@ const General = ({ data, setData }) => {
                             onClick={SaveSettings}
                             variant="primary"
                         >
-                            {__('Save Settings', 'linguator-multilingual-chromeai-translation')}
+                            {__('Save Settings', 'easy-web-translator')}
                         </Button>
                     </Container.Item>
                 </Container>
@@ -469,9 +469,9 @@ const General = ({ data, setData }) => {
                     <Container.Item>
                         <Label size='md' className='font-bold flex items-center gap-2'>
                             <Link className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Language URL format', 'linguator-multilingual-chromeai-translation')}
+                            {__('Language URL format', 'easy-web-translator')}
                         </Label>
-                        <Label variant='help'>{__('Decide how your website’s URLs will display different languages for visitors.', 'linguator-multilingual-chromeai-translation')}</Label>
+                        <Label variant='help'>{__('Decide how your website’s URLs will display different languages for visitors.', 'easy-web-translator')}</Label>
                     </Container.Item>
                     <Container cols="2" containerType='grid'>
                         <Container.Item >
@@ -544,7 +544,7 @@ const General = ({ data, setData }) => {
                                 forceLang !== 3 &&
                                 <Checkbox
                                     label={{
-                                        heading: __('Hide URL language information for default language', 'linguator-multilingual-chromeai-translation')
+                                        heading: __('Hide URL language information for default language', 'easy-web-translator')
                                     }}
                                     size="sm"
                                     className='cursor-pointer'
@@ -592,14 +592,14 @@ const General = ({ data, setData }) => {
                        <div>
                          <Label size='md' className='font-bold flex items-center gap-2'>
                             <Milestone className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Custom Post Types', 'linguator-multilingual-chromeai-translation')}
+                            {__('Custom Post Types', 'easy-web-translator')}
                         </Label>
-                        <p>{__("Choose the custom post types you want to enable for translation.For example, if you have a 'Portfolio' post type, check the box to enable it for translation.", 'linguator-multilingual-chromeai-translation')}</p>
+                        <p>{__("Choose the custom post types you want to enable for translation.For example, if you have a 'Portfolio' post type, check the box to enable it for translation.", 'easy-web-translator')}</p>
                        </div>
                         {AvailablePostTypes.length > 0 && (
                             <div className='flex justify-end gap-2' style={{paddingRight: '30%'}}>
                                 <Label size='sm' className='cursor-pointer items-start' htmlFor="select-all-post-types">
-                                    {__('Select All', 'linguator-multilingual-chromeai-translation')}
+                                    {__('Select All', 'easy-web-translator')}
                                 </Label>
                                 <Switch
                                     aria-label="Select All Post Types"
@@ -615,7 +615,7 @@ const General = ({ data, setData }) => {
                         {
                             AvailablePostTypes.length == 0 ?
                                 <div style={{ color: "red" }}>
-                                    {__('No Custom Post Types Available', 'linguator-multilingual-chromeai-translation')}
+                                    {__('No Custom Post Types Available', 'easy-web-translator')}
                                 </div> :
                                 <div className='flex gap-4 flex-wrap'>
                                     {
@@ -653,14 +653,14 @@ const General = ({ data, setData }) => {
                         <div>
                             <Label size='md' className='font-bold flex items-center gap-2'>
                             <Milestone className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Custom Taxonomies', 'linguator-multilingual-chromeai-translation')}
+                            {__('Custom Taxonomies', 'easy-web-translator')}
                         </Label>
-                        <p>{__('Choose the Custom Taxonomies you want to enable for translation', 'linguator-multilingual-chromeai-translation')}</p>
+                        <p>{__('Choose the Custom Taxonomies you want to enable for translation', 'easy-web-translator')}</p>
                         </div>
                         {AvailableTaxonomies.length > 0 && (
                             <div className='flex justify-end gap-2' style={{paddingRight: '30%'}}>
                                 <Label size='sm' className='cursor-pointer items-start' htmlFor="select-all-taxonomies">
-                                    {__('Select All', 'linguator-multilingual-chromeai-translation')}
+                                    {__('Select All', 'easy-web-translator')}
                                 </Label>
                                 <Switch
                                     aria-label="Select All Taxonomies"
@@ -676,7 +676,7 @@ const General = ({ data, setData }) => {
                         {
                             AvailableTaxonomies.length == 0 ?
                                 <div style={{ color: "red" }}>
-                                    {__('No Custom Taxonomies Available', 'linguator-multilingual-chromeai-translation')}
+                                    {__('No Custom Taxonomies Available', 'easy-web-translator')}
                                 </div> :
                                 <div className='flex gap-4 flex-wrap'>
                                     {
@@ -706,13 +706,13 @@ const General = ({ data, setData }) => {
                         <div>
                         <Label size='md' className='font-bold flex items-center gap-2'>
                             <RefreshCcw className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Synchronization', 'linguator-multilingual-chromeai-translation')}
+                            {__('Synchronization', 'easy-web-translator')}
                         </Label>
-                        <p>{__('Choose synchronization options for translated content.', 'linguator-multilingual-chromeai-translation')}</p>
+                        <p>{__('Choose synchronization options for translated content.', 'easy-web-translator')}</p>
                         </div>
                         <div className='flex  justify-end  gap-2' style={{paddingRight: '30%'}}>
                             <Label size='sm' className='cursor-pointer items-start' htmlFor="select-all-sync">
-                                {__('Select All', 'linguator-multilingual-chromeai-translation')}
+                                {__('Select All', 'easy-web-translator')}
                             </Label>
 
                             <Switch
@@ -750,10 +750,10 @@ const General = ({ data, setData }) => {
                     <Container.Item >
                         <h3 className='flex items-center gap-2'>
                             <Globe className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Detect Browser Language', 'linguator-multilingual-chromeai-translation')}
+                            {__('Detect Browser Language', 'easy-web-translator')}
                         </h3>
                         <p>
-                            {__('When visitors open your homepage, Linguator displays it in their preferred language. To avoid issues, homepage caching is turned off for supported cache plugins.', 'linguator-multilingual-chromeai-translation')}
+                            {__('When visitors open your homepage, Linguator displays it in their preferred language. To avoid issues, homepage caching is turned off for supported cache plugins.', 'easy-web-translator')}
                         </p>
                     </Container.Item>
                     <Container.Item className='flex items-center justify-end' style={{paddingRight: '30%'}}>
@@ -789,10 +789,10 @@ const General = ({ data, setData }) => {
                     <Container.Item>
                         <h3 className='flex items-center gap-2'>
                             <Focus className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Media', 'linguator-multilingual-chromeai-translation')}
+                            {__('Media', 'easy-web-translator')}
                         </h3>
                         <p>
-                            {__('Turn on media translation only if you need to translate titles, alt text, captions, or descriptions. The original file stays the same.', 'linguator-multilingual-chromeai-translation')}
+                            {__('Turn on media translation only if you need to translate titles, alt text, captions, or descriptions. The original file stays the same.', 'easy-web-translator')}
                         </p>
                     </Container.Item>
                     <Container.Item className='flex items-center justify-end' style={{paddingRight: '30%'}}>
@@ -813,10 +813,10 @@ const General = ({ data, setData }) => {
                     <Container.Item>
                         <h3 className='flex items-center gap-2'>
                             <Settings2 className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Static Strings Tab', 'linguator-multilingual-chromeai-translation')}
+                            {__('Static Strings Tab', 'easy-web-translator')}
                         </h3>
                         <p>
-                            {__('Show or hide the Static Strings tab in the admin menu. This tab allows you to translate static strings from your theme and plugins.', 'linguator-multilingual-chromeai-translation')}
+                            {__('Show or hide the Static Strings tab in the admin menu. This tab allows you to translate static strings from your theme and plugins.', 'easy-web-translator')}
                         </p>
                     </Container.Item>
                     <Container.Item className='flex items-center justify-end' style={{paddingRight: '30%'}}>
@@ -844,7 +844,7 @@ const General = ({ data, setData }) => {
                             onClick={SaveSettings}
                             variant="primary"
                         >
-                            {__('Save Settings', 'linguator-multilingual-chromeai-translation')}
+                            {__('Save Settings', 'easy-web-translator')}
                         </Button>
 
                     </Container.Item>

@@ -25,7 +25,7 @@ const DropdownRenderLangauage = ({ flagUrl }) => {
           {" " + selectedLanguage?.name + " - " + selectedLanguage?.locale}</span>
     }
   </>)
-  else return (<div>{__('Select an option', 'linguator-multilingual-chromeai-translation')}</div>)
+  else return (<div>{__('Select an option', 'easy-web-translator')}</div>)
 }
 
 
@@ -82,7 +82,7 @@ const Languages = () => {
       toast.info("Please select a language");
     }
     setValidLanguages(validLanguages.filter((language) => language.locale !== selectedLanguage.locale))
-    setSelectedLanguage({ id: 'none', name: __('None', 'linguator-multilingual-chromeai-translation'), flag: null, locale: null })
+    setSelectedLanguage({ id: 'none', name: __('None', 'easy-web-translator'), flag: null, locale: null })
   }
 
 
@@ -115,7 +115,7 @@ const Languages = () => {
         // Reset the loader state when dialog opens since we're not proceeding with API call
         setLanguageLoader(false)
       } else if (selectedLanguage.id == 'none' && currentSelectedLanguage.length == 0 && languagesArray?.length == 0) {
-        throw new Error(__('You have to select a language to continue', 'linguator-multilingual-chromeai-translation'))
+        throw new Error(__('You have to select a language to continue', 'easy-web-translator'))
       } else {
         try {
           let languageResponse = {
@@ -170,7 +170,7 @@ const Languages = () => {
 
         } catch (error) {
           setLanguageLoader(false)
-          toast.error(__('Please try again later', 'linguator-multilingual-chromeai-translation'))
+          toast.error(__('Please try again later', 'easy-web-translator'))
         }
         setLanguageLoader(false)
       }
@@ -184,9 +184,9 @@ const Languages = () => {
   return (
     <div className='mx-auto max-w-[600px] min-h-[40vh] p-10 bg-white shadow-sm flex flex-col'>
       <div className='flex-grow mb-5'>
-        <p className='text-sm'>{__('This wizard will help you set up Linguator to translate your website into multiple languages', 'linguator-multilingual-chromeai-translation')}</p>
-        <p className='text-sm'>{__('First, let’s choose the languages for your website.', 'linguator-multilingual-chromeai-translation')}</p>
-        <h2>{__('Translation Languages', 'linguator-multilingual-chromeai-translation')}</h2>
+        <p className='text-sm'>{__('This wizard will help you set up Linguator to translate your website into multiple languages', 'easy-web-translator')}</p>
+        <p className='text-sm'>{__('First, let’s choose the languages for your website.', 'easy-web-translator')}</p>
+        <h2>{__('Translation Languages', 'easy-web-translator')}</h2>
         <div className='flex items-end gap-2'>
           <Select
             combobox
@@ -205,15 +205,15 @@ const Languages = () => {
             searchPlaceholder="Search..."
           >
             <Select.Button
-              label={__('Which languages do you want to translate your site into?', 'linguator-multilingual-chromeai-translation')}
-              placeholder={__('Select an option', 'linguator-multilingual-chromeai-translation')}
+              label={__('Which languages do you want to translate your site into?', 'easy-web-translator')}
+              placeholder={__('Select an option', 'easy-web-translator')}
               render={() => <DropdownRenderLangauage flagUrl={false} />}
             />
             <Select.Options >
               <Select.Option
-                value={{ id: 'none', name: __('None', 'linguator-multilingual-chromeai-translation'), flag: null, locale: null }}
+                value={{ id: 'none', name: __('None', 'easy-web-translator'), flag: null, locale: null }}
               >
-                <span className="text-gray-500">{sprintf(__('None (%s)', 'linguator-multilingual-chromeai-translation'), __('Clear selection', 'linguator-multilingual-chromeai-translation'))}</span>
+                <span className="text-gray-500">{sprintf(__('None (%s)', 'easy-web-translator'), __('Clear selection', 'easy-web-translator'))}</span>
               </Select.Option>
               {
                 validLanguages.map((language, index) => (
@@ -240,14 +240,14 @@ const Languages = () => {
             onClick={handleClick}
             variant="primary"
           >
-            {__('ADD', 'linguator-multilingual-chromeai-translation')}
+            {__('ADD', 'easy-web-translator')}
           </Button>
         </div>
       </div>
       {
         currentSelectedLanguage.length > 0 &&
         <div style={{ paddingTop: "10px" }}>
-          <h4 className='m-0 ' style={{paddingBottom: "6px"}}>{__('Languages to be added', 'linguator-multilingual-chromeai-translation')}</h4>
+          <h4 className='m-0 ' style={{paddingBottom: "6px"}}>{__('Languages to be added', 'easy-web-translator')}</h4>
           {
             currentSelectedLanguage?.length > 0 && currentSelectedLanguage.map((language, index) => (
               <div className='flex justify-between items-center ' key={index} style={{paddingBottom: "6px"}}>
@@ -265,7 +265,7 @@ const Languages = () => {
       {
         languagesArray?.length > 0 &&
         <div className='py-4'>
-          <h4 className='m-0 ' style={{paddingBottom: "6px"}}>{__('Selected Languages', 'linguator-multilingual-chromeai-translation')}</h4>
+          <h4 className='m-0 ' style={{paddingBottom: "6px"}}>{__('Selected Languages', 'easy-web-translator')}</h4>
           <table style={{ width: "100%" }}>
             <tbody>
               {

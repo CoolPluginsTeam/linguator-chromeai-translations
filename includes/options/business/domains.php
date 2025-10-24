@@ -132,10 +132,10 @@ class Domains extends Abstract_Option {
 			// Non-blocking error.
 			if ( 1 === count( $missing_langs ) ) {
 				/* translators: %s is a native language name. */
-				$message = __( 'Please enter a valid URL for %s.', 'linguator-multilingual-chromeai-translation' );
+				$message = __( 'Please enter a valid URL for %s.', 'easy-web-translator' );
 			} else {
 				/* translators: %s is a list of native language names. */
-				$message = __( 'Please enter valid URLs for %s.', 'linguator-multilingual-chromeai-translation' );
+				$message = __( 'Please enter valid URLs for %s.', 'easy-web-translator' );
 			}
 
 			$this->errors->add(
@@ -160,7 +160,7 @@ class Domains extends Abstract_Option {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'Domains used when the language is set from different domains.', 'linguator-multilingual-chromeai-translation' );
+		return __( 'Domains used when the language is set from different domains.', 'easy-web-translator' );
 
 	}
 

@@ -79,7 +79,7 @@ const LanguageSection = ( { lang, allLanguages } ) => {
     }, [ lang, allLanguages ] );
 
     return (
-        <PanelBody title={ __( 'Language', 'linguator-multilingual-chromeai-translation' ) } initialOpen >
+        <PanelBody title={ __( 'Language', 'easy-web-translator' ) } initialOpen >
             <Flex align="center">
                 <FlexItem>
                     { lang?.flag_url ? (
@@ -153,7 +153,7 @@ const TranslationRow = ( { row } ) => {
             setSaving(false);
         } catch (e) {
             setSaving(false);
-            setError( __( 'Failed to save title. Please try again.', 'linguator-multilingual-chromeai-translation' ) );
+            setError( __( 'Failed to save title. Please try again.', 'easy-web-translator' ) );
             // Optional: console.error(e);
         }
     }, 2000);
@@ -221,7 +221,7 @@ const TranslationRow = ( { row } ) => {
             });
             window.location.reload();
         } catch (e) {
-            setError( __( 'Failed to link page. Please try again.', 'linguator-multilingual-chromeai-translation' ) );
+            setError( __( 'Failed to link page. Please try again.', 'easy-web-translator' ) );
         } finally {
             setLinking(false);
         }
@@ -255,7 +255,7 @@ const TranslationRow = ( { row } ) => {
             // Refresh to reflect new translation and show Edit icon
             window.location.reload();
         } catch (e) {
-            setError( __( 'Failed to create page. Please try again.', 'linguator-multilingual-chromeai-translation' ) );
+            setError( __( 'Failed to create page. Please try again.', 'easy-web-translator' ) );
         } finally {
             setLinking(false);
         }
@@ -273,38 +273,38 @@ const TranslationRow = ( { row } ) => {
                     <TextControl
                         value={ title }
                         onChange={ handleTitleChange }
-                        placeholder={ __( 'title', 'linguator-multilingual-chromeai-translation' ) }
+                        placeholder={ __( 'title', 'easy-web-translator' ) }
                         readOnly={ !editable }
                         disabled={ !editable }
                         help={
                             editable
                                 ? ( saving
-                                    ? __( 'Saving…', 'linguator-multilingual-chromeai-translation' )
-                                    : __( 'Type title to save translation.', 'linguator-multilingual-chromeai-translation' )
+                                    ? __( 'Saving…', 'easy-web-translator' )
+                                    : __( 'Type title to save translation.', 'easy-web-translator' )
                                   )
-                                : __( 'Modify title via Edit.', 'linguator-multilingual-chromeai-translation' )
+                                : __( 'Modify title via Edit.', 'easy-web-translator' )
                         }
                     />
                 </FlexItem>
                 <FlexItem style={{paddingTop:'14px'}}>
                     { hasEdit ? (
-                        <a href={ links.edit_link } aria-label={ __( 'Edit translation', 'linguator-multilingual-chromeai-translation' ) } style={ { marginLeft: 8,height: "100%",width: "100%",display: "flex",alignItems: "center",justifyContent: "center" } }>
+                        <a href={ links.edit_link } aria-label={ __( 'Edit translation', 'easy-web-translator' ) } style={ { marginLeft: 8,height: "100%",width: "100%",display: "flex",alignItems: "center",justifyContent: "center" } }>
                             <SquarePen size={20} />
                         </a>
                     ) : null }
                     { ! hasEdit && (
                         selectedSuggestion ? (
-                            <button onClick={ linkSelected } aria-label={ __( 'Link existing page', 'linguator-multilingual-chromeai-translation' ) } style={ { marginLeft: 8, background: 'transparent', border: 0, padding: 0, cursor: 'pointer' } }>
+                            <button onClick={ linkSelected } aria-label={ __( 'Link existing page', 'easy-web-translator' ) } style={ { marginLeft: 8, background: 'transparent', border: 0, padding: 0, cursor: 'pointer' } }>
                                 <CirclePlus size={20} />
                             </button>
                         ) : (
                             hasAdd ? (
                                 (title || '').trim().length > 0 ? (
-                                    <button onClick={ createFromTyped } aria-label={ __( 'Create translation from typed title', 'linguator-multilingual-chromeai-translation' ) } style={ { marginLeft: 8, background: 'transparent', border: 0, padding: 0, cursor: 'pointer' } }>
+                                    <button onClick={ createFromTyped } aria-label={ __( 'Create translation from typed title', 'easy-web-translator' ) } style={ { marginLeft: 8, background: 'transparent', border: 0, padding: 0, cursor: 'pointer' } }>
                                         <CirclePlus size={20} />
                                     </button>
                                 ) : (
-                                    <a href={ links.add_link } aria-label={ __( 'Add translation', 'linguator-multilingual-chromeai-translation' ) } style={ { marginLeft: 8,height: "100%",width: "100%",display: "flex",alignItems: "center",justifyContent: "center" } }>
+                                    <a href={ links.add_link } aria-label={ __( 'Add translation', 'easy-web-translator' ) } style={ { marginLeft: 8,height: "100%",width: "100%",display: "flex",alignItems: "center",justifyContent: "center" } }>
                                         <CirclePlus size={20} />
                                     </a>
                                 )
@@ -338,7 +338,7 @@ const TranslationRow = ( { row } ) => {
 const TranslationsSection = ( { translations } ) => {
     const rows = Object.values( translations );
     return (
-        <PanelBody title={ __( 'Translations', 'linguator-multilingual-chromeai-translation' ) } initialOpen >
+        <PanelBody title={ __( 'Translations', 'easy-web-translator' ) } initialOpen >
             { rows.map( ( row ) => (
                 <TranslationRow key={ row.lang.slug } row={ row } />
             ) ) }
@@ -354,9 +354,9 @@ const Sidebar = () => {
     return (
         <>
             <PluginSidebarMoreMenuItem target={ SIDEBAR_NAME }>
-                { __( 'Linguator', 'linguator-multilingual-chromeai-translation' ) }
+                { __( 'Linguator', 'easy-web-translator' ) }
             </PluginSidebarMoreMenuItem>
-            <PluginSidebar name={ SIDEBAR_NAME } title={ __( 'Linguator', 'linguator-multilingual-chromeai-translation' ) }>
+            <PluginSidebar name={ SIDEBAR_NAME } title={ __( 'Linguator', 'easy-web-translator' ) }>
                 <LanguageSection lang={ lang } allLanguages={ translations } />
                 <TranslationsSection translations={ translations } />
             </PluginSidebar>

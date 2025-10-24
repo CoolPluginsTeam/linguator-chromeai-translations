@@ -164,12 +164,12 @@ if ( ! class_exists( 'Custom_Block_Post' ) ) {
 
 		public function get_custom_blocks_content() {
 			if ( ! check_ajax_referer( 'lmat_block_update_nonce', 'lmat_nonce', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'linguator-multilingual-chromeai-translation' ) );
+				wp_send_json_error( __( 'Invalid security token sent.', 'easy-web-translator' ) );
 				wp_die( '0', 400 );
 			}
 
 			if(!current_user_can('edit_posts')){
-				wp_send_json_error( __( 'Unauthorized', 'linguator-multilingual-chromeai-translation' ), 403 );
+				wp_send_json_error( __( 'Unauthorized', 'easy-web-translator' ), 403 );
 				wp_die( '0', 403 );
 			}
 
@@ -178,26 +178,26 @@ if ( ! class_exists( 'Custom_Block_Post' ) ) {
 			if ( $custom_content && is_string( $custom_content ) && ! empty( trim( $custom_content ) ) ) {
 				return wp_send_json_success( array( 'block_data' => $custom_content ) );
 			} else {
-				return wp_send_json_success( array( 'message' => __( 'No custom blocks found.', 'linguator-multilingual-chromeai-translation' ) ) );
+				return wp_send_json_success( array( 'message' => __( 'No custom blocks found.', 'easy-web-translator' ) ) );
 			}
 			exit();
 		}
 		
 		public function update_custom_blocks_content() {
 			if ( ! check_ajax_referer( 'lmat_block_update_nonce', 'lmat_nonce', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'linguator-multilingual-chromeai-translation' ) );
+				wp_send_json_error( __( 'Invalid security token sent.', 'easy-web-translator' ) );
 				wp_die( '0', 400 );
 			}
 
 			if(!current_user_can('edit_posts')){
-				wp_send_json_error( __( 'Unauthorized', 'linguator-multilingual-chromeai-translation' ), 403 );
+				wp_send_json_error( __( 'Unauthorized', 'easy-web-translator' ), 403 );
 				wp_die( '0', 403 );
 			}
 
 			$json = isset($_POST['save_block_data']) ? wp_unslash($_POST['save_block_data']) : false;
 			$updated_blocks_data = json_decode($json, true);
 			if(json_last_error() !== JSON_ERROR_NONE){ 
-				wp_send_json_error( __( 'Invalid JSON', 'linguator-multilingual-chromeai-translation' ) );
+				wp_send_json_error( __( 'Invalid JSON', 'easy-web-translator' ) );
 				wp_die( '0', 400 );
 			}
 
@@ -205,7 +205,7 @@ if ( ! class_exists( 'Custom_Block_Post' ) ) {
 				Supported_Blocks::get_instance()->update_custom_blocks_content($updated_blocks_data);
 			}
 
-			return wp_send_json_success( array( 'message' => __( 'Linguator Multilingual AI Translation: Custom Blocks data updated successfully', 'linguator-multilingual-chromeai-translation' ) ) );
+			return wp_send_json_success( array( 'message' => __( 'Linguator Multilingual AI Translation: Custom Blocks data updated successfully', 'easy-web-translator' ) ) );
 			exit();
 		}
 	}

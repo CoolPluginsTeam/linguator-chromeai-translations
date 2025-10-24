@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 ?>
-<p><strong><?php esc_html_e( 'Translations', 'linguator-multilingual-chromeai-translation' ); ?></strong></p>
+<p><strong><?php esc_html_e( 'Translations', 'easy-web-translator' ); ?></strong></p>
 <table>
 	<?php
 	foreach ( $this->model->get_languages_list() as $language ) {

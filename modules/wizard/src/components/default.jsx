@@ -23,7 +23,7 @@ const Default = () => {
     setDefaultLoader(true)
     try {
       if (defaultLanguage === null) {
-        throw new Error(__('Please select a default language', 'linguator-multilingual-chromeai-translation'))
+        throw new Error(__('Please select a default language', 'easy-web-translator'))
       }
       
       let updatedLanguages = languagesArray;
@@ -112,9 +112,9 @@ const Default = () => {
     <div className='mx-auto p-10 max-w-[600px] min-h-[40vh] bg-white shadow-sm flex flex-col'>
       <div className='flex-grow'>
         <div className='flex-grow'>
-          <h2>{__('Default Language', 'linguator-multilingual-chromeai-translation')}</h2>
-          <p className='m-0 text-sm/6'>{__('Set your website’s default language here.', 'linguator-multilingual-chromeai-translation')}</p>
-          <p className='m-0 text-sm/6'>{__('This language will be shown to visitors if their preferred language isn’t available.', 'linguator-multilingual-chromeai-translation')}</p>
+          <h2>{__('Default Language', 'easy-web-translator')}</h2>
+          <p className='m-0 text-sm/6'>{__('Set your website’s default language here.', 'easy-web-translator')}</p>
+          <p className='m-0 text-sm/6'>{__('This language will be shown to visitors if their preferred language isn’t available.', 'easy-web-translator')}</p>
           <Select
             combobox
             onChange={(value) => setDefaultLanguage(value)}
@@ -130,8 +130,8 @@ const Default = () => {
             by="locale"
           >
             <Select.Button
-              label={__("Choose the language to be assigned", 'linguator-multilingual-chromeai-translation')}
-              placeholder={__("Select an option", 'linguator-multilingual-chromeai-translation')}
+              label={__("Choose the language to be assigned", 'easy-web-translator')}
+              placeholder={__("Select an option", 'easy-web-translator')}
               render={() => <RenderedLanguage languageName={defaultLanguage?.name} languageFlag={defaultLanguage?.flag} flagUrl={true} languageLocale={defaultLanguage?.locale} />}
             />
             <Select.Options>
@@ -163,7 +163,7 @@ const Default = () => {
               Loading...
             </SetupContinueButton>
             :
-            <SetupContinueButton SaveSettings={saveDefault} >{__('Continue', 'linguator-multilingual-chromeai-translation')}</SetupContinueButton>
+            <SetupContinueButton SaveSettings={saveDefault} >{__('Continue', 'easy-web-translator')}</SetupContinueButton>
         }
       </div>
 

@@ -41,15 +41,15 @@ const StringModalBodyNotice = () => {
   if (postMetaSync) {
     notices.push({
       className: 'lmat-page-translation-notice lmat-page-translation-notice-error', message: <p>
-        {__('For accurate custom field translations, please disable the Custom Fields synchronization in ', 'linguator-multilingual-chromeai-translation')}
+        {__('For accurate custom field translations, please disable the Custom Fields synchronization in ', 'easy-web-translator')}
         <a
           href={`${lmatPageTranslationGlobal.admin_url}admin.php?page=lmat_settings`}
           target="_blank"
           rel="noopener noreferrer"
         >
-          {__('Linguator settings', 'linguator-multilingual-chromeai-translation')}
+          {__('Linguator settings', 'easy-web-translator')}
         </a>
-        {__('. This may affect linked posts or pages.', 'linguator-multilingual-chromeai-translation')}
+        {__('. This may affect linked posts or pages.', 'easy-web-translator')}
       </p>
     });
   }
@@ -59,7 +59,7 @@ const StringModalBodyNotice = () => {
     const blockRules = select('block-lmatPageTranslation/translate').getBlockRules();
 
     if (!blockRules.LmatBlockParseRules || Object.keys(blockRules.LmatBlockParseRules).length === 0) {
-      notices.push({ className: 'lmat-page-translation-notice lmat-page-translation-notice-error', message: <p>{__('No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.', 'linguator-multilingual-chromeai-translation')}</p> });
+      notices.push({ className: 'lmat-page-translation-notice lmat-page-translation-notice-error', message: <p>{__('No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.', 'easy-web-translator')}</p> });
     }
   }
 
@@ -67,7 +67,7 @@ const StringModalBodyNotice = () => {
     const blockCommentTag = lmatPageTranslationGlobal.blockCommentTag === 'true';
 
     if (blockCommentTag) {
-      notices.push({ className: 'lmat-page-translation-notice lmat-page-translation-notice-error', message: <p>{__('This page may contain Gutenberg block content. After the translation, please review the updated content before finalizing the page update.', 'linguator-multilingual-chromeai-translation')}</p> });
+      notices.push({ className: 'lmat-page-translation-notice lmat-page-translation-notice-error', message: <p>{__('This page may contain Gutenberg block content. After the translation, please review the updated content before finalizing the page update.', 'easy-web-translator')}</p> });
     }
   }
 
@@ -147,7 +147,7 @@ const App = () => {
       const metaFieldBtn = document.querySelector(translateWrpSelector);
       if (metaFieldBtn) {
         metaFieldBtn.disabled = true;
-        metaFieldBtn.value = __("Already Translated", 'linguator-multilingual-chromeai-translation');
+        metaFieldBtn.value = __("Already Translated", 'easy-web-translator');
       }
     }
   }, [pageTranslate]);
@@ -182,10 +182,10 @@ const createMessagePopup = () => {
   messagePopup.innerHTML = `
     <div class="modal-container" style="display: flex">
       <div class="modal-content">
-        <p>${sprintf(__("Would you like to duplicate your original %s content and have it automatically translated into %s?", 'linguator-multilingual-chromeai-translation'), postType, targetLangName)}</p>
+        <p>${sprintf(__("Would you like to duplicate your original %s content and have it automatically translated into %s?", 'easy-web-translator'), postType, targetLangName)}</p>
         <div>
-          <div data-value="yes">${__("Yes", 'linguator-multilingual-chromeai-translation')}</div>
-          <div data-value="no">${__("No", 'linguator-multilingual-chromeai-translation')}</div>
+          <div data-value="yes">${__("Yes", 'easy-web-translator')}</div>
+          <div data-value="no">${__("No", 'easy-web-translator')}</div>
         </div>
       </div>
     </div>`;

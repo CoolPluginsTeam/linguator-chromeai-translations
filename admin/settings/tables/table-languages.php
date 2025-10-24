@@ -99,7 +99,7 @@ class LMAT_Table_Languages extends WP_List_Table {
 	public function column_name( $item ) {
 		return sprintf(
 			'<a title="%s" href="%s">%s</a>',
-			esc_attr__( 'Edit this language', 'linguator-multilingual-chromeai-translation' ),
+			esc_attr__( 'Edit this language', 'easy-web-translator' ),
 			esc_url( admin_url( 'admin.php?page=lmat&amp;lmat_action=edit&amp;lang=' . $item->term_id ) ),
 			esc_html( $item->name )
 		);
@@ -120,10 +120,10 @@ class LMAT_Table_Languages extends WP_List_Table {
 				'<div class="row-actions"><span class="default-lang">
 				<a class="icon-default-lang" title="%1$s" href="%2$s"><span class="screen-reader-text">%3$s</span></a>
 				</span></div>',
-				esc_attr__( 'Select as default language', 'linguator-multilingual-chromeai-translation' ),
+				esc_attr__( 'Select as default language', 'easy-web-translator' ),
 				wp_nonce_url( '?page=lmat&amp;lmat_action=default-lang&amp;noheader=true&amp;lang=' . $item->term_id, 'default-lang' ),
 				/* translators: accessibility text, %s is a native language name */
-				esc_html( sprintf( __( 'Choose %s as default language', 'linguator-multilingual-chromeai-translation' ), $item->name ) )
+				esc_html( sprintf( __( 'Choose %s as default language', 'easy-web-translator' ), $item->name ) )
 			);
 
 			/**
@@ -139,7 +139,7 @@ class LMAT_Table_Languages extends WP_List_Table {
 			$s = sprintf(
 				'<span class="icon-default-lang"><span class="screen-reader-text">%1$s</span></span>',
 				/* translators: accessibility text */
-				esc_html__( 'Default language', 'linguator-multilingual-chromeai-translation' )
+				esc_html__( 'Default language', 'easy-web-translator' )
 			);
 		}
 
@@ -155,13 +155,13 @@ class LMAT_Table_Languages extends WP_List_Table {
 	 */
 	public function get_columns() {
 		return array(
-			'name'         => esc_html__( 'Full name', 'linguator-multilingual-chromeai-translation' ),
-			'locale'       => esc_html__( 'Locale', 'linguator-multilingual-chromeai-translation' ),
-			'slug'         => esc_html__( 'Code', 'linguator-multilingual-chromeai-translation' ),
-			'default_lang' => sprintf( '<span title="%1$s" class="icon-default-lang"><span class="screen-reader-text">%2$s</span></span>', esc_attr__( 'Default language', 'linguator-multilingual-chromeai-translation' ), esc_html__( 'Default language', 'linguator-multilingual-chromeai-translation' ) ),
-			'term_group'   => esc_html__( 'Order', 'linguator-multilingual-chromeai-translation' ),
-			'flag'         => esc_html__( 'Flag', 'linguator-multilingual-chromeai-translation' ),
-			'count'        => esc_html__( 'Posts', 'linguator-multilingual-chromeai-translation' ),
+			'name'         => esc_html__( 'Full name', 'easy-web-translator' ),
+			'locale'       => esc_html__( 'Locale', 'easy-web-translator' ),
+			'slug'         => esc_html__( 'Code', 'easy-web-translator' ),
+			'default_lang' => sprintf( '<span title="%1$s" class="icon-default-lang"><span class="screen-reader-text">%2$s</span></span>', esc_attr__( 'Default language', 'easy-web-translator' ), esc_html__( 'Default language', 'easy-web-translator' ) ),
+			'term_group'   => esc_html__( 'Order', 'easy-web-translator' ),
+			'flag'         => esc_html__( 'Flag', 'easy-web-translator' ),
+			'count'        => esc_html__( 'Posts', 'easy-web-translator' ),
 		);
 	}
 
@@ -211,16 +211,16 @@ class LMAT_Table_Languages extends WP_List_Table {
 		$actions = array(
 			'edit'   => sprintf(
 				'<a title="%s" href="%s">%s</a>',
-				esc_attr__( 'Edit this language', 'linguator-multilingual-chromeai-translation' ),
+				esc_attr__( 'Edit this language', 'easy-web-translator' ),
 				esc_url( admin_url( 'admin.php?page=lmat&amp;lmat_action=edit&amp;lang=' . $item->term_id ) ),
-				esc_html__( 'Edit', 'linguator-multilingual-chromeai-translation' )
+				esc_html__( 'Edit', 'easy-web-translator' )
 			),
 			'delete' => sprintf(
 				'<a title="%s" href="%s" onclick = "return confirm( \'%s\' );">%s</a>',
-				esc_attr__( 'Delete this language and all its associated data', 'linguator-multilingual-chromeai-translation' ),
+				esc_attr__( 'Delete this language and all its associated data', 'easy-web-translator' ),
 				wp_nonce_url( '?page=lmat&amp;lmat_action=delete&amp;noheader=true&amp;lang=' . $item->term_id, 'delete-lang' ),
-				esc_js( __( 'You are about to permanently delete this language. Are you sure?', 'linguator-multilingual-chromeai-translation' ) ),
-				esc_html__( 'Delete', 'linguator-multilingual-chromeai-translation' )
+				esc_js( __( 'You are about to permanently delete this language. Are you sure?', 'easy-web-translator' ) ),
+				esc_html__( 'Delete', 'easy-web-translator' )
 			),
 		);
 

@@ -65,7 +65,7 @@ class LMAT_Install extends LMAT_Install_Base {
 			'<div class="error"><p>%s</p></div>',
 			sprintf(
 				/* translators: 1: Plugin name 2: Current PHP version 3: Required PHP version */
-				esc_html__( '%1$s has deactivated itself because you are using an old version of PHP. You are using using PHP %2$s. %1$s requires PHP %3$s.', 'linguator-multilingual-chromeai-translation' ),
+				esc_html__( '%1$s has deactivated itself because you are using an old version of PHP. You are using using PHP %2$s. %1$s requires PHP %3$s.', 'easy-web-translator' ),
 				esc_html( LINGUATOR ),
 				esc_html( PHP_VERSION ),
 				esc_html( LMAT_MIN_PHP_VERSION )
@@ -84,11 +84,11 @@ class LMAT_Install extends LMAT_Install_Base {
 		?>
 		<div class="notice notice-error">
 			<p>
-				<strong><?php esc_html_e( 'Linguator – Multilingual Chrome AI Translation', 'linguator-multilingual-chromeai-translation' ); ?></strong>
+				<strong><?php esc_html_e( 'Easy Web Translator – On-Device Chrome AI Translation', 'easy-web-translator' ); ?></strong>
 			</p>
 			<p>
 				<?php 
-				echo esc_html__( 'Linguator cannot run alongside Polylang. Please deactivate Polylang first.', 'linguator-multilingual-chromeai-translation' );
+				echo esc_html__( 'Linguator cannot run alongside Polylang. Please deactivate Polylang first.', 'easy-web-translator' );
 				?>
 			</p>
 		</div>
@@ -109,7 +109,7 @@ class LMAT_Install extends LMAT_Install_Base {
 			'<div class="error"><p>%s</p></div>',
 			sprintf(
 				/* translators: 1: Plugin name 2: Current WordPress version 3: Required WordPress version */
-				esc_html__( '%1$s has deactivated itself because you are using an old version of WordPress. You are using using WordPress %2$s. %1$s requires at least WordPress %3$s.', 'linguator-multilingual-chromeai-translation' ),
+				esc_html__( '%1$s has deactivated itself because you are using an old version of WordPress. You are using using WordPress %2$s. %1$s requires at least WordPress %3$s.', 'easy-web-translator' ),
 				esc_html( LINGUATOR ),
 				esc_html( $wp_version ),
 				esc_html( LMAT_MIN_WP_VERSION )

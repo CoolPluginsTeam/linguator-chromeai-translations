@@ -12,11 +12,11 @@ const Sidebar = () => {
     return (
         <>
             <PluginSidebarMoreMenuItem target={ SIDEBAR_NAME }>
-                { __( 'Languages', 'linguator-multilingual-chromeai-translation' ) }
+                { __( 'Languages', 'easy-web-translator' ) }
             </PluginSidebarMoreMenuItem>
-            <PluginSidebar name={ SIDEBAR_NAME } title={ __( 'Languages', 'linguator-multilingual-chromeai-translation' ) }>
+            <PluginSidebar name={ SIDEBAR_NAME } title={ __( 'Languages', 'easy-web-translator' ) }>
                 <div className="lmat-sidebar-section">
-                    <p>{ __( 'Linguator sidebar (Site Editor)', 'linguator-multilingual-chromeai-translation' ) }</p>
+                    <p>{ __( 'Linguator sidebar (Site Editor)', 'easy-web-translator' ) }</p>
                 </div>
             </PluginSidebar>
         </>

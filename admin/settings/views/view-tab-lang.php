@@ -36,7 +36,7 @@ use Linguator\Settings\Controllers\LMAT_Settings;
 		<div class="col-wrap">
 
 			<div class="form-wrap">
-				<h2><?php echo ! empty( $edit_lang ) ? esc_html__( 'Edit language', 'linguator-multilingual-chromeai-translation' ) : esc_html__( 'Add new language', 'linguator-multilingual-chromeai-translation' ); ?></h2>
+				<h2><?php echo ! empty( $edit_lang ) ? esc_html__( 'Edit language', 'easy-web-translator' ) : esc_html__( 'Add new language', 'easy-web-translator' ); ?></h2>
 				<?php
 				// Displays the add ( or edit ) language form
 				// Adds noheader=true in the action url to allow using wp_redirect when processing the form
@@ -57,7 +57,7 @@ use Linguator\Settings\Controllers\LMAT_Settings;
 				}
 				?>
 					<div class="form-field">
-						<label for="lang_list"><?php esc_html_e( 'Choose a language', 'linguator-multilingual-chromeai-translation' ); ?></label>
+						<label for="lang_list"><?php esc_html_e( 'Choose a language', 'easy-web-translator' ); ?></label>
 						<select name="lang_list" id="lang_list">
 							<option value=""></option>
 							<?php
@@ -87,61 +87,61 @@ use Linguator\Settings\Controllers\LMAT_Settings;
 							}
 							?>
 						</select>
-						<p><?php esc_html_e( 'You can choose a language from the list or directly edit it below.', 'linguator-multilingual-chromeai-translation' ); ?></p>
+						<p><?php esc_html_e( 'You can choose a language from the list or directly edit it below.', 'easy-web-translator' ); ?></p>
 					</div>
 
 					<div class="form-field form-required">
-						<label for="lang_name"><?php esc_html_e( 'Full name', 'linguator-multilingual-chromeai-translation' ); ?></label>
+						<label for="lang_name"><?php esc_html_e( 'Full name', 'easy-web-translator' ); ?></label>
 						<?php
 						printf(
 							'<input name="name" id="lang_name" type="text" value="%s" size="40" aria-required="true" />',
 							! empty( $edit_lang ) ? esc_attr( $edit_lang->name ) : ''
 						);
 						?>
-						<p><?php esc_html_e( 'The name of language will display on your site (for example: English).', 'linguator-multilingual-chromeai-translation' ); ?></p>
+						<p><?php esc_html_e( 'The name of language will display on your site (for example: English).', 'easy-web-translator' ); ?></p>
 					</div>
 
 					<div class="form-field form-required">
-						<label for="lang_locale"><?php esc_html_e( 'Locale', 'linguator-multilingual-chromeai-translation' ); ?></label>
+						<label for="lang_locale"><?php esc_html_e( 'Locale', 'easy-web-translator' ); ?></label>
 						<?php
 						printf(
 							'<input name="locale" id="lang_locale" type="text" value="%s" size="40" aria-required="true" />',
 							! empty( $edit_lang ) ? esc_attr( $edit_lang->locale ) : ''
 						);
 						?>
-						<p><?php esc_html_e( "WordPress Locale for the language (for example: en_US). You'll have to install the .mo file for this language.", 'linguator-multilingual-chromeai-translation' ); ?></p>
+						<p><?php esc_html_e( "WordPress Locale for the language (for example: en_US). You'll have to install the .mo file for this language.", 'easy-web-translator' ); ?></p>
 					</div>
 
 					<div class="form-field">
-						<label for="lang_slug"><?php esc_html_e( 'Language code', 'linguator-multilingual-chromeai-translation' ); ?></label>
+						<label for="lang_slug"><?php esc_html_e( 'Language code', 'easy-web-translator' ); ?></label>
 						<?php
 						printf(
 							'<input name="slug" id="lang_slug" type="text" value="%s" size="40"/>',
 							! empty( $edit_lang ) ? esc_attr( $edit_lang->slug ) : ''
 						);
 						?>
-						<p><?php esc_html_e( 'Language code - preferably 2-letters ISO 639-1  (for example: en)', 'linguator-multilingual-chromeai-translation' ); ?></p>
+						<p><?php esc_html_e( 'Language code - preferably 2-letters ISO 639-1  (for example: en)', 'easy-web-translator' ); ?></p>
 					</div>
 
 					<div class="form-field"><fieldset>
-						<legend class="lmat-legend"><?php esc_html_e( 'Text direction', 'linguator-multilingual-chromeai-translation' ); ?></legend>
+						<legend class="lmat-legend"><?php esc_html_e( 'Text direction', 'easy-web-translator' ); ?></legend>
 						<?php
 						printf(
 							'<label><input name="rtl" type="radio" value="0" %s /> %s</label>',
 							checked( ! empty( $edit_lang ) && $edit_lang->is_rtl, false, false ),
-							esc_html__( 'left to right', 'linguator-multilingual-chromeai-translation' )
+							esc_html__( 'left to right', 'easy-web-translator' )
 						);
 						printf(
 							'<label><input name="rtl" type="radio" value="1" %s /> %s</label>',
 							checked( ! empty( $edit_lang ) && $edit_lang->is_rtl, true, false ),
-							esc_html__( 'right to left', 'linguator-multilingual-chromeai-translation' )
+							esc_html__( 'right to left', 'easy-web-translator' )
 						);
 						?>
-						<p><?php esc_html_e( 'Choose the text direction for the language', 'linguator-multilingual-chromeai-translation' ); ?></p>
+						<p><?php esc_html_e( 'Choose the text direction for the language', 'easy-web-translator' ); ?></p>
 					</fieldset></div>
 
 					<div class="form-field">
-						<label for="flag_list"><?php esc_html_e( 'Flag', 'linguator-multilingual-chromeai-translation' ); ?></label>
+						<label for="flag_list"><?php esc_html_e( 'Flag', 'easy-web-translator' ); ?></label>
 						<select name="flag" id="flag_list">
 							<option value=""></option>
 							<?php
@@ -157,18 +157,18 @@ use Linguator\Settings\Controllers\LMAT_Settings;
 							}
 							?>
 						</select>
-						<p><?php esc_html_e( 'Choose a flag for the language.', 'linguator-multilingual-chromeai-translation' ); ?></p>
+						<p><?php esc_html_e( 'Choose a flag for the language.', 'easy-web-translator' ); ?></p>
 					</div>
 
 					<div class="form-field">
-						<label for="lang_order"><?php esc_html_e( 'Order', 'linguator-multilingual-chromeai-translation' ); ?></label>
+						<label for="lang_order"><?php esc_html_e( 'Order', 'easy-web-translator' ); ?></label>
 						<?php
 						printf(
 							'<input name="term_group" id="lang_order" type="text" value="%d" />',
 							! empty( $edit_lang ) ? esc_attr( $edit_lang->term_group ) : ''
 						);
 						?>
-						<p><?php esc_html_e( 'Position of the language in the language switcher', 'linguator-multilingual-chromeai-translation' ); ?></p>
+						<p><?php esc_html_e( 'Position of the language in the language switcher', 'easy-web-translator' ); ?></p>
 					</div>
 					<?php
 					if ( ! empty( $edit_lang ) ) {
@@ -189,7 +189,7 @@ use Linguator\Settings\Controllers\LMAT_Settings;
 						do_action( 'lmat_language_add_form_fields' );
 					}
 
-					submit_button( ! empty( $edit_lang ) ? __( 'Update', 'linguator-multilingual-chromeai-translation' ) : __( 'Add new language', 'linguator-multilingual-chromeai-translation' ) ); // since WP 3.1
+					submit_button( ! empty( $edit_lang ) ? __( 'Update', 'easy-web-translator' ) : __( 'Add new language', 'easy-web-translator' ) ); // since WP 3.1
 					?>
 				</form>
 			</div><!-- form-wrap -->

@@ -116,6 +116,6 @@ class Ai_Translation_Configuration extends Abstract_Option {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'List of post types to translate.', 'linguator-multilingual-chromeai-translation' );
+		return __( 'List of post types to translate.', 'easy-web-translator' );
 	}
 }

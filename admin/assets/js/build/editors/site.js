@@ -19,12 +19,12 @@ var SIDEBAR_NAME = 'lmat-site-sidebar';
 var Sidebar = function Sidebar() {
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(external_wp_editSite_namespaceObject.PluginSidebarMoreMenuItem, {
     target: SIDEBAR_NAME
-  }, (0,external_wp_i18n_namespaceObject.__)('Languages', 'linguator-multilingual-chromeai-translation')), /*#__PURE__*/React.createElement(external_wp_editSite_namespaceObject.PluginSidebar, {
+  }, (0,external_wp_i18n_namespaceObject.__)('Languages', 'easy-web-translator')), /*#__PURE__*/React.createElement(external_wp_editSite_namespaceObject.PluginSidebar, {
     name: SIDEBAR_NAME,
-    title: (0,external_wp_i18n_namespaceObject.__)('Languages', 'linguator-multilingual-chromeai-translation')
+    title: (0,external_wp_i18n_namespaceObject.__)('Languages', 'easy-web-translator')
   }, /*#__PURE__*/React.createElement("div", {
     className: "lmat-sidebar-section"
-  }, /*#__PURE__*/React.createElement("p", null, (0,external_wp_i18n_namespaceObject.__)('Linguator sidebar (Site Editor)', 'linguator-multilingual-chromeai-translation')))));
+  }, /*#__PURE__*/React.createElement("p", null, (0,external_wp_i18n_namespaceObject.__)('Linguator sidebar (Site Editor)', 'easy-web-translator')))));
 };
 (0,external_wp_plugins_namespaceObject.registerPlugin)(SIDEBAR_NAME, {
   render: Sidebar

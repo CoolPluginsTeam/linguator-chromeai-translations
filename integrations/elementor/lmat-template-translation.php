@@ -245,7 +245,7 @@ class LMAT_Template_Translation {
         $document->start_controls_section(
             'lmat_language_panel_controls',
             [
-                'label' => esc_html__('Translations', 'linguator-multilingual-chromeai-translation'),
+                'label' => esc_html__('Translations', 'easy-web-translator'),
                 'tab'   => \Elementor\Controls_Manager::TAB_SETTINGS,
             ]
         );
@@ -305,7 +305,7 @@ class LMAT_Template_Translation {
                             $flag_html,
                             sprintf(
                                 /* translators: %s: Language name */
-                                __('Add translation — %s', 'linguator-multilingual-chromeai-translation'),
+                                __('Add translation — %s', 'easy-web-translator'),
                                 esc_html($lang->name)
                             )
                         ),

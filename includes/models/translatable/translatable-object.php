@@ -611,7 +611,7 @@ abstract class LMAT_Translatable_Object {
 	 */
 	public function get_rest_description(): string {
 		/* translators: %s is the name of a database table. */
-		return sprintf( __( 'Language taxonomy properties for table %s.', 'linguator-multilingual-chromeai-translation' ), $this->get_db_infos()['table'] );
+		return sprintf( __( 'Language taxonomy properties for table %s.', 'easy-web-translator' ), $this->get_db_infos()['table'] );
 	}
 
 	/**

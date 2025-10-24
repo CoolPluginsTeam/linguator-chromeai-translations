@@ -36,6 +36,6 @@ class Previous_Version extends Version {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( "Linguator's previous version.", 'linguator-multilingual-chromeai-translation' );
+		return __( "Linguator's previous version.", 'easy-web-translator' );
 	}
 }

@@ -150,7 +150,7 @@ class LMAT_Admin_Filters_Term {
 				<div id="select-add-term-language">%s</div>
 				<p>%s</p>
 			</div>',
-			esc_html__( 'Language', 'linguator-multilingual-chromeai-translation' ),
+			esc_html__( 'Language', 'easy-web-translator' ),
 			wp_kses(
 				$dropdown_html,
 				array(
@@ -182,7 +182,7 @@ class LMAT_Admin_Filters_Term {
 				),
 				array_merge( wp_allowed_protocols(), array( 'data' ) )
 			),
-			esc_html__( 'Sets the language', 'linguator-multilingual-chromeai-translation' )
+			esc_html__( 'Sets the language', 'easy-web-translator' )
 		);
 
 		if ( ! empty( $from_term_id ) ) {
@@ -253,7 +253,7 @@ class LMAT_Admin_Filters_Term {
 					<p class="description">%s</p>
 				</td>
 			</tr>',
-			esc_html__( 'Language', 'linguator-multilingual-chromeai-translation' ),
+			esc_html__( 'Language', 'easy-web-translator' ),
 			wp_kses(
 				$dropdown_html,
 				array(
@@ -285,7 +285,7 @@ class LMAT_Admin_Filters_Term {
 				),
 				array_merge( wp_allowed_protocols(), array( 'data' ) )
 			),
-			esc_html__( 'Sets the language', 'linguator-multilingual-chromeai-translation' )
+			esc_html__( 'Sets the language', 'easy-web-translator' )
 		);
 
 		echo '<tr id="term-translations" class="form-field">';
@@ -539,7 +539,7 @@ class LMAT_Admin_Filters_Term {
 				'name'             => 'parent',
 				'orderby'          => 'name',
 				'hierarchical'     => true,
-				'show_option_none' => __( 'None', 'linguator-multilingual-chromeai-translation' ),
+				'show_option_none' => __( 'None', 'easy-web-translator' ),
 				'echo'             => 0,
 			);
 			$x->Add( array( 'what' => 'parent', 'data' => wp_dropdown_categories( $args ) ) );

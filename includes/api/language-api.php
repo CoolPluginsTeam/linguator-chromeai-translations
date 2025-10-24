@@ -221,7 +221,7 @@ function lmat_home_url( $lang = '' ) {
  *
  * @param string $name      A unique name for the string.
  * @param string $string    The string to register.
- * @param string $context   Optional, the group in which the string is registered, defaults to 'linguator-multilingual-chromeai-translation'.
+ * @param string $context   Optional, the group in which the string is registered, defaults to 'easy-web-translator'.
  * @param bool   $multiline Optional, true if the string table should display a multiline textarea,
  *                          false if should display a single line input, defaults to false.
  * @return void
@@ -630,7 +630,7 @@ function lmat_insert_post( array $postarr, $language ) {
 	$language = LMAT()->model->get_language( $language );
 
 	if ( ! $language instanceof LMAT_Language ) {
-		return new WP_Error( 'invalid_language', __( 'Please provide a valid language.', 'linguator-multilingual-chromeai-translation' ) );
+		return new WP_Error( 'invalid_language', __( 'Please provide a valid language.', 'easy-web-translator' ) );
 	}
 
 	return LMAT()->model->post->insert( $postarr, $language );
@@ -665,7 +665,7 @@ function lmat_insert_term( string $term, string $taxonomy, $language, array $arg
 	$language = LMAT()->model->get_language( $language );
 
 	if ( ! $language instanceof LMAT_Language ) {
-		return new WP_Error( 'invalid_language', __( 'Please provide a valid language.', 'linguator-multilingual-chromeai-translation' ) );
+		return new WP_Error( 'invalid_language', __( 'Please provide a valid language.', 'easy-web-translator' ) );
 	}
 
 	return LMAT()->model->term->insert( $term, $taxonomy, $language, $args );

@@ -149,29 +149,29 @@ class LMAT_Settings_Module {
 		$this->action_links = array(
 			'configure'   => sprintf(
 				'<a title="%s" href="%s">%s</a>',
-				esc_attr__( 'Configure this module', 'linguator-multilingual-chromeai-translation' ),
+				esc_attr__( 'Configure this module', 'easy-web-translator' ),
 				'#',
-				esc_html__( 'Settings', 'linguator-multilingual-chromeai-translation' )
+				esc_html__( 'Settings', 'easy-web-translator' )
 			),
 			'deactivate'  => sprintf(
 				'<a title="%s" href="%s">%s</a>',
-				esc_attr__( 'Deactivate this module', 'linguator-multilingual-chromeai-translation' ),
+				esc_attr__( 'Deactivate this module', 'easy-web-translator' ),
 				esc_url( wp_nonce_url( '?page=lmat&tab=modules&lmat_action=deactivate&noheader=true&module=' . $this->module, 'lmat_deactivate' ) ),
-				esc_html__( 'Deactivate', 'linguator-multilingual-chromeai-translation' )
+				esc_html__( 'Deactivate', 'easy-web-translator' )
 			),
 			'activate'    => sprintf(
 				'<a title="%s" href="%s">%s</a>',
-				esc_attr__( 'Activate this module', 'linguator-multilingual-chromeai-translation' ),
+				esc_attr__( 'Activate this module', 'easy-web-translator' ),
 				esc_url( wp_nonce_url( '?page=lmat&tab=modules&lmat_action=activate&noheader=true&module=' . $this->module, 'lmat_activate' ) ),
-				esc_html__( 'Activate', 'linguator-multilingual-chromeai-translation' )
+				esc_html__( 'Activate', 'easy-web-translator' )
 			),
-			'activated'   => esc_html__( 'Activated', 'linguator-multilingual-chromeai-translation' ),
-			'deactivated' => esc_html__( 'Deactivated', 'linguator-multilingual-chromeai-translation' ),
+			'activated'   => esc_html__( 'Activated', 'easy-web-translator' ),
+			'deactivated' => esc_html__( 'Deactivated', 'easy-web-translator' ),
 		);
 
 		$this->buttons = array(
-			'cancel' => sprintf( '<button type="button" class="button button-secondary cancel">%s</button>', esc_html__( 'Cancel', 'linguator-multilingual-chromeai-translation' ) ),
-			'save'   => sprintf( '<button type="button" class="button button-primary save">%s</button>', esc_html__( 'Save Changes', 'linguator-multilingual-chromeai-translation' ) ),
+			'cancel' => sprintf( '<button type="button" class="button button-secondary cancel">%s</button>', esc_html__( 'Cancel', 'easy-web-translator' ) ),
+			'save'   => sprintf( '<button type="button" class="button button-primary save">%s</button>', esc_html__( 'Save Changes', 'easy-web-translator' ) ),
 		);
 
 		// Ajax action to save options.
@@ -289,7 +289,7 @@ class LMAT_Settings_Module {
 
 			if ( ! $errors->has_errors() ) {
 				// Send update message
-				lmat_add_notice( new WP_Error( 'settings_updated', __( 'Settings saved.', 'linguator-multilingual-chromeai-translation' ), 'success' ) );
+				lmat_add_notice( new WP_Error( 'settings_updated', __( 'Settings saved.', 'easy-web-translator' ), 'success' ) );
 				$notice_html = $this->render_settings_errors_html( 'linguator' );
 				$x = new WP_Ajax_Response( array( 'what' => 'success', 'data' => $notice_html ) );
 				$x->send();

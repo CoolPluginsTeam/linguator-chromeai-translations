@@ -67,19 +67,19 @@ if ( ! class_exists( 'LMAT_Page_Translation_Helper' ) ) {
 		 */
 		public function fetch_post_meta_fields() {
 			if ( ! check_ajax_referer( 'lmat_fetch_post_meta_fields', 'meta_fields_key', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'linguator-multilingual-chromeai-translation' ) );
+				wp_send_json_error( __( 'Invalid security token sent.', 'easy-web-translator' ) );
 				wp_die( '0', 400 );
 			}
 
 			$post_id = isset( $_POST['postId']) ? absint(sanitize_text_field($_POST['postId'])) : false;
 
 			if(!isset($post_id) || false === $post_id){
-				wp_send_json_error( __( 'Invalid Post ID.', 'linguator-multilingual-chromeai-translation' ) );
+				wp_send_json_error( __( 'Invalid Post ID.', 'easy-web-translator' ) );
 				wp_die( '0', 400 );
 			}
 
 			if(!current_user_can('edit_post', $post_id)){
-				wp_send_json_error( __( 'Unauthorized', 'linguator-multilingual-chromeai-translation' ), 403 );
+				wp_send_json_error( __( 'Unauthorized', 'easy-web-translator' ), 403 );
 				wp_die( '0', 403 );
 			}
 
@@ -90,7 +90,7 @@ if ( ! class_exists( 'LMAT_Page_Translation_Helper' ) ) {
             }
 
 			if($post_meta_sync){
-				wp_send_json_success( __( 'Post meta sync is enabled. Please disable post meta sync in Linguator settings.', 'linguator-multilingual-chromeai-translation' ) );
+				wp_send_json_success( __( 'Post meta sync is enabled. Please disable post meta sync in Linguator settings.', 'easy-web-translator' ) );
 			}
 
 			$allowed_meta_fields=Custom_Fields::get_allowed_custom_fields();
@@ -115,14 +115,14 @@ if ( ! class_exists( 'LMAT_Page_Translation_Helper' ) ) {
 		 */
 		public function fetch_post_content() {
 			if ( ! check_ajax_referer( 'lmat_page_translation_admin', 'lmat_page_translation_nonce', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'linguator-multilingual-chromeai-translation' ) );
+				wp_send_json_error( __( 'Invalid security token sent.', 'easy-web-translator' ) );
 				wp_die( '0', 400 );
 			}
 
 			$post_id = absint( isset( $_POST['postId'] ) ? absint( sanitize_text_field( $_POST['postId'] ) ) : false );
 
 			if ( ! current_user_can( 'edit_post', $post_id ) ) {
-				wp_send_json_error( __( 'Unauthorized', 'linguator-multilingual-chromeai-translation' ), 403 );
+				wp_send_json_error( __( 'Unauthorized', 'easy-web-translator' ), 403 );
 				wp_die( '0', 403 );
 			}
 
@@ -157,7 +157,7 @@ if ( ! class_exists( 'LMAT_Page_Translation_Helper' ) ) {
 
 				return wp_send_json_success( $data );
 			} else {
-				wp_send_json_error( __( 'Invalid Post ID.', 'linguator-multilingual-chromeai-translation' ) );
+				wp_send_json_error( __( 'Invalid Post ID.', 'easy-web-translator' ) );
 				wp_die( '0', 400 );
 			}
 
@@ -166,7 +166,7 @@ if ( ! class_exists( 'LMAT_Page_Translation_Helper' ) ) {
 
 		public function lmat_update_translate_data() {
 			if ( ! check_ajax_referer( 'lmat_update_translate_data_nonce', 'update_translation_key', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'linguator-multilingual-chromeai-translation' ) );
+				wp_send_json_error( __( 'Invalid security token sent.', 'easy-web-translator' ) );
 				wp_die( '0', 400 );
 			}
 
@@ -177,18 +177,18 @@ if ( ! class_exists( 'LMAT_Page_Translation_Helper' ) ) {
 			// Require capability based on context
 			if ( $post_id > 0 ) {
 				if ( ! current_user_can( 'edit_post', $post_id ) && $editor_type !== 'taxonomy' ) {
-					wp_send_json_error( __( 'Unauthorized to edit post', 'linguator-multilingual-chromeai-translation' ), 403 );
+					wp_send_json_error( __( 'Unauthorized to edit post', 'easy-web-translator' ), 403 );
 					wp_die( '0', 403 );
 				}
 				
 				if ( $editor_type === 'taxonomy' ) {
 					if ( ! current_user_can( 'edit_posts' ) ) {
-						wp_send_json_error( __( 'Unauthorized to edit terms', 'linguator-multilingual-chromeai-translation' ), 403 );
+						wp_send_json_error( __( 'Unauthorized to edit terms', 'easy-web-translator' ), 403 );
 						wp_die( '0', 403 );
 					}
 				}
 			} elseif ( ! current_user_can( 'edit_posts' ) ) {
-					wp_send_json_error( __( 'Unauthorized', 'linguator-multilingual-chromeai-translation' ), 403 );
+					wp_send_json_error( __( 'Unauthorized', 'easy-web-translator' ), 403 );
 					wp_die( '0', 403 );
 			}
 
@@ -239,13 +239,13 @@ if ( ! class_exists( 'LMAT_Page_Translation_Helper' ) ) {
 
 				wp_send_json_success(
 					array(
-						'message' => __( 'Translation data updated successfully', 'linguator-multilingual-chromeai-translation' ),
+						'message' => __( 'Translation data updated successfully', 'easy-web-translator' ),
 					)
 				);
 			} else {
 				wp_send_json_error(
 					array(
-						'message' => __( 'Lmat_Dashboard class not found', 'linguator-multilingual-chromeai-translation' ),
+						'message' => __( 'Lmat_Dashboard class not found', 'easy-web-translator' ),
 					)
 				);
 			}
@@ -257,12 +257,12 @@ if ( ! class_exists( 'LMAT_Page_Translation_Helper' ) ) {
 		 */
 		public function update_elementor_data() {
 			if ( ! check_ajax_referer( 'lmat_page_translation_admin', 'lmat_page_translation_nonce', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'linguator-multilingual-chromeai-translation' ) );
+				wp_send_json_error( __( 'Invalid security token sent.', 'easy-web-translator' ) );
 				wp_die( '0', 400 );
 			}
 			$post_id = isset( $_POST['post_id'] ) ? absint( sanitize_text_field( $_POST['post_id'] ) ) : 0;
 			if ( ! $post_id || ! current_user_can( 'edit_post', $post_id ) ) {
-				wp_send_json_error( __( 'Unauthorized', 'linguator-multilingual-chromeai-translation' ), 403 );
+				wp_send_json_error( __( 'Unauthorized', 'easy-web-translator' ), 403 );
 				wp_die( '0', 403 );
 			}
 
@@ -270,7 +270,7 @@ if ( ! class_exists( 'LMAT_Page_Translation_Helper' ) ) {
 			if ( isset( $_POST['elementor_data'] ) && is_string( $_POST['elementor_data'] ) ) {
 				$decoded = json_decode( stripslashes( $_POST['elementor_data'] ), true );
 				if ( json_last_error() !== JSON_ERROR_NONE ) {
-					wp_send_json_error( __( 'Invalid data.', 'linguator-multilingual-chromeai-translation' ), 400 );
+					wp_send_json_error( __( 'Invalid data.', 'easy-web-translator' ), 400 );
 					wp_die( '0', 400 );
 				}
 			}
@@ -304,7 +304,7 @@ if ( ! class_exists( 'LMAT_Page_Translation_Helper' ) ) {
 					$elementor_data = json_decode( wp_unslash( $_POST['elementor_data'] ), true );
 
 					if ( json_last_error() !== JSON_ERROR_NONE ) {
-						wp_send_json_error( __( 'Invalid Elementor data.', 'linguator-multilingual-chromeai-translation' ), 400 );
+						wp_send_json_error( __( 'Invalid Elementor data.', 'easy-web-translator' ), 400 );
 						wp_die( '0', 400 );
 					}
 

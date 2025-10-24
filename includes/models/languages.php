@@ -214,7 +214,7 @@ class Languages {
 		);
 
 		if ( is_wp_error( $r ) ) {
-			return new WP_Error( 'lmat_add_language', __( 'Impossible to add the language. Please check if the language code or locale is unique.', 'linguator-multilingual-chromeai-translation' ) );
+			return new WP_Error( 'lmat_add_language', __( 'Impossible to add the language. Please check if the language code or locale is unique.', 'easy-web-translator' ) );
 		}
 
 		wp_update_term( (int) $r['term_id'], 'lmat_language', array( 'term_group' => (int) $args['term_group'] ) );
@@ -275,7 +275,7 @@ class Languages {
 		$lang = $this->get( (int) $args['lang_id'] );
 
 		if ( empty( $lang ) ) {
-			return new WP_Error( 'lmat_invalid_language_id', __( 'The language does not seem to exist.', 'linguator-multilingual-chromeai-translation' ) );
+			return new WP_Error( 'lmat_invalid_language_id', __( 'The language does not seem to exist.', 'easy-web-translator' ) );
 		}
 
 		$args['locale']     = $args['locale'] ?? $lang->locale;
@@ -879,26 +879,26 @@ class Languages {
 
 		// Validate locale with the same pattern as WP 4.3. 
 		if ( empty( $args['locale'] ) || ! preg_match( '#' . self::LOCALE_PATTERN . '#', $args['locale'], $matches ) ) {
-			$errors->add( 'lmat_invalid_locale', __( 'Enter a valid WordPress locale', 'linguator-multilingual-chromeai-translation' ) );
+			$errors->add( 'lmat_invalid_locale', __( 'Enter a valid WordPress locale', 'easy-web-translator' ) );
 		}
 
 		// Validate slug characters.
 		if ( empty( $args['slug'] ) || ! preg_match( '#' . self::SLUG_PATTERN . '#', $args['slug'] ) ) {
-			$errors->add( 'lmat_invalid_slug', __( 'The language code contains invalid characters', 'linguator-multilingual-chromeai-translation' ) );
+			$errors->add( 'lmat_invalid_slug', __( 'The language code contains invalid characters', 'easy-web-translator' ) );
 		}
 
 		// Validate slug is unique.
 		foreach ( $this->get_list() as $language ) {
 			// Check if both slug and locale are the same (exact duplicate)
 			if ( ! empty( $args['slug'] ) && $language->slug === $args['slug'] && $language->locale === $args['locale'] && ( null === $lang || $lang->term_id !== $language->term_id ) ) {
-				$errors->add( 'lmat_non_unique_slug', __( 'This language with the same code and locale already exists', 'linguator-multilingual-chromeai-translation' ) );
+				$errors->add( 'lmat_non_unique_slug', __( 'This language with the same code and locale already exists', 'easy-web-translator' ) );
 			}
 		}
 
 		// Validate name.
 		// No need to sanitize it as `wp_insert_term()` will do it for us.
 		if ( empty( $args['name'] ) ) {
-			$errors->add( 'lmat_invalid_name', __( 'The language must have a name', 'linguator-multilingual-chromeai-translation' ) );
+			$errors->add( 'lmat_invalid_name', __( 'The language must have a name', 'easy-web-translator' ) );
 		}
 
 		// Validate flag.
@@ -910,7 +910,7 @@ class Languages {
 			}
 
 			if ( empty( $response ) || is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-				$errors->add( 'lmat_invalid_flag', __( 'The flag does not exist', 'linguator-multilingual-chromeai-translation' ) );
+				$errors->add( 'lmat_invalid_flag', __( 'The flag does not exist', 'easy-web-translator' ) );
 			}
 		}
 

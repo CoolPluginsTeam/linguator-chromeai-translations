@@ -31,12 +31,12 @@ const withInspectorControls = createHigherOrderComponent( ( BlockEdit ) => {
             <>
                 <BlockEdit { ...props } />
                 <InspectorControls>
-                    <PanelBody title={ __( 'Language', 'linguator-multilingual-chromeai-translation' ) }>
+                    <PanelBody title={ __( 'Language', 'easy-web-translator' ) }>
                         <SelectControl
-                            label={ __( 'Display in language', 'linguator-multilingual-chromeai-translation' ) }
+                            label={ __( 'Display in language', 'easy-web-translator' ) }
                             value={ lmatLang }
                             options={ [
-                                { label: __( 'Any', 'linguator-multilingual-chromeai-translation' ), value: '' },
+                                { label: __( 'Any', 'easy-web-translator' ), value: '' },
                                 // Real options should be injected server-side/localized; placeholder values here.
                                 { label: 'en', value: 'en' },
                                 { label: 'fr', value: 'fr' },

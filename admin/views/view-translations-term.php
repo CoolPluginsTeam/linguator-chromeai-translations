@@ -24,14 +24,14 @@ use WP_Term;
 
 if ( isset( $term_id ) ) {
 	// Edit term form ?>
-	<th scope="row"><?php esc_html_e( 'Translations', 'linguator-multilingual-chromeai-translation' ); ?></th>
+	<th scope="row"><?php esc_html_e( 'Translations', 'easy-web-translator' ); ?></th>
 	<td>
 	<?php
 }
 else {
 	// Add term form
 	?>
-	<p><?php esc_html_e( 'Translations', 'linguator-multilingual-chromeai-translation' ); ?></p>
+	<p><?php esc_html_e( 'Translations', 'easy-web-translator' ); ?></p>
 	<?php
 }
 ?>
@@ -87,7 +87,7 @@ else {
 					<span lang="%6$s" dir="%7$s"><input type="text" class="tr_lang" id="tr_lang_%1$s" value="%4$s"%5$s /></span>',
 					esc_attr( $language->slug ),
 					/* translators: accessibility text */
-					esc_html__( 'Translation', 'linguator-multilingual-chromeai-translation' ),
+					esc_html__( 'Translation', 'easy-web-translator' ),
 					$translation_exists ? (int) $translation->term_id : 0,
 					$translation_exists ? esc_attr( $translation->name ) : '',
 					disabled( empty( $disabled ), false, false ),

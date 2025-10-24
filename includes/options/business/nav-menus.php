@@ -63,7 +63,7 @@ class Nav_Menus extends Abstract_Option {
 		foreach ( $nav_menus[ $current_theme ] as $location => $lang ) {
 			if ( empty( $lang ) ) {
 				/* translators: default value when a menu location is not used. */
-				$lang = __( 'Not used', 'linguator-multilingual-chromeai-translation' );
+				$lang = __( 'Not used', 'easy-web-translator' );
 			}
 
 			$fields[ $location ]['label'] = sprintf( 'menu: %s', $location );
@@ -184,6 +184,6 @@ class Nav_Menus extends Abstract_Option {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'Translated navigation menus for each theme.', 'linguator-multilingual-chromeai-translation' );
+		return __( 'Translated navigation menus for each theme.', 'easy-web-translator' );
 	}
 }

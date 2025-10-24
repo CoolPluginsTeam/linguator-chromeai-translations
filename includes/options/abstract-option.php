@@ -261,10 +261,10 @@ abstract class Abstract_Option {
 	protected function add_unknown_languages_warning( array $language_slugs ): void {
 		if ( 1 === count( $language_slugs ) ) {
 			/* translators: %s is a language slug. */
-			$message = __( 'The language %s is unknown and has been discarded.', 'linguator-multilingual-chromeai-translation' );
+			$message = __( 'The language %s is unknown and has been discarded.', 'easy-web-translator' );
 		} else {
 			/* translators: %s is a list of language slugs. */
-			$message = __( 'The languages %s are unknown and have been discarded.', 'linguator-multilingual-chromeai-translation' );
+			$message = __( 'The languages %s are unknown and have been discarded.', 'easy-web-translator' );
 		}
 
 		$this->errors->add(

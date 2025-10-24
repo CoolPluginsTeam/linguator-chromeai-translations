@@ -108,7 +108,7 @@ class Languages extends Abstract_Controller {
 			array(
 				'args'   => array(
 					'term_id' => array(
-						'description' => __( 'Unique identifier for the language.', 'linguator-multilingual-chromeai-translation' ),
+						'description' => __( 'Unique identifier for the language.', 'easy-web-translator' ),
 						'type'        => 'integer',
 					),
 				),
@@ -141,7 +141,7 @@ class Languages extends Abstract_Controller {
 			array(
 				'args'   => array(
 					'slug'    => array(
-						'description' => __( 'Language code - preferably 2-letters ISO 639-1 (for example: en).', 'linguator-multilingual-chromeai-translation' ),
+						'description' => __( 'Language code - preferably 2-letters ISO 639-1 (for example: en).', 'easy-web-translator' ),
 						'type'        => 'string',
 					),
 				),
@@ -166,7 +166,7 @@ class Languages extends Abstract_Controller {
 				'permission_callback' => array( $this, 'assign_language_permissions_check' ),
 				'args'                => array(
 					'locale' => array(
-						'description' => __( 'Locale of the language to assign.', 'linguator-multilingual-chromeai-translation' ),
+						'description' => __( 'Locale of the language to assign.', 'easy-web-translator' ),
 						'type'        => 'string',
 						'required'    => true,
 					),
@@ -183,17 +183,17 @@ class Languages extends Abstract_Controller {
 				'permission_callback' => array( $this, 'link_translation_permissions_check' ),
 				'args'                => array(
 					'source_id' => array(
-						'description' => __( 'ID of the source post (current).', 'linguator-multilingual-chromeai-translation' ),
+						'description' => __( 'ID of the source post (current).', 'easy-web-translator' ),
 						'type'        => 'integer',
 						'required'    => true,
 					),
 					'target_id' => array(
-						'description' => __( 'ID of the existing page to link.', 'linguator-multilingual-chromeai-translation' ),
+						'description' => __( 'ID of the existing page to link.', 'easy-web-translator' ),
 						'type'        => 'integer',
 						'required'    => true,
 					),
 					'target_lang' => array(
-						'description' => __( 'Language slug of the target page.', 'linguator-multilingual-chromeai-translation' ),
+						'description' => __( 'Language slug of the target page.', 'easy-web-translator' ),
 						'type'        => 'string',
 						'required'    => true,
 					),
@@ -219,22 +219,22 @@ class Languages extends Abstract_Controller {
 				'permission_callback' => array( $this, 'create_translation_permissions_check' ),
 				'args'                => array(
 					'source_id' => array(
-						'description' => __( 'ID of the source post (current).', 'linguator-multilingual-chromeai-translation' ),
+						'description' => __( 'ID of the source post (current).', 'easy-web-translator' ),
 						'type'        => 'integer',
 						'required'    => true,
 					),
 					'target_lang' => array(
-						'description' => __( 'Language slug for the new translation.', 'linguator-multilingual-chromeai-translation' ),
+						'description' => __( 'Language slug for the new translation.', 'easy-web-translator' ),
 						'type'        => 'string',
 						'required'    => true,
 					),
 					'title' => array(
-						'description' => __( 'Title for the new translation post.', 'linguator-multilingual-chromeai-translation' ),
+						'description' => __( 'Title for the new translation post.', 'easy-web-translator' ),
 						'type'        => 'string',
 						'required'    => true,
 					),
 					'post_type' => array(
-						'description' => __( 'Post type for the new translation (default page).', 'linguator-multilingual-chromeai-translation' ),
+						'description' => __( 'Post type for the new translation (default page).', 'easy-web-translator' ),
 						'type'        => 'string',
 						'required'    => false,
 					),
@@ -305,7 +305,7 @@ class Languages extends Abstract_Controller {
 		if ( ! current_user_can( 'edit_posts' ) ) {
 			return new WP_Error(
 				'rest_forbidden',
-				__( 'Sorry, you are not allowed to view posts data.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'Sorry, you are not allowed to view posts data.', 'easy-web-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -356,7 +356,7 @@ class Languages extends Abstract_Controller {
 		if ( isset( $request['term_id'] ) ) {
 			return new WP_Error(
 				'rest_exists',
-				__( 'Cannot create existing language.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'Cannot create existing language.', 'easy-web-translator' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -419,7 +419,7 @@ class Languages extends Abstract_Controller {
 					'language' => $language_identifier,
 					'error' => new WP_Error(
 						'rest_exists',
-						__( 'Cannot create existing language.', 'linguator-multilingual-chromeai-translation' ),
+						__( 'Cannot create existing language.', 'easy-web-translator' ),
 						array( 'status' => 400 )
 					)
 				);
@@ -512,7 +512,7 @@ class Languages extends Abstract_Controller {
 		}
 		
 		// Fallback to a generic identifier
-		return __( 'Unknown language', 'linguator-multilingual-chromeai-translation' );
+		return __( 'Unknown language', 'easy-web-translator' );
 	}
 
 	/**
@@ -624,7 +624,7 @@ class Languages extends Abstract_Controller {
 		if ( ! ( $language instanceof LMAT_Language ) ) {
 			return new WP_Error(
 				'lmat_invalid_language',
-				__( 'Invalid language locale provided.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'Invalid language locale provided.', 'easy-web-translator' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -637,7 +637,7 @@ class Languages extends Abstract_Controller {
 		return rest_ensure_response( array(
 			'success'  => true,
 			// translators: %s is the language name being assigned to untranslated content.
-			'message'  => sprintf( __( 'Language %s assigned to untranslated content.', 'linguator-multilingual-chromeai-translation' ), $language->name ),
+			'message'  => sprintf( __( 'Language %s assigned to untranslated content.', 'easy-web-translator' ), $language->name ),
 			'language' => $language->to_array(),
 		) );
 	}
@@ -654,19 +654,19 @@ class Languages extends Abstract_Controller {
 		$target_lang_slug = sanitize_key( $request['target_lang'] );
 
 		if ( ! $source_id || ! $target_id || ! $target_lang_slug ) {
-			return new WP_Error( 'lmat_link_invalid_params', __( 'Missing required parameters.', 'linguator-multilingual-chromeai-translation' ), array( 'status' => 400 ) );
+			return new WP_Error( 'lmat_link_invalid_params', __( 'Missing required parameters.', 'easy-web-translator' ), array( 'status' => 400 ) );
 		}
 
 		$source = get_post( $source_id );
 		$target = get_post( $target_id );
 		if ( ! $source || ! $target ) {
-			return new WP_Error( 'lmat_link_invalid_posts', __( 'Invalid source or target.', 'linguator-multilingual-chromeai-translation' ), array( 'status' => 404 ) );
+			return new WP_Error( 'lmat_link_invalid_posts', __( 'Invalid source or target.', 'easy-web-translator' ), array( 'status' => 404 ) );
 		}
 
 		// Validate target language
 		$target_lang = $this->model->get_language( $target_lang_slug );
 		if ( ! $target_lang ) {
-			return new WP_Error( 'lmat_invalid_language', __( 'Invalid target language.', 'linguator-multilingual-chromeai-translation' ), array( 'status' => 400 ) );
+			return new WP_Error( 'lmat_invalid_language', __( 'Invalid target language.', 'easy-web-translator' ), array( 'status' => 400 ) );
 		}
 
 		// Ensure target is in requested language
@@ -706,7 +706,7 @@ class Languages extends Abstract_Controller {
 		$source_id = (int) $request['source_id'];
 		$target_id = (int) $request['target_id'];
 		if ( ( $source_id && ! current_user_can( 'edit_post', $source_id ) ) || ( $target_id && ! current_user_can( 'edit_post', $target_id ) ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'You are not allowed to link these posts.', 'linguator-multilingual-chromeai-translation' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'rest_forbidden', __( 'You are not allowed to link these posts.', 'easy-web-translator' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 		// Verify nonce for non-GET requests
 		$nonce_check = $this->verify_nonce( $request );
@@ -729,17 +729,17 @@ class Languages extends Abstract_Controller {
 		$post_type       = sanitize_key( $request['post_type'] ?: 'page' );
 
 		if ( ! $source_id || ! $target_lang_slug || '' === $title ) {
-			return new WP_Error( 'lmat_create_tr_invalid_params', __( 'Missing required parameters.', 'linguator-multilingual-chromeai-translation' ), array( 'status' => 400 ) );
+			return new WP_Error( 'lmat_create_tr_invalid_params', __( 'Missing required parameters.', 'easy-web-translator' ), array( 'status' => 400 ) );
 		}
 
 		$source = get_post( $source_id );
 		if ( ! $source ) {
-			return new WP_Error( 'lmat_create_tr_invalid_source', __( 'Invalid source post.', 'linguator-multilingual-chromeai-translation' ), array( 'status' => 404 ) );
+			return new WP_Error( 'lmat_create_tr_invalid_source', __( 'Invalid source post.', 'easy-web-translator' ), array( 'status' => 404 ) );
 		}
 
 		$target_lang = $this->model->get_language( $target_lang_slug );
 		if ( ! $target_lang ) {
-			return new WP_Error( 'lmat_create_tr_invalid_language', __( 'Invalid target language.', 'linguator-multilingual-chromeai-translation' ), array( 'status' => 400 ) );
+			return new WP_Error( 'lmat_create_tr_invalid_language', __( 'Invalid target language.', 'easy-web-translator' ), array( 'status' => 400 ) );
 		}
 
 		// If a translation already exists, return it.
@@ -761,7 +761,7 @@ class Languages extends Abstract_Controller {
 		) );
 
 		if ( is_wp_error( $new_post_id ) || ! $new_post_id ) {
-			return new WP_Error( 'lmat_create_tr_failed', __( 'Failed to create translation post.', 'linguator-multilingual-chromeai-translation' ), array( 'status' => 500 ) );
+			return new WP_Error( 'lmat_create_tr_failed', __( 'Failed to create translation post.', 'easy-web-translator' ), array( 'status' => 500 ) );
 		}
 
 		// Assign language and link translations.
@@ -796,10 +796,10 @@ class Languages extends Abstract_Controller {
 	public function create_translation_permissions_check( $request ) {
 		$source_id = (int) $request['source_id'];
 		if ( $source_id && ! current_user_can( 'edit_post', $source_id ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'You are not allowed to create a translation for this post.', 'linguator-multilingual-chromeai-translation' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'rest_forbidden', __( 'You are not allowed to create a translation for this post.', 'easy-web-translator' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 		if ( ! current_user_can( 'edit_posts' ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'You are not allowed to create posts.', 'linguator-multilingual-chromeai-translation' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'rest_forbidden', __( 'You are not allowed to create posts.', 'easy-web-translator' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 		$nonce_check = $this->verify_nonce( $request );
 		if ( is_wp_error( $nonce_check ) ) {
@@ -828,7 +828,7 @@ class Languages extends Abstract_Controller {
 		if (!$source_language) {
 			return new WP_Error(
 				'lmat_invalid_source',
-				__('Source page has no language assigned', 'linguator-multilingual-chromeai-translation'),
+				__('Source page has no language assigned', 'easy-web-translator'),
 				array('status' => 400)
 			);
 		}
@@ -918,7 +918,7 @@ class Languages extends Abstract_Controller {
 		if ( ! $this->check_update_permission() ) {
 			return new WP_Error(
 				'rest_cannot_create',
-				__( 'Sorry, you are not allowed to create a home page translation.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'Sorry, you are not allowed to create a home page translation.', 'easy-web-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -947,7 +947,7 @@ class Languages extends Abstract_Controller {
 		if ( 'edit' === $request['context'] && ! $this->check_update_permission() ) {
 			return new WP_Error(
 				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit languages.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'Sorry, you are not allowed to edit languages.', 'easy-web-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -970,7 +970,7 @@ class Languages extends Abstract_Controller {
 		if ( ! $this->check_update_permission() ) {
 			return new WP_Error(
 				'rest_cannot_create',
-				__( 'Sorry, you are not allowed to create a language.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'Sorry, you are not allowed to create a language.', 'easy-web-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -1015,7 +1015,7 @@ class Languages extends Abstract_Controller {
 		if ( ! $this->check_update_permission() ) {
 			return new WP_Error(
 				'rest_cannot_update',
-				__( 'Sorry, you are not allowed to edit this language.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'Sorry, you are not allowed to edit this language.', 'easy-web-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -1045,7 +1045,7 @@ class Languages extends Abstract_Controller {
 		if ( ! $this->check_update_permission() ) {
 			return new WP_Error(
 				'rest_cannot_delete',
-				__( 'Sorry, you are not allowed to delete this language.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'Sorry, you are not allowed to delete this language.', 'easy-web-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -1075,7 +1075,7 @@ class Languages extends Abstract_Controller {
 		if ( ! $this->check_update_permission() ) {
 			return new WP_Error(
 				'rest_cannot_assign',
-				__( 'Sorry, you are not allowed to assign languages.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'Sorry, you are not allowed to assign languages.', 'easy-web-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -1137,39 +1137,39 @@ class Languages extends Abstract_Controller {
 			'type'       => 'object',
 			'properties' => array(
 				'term_id'         => array(
-					'description' => __( 'Unique identifier for the language.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Unique identifier for the language.', 'easy-web-translator' ),
 					'type'        => 'integer',
 					'minimum'     => 1,
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'name'            => array(
-					'description' => __( 'The name is how it is displayed on your site (for example: English).', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'The name is how it is displayed on your site (for example: English).', 'easy-web-translator' ),
 					'type'        => 'string',
 					'minLength'   => 1,
 					'context'     => array( 'view', 'edit' ),
 				),
 				'slug'            => array(
-					'description' => __( 'Language code - preferably 2-letters ISO 639-1 (for example: en).', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Language code - preferably 2-letters ISO 639-1 (for example: en).', 'easy-web-translator' ),
 					'type'        => 'string',
 					'pattern'     => Languages_Model::SLUG_PATTERN,
 					'context'     => array( 'view', 'edit' ),
 				),
 				'locale'          => array(
-					'description' => __( 'WordPress Locale for the language (for example: en_US).', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'WordPress Locale for the language (for example: en_US).', 'easy-web-translator' ),
 					'type'        => 'string',
 					'pattern'     => Languages_Model::LOCALE_PATTERN,
 					'context'     => array( 'view', 'edit' ),
 					'required'    => true,
 				),
 				'w3c'             => array(
-					'description' => __( 'W3C Locale for the language (for example: en-US).', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'W3C Locale for the language (for example: en-US).', 'easy-web-translator' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'facebook'        => array(
-					'description' => __( 'Facebook Locale for the language (for example: en_US).', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Facebook Locale for the language (for example: en_US).', 'easy-web-translator' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
@@ -1177,97 +1177,97 @@ class Languages extends Abstract_Controller {
 				'is_rtl'          => array(
 					'description' => sprintf(
 						/* translators: %s is a value. */
-						__( 'Text direction. %s for right-to-left.', 'linguator-multilingual-chromeai-translation' ),
+						__( 'Text direction. %s for right-to-left.', 'easy-web-translator' ),
 						'`true`'
 					),
 					'type'        => 'boolean',
 					'context'     => array( 'view', 'edit' ),
 				),
 				'term_group'      => array(
-					'description' => __( 'Position of the language in the language switcher.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Position of the language in the language switcher.', 'easy-web-translator' ),
 					'type'        => 'integer',
 					'context'     => array( 'view', 'edit' ),
 				),
 				'flag_code'       => array(
-					'description' => __( 'Flag code corresponding to ISO 3166-1 (for example: us for the United States flag).', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Flag code corresponding to ISO 3166-1 (for example: us for the United States flag).', 'easy-web-translator' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 				),
 				'flag_url'        => array(
-					'description' => __( 'Flag URL.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Flag URL.', 'easy-web-translator' ),
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'flag'            => array(
-					'description' => __( 'HTML tag for the flag.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'HTML tag for the flag.', 'easy-web-translator' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'custom_flag_url' => array(
-					'description' => __( 'Custom flag URL.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Custom flag URL.', 'easy-web-translator' ),
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'custom_flag'     => array(
-					'description' => __( 'HTML tag for the custom flag.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'HTML tag for the custom flag.', 'easy-web-translator' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'is_default'      => array(
-					'description' => __( 'Tells whether the language is the default one.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Tells whether the language is the default one.', 'easy-web-translator' ),
 					'type'        => 'boolean',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'active'          => array(
-					'description' => __( 'Tells whether the language is active.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Tells whether the language is active.', 'easy-web-translator' ),
 					'type'        => 'boolean',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'home_url'        => array(
-					'description' => __( 'Home URL in this language.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Home URL in this language.', 'easy-web-translator' ),
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'search_url'      => array(
-					'description' => __( 'Search URL in this language.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Search URL in this language.', 'easy-web-translator' ),
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'host'            => array(
-					'description' => __( 'Host for this language.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Host for this language.', 'easy-web-translator' ),
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'page_on_front'   => array(
-					'description' => __( 'Page on front ID in this language.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Page on front ID in this language.', 'easy-web-translator' ),
 					'type'        => 'integer',
 					'minimum'     => 0,
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'page_for_posts'  => array(
-					'description' => __( 'Identifier of the page for posts in this language.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Identifier of the page for posts in this language.', 'easy-web-translator' ),
 					'type'        => 'integer',
 					'minimum'     => 0,
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'fallbacks'       => array(
-					'description' => __( 'List of language locale fallbacks.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'List of language locale fallbacks.', 'easy-web-translator' ),
 					'type'        => 'array',
 					'uniqueItems' => true,
 					'items'       => array(
@@ -1278,14 +1278,14 @@ class Languages extends Abstract_Controller {
 					'readonly'    => true,
 				),
 				'term_props'      => array(
-					'description' => __( 'Language properties.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Language properties.', 'easy-web-translator' ),
 					'type'        => 'object',
 					'properties'  => array(),
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'no_default_cat'  => array(
-					'description' => __( 'Tells whether the default category must be created when creating a new language.', 'linguator-multilingual-chromeai-translation' ),
+					'description' => __( 'Tells whether the default category must be created when creating a new language.', 'easy-web-translator' ),
 					'type'        => 'boolean',
 					'context'     => array( 'edit' ),
 					'default'     => false,
@@ -1300,18 +1300,18 @@ class Languages extends Abstract_Controller {
 				'properties'  => array(
 					'term_id'          => array(
 						/* translators: %s is the name of the term property (`term_id` or `term_taxonomy_id`). */
-						'description' => sprintf( __( 'The %s of the language term for this translatable entity.', 'linguator-multilingual-chromeai-translation' ), '`term_id`' ),
+						'description' => sprintf( __( 'The %s of the language term for this translatable entity.', 'easy-web-translator' ), '`term_id`' ),
 						'type'        => 'integer',
 						'minimum'     => 1,
 					),
 					'term_taxonomy_id' => array(
 						/* translators: %s is the name of the term property (`term_id` or `term_taxonomy_id`). */
-						'description' => sprintf( __( 'The %s of the language term for this translatable entity.', 'linguator-multilingual-chromeai-translation' ), '`term_taxonomy_id`' ),
+						'description' => sprintf( __( 'The %s of the language term for this translatable entity.', 'easy-web-translator' ), '`term_taxonomy_id`' ),
 						'type'        => 'integer',
 						'minimum'     => 1,
 					),
 					'count'            => array(
-						'description' => __( 'Number of items of this type of content in this language.', 'linguator-multilingual-chromeai-translation' ),
+						'description' => __( 'Number of items of this type of content in this language.', 'easy-web-translator' ),
 						'type'        => 'integer',
 						'minimum'     => 0,
 					),
@@ -1397,7 +1397,7 @@ class Languages extends Abstract_Controller {
 			// Should not happen.
 			return new WP_Error(
 				'rest_invalid_locale',
-				__( 'The locale is invalid.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'The locale is invalid.', 'easy-web-translator' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -1420,7 +1420,7 @@ class Languages extends Abstract_Controller {
 		if ( empty( $languages[ $request['locale'] ] ) ) {
 			return new WP_Error(
 				'lmat_rest_invalid_locale',
-				__( 'The locale is invalid.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'The locale is invalid.', 'easy-web-translator' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -1464,7 +1464,7 @@ class Languages extends Abstract_Controller {
 		if ( isset( $request['term_id'] ) ) {
 			$error = new WP_Error(
 				'rest_invalid_id',
-				__( 'Invalid language ID', 'linguator-multilingual-chromeai-translation' ),
+				__( 'Invalid language ID', 'easy-web-translator' ),
 				array( 'status' => 404 )
 			);
 
@@ -1487,7 +1487,7 @@ class Languages extends Abstract_Controller {
 			if ( ! $language instanceof LMAT_Language ) {
 				return new WP_Error(
 					'rest_invalid_slug',
-					__( 'Invalid language slug', 'linguator-multilingual-chromeai-translation' ),
+					__( 'Invalid language slug', 'easy-web-translator' ),
 					array( 'status' => 404 )
 				);
 			}
@@ -1498,7 +1498,7 @@ class Languages extends Abstract_Controller {
 		// Should not happen.
 		return new WP_Error(
 			'rest_invalid_identifier',
-			__( 'Invalid language identifier', 'linguator-multilingual-chromeai-translation' ),
+			__( 'Invalid language identifier', 'easy-web-translator' ),
 			array( 'status' => 404 )
 		);
 	}

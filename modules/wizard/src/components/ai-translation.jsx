@@ -47,47 +47,47 @@ const ChromeLocalAINotice = () => {
     let heading='';
 
     if(showBrowserNotice){
-      heading = __('⚠️ Important Notice: Browser Compatibility', 'linguator-multilingual-chromeai-translation');
+      heading = __('⚠️ Important Notice: Browser Compatibility', 'easy-web-translator');
       message = `<ul className="list-disc ml-5 mt-2"><li>
-                ${sprintf(__('The %sTranslator API%s, which uses Chrome Local AI Models, is designed exclusively for use with the %sChrome browser%s.', 'linguator-multilingual-chromeai-translation'), '<strong>', '</strong>', '<strong>', '</strong>')}
+                ${sprintf(__('The %sTranslator API%s, which uses Chrome Local AI Models, is designed exclusively for use with the %sChrome browser%s.', 'easy-web-translator'), '<strong>', '</strong>', '<strong>', '</strong>')}
               </li>
               <li>
-                ${sprintf(__('If you are using a different browser (such as Edge, Firefox, or Safari), the API may not function correctly.', 'linguator-multilingual-chromeai-translation'))}
+                ${sprintf(__('If you are using a different browser (such as Edge, Firefox, or Safari), the API may not function correctly.', 'easy-web-translator'))}
               </li>
               <li>
-                ${sprintf(__('Learn more in the %sofficial documentation%s.', 'linguator-multilingual-chromeai-translation'), '<a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank" rel="noreferrer" class="underline text-blue-600">', '</a>')}
+                ${sprintf(__('Learn more in the %sofficial documentation%s.', 'easy-web-translator'), '<a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank" rel="noreferrer" class="underline text-blue-600">', '</a>')}
               </li>
       </ul>`;
     }else if(showSecureNotice){
-      heading = __('⚠️ Important Notice: Secure Connection Required', 'linguator-multilingual-chromeai-translation');
+      heading = __('⚠️ Important Notice: Secure Connection Required', 'easy-web-translator');
       message = `<ul className="list-disc ml-5 mt-2">
               <li>
-                ${sprintf(__('The %sTranslator API%s requires a secure (HTTPS) connection to function properly.', 'linguator-multilingual-chromeai-translation'), '<strong>', '</strong>')}
+                ${sprintf(__('The %sTranslator API%s requires a secure (HTTPS) connection to function properly.', 'easy-web-translator'), '<strong>', '</strong>')}
               </li>
               <li>
-                ${__('If you are on an insecure connection (HTTP), the API will not work.', 'linguator-multilingual-chromeai-translation')}
+                ${__('If you are on an insecure connection (HTTP), the API will not work.', 'easy-web-translator')}
               </li>
             </ul>
-            <p className="mt-2">${__('👉 How to Fix This:', 'linguator-multilingual-chromeai-translation')}</p>
+            <p className="mt-2">${__('👉 How to Fix This:', 'easy-web-translator')}</p>
             <ol className="list-decimal ml-5 mt-2">
-              <li>${sprintf(__('Switch to a secure connection by using %s.', 'linguator-multilingual-chromeai-translation'), '<strong><code>https://</code></strong>')}
+              <li>${sprintf(__('Switch to a secure connection by using %s.', 'easy-web-translator'), '<strong><code>https://</code></strong>')}
               </li>
               <li>
-                ${sprintf(__('Alternatively, add this URL to Chrome’s list of insecure origins treated as secure: %s.', 'linguator-multilingual-chromeai-translation'), '<strong><code>chrome://flags/#unsafely-treat-insecure-origin-as-secure</code></strong>')}
+                ${sprintf(__('Alternatively, add this URL to Chrome’s list of insecure origins treated as secure: %s.', 'easy-web-translator'), '<strong><code>chrome://flags/#unsafely-treat-insecure-origin-as-secure</code></strong>')}
                 <br />
-                ${__('Copy the URL and then open a new window and paste this URL to access the settings.', 'linguator-multilingual-chromeai-translation')}
+                ${__('Copy the URL and then open a new window and paste this URL to access the settings.', 'easy-web-translator')}
               </li>
             </ol>`;
     }else if(showApiNotice){
-      heading = __('⚠️ Important Notice: API Availability', 'linguator-multilingual-chromeai-translation');
+      heading = __('⚠️ Important Notice: API Availability', 'easy-web-translator');
       message = `<ol>
-                    <li>${sprintf(__('Open this URL in a new Chrome tab: %s. Copy this URL and then open a new window and paste this URL to access the settings.', 'linguator-multilingual-chromeai-translation'), '<strong><code>chrome://flags/#translation-api</code></strong>')}</li>
-                    <li>${sprintf(__('Ensure that the %sExperimental translation API%s option is set to <strong>Enabled</strong>.', 'linguator-multilingual-chromeai-translation'), '<strong>', '</strong>')}</li>
-                    <li>${sprintf(__('After change the setting, Click on the %sRelaunch%s button to apply the changes.', 'linguator-multilingual-chromeai-translation'), '<strong>', '</strong>')}</li>
-                    <li>${__('The Translator AI modal should now be enabled and ready for use.', 'linguator-multilingual-chromeai-translation')}</li>
+                    <li>${sprintf(__('Open this URL in a new Chrome tab: %s. Copy this URL and then open a new window and paste this URL to access the settings.', 'easy-web-translator'), '<strong><code>chrome://flags/#translation-api</code></strong>')}</li>
+                    <li>${sprintf(__('Ensure that the %sExperimental translation API%s option is set to <strong>Enabled</strong>.', 'easy-web-translator'), '<strong>', '</strong>')}</li>
+                    <li>${sprintf(__('After change the setting, Click on the %sRelaunch%s button to apply the changes.', 'easy-web-translator'), '<strong>', '</strong>')}</li>
+                    <li>${__('The Translator AI modal should now be enabled and ready for use.', 'easy-web-translator')}</li>
                 </ol>
-                <p>${sprintf(__('For more information, please refer to the %sdocumentation%s.', 'linguator-multilingual-chromeai-translation'), '<a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">', '</a>')}</p>   
-                <p>${__('If the issue persists, please ensure that your browser is up to date and restart your browser.', 'linguator-multilingual-chromeai-translation')}</p>`;
+                <p>${sprintf(__('For more information, please refer to the %sdocumentation%s.', 'easy-web-translator'), '<a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">', '</a>')}</p>   
+                <p>${__('If the issue persists, please ensure that your browser is up to date and restart your browser.', 'easy-web-translator')}</p>`;
     }
 
     return (
@@ -147,20 +147,20 @@ const AiTranslation = () => {
             setSetupProgress("language_switcher")
             localStorage.setItem("setupProgress", "language_switcher");
         } catch (error) {
-            toast.error(__("Please try again later", "linguator-multilingual-chromeai-translation"))
+            toast.error(__("Please try again later", "easy-web-translator"))
         }
     }
 
     return (
         <div className='mx-auto p-10 max-w-[600px] min-h-[40vh] bg-white shadow-sm flex flex-col'>
             <div className='flex-grow'>
-                <h2>{__('Translation Configuration', 'linguator-multilingual-chromeai-translation')}</h2>
-                <p className='text-justify text-sm/6'>{__('Linguator lets you translate content using AI. You can translate the content of your website using AI.', 'linguator-multilingual-chromeai-translation')}</p>
+                <h2>{__('Translation Configuration', 'easy-web-translator')}</h2>
+                <p className='text-justify text-sm/6'>{__('Linguator lets you translate content using AI. You can translate the content of your website using AI.', 'easy-web-translator')}</p>
                 <div className='p-6 rounded-lg' style={{ border: "1px solid #e5e7eb" }}>
                     <div className='flex justify-between items-center'>
                     <div className="flex items-center  gap-2">
                       <ChromeIcon className="w-4 h-4" />
-                      <p className="text-sm/6">{__('Chrome Local AI Translation', 'linguator-multilingual-chromeai-translation')}</p>
+                      <p className="text-sm/6">{__('Chrome Local AI Translation', 'easy-web-translator')}</p>
                     </div>
                     <Switch
                         aria-label="Chrome Local AI Translation"

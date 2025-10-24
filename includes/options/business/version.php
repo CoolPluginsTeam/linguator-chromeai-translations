@@ -41,7 +41,7 @@ class Version extends Abstract_String {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( "Linguator's version.", 'linguator-multilingual-chromeai-translation' );
+		return __( "Linguator's version.", 'easy-web-translator' );
 	}
 
 	/**

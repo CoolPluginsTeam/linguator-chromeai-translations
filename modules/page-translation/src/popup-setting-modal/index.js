@@ -101,7 +101,7 @@ const SettingModal = (props) => {
                 if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
                 setChromeAiBtnDisabled(true);
     
-                    errors.localAiTranslator = { message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'linguator-multilingual-chromeai-translation') };
+                    errors.localAiTranslator = { message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'easy-web-translator') };
 
                     setServiceModalErrors(prev => ({ ...prev, localAiTranslator: errors.localAiTranslator }));
             }
@@ -125,13 +125,13 @@ const SettingModal = (props) => {
         if (providers.length < 1) {
             let providerConfigMsg = sprintf(__(
                 '%sYou have not enabled any translation provider. Please enable at least one service provider to use automatic translation. Go to the %sTranslation Settings%s to configure a translation provider.%s',
-                'linguator-multilingual-chromeai-translation'
+                'easy-web-translator'
             ),
                 '<p>',
                 `<strong><a href='${lmatPageTranslationGlobal.admin_url}admin.php?page=lmat_settings&tab=translation' target='_blank' rel='noopener noreferrer'>`,
                 '</a></strong>',
                 '</p>');
-            setServiceModalErrors((prev) => ({ ...prev, providerNotConfigured: { message: providerConfigMsg, Title: __("Translation Provider Not Configured", 'linguator-multilingual-chromeai-translation') } }));
+            setServiceModalErrors((prev) => ({ ...prev, providerNotConfigured: { message: providerConfigMsg, Title: __("Translation Provider Not Configured", 'easy-web-translator') } }));
             return;
         }
         if (settingVisibility) {

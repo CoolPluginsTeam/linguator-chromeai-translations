@@ -321,7 +321,7 @@ class Settings extends Abstract_Controller {
 		if ( empty( $domains ) || ! is_array( $domains ) ) {
 			$errors->add(
 				'missing_domains',
-				__( 'Domains are required when language is set from different domains.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'Domains are required when language is set from different domains.', 'easy-web-translator' ),
 				array( 'status' => 400 )
 			);
 			return $errors;
@@ -338,7 +338,7 @@ class Settings extends Abstract_Controller {
 				$errors->add(
 					'invalid_language',
 					// translators: %s is the language slug/code that was provided
-					sprintf( __( 'Invalid language code: %s', 'linguator-multilingual-chromeai-translation' ), $lang_slug ),
+					sprintf( __( 'Invalid language code: %s', 'easy-web-translator' ), $lang_slug ),
 					array( 'status' => 400 )
 				);
 				continue;
@@ -349,7 +349,7 @@ class Settings extends Abstract_Controller {
 				$errors->add(
 					'empty_domain',
 					// translators: %s is the language slug/code that needs a domain URL
-					sprintf( __( 'Domain URL is required for language: %s', 'linguator-multilingual-chromeai-translation' ), $lang_slug ),
+					sprintf( __( 'Domain URL is required for language: %s', 'easy-web-translator' ), $lang_slug ),
 					array( 'status' => 400 )
 				);
 				continue;
@@ -361,7 +361,7 @@ class Settings extends Abstract_Controller {
 				$errors->add(
 					'invalid_domain_format',
 					// translators: %1$s is the language slug/code, %2$s is the invalid domain URL provided
-					sprintf( __( 'Invalid domain URL format for language %1$s: %2$s', 'linguator-multilingual-chromeai-translation' ), $lang_slug, $domain_url ),
+					sprintf( __( 'Invalid domain URL format for language %1$s: %2$s', 'easy-web-translator' ), $lang_slug, $domain_url ),
 					array( 'status' => 400 )
 				);
 				continue;
@@ -377,7 +377,7 @@ class Settings extends Abstract_Controller {
 				$errors->add(
 					'missing_language_domain',
 					// translators: %s is the language slug/code that is missing a domain URL
-					sprintf( __( 'Domain URL is required for language: %s', 'linguator-multilingual-chromeai-translation' ), $lang_slug ),
+					sprintf( __( 'Domain URL is required for language: %s', 'easy-web-translator' ), $lang_slug ),
 					array( 'status' => 400 )
 				);
 			}
@@ -399,10 +399,10 @@ class Settings extends Abstract_Controller {
 			// Blocking error - prevents save
 			if ( 1 === count( $failed_urls ) ) {
 				/* translators: %s is a URL. */
-				$message = __( 'Linguator was unable to access the %s URL. Please check that the URL is valid.', 'linguator-multilingual-chromeai-translation' );
+				$message = __( 'Linguator was unable to access the %s URL. Please check that the URL is valid.', 'easy-web-translator' );
 			} else {
 				/* translators: %s is a list of URLs. */
-				$message = __( 'Linguator was unable to access the %s URLs. Please check that the URLs are valid.', 'linguator-multilingual-chromeai-translation' );
+				$message = __( 'Linguator was unable to access the %s URLs. Please check that the URLs are valid.', 'easy-web-translator' );
 			}
 			$errors->add(
 				'lmat_invalid_domains',
@@ -430,7 +430,7 @@ class Settings extends Abstract_Controller {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return new WP_Error(
 				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit options.', 'linguator-multilingual-chromeai-translation' ),
+				__( 'Sorry, you are not allowed to edit options.', 'easy-web-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}

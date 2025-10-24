@@ -1,4 +1,4 @@
-=== Linguator – Multilingual Chrome AI Translation  ===
+=== Easy Web Translator – On-Device Chrome AI Translation  ===
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: translation, multilingual, language, ai translation 
 Requires at least: 6.2
@@ -62,7 +62,7 @@ This plugin offers AI translation services via Chrome's built-in AI APIs. Learn 
 2. Navigate to the Plugins section.
 3. Search for "Linguator".
 4. Click Install and then Activate the plugin.
-That's it! Linguator – Multilingual Chrome AI Translation (Beta Version) is now installed and activated. You can start translating your website automatically using the power of AI.
+That's it! Easy Web Translator – On-Device Chrome AI Translation (Beta Version) is now installed and activated. You can start translating your website automatically using the power of AI.
 **Language Configuration**
 When you first activate Linguator, a simple Setup Wizard will guide you through configuring your multilingual website.
 Follow these steps to complete the setup:

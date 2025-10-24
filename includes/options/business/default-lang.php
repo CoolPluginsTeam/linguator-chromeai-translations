@@ -60,7 +60,7 @@ class Default_Lang extends Abstract_String {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'Slug of the default language.', 'linguator-multilingual-chromeai-translation' );
+		return __( 'Slug of the default language.', 'easy-web-translator' );
 	}
 
 	/**

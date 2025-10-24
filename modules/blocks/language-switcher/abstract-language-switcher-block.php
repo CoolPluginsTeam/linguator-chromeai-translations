@@ -167,7 +167,7 @@ abstract class LMAT_Abstract_Language_Switcher_Block {
 		
 
 		// Translated strings used in JS code
-		wp_set_script_translations( $script_handle, 'linguator-multilingual-chromeai-translation' );
+		wp_set_script_translations( $script_handle, 'easy-web-translator' );
 	}
 
 	/**

@@ -73,7 +73,7 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 		add_action( 'load-nav-menus.php', array( $this, 'maybe_update_selected_menu' ), 10 );
 		add_action( 'admin_init', array( $this, 'maybe_update_selected_menu_on_init' ), 10 );
 		add_filter( 'wp_redirect', array( $this, 'preserve_lang_param_on_redirect' ), 10, 2 );
-		add_meta_box( 'lmat_lang_switch_box', __( 'Language switcher', 'linguator-multilingual-chromeai-translation' ), array( $this, 'lang_switch' ), 'nav-menus', 'side', 'high' );
+		add_meta_box( 'lmat_lang_switch_box', __( 'Language switcher', 'easy-web-translator' ), array( $this, 'lang_switch' ), 'nav-menus', 'side', 'high' );
 
 		$this->create_nav_menu_locations();
 	}
@@ -95,17 +95,17 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 				<ul id="lang-switch-checklist" class="categorychecklist form-no-clear">
 					<li>
 						<label class="menu-item-title">
-							<input type="checkbox" class="menu-item-checkbox" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-object-id]" value="-1" > <?php esc_html_e( 'Languages', 'linguator-multilingual-chromeai-translation' ); ?>
+							<input type="checkbox" class="menu-item-checkbox" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-object-id]" value="-1" > <?php esc_html_e( 'Languages', 'easy-web-translator' ); ?>
 						</label>
 						<input type="hidden" class="menu-item-type" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-type]" value="custom">
-						<input type="hidden" class="menu-item-title" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-title]" value="<?php esc_attr_e( 'Languages', 'linguator-multilingual-chromeai-translation' ); ?>">
+						<input type="hidden" class="menu-item-title" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-title]" value="<?php esc_attr_e( 'Languages', 'easy-web-translator' ); ?>">
 						<input type="hidden" class="menu-item-url" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-url]" value="#lmat_switcher">
 					</li>
 				</ul>
 			</div>
 			<p class="button-controls">
 				<span class="add-to-menu">
-					<input type="submit" <?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', 'linguator-multilingual-chromeai-translation' ); ?>" name="add-post-type-menu-item" id="submit-posttype-lang-switch">
+					<input type="submit" <?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', 'easy-web-translator' ); ?>" name="add-post-type-menu-item" id="submit-posttype-lang-switch">
 					<span class="spinner"></span>
 				</span>
 			</p>
@@ -138,7 +138,7 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 		) );
 		$data = array(
 			'strings' => LMAT_Switcher::get_switcher_options( 'menu', 'string' ), // The strings for the options
-			'title'   => __( 'Languages', 'linguator-multilingual-chromeai-translation' ), // The title
+			'title'   => __( 'Languages', 'easy-web-translator' ), // The title
 			'val'     => array(),
 		);
 

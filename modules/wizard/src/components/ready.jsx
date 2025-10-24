@@ -32,15 +32,15 @@ const Ready = () => {
 
   //content for page
   let nextSteps = [ {
-    button: __('Settings', 'linguator-multilingual-chromeai-translation'),
+    button: __('Settings', 'easy-web-translator'),
     href: `${currentDomain}admin.php?page=lmat_settings`,
     variant: 'outline'
   },{
-    button: __('View Pages', 'linguator-multilingual-chromeai-translation'),
+    button: __('View Pages', 'easy-web-translator'),
     href: `${currentDomain}edit.php?post_type=page`,
     variant: 'outline'
   },{
-    button: __('View Posts', 'linguator-multilingual-chromeai-translation'),
+    button: __('View Posts', 'easy-web-translator'),
     href: `${currentDomain}edit.php`,
     variant: 'outline'
   }]
@@ -48,9 +48,9 @@ const Ready = () => {
  
   return (
     <div className='mx-auto max-w-[600px] min-h-[40vh] bg-white shadow-lg p-10 flex flex-col gap-6'>
-      <h2 className='m-0'>{__("You're ready to translate your Site!", 'linguator-multilingual-chromeai-translation')}</h2>
+      <h2 className='m-0'>{__("You're ready to translate your Site!", 'easy-web-translator')}</h2>
       <div>
-                  <p className='m-0 text-sm/6' style={{ color: "#6b7280" }}>{__("You're now able to translate your content such as posts, pages, categories and tags. You can learn how to use Linguator by watching the video tutorial.", 'linguator-multilingual-chromeai-translation')}</p>
+                  <p className='m-0 text-sm/6' style={{ color: "#6b7280" }}>{__("You're now able to translate your content such as posts, pages, categories and tags. You can learn how to use Linguator by watching the video tutorial.", 'easy-web-translator')}</p>
       </div>
       <table className='ready-table'>
         <tbody>

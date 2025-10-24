@@ -207,7 +207,7 @@ class LMAT_Settings extends LMAT_Admin_Base {
 		add_screen_option(
 			'per_page',
 			array(
-				'label'   => __( 'Languages', 'linguator-multilingual-chromeai-translation' ),
+				'label'   => __( 'Languages', 'easy-web-translator' ),
 				'default' => 10,
 				'option'  => 'lmat_lang_per_page',
 			)
@@ -227,7 +227,7 @@ class LMAT_Settings extends LMAT_Admin_Base {
 		add_screen_option(
 			'per_page',
 			array(
-				'label'   => __( 'Strings translations', 'linguator-multilingual-chromeai-translation' ),
+				'label'   => __( 'Strings translations', 'easy-web-translator' ),
 				'default' => 10,
 				'option'  => 'lmat_strings_per_page',
 			)
@@ -272,14 +272,14 @@ class LMAT_Settings extends LMAT_Admin_Base {
 				if ( is_wp_error( $errors ) ) {
 						lmat_add_notice( $errors );
 				} else {
-					lmat_add_notice( new WP_Error( 'lmat_languages_created', __( 'Language added.', 'linguator-multilingual-chromeai-translation' ), 'success' ) );
+					lmat_add_notice( new WP_Error( 'lmat_languages_created', __( 'Language added.', 'easy-web-translator' ), 'success' ) );
 					$locale = $sanitized_data['locale'];
 
 					if ( 'en_US' !== $locale && current_user_can( 'install_languages' ) ) {
 						// Attempts to install the language pack
 						require_once ABSPATH . 'wp-admin/includes/translation-install.php';
 						if ( ! wp_download_language_pack( $locale ) ) {
-							lmat_add_notice( new WP_Error( 'lmat_download_mo', __( 'The language was created, but the WordPress language file was not downloaded. Please install it manually.', 'linguator-multilingual-chromeai-translation' ), 'warning' ) );
+							lmat_add_notice( new WP_Error( 'lmat_download_mo', __( 'The language was created, but the WordPress language file was not downloaded. Please install it manually.', 'easy-web-translator' ), 'warning' ) );
 						}
 
 						// Force checking for themes and plugins translations updates
@@ -294,7 +294,7 @@ class LMAT_Settings extends LMAT_Admin_Base {
 				check_admin_referer( 'delete-lang' );
 
 				if ( ! empty( $_GET['lang'] ) && $this->model->delete_language( (int) $_GET['lang'] ) ) {
-					lmat_add_notice( new WP_Error( 'lmat_languages_deleted', __( 'Language deleted.', 'linguator-multilingual-chromeai-translation' ), 'success' ) );
+					lmat_add_notice( new WP_Error( 'lmat_languages_deleted', __( 'Language deleted.', 'easy-web-translator' ), 'success' ) );
 				}
 
 				
@@ -316,7 +316,7 @@ class LMAT_Settings extends LMAT_Admin_Base {
 				if ( is_wp_error( $errors ) ) {
 					lmat_add_notice( $errors );
 				} else {
-					lmat_add_notice( new WP_Error( 'lmat_languages_updated', __( 'Language updated.', 'linguator-multilingual-chromeai-translation' ), 'success' ) );
+					lmat_add_notice( new WP_Error( 'lmat_languages_updated', __( 'Language updated.', 'easy-web-translator' ), 'success' ) );
 				}
 
 
@@ -488,19 +488,19 @@ class LMAT_Settings extends LMAT_Admin_Base {
 	private function get_language_switcher_options() {
         $language_switcher_options = array(
             array(
-                'label' => __( 'Classic (Widgets) Based', 'linguator-multilingual-chromeai-translation' ),
+                'label' => __( 'Classic (Widgets) Based', 'easy-web-translator' ),
                 'value' => 'default',
 				'subheading' => 'Standard language switcher widget that can be added to widget areas and sidebars.'
             ),
             array(
-                'label' => __( 'Block Based', 'linguator-multilingual-chromeai-translation' ),
+                'label' => __( 'Block Based', 'easy-web-translator' ),
                 'value' => 'block',
 				'subheading' => 'Gutenberg block widget for the block editor, compatible with modern WordPress themes.'
             )
         );
         if(lmat_is_plugin_active('elementor/elementor.php')){
             $language_switcher_options[] = array(
-                'label' => __( 'Elementor Widget Based', 'linguator-multilingual-chromeai-translation' ),
+                'label' => __( 'Elementor Widget Based', 'easy-web-translator' ),
                 'value' => 'elementor',
 				'subheading' => 'Specialized widget for Elementor page builder with enhanced styling and customization options.'
             );
@@ -540,9 +540,9 @@ class LMAT_Settings extends LMAT_Admin_Base {
 				$avilable_service_providers = array('localAiTranslator'=>'Chrome AI Translator');
 				$cpt_dashboard_data=LMAT_Translation_Dashboard::get_translation_data('lmat');
 				$translation_providers=(isset($cpt_dashboard_data['service_providers']) && is_array($cpt_dashboard_data['service_providers'])) ? $cpt_dashboard_data['service_providers'] : array();
-				$translations_data['total_string']=isset($cpt_dashboard_data['total_string_count']) ? $this->lmat_format_number($cpt_dashboard_data['total_string_count'], 'linguator-multilingual-chromeai-translation') : 0;
-				$translations_data['total_character']=isset($cpt_dashboard_data['total_character_count']) ? $this->lmat_format_number($cpt_dashboard_data['total_character_count'], 'linguator-multilingual-chromeai-translation') : 0;
-				$translations_data['total_time']=isset($cpt_dashboard_data['total_time_taken']) ? $this->lmat_format_time_taken($cpt_dashboard_data['total_time_taken'], 'linguator-multilingual-chromeai-translation') : 0;
+				$translations_data['total_string']=isset($cpt_dashboard_data['total_string_count']) ? $this->lmat_format_number($cpt_dashboard_data['total_string_count'], 'easy-web-translator') : 0;
+				$translations_data['total_character']=isset($cpt_dashboard_data['total_character_count']) ? $this->lmat_format_number($cpt_dashboard_data['total_character_count'], 'easy-web-translator') : 0;
+				$translations_data['total_time']=isset($cpt_dashboard_data['total_time_taken']) ? $this->lmat_format_time_taken($cpt_dashboard_data['total_time_taken'], 'easy-web-translator') : 0;
 				$translations_data['total_pages']=isset($cpt_dashboard_data['data']) ? count($cpt_dashboard_data['data']) : 0;
 				$translations_data['service_providers']=array_map(function($item) use ($avilable_service_providers){
 					return $avilable_service_providers[$item];
@@ -563,7 +563,7 @@ class LMAT_Settings extends LMAT_Admin_Base {
 				'lmat_settings',
 				'lmat_settings',
 				array(
-					'dismiss_notice' => esc_html__( 'Dismiss this notice.', 'linguator-multilingual-chromeai-translation' ),
+					'dismiss_notice' => esc_html__( 'Dismiss this notice.', 'easy-web-translator' ),
 					'api_url'        => rest_url( 'lmat/v1/' ),
 					'nonce'          => wp_create_nonce( 'wp_rest' ),
 					'languages'      => $this->model->get_languages_list(),
@@ -613,23 +613,23 @@ class LMAT_Settings extends LMAT_Admin_Base {
 			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 			wp_enqueue_script( 'lmat_settings', plugins_url( 'admin/assets/js/build/settings' . $suffix . '.js', LINGUATOR_ROOT_FILE ), array( 'jquery', 'wp-ajax-response', 'postbox', 'jquery-ui-selectmenu', 'wp-hooks' ), LINGUATOR_VERSION, true );
-			wp_localize_script( 'lmat_settings', 'lmat_settings', array( 'dismiss_notice' => esc_html__( 'Dismiss this notice.', 'linguator-multilingual-chromeai-translation' ) ) );
+			wp_localize_script( 'lmat_settings', 'lmat_settings', array( 'dismiss_notice' => esc_html__( 'Dismiss this notice.', 'easy-web-translator' ) ) );
 
 			wp_enqueue_style( 'lmat_selectmenu', plugins_url( 'admin/assets/css/build/selectmenu' . $suffix . '.css', LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION );
 		}
 	}
 
 	function lmat_format_time_taken($time_taken) {
-		if ($time_taken === 0) return esc_html__('0', 'linguator-multilingual-chromeai-translation');
-		if ($time_taken < 60) return sprintf(esc_html__('%d sec', 'linguator-multilingual-chromeai-translation'), $time_taken);
+		if ($time_taken === 0) return esc_html__('0', 'easy-web-translator');
+		if ($time_taken < 60) return sprintf(esc_html__('%d sec', 'easy-web-translator'), $time_taken);
 		if ($time_taken < 3600) {
 			$min = floor($time_taken / 60);
 			$sec = $time_taken % 60;
-			return sprintf(esc_html__('%d min %d sec', 'linguator-multilingual-chromeai-translation'), $min, $sec);
+			return sprintf(esc_html__('%d min %d sec', 'easy-web-translator'), $min, $sec);
 		}
 		$hours = floor($time_taken / 3600);
 		$min = floor(($time_taken % 3600) / 60);
-		return sprintf(esc_html__('%d hours %d min', 'linguator-multilingual-chromeai-translation'), $hours, $min);
+		return sprintf(esc_html__('%d hours %d min', 'easy-web-translator'), $hours, $min);
 	}
 
 	public function lmat_format_number($number, $text_domain) {
@@ -654,9 +654,9 @@ class LMAT_Settings extends LMAT_Admin_Base {
 		if ( ! empty( $this->options['default_lang'] ) && $this->model->get_objects_with_no_lang( 1 ) ) {
 			printf(
 				'<div class="error"><p>%s <a href="%s">%s</a></p></div>',
-				esc_html__( 'There are posts, pages, categories or tags without language.', 'linguator-multilingual-chromeai-translation' ),
+				esc_html__( 'There are posts, pages, categories or tags without language.', 'easy-web-translator' ),
 				esc_url( wp_nonce_url( '?page=lmat&lmat_action=content-default-lang&noheader=true', 'content-default-lang' ) ),
-				esc_html__( 'You can set them all to the default language.', 'linguator-multilingual-chromeai-translation' )
+				esc_html__( 'You can set them all to the default language.', 'easy-web-translator' )
 			);
 		}
 	}
@@ -671,7 +671,7 @@ class LMAT_Settings extends LMAT_Admin_Base {
 	 * @return void
 	 */
 	public static function redirect( array $args = array() ): void {
-		$errors = get_settings_errors( 'linguator-multilingual-chromeai-translation' );
+		$errors = get_settings_errors( 'easy-web-translator' );
 		if ( ! empty( $errors ) ) {
 			set_transient( 'lmat_settings_errors', $errors, 30 );
 			$args['settings-updated'] = 1;

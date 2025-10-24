@@ -286,7 +286,7 @@ var LanguageSection = function LanguageSection(_ref) {
     return list;
   }, [lang, allLanguages]);
   return /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.PanelBody, {
-    title: (0,external_wp_i18n_namespaceObject.__)('Language', 'linguator-multilingual-chromeai-translation'),
+    title: (0,external_wp_i18n_namespaceObject.__)('Language', 'easy-web-translator'),
     initialOpen: true
   }, /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.Flex, {
     align: "center"
@@ -410,7 +410,7 @@ var TranslationRow = function TranslationRow(_ref2) {
               _context.p = 3;
               _t = _context.v;
               setSaving(false);
-              setError((0,external_wp_i18n_namespaceObject.__)('Failed to save title. Please try again.', 'linguator-multilingual-chromeai-translation'));
+              setError((0,external_wp_i18n_namespaceObject.__)('Failed to save title. Please try again.', 'easy-web-translator'));
               // Optional: console.error(e);
             case 4:
               return _context.a(2);
@@ -521,7 +521,7 @@ var TranslationRow = function TranslationRow(_ref2) {
           case 3:
             _context3.p = 3;
             _t3 = _context3.v;
-            setError((0,external_wp_i18n_namespaceObject.__)('Failed to link page. Please try again.', 'linguator-multilingual-chromeai-translation'));
+            setError((0,external_wp_i18n_namespaceObject.__)('Failed to link page. Please try again.', 'easy-web-translator'));
           case 4:
             _context3.p = 4;
             setLinking(false);
@@ -577,7 +577,7 @@ var TranslationRow = function TranslationRow(_ref2) {
           case 3:
             _context4.p = 3;
             _t4 = _context4.v;
-            setError((0,external_wp_i18n_namespaceObject.__)('Failed to create page. Please try again.', 'linguator-multilingual-chromeai-translation'));
+            setError((0,external_wp_i18n_namespaceObject.__)('Failed to create page. Please try again.', 'easy-web-translator'));
           case 4:
             _context4.p = 4;
             setLinking(false);
@@ -620,17 +620,17 @@ var TranslationRow = function TranslationRow(_ref2) {
   }, /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.TextControl, {
     value: title,
     onChange: handleTitleChange,
-    placeholder: (0,external_wp_i18n_namespaceObject.__)('title', 'linguator-multilingual-chromeai-translation'),
+    placeholder: (0,external_wp_i18n_namespaceObject.__)('title', 'easy-web-translator'),
     readOnly: !editable,
     disabled: !editable,
-    help: editable ? saving ? (0,external_wp_i18n_namespaceObject.__)('Saving…', 'linguator-multilingual-chromeai-translation') : (0,external_wp_i18n_namespaceObject.__)('Type title to save translation.', 'linguator-multilingual-chromeai-translation') : (0,external_wp_i18n_namespaceObject.__)('Modify title via Edit.', 'linguator-multilingual-chromeai-translation')
+    help: editable ? saving ? (0,external_wp_i18n_namespaceObject.__)('Saving…', 'easy-web-translator') : (0,external_wp_i18n_namespaceObject.__)('Type title to save translation.', 'easy-web-translator') : (0,external_wp_i18n_namespaceObject.__)('Modify title via Edit.', 'easy-web-translator')
   })), /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.FlexItem, {
     style: {
       paddingTop: '14px'
     }
   }, hasEdit ? /*#__PURE__*/React.createElement("a", {
     href: links.edit_link,
-    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Edit translation', 'linguator-multilingual-chromeai-translation'),
+    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Edit translation', 'easy-web-translator'),
     style: {
       marginLeft: 8,
       height: "100%",
@@ -643,7 +643,7 @@ var TranslationRow = function TranslationRow(_ref2) {
     size: 20
   })) : null, !hasEdit && (selectedSuggestion ? /*#__PURE__*/React.createElement("button", {
     onClick: linkSelected,
-    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Link existing page', 'linguator-multilingual-chromeai-translation'),
+    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Link existing page', 'easy-web-translator'),
     style: {
       marginLeft: 8,
       background: 'transparent',
@@ -655,7 +655,7 @@ var TranslationRow = function TranslationRow(_ref2) {
     size: 20
   })) : hasAdd ? (title || '').trim().length > 0 ? /*#__PURE__*/React.createElement("button", {
     onClick: createFromTyped,
-    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Create translation from typed title', 'linguator-multilingual-chromeai-translation'),
+    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Create translation from typed title', 'easy-web-translator'),
     style: {
       marginLeft: 8,
       background: 'transparent',
@@ -667,7 +667,7 @@ var TranslationRow = function TranslationRow(_ref2) {
     size: 20
   })) : /*#__PURE__*/React.createElement("a", {
     href: links.add_link,
-    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Add translation', 'linguator-multilingual-chromeai-translation'),
+    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Add translation', 'easy-web-translator'),
     style: {
       marginLeft: 8,
       height: "100%",
@@ -710,7 +710,7 @@ var TranslationsSection = function TranslationsSection(_ref7) {
   var translations = _ref7.translations;
   var rows = Object.values(translations);
   return /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.PanelBody, {
-    title: (0,external_wp_i18n_namespaceObject.__)('Translations', 'linguator-multilingual-chromeai-translation'),
+    title: (0,external_wp_i18n_namespaceObject.__)('Translations', 'easy-web-translator'),
     initialOpen: true
   }, rows.map(function (row) {
     return /*#__PURE__*/React.createElement(TranslationRow, {
@@ -725,9 +725,9 @@ var Sidebar = function Sidebar() {
   var translations = (settings === null || settings === void 0 ? void 0 : settings.translations_table) || {};
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(external_wp_editPost_namespaceObject.PluginSidebarMoreMenuItem, {
     target: SIDEBAR_NAME
-  }, (0,external_wp_i18n_namespaceObject.__)('Linguator', 'linguator-multilingual-chromeai-translation')), /*#__PURE__*/React.createElement(external_wp_editPost_namespaceObject.PluginSidebar, {
+  }, (0,external_wp_i18n_namespaceObject.__)('Linguator', 'easy-web-translator')), /*#__PURE__*/React.createElement(external_wp_editPost_namespaceObject.PluginSidebar, {
     name: SIDEBAR_NAME,
-    title: (0,external_wp_i18n_namespaceObject.__)('Linguator', 'linguator-multilingual-chromeai-translation')
+    title: (0,external_wp_i18n_namespaceObject.__)('Linguator', 'easy-web-translator')
   }, /*#__PURE__*/React.createElement(LanguageSection, {
     lang: lang,
     allLanguages: translations

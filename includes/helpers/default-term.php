@@ -141,7 +141,7 @@ class LMAT_Default_Term {
 
 		// Create a new term
 		// FIXME this is translated in admin language when we would like it in $lang
-		$cat_name = __( 'Uncategorized', 'linguator-multilingual-chromeai-translation' );
+		$cat_name = __( 'Uncategorized', 'easy-web-translator' );
 		$cat_slug = sanitize_title( $cat_name . '-' . $lang->locale );
 		$cat = wp_insert_term( $cat_name, $taxonomy, array( 'slug' => $cat_slug ) );
 

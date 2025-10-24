@@ -79,8 +79,8 @@ class LMAT_Nav_Menu {
 	 */
 	public function wp_setup_nav_menu_item( $item ) {
 		if ( isset( $item->url ) && '#lmat_switcher' === $item->url ) {
-			$item->post_title = __( 'Languages', 'linguator-multilingual-chromeai-translation' );
-			$item->type_label = __( 'Language switcher', 'linguator-multilingual-chromeai-translation' );
+			$item->post_title = __( 'Languages', 'easy-web-translator' );
+			$item->type_label = __( 'Language switcher', 'easy-web-translator' );
 		}
 		return $item;
 	}

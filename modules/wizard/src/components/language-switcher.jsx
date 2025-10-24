@@ -42,21 +42,21 @@ const LanguageSwitcher = () => {
                 })
 
         } catch (error) {
-            toast.error(error.message || __("Something went wrong", "linguator-multilingual-chromeai-translation"));
+            toast.error(error.message || __("Something went wrong", "easy-web-translator"));
         }
     }
     return (
         <div className='mx-auto p-10 max-w-[600px] min-h-[40vh] bg-white shadow-sm flex flex-col'>
             <div className='flex-grow'>
-                <h2>{__('Language Switcher Widget Configuration', 'linguator-multilingual-chromeai-translation')}</h2>
-                <p className='text-justify text-sm/6'>{__('Linguator allows you to choose which language switcher should be displayed to users.', 'linguator-multilingual-chromeai-translation')}</p>
+                <h2>{__('Language Switcher Widget Configuration', 'easy-web-translator')}</h2>
+                <p className='text-justify text-sm/6'>{__('Linguator allows you to choose which language switcher should be displayed to users.', 'easy-web-translator')}</p>
 
                 <div className='flex flex-col gap-4'>
                     {
                         languageSwitcherOptions.map((switcher, index) => (
                             <div key={index} className='p-6 rounded-lg' style={{ border: "1px solid #e5e7eb" }}>
                                 <div className='flex justify-between items-center'>
-                                    <p className="text-sm/6">{__(switcher.label, 'linguator-multilingual-chromeai-translation')}</p>
+                                    <p className="text-sm/6">{__(switcher.label, 'easy-web-translator')}</p>
                                     <Switch
                                         aria-label={`Switch for ${switcher.label}`}
                                         id={`lmat_language_switcher_${switcher.value}`}

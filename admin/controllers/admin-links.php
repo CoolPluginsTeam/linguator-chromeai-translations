@@ -33,7 +33,7 @@ class LMAT_Admin_Links extends LMAT_Links {
 
 		if ( $link ) {
 			/* translators: accessibility text, %s is a native language name */
-			$hint = sprintf( __( 'Add a translation in %s', 'linguator-multilingual-chromeai-translation' ), $language->name );
+			$hint = sprintf( __( 'Add a translation in %s', 'easy-web-translator' ), $language->name );
 
 			$str = sprintf(
 				'<a href="%1$s" title="%2$s" class="lmat_icon_add"><span class="screen-reader-text">%3$s</span></a>',
@@ -60,7 +60,7 @@ class LMAT_Admin_Links extends LMAT_Links {
 			'<a href="%1$s" class="lmat_icon_edit"><span class="screen-reader-text">%2$s</span></a>',
 			esc_url( $link ),
 			/* translators: accessibility text, %s is a native language name */
-			esc_html( sprintf( __( 'Edit the translation in %s', 'linguator-multilingual-chromeai-translation' ), $language->name ) )
+			esc_html( sprintf( __( 'Edit the translation in %s', 'easy-web-translator' ), $language->name ) )
 		) : '';
 	}
 

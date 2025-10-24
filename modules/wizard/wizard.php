@@ -96,8 +96,8 @@ class LMAT_Wizard
 	{
 		// Add the wizard page as a top-level admin menu item (hidden from menu)
 		add_menu_page(
-			esc_html__('Linguator Setup Wizard', 'linguator-multilingual-chromeai-translation'),
-			esc_html__('Linguator Setup', 'linguator-multilingual-chromeai-translation'),
+			esc_html__('Linguator Setup Wizard', 'easy-web-translator'),
+			esc_html__('Linguator Setup', 'easy-web-translator'),
 			'manage_options',
 			'lmat_wizard',
 			array($this, 'display_wizard_page'),
@@ -179,7 +179,7 @@ class LMAT_Wizard
 	{
 		// Only show the wizard tab if setup is not complete
 		if (!get_option('lmat_setup_complete')) {
-			$tabs['wizard'] = esc_html__('Setup Guide', 'linguator-multilingual-chromeai-translation');
+			$tabs['wizard'] = esc_html__('Setup Guide', 'easy-web-translator');
 		}
 		return $tabs;
 	}
@@ -285,19 +285,19 @@ class LMAT_Wizard
 	private function get_language_switcher_options() {
 		$language_switcher_options = array(
             array(
-                'label' => __( 'Classic (Menu, Widgets) Based', 'linguator-multilingual-chromeai-translation' ),
+                'label' => __( 'Classic (Menu, Widgets) Based', 'easy-web-translator' ),
                 'value' => 'default',
 				'subheading' => 'Standard language switcher widget that can be added to widget areas and sidebars.'
             ),
             array(
-                'label' => __( 'Block Based', 'linguator-multilingual-chromeai-translation' ),
+                'label' => __( 'Block Based', 'easy-web-translator' ),
                 'value' => 'block',
 				'subheading' => 'Gutenberg block widget for the block editor, compatible with modern WordPress themes.'
             )
         );
         if(lmat_is_plugin_active('elementor/elementor.php')){
             $language_switcher_options[] = array(
-                'label' => __( 'Elementor Widget Based', 'linguator-multilingual-chromeai-translation' ),
+                'label' => __( 'Elementor Widget Based', 'easy-web-translator' ),
                 'value' => 'elementor',
 				'subheading' => 'Specialized widget for Elementor page builder with enhanced styling and customization options.'
             );
@@ -316,7 +316,7 @@ class LMAT_Wizard
 	{
 		// Check permissions
 		if (! current_user_can('manage_options')) {
-			wp_die(esc_html__('Sorry, you are not allowed to manage options for this site.', 'linguator-multilingual-chromeai-translation'));
+			wp_die(esc_html__('Sorry, you are not allowed to manage options for this site.', 'easy-web-translator'));
 		}
 
 		$steps          = $this->steps;
@@ -381,7 +381,7 @@ class LMAT_Wizard
 				'lmat_setup',
 				'lmat_setup',
 				array(
-					'dismiss_notice' => esc_html__('Dismiss this notice.', 'linguator-multilingual-chromeai-translation'),
+					'dismiss_notice' => esc_html__('Dismiss this notice.', 'easy-web-translator'),
 					'api_url'        => rest_url('lmat/v1/'),
 					'nonce'          => wp_create_nonce('wp_rest'),
 					'languages'      => $this->model->get_languages_list(),

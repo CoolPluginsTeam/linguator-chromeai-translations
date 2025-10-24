@@ -158,7 +158,7 @@ class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Swi
 			'_lmat_menu_item',
 			array(
 				'object_subtype' => 'nav_menu_item',
-				'description'    => __( 'Language switcher settings', 'linguator-multilingual-chromeai-translation' ),
+				'description'    => __( 'Language switcher settings', 'easy-web-translator' ),
 				'single'         => true,
 				'show_in_rest'   => array(
 					'schema' => array(
@@ -245,7 +245,7 @@ class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Swi
 					'aria-label',
 					str_replace(
 						static::PLACEHOLDER,
-						__( 'Languages', 'linguator-multilingual-chromeai-translation' ),
+						__( 'Languages', 'easy-web-translator' ),
 						(string) $content_tags->get_attribute( 'aria-label' )
 					)
 				);

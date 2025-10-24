@@ -46,7 +46,7 @@ class LMAT_WordPress_Importer {
 		$class = new \ReflectionClass( 'WP_Import' );
 
 		$GLOBALS['wp_import'] = new \LMAT_WP_Import(); // WordPress core global variable for WP Importer
-		register_importer( 'wordpress', 'WordPress', __( 'Import <strong>posts, pages, comments, custom fields, categories, and tags</strong> from a WordPress export file.', 'linguator-multilingual-chromeai-translation' ), array( $GLOBALS['wp_import'], 'dispatch' ) ); // phpcs:ignore WordPress.WP.CapitalPDangit.MisspelledInText
+		register_importer( 'wordpress', 'WordPress', __( 'Import <strong>posts, pages, comments, custom fields, categories, and tags</strong> from a WordPress export file.', 'easy-web-translator' ), array( $GLOBALS['wp_import'], 'dispatch' ) ); // phpcs:ignore WordPress.WP.CapitalPDangit.MisspelledInText
 	}
 
 	/**

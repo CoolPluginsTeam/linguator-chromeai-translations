@@ -173,7 +173,7 @@ class LMAT_Admin extends LMAT_Admin_Base {
 	 * @return string[] Modified list of links.
 	 */
 	public function plugin_action_links( $links ) {
-		array_unshift( $links, '<a href="admin.php?page=lmat_settings">' . __( 'Settings', 'linguator-multilingual-chromeai-translation' ) . '</a>' );
+		array_unshift( $links, '<a href="admin.php?page=lmat_settings">' . __( 'Settings', 'easy-web-translator' ) . '</a>' );
 		return $links;
 	}
 

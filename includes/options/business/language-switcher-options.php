@@ -49,6 +49,6 @@ class Language_Switcher_Options extends Abstract_List {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'List of enabled language switcher types.', 'linguator-multilingual-chromeai-translation' );
+		return __( 'List of enabled language switcher types.', 'easy-web-translator' );
 	}
 }

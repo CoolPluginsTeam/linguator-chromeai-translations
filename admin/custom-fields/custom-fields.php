@@ -33,7 +33,7 @@ if(!class_exists('Custom_Fields')) {
                 'save_button_handler' => 'lmat_update_custom_fields_content',
                 'save_button_nonce' => wp_create_nonce('lmat_save_custom_fields'),
                 'save_button_enabled'=>true,
-                'save_button_text'=>__('Save Fields', 'linguator-multilingual-chromeai-translation'),
+                'save_button_text'=>__('Save Fields', 'easy-web-translator'),
                 'save_button_class'=>'lmat-save-custom-fields',
             ) );
         }
@@ -43,26 +43,26 @@ if(!class_exists('Custom_Fields')) {
                 $s_no                        = 1;
                 ?>
                 <div class="lmat-custom-data-table-wrapper lmat-custom-fields">
-                    <h3><?php echo __('Custom Fields Translation Settings', 'linguator-multilingual-chromeai-translation'); ?>
+                    <h3><?php echo __('Custom Fields Translation Settings', 'easy-web-translator'); ?>
                     <br>
-                    <p><?php echo sprintf(esc_html__('Select which custom fields will be translated by %s.', 'linguator-multilingual-chromeai-translation'), 'Linguator'); ?></p>
+                    <p><?php echo sprintf(esc_html__('Select which custom fields will be translated by %s.', 'easy-web-translator'), 'Linguator'); ?></p>
                     </h3>
-                    <button class="button button-primary lmat-save-custom-fields"><?php esc_html_e( 'Save Fields', 'linguator-multilingual-chromeai-translation' ); ?></button>
+                    <button class="button button-primary lmat-save-custom-fields"><?php esc_html_e( 'Save Fields', 'easy-web-translator' ); ?></button>
                     <div class="lmat-custom-data-table-filters">
                         <div class="lmat-filter-tab" data-column="3" data-default="all">
-                            <label for="lmat-fields-filter"><?php esc_html_e( 'Show Fields:', 'linguator-multilingual-chromeai-translation' ); ?></label>
+                            <label for="lmat-fields-filter"><?php esc_html_e( 'Show Fields:', 'easy-web-translator' ); ?></label>
                             <select id="lmat-fields-filter" name="lmat_fields_filter">
-                                <option value="all"><?php esc_html_e( 'All', 'linguator-multilingual-chromeai-translation' ); ?></option>
-                                <option value="supported"><?php esc_html_e( 'Translatable', 'linguator-multilingual-chromeai-translation' ); ?></option>
-                                <option value="unsupported"><?php esc_html_e( 'Non-Translatable', 'linguator-multilingual-chromeai-translation' ); ?></option>
+                                <option value="all"><?php esc_html_e( 'All', 'easy-web-translator' ); ?></option>
+                                <option value="supported"><?php esc_html_e( 'Translatable', 'easy-web-translator' ); ?></option>
+                                <option value="unsupported"><?php esc_html_e( 'Non-Translatable', 'easy-web-translator' ); ?></option>
                             </select>
                         </div>
                         <div class="lmat-filter-tab" data-column="2" data-default="all">
-                            <label for="lmat-fields-filter"><?php esc_html_e( 'Type:', 'linguator-multilingual-chromeai-translation' ); ?></label>
+                            <label for="lmat-fields-filter"><?php esc_html_e( 'Type:', 'easy-web-translator' ); ?></label>
                             <select id="lmat-fields-value-type-filter" name="lmat_fields_value_type_filter">
-                                <option value="all"><?php esc_html_e( 'All', 'linguator-multilingual-chromeai-translation' ); ?></option>
-                                <option value="string"><?php esc_html_e( 'String', 'linguator-multilingual-chromeai-translation' ); ?></option>
-                                <option value="array"><?php esc_html_e( 'Array', 'linguator-multilingual-chromeai-translation' ); ?></option>
+                                <option value="all"><?php esc_html_e( 'All', 'easy-web-translator' ); ?></option>
+                                <option value="string"><?php esc_html_e( 'String', 'easy-web-translator' ); ?></option>
+                                <option value="array"><?php esc_html_e( 'Array', 'easy-web-translator' ); ?></option>
                             </select>
                         </div>
                     </div>
@@ -71,11 +71,11 @@ if(!class_exists('Custom_Fields')) {
                             <table class="lmat-custom-data-table-table" id="lmat-custom-datatable">
                                 <thead>
                                     <tr>
-                                        <th><?php esc_html_e( 'Sr.No', 'linguator-multilingual-chromeai-translation' ); ?></th>
-                                        <th><?php esc_html_e( 'Field Name', 'linguator-multilingual-chromeai-translation' ); ?></th>
-                                        <th><?php esc_html_e( 'Type', 'linguator-multilingual-chromeai-translation' ); ?></th>
-                                        <th><?php esc_html_e( 'Status', 'linguator-multilingual-chromeai-translation' ); ?></th>
-                                        <th align="center"><?php esc_html_e( 'Translate', 'linguator-multilingual-chromeai-translation' ); ?></th>
+                                        <th><?php esc_html_e( 'Sr.No', 'easy-web-translator' ); ?></th>
+                                        <th><?php esc_html_e( 'Field Name', 'easy-web-translator' ); ?></th>
+                                        <th><?php esc_html_e( 'Type', 'easy-web-translator' ); ?></th>
+                                        <th><?php esc_html_e( 'Status', 'easy-web-translator' ); ?></th>
+                                        <th align="center"><?php esc_html_e( 'Translate', 'easy-web-translator' ); ?></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -112,12 +112,12 @@ if(!class_exists('Custom_Fields')) {
 
         public function update_custom_fields_content(){
             if ( ! check_ajax_referer( 'lmat_save_custom_fields', 'lmat_nonce', false ) ) {
-                wp_send_json_error( __( 'Invalid security token sent.', 'linguator-multilingual-chromeai-translation' ) );
+                wp_send_json_error( __( 'Invalid security token sent.', 'easy-web-translator' ) );
                 wp_die( '0', 400 );
             }
 
             if(!current_user_can('edit_posts')){
-                wp_send_json_error( __( 'Unauthorized', 'linguator-multilingual-chromeai-translation' ), 403 );
+                wp_send_json_error( __( 'Unauthorized', 'easy-web-translator' ), 403 );
                 wp_die( '0', 403 );
             }
             
@@ -128,14 +128,14 @@ if(!class_exists('Custom_Fields')) {
 			$existing_fields=get_option('lmat_allowed_custom_fields', false);
 
 			if(json_last_error() !== JSON_ERROR_NONE){ 
-                wp_send_json_error( __( 'Invalid JSON', 'linguator-multilingual-chromeai-translation' ) );
+                wp_send_json_error( __( 'Invalid JSON', 'easy-web-translator' ) );
                 wp_die( '0', 400 );
             }
 			
 			$allowed_fields=self::get_custom_fields_data();
 
 			if(!$allowed_fields || !is_array($allowed_fields)){
-				wp_send_json_error( __( 'Invalid allowed fields', 'linguator-multilingual-chromeai-translation' ) );
+				wp_send_json_error( __( 'Invalid allowed fields', 'easy-web-translator' ) );
 				wp_die( '0', 400 );
 			}
 
@@ -164,7 +164,7 @@ if(!class_exists('Custom_Fields')) {
 			}
 
 			if(count($sanitize_fields) < 1){
-				wp_send_json_success(array( 'message' => __( 'No changes detected. All selected custom fields are already up to date.', 'linguator-multilingual-chromeai-translation' ) ));
+				wp_send_json_success(array( 'message' => __( 'No changes detected. All selected custom fields are already up to date.', 'easy-web-translator' ) ));
 				exit;
 			}
 
@@ -173,12 +173,12 @@ if(!class_exists('Custom_Fields')) {
 			$save_settings=get_option('lmat_allowed_custom_fields', false);
 
 			if ( ! $save_settings || ! is_array( $save_settings ) || count( $save_settings ) < 1 ) {
-				wp_send_json_success( array( 'message' => __( 'No custom fields selected. Autopoly cannot translate any fields.', 'linguator-multilingual-chromeai-translation' ) ) );
+				wp_send_json_success( array( 'message' => __( 'No custom fields selected. Autopoly cannot translate any fields.', 'easy-web-translator' ) ) );
 				exit;
 			}
 
             wp_send_json_success( array(
-                'message' => __( 'Custom fields translation settings have been updated successfully. Your selected fields will now be translated automatically.', 'linguator-multilingual-chromeai-translation' ),
+                'message' => __( 'Custom fields translation settings have been updated successfully. Your selected fields will now be translated automatically.', 'easy-web-translator' ),
                 'updated_fields' => $sanitize_fields
             ) );
 

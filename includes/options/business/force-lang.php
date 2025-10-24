@@ -45,16 +45,16 @@ class Force_Lang extends Abstract_Option {
 	public function add_to_site_health_info( array $info, Options $options ): array { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		switch ( $this->get() ) {
 			case '0':
-				$value = '0: ' . __( 'The language is set from content', 'linguator-multilingual-chromeai-translation' );
+				$value = '0: ' . __( 'The language is set from content', 'easy-web-translator' );
 				break;
 			case '1':
-				$value = '1: ' . __( 'The language is set from the directory name in pretty permalinks', 'linguator-multilingual-chromeai-translation' );
+				$value = '1: ' . __( 'The language is set from the directory name in pretty permalinks', 'easy-web-translator' );
 				break;
 			case '2':
-				$value = '2: ' . __( 'The language is set from the subdomain name in pretty permalinks', 'linguator-multilingual-chromeai-translation' );
+				$value = '2: ' . __( 'The language is set from the subdomain name in pretty permalinks', 'easy-web-translator' );
 				break;
 			case '3':
-				$value = '3: ' . __( 'The language is set from different domains', 'linguator-multilingual-chromeai-translation' );
+				$value = '3: ' . __( 'The language is set from different domains', 'easy-web-translator' );
 				break;
 			default:
 				$value = '';
@@ -99,6 +99,6 @@ class Force_Lang extends Abstract_Option {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'Determine how the current language is defined.', 'linguator-multilingual-chromeai-translation' );
+		return __( 'Determine how the current language is defined.', 'easy-web-translator' );
 	}
 }

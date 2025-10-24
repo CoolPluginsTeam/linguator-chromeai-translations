@@ -80,7 +80,7 @@ class LMAT_Widget extends Widget_Base
      */
     public function get_title()
     {
-        return __('Language Switcher', 'linguator-multilingual-chromeai-translation');
+        return __('Language Switcher', 'easy-web-translator');
     }
 
     /**
@@ -121,7 +121,7 @@ class LMAT_Widget extends Widget_Base
         $this->start_controls_section(
             'section_content',
             [
-                'label' => __('Language Switcher', 'linguator-multilingual-chromeai-translation'),
+                'label' => __('Language Switcher', 'easy-web-translator'),
                 'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -129,12 +129,12 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_type',
             [
-                'label'   => __('Language Switcher Type', 'linguator-multilingual-chromeai-translation'),
+                'label'   => __('Language Switcher Type', 'easy-web-translator'),
                 'type'    => Controls_Manager::SELECT,
                 'options' => [
-                    'dropdown'   => __('Dropdown', 'linguator-multilingual-chromeai-translation'),
-                    'vertical'   => __('Vertical', 'linguator-multilingual-chromeai-translation'),
-                    'horizontal' => __('Horizontal', 'linguator-multilingual-chromeai-translation'),
+                    'dropdown'   => __('Dropdown', 'easy-web-translator'),
+                    'vertical'   => __('Vertical', 'easy-web-translator'),
+                    'horizontal' => __('Horizontal', 'easy-web-translator'),
                 ],
                 'default' => 'dropdown',
             ]
@@ -143,7 +143,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_show_flags',
             [
-                'label'   => __('Show Flags', 'linguator-multilingual-chromeai-translation'),
+                'label'   => __('Show Flags', 'easy-web-translator'),
                 'type'    => Controls_Manager::SWITCHER,
                 'default' => 'yes',
             ]
@@ -152,7 +152,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_show_names',
             [
-                'label'   => __('Show Language Names', 'linguator-multilingual-chromeai-translation'),
+                'label'   => __('Show Language Names', 'easy-web-translator'),
                 'type'    => Controls_Manager::SWITCHER,
                 'default' => 'yes',
             ]
@@ -161,7 +161,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_languages_switcher_show_code',
             [
-                'label'   => __('Show Language Codes', 'linguator-multilingual-chromeai-translation'),
+                'label'   => __('Show Language Codes', 'easy-web-translator'),
                 'type'    => Controls_Manager::SWITCHER,
                 'default' => 'yes',
             ]
@@ -170,7 +170,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_hide_current_language',
             [
-                'label'   => __('Hide Current Language', 'linguator-multilingual-chromeai-translation'),
+                'label'   => __('Hide Current Language', 'easy-web-translator'),
                 'type'    => Controls_Manager::SWITCHER,
                 'default' => 'no',
             ]
@@ -179,7 +179,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_hide_untranslated_languages',
             [
-                'label'   => __('Hide Untranslated Languages', 'linguator-multilingual-chromeai-translation'),
+                'label'   => __('Hide Untranslated Languages', 'easy-web-translator'),
                 'type'    => Controls_Manager::SWITCHER,
                 'default' => 'no',
             ]
@@ -190,7 +190,7 @@ class LMAT_Widget extends Widget_Base
         $this->start_controls_section(
             'section_style',
             [
-                'label' => __('Language Switcher Style', 'linguator-multilingual-chromeai-translation'),
+                'label' => __('Language Switcher Style', 'easy-web-translator'),
                 'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -198,19 +198,19 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_alignment',
             [
-                'label'     => __('Switcher Alignment', 'linguator-multilingual-chromeai-translation'),
+                'label'     => __('Switcher Alignment', 'easy-web-translator'),
                 'type'      => Controls_Manager::CHOOSE,
                 'options'   => [
                     'left'   => [
-                        'title' => esc_html__('Left', 'linguator-multilingual-chromeai-translation'),
+                        'title' => esc_html__('Left', 'easy-web-translator'),
                         'icon'  => 'eicon-h-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__('Center', 'linguator-multilingual-chromeai-translation'),
+                        'title' => esc_html__('Center', 'easy-web-translator'),
                         'icon'  => 'eicon-h-align-center',
                     ],
                     'right'  => [
-                        'title' => esc_html__('Right', 'linguator-multilingual-chromeai-translation'),
+                        'title' => esc_html__('Right', 'easy-web-translator'),
                         'icon'  => 'eicon-h-align-right',
                     ],
                 ],
@@ -227,11 +227,11 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_flag_ratio',
             [
-                'label'        => __('Flag Ratio', 'linguator-multilingual-chromeai-translation'),
+                'label'        => __('Flag Ratio', 'easy-web-translator'),
                 'type'         => Controls_Manager::SELECT,
                 'options'      => [
-                    '11' => __('1/1', 'linguator-multilingual-chromeai-translation'),
-                    '43' => __('4/3', 'linguator-multilingual-chromeai-translation'),
+                    '11' => __('1/1', 'easy-web-translator'),
+                    '43' => __('4/3', 'easy-web-translator'),
                 ],
                 'prefix_class' => 'lmat-switcher--aspect-ratio-',
                 'default'      => '43',
@@ -247,7 +247,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_flag_width',
             [
-                'label'      => __('Flag Width', 'linguator-multilingual-chromeai-translation'),
+                'label'      => __('Flag Width', 'easy-web-translator'),
                 'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px'],
                 'default'    => [
@@ -267,7 +267,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_flag_radius',
             [
-                'label'      => __('Flag Radius', 'linguator-multilingual-chromeai-translation'),
+                'label'      => __('Flag Radius', 'easy-web-translator'),
                 'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
                 'range'      => [
@@ -298,7 +298,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_margin',
             [
-                'label'      => esc_html__('Margin', 'linguator-multilingual-chromeai-translation'),
+                'label'      => esc_html__('Margin', 'easy-web-translator'),
                 'type'       => \Elementor\Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%', 'em', 'rem'],
                 'default'    => [
@@ -318,7 +318,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_padding',
             [
-                'label'      => __('Padding', 'linguator-multilingual-chromeai-translation'),
+                'label'      => __('Padding', 'easy-web-translator'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%', 'em', 'rem'],
                 'default'    => [
@@ -340,7 +340,7 @@ class LMAT_Widget extends Widget_Base
             \Elementor\Group_Control_Border::get_type(),
             [
                 'name'     => 'lmat_language_switcher_border',
-                'label'    => __('Border', 'linguator-multilingual-chromeai-translation'),
+                'label'    => __('Border', 'easy-web-translator'),
                 'selector' => '{{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.dropdown, {{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.horizontal li a, {{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.vertical li a',
             ]
         );
@@ -348,7 +348,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_border_radius',
             [
-                'label'      => __('Border Radius', 'linguator-multilingual-chromeai-translation'),
+                'label'      => __('Border Radius', 'easy-web-translator'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%', 'em', 'rem'],
                 'default'    => [
@@ -370,21 +370,21 @@ class LMAT_Widget extends Widget_Base
         $this->start_controls_tab(
             'lmat_language_switcher_style_tab_normal',
             [
-                'label' => __('Normal', 'linguator-multilingual-chromeai-translation'),
+                'label' => __('Normal', 'easy-web-translator'),
             ]
         );
         $this->add_group_control(
             \Elementor\Group_Control_Typography::get_type(),
             [
                 'name'     => 'lmat_language_switcher_typography',
-                'label'    => __('Typography', 'linguator-multilingual-chromeai-translation'),
+                'label'    => __('Typography', 'easy-web-translator'),
                 'selector' => '{{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.dropdown .lmat-active-language a div:not(.lmat-lang-image), {{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.dropdown .lmat-lang-item a, {{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.horizontal .lmat-lang-item a, {{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.vertical .lmat-lang-item a',
             ]
         );
         $this->add_control(
             'lmat_language_switcher_background_color',
             [
-                'label'     => __('Switcher Background Color', 'linguator-multilingual-chromeai-translation'),
+                'label'     => __('Switcher Background Color', 'easy-web-translator'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.dropdown'                     => '--lmat-normal-bg-color: {{VALUE}};',
@@ -398,7 +398,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_text_color',
             [
-                'label'     => __('Switcher Text Color', 'linguator-multilingual-chromeai-translation'),
+                'label'     => __('Switcher Text Color', 'easy-web-translator'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.dropdown .lmat-active-language,{{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.dropdown .lmat-lang-item a, {{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.horizontal .lmat-lang-item a, {{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.vertical .lmat-lang-item a' => '--lmat-normal-text-color: {{VALUE}};',
@@ -410,21 +410,21 @@ class LMAT_Widget extends Widget_Base
         $this->start_controls_tab(
             'lmat_language_switcher_style_tab_hover',
             [
-                'label' => __('Hover', 'linguator-multilingual-chromeai-translation'),
+                'label' => __('Hover', 'easy-web-translator'),
             ]
         );
         $this->add_group_control(
             \Elementor\Group_Control_Typography::get_type(),
             [
                 'name'     => 'lmat_language_switcher_typography_hover',
-                'label'    => __('Typography', 'linguator-multilingual-chromeai-translation'),
+                'label'    => __('Typography', 'easy-web-translator'),
                 'selector' => '{{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.dropdown .lmat-active-language:hover,{{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.dropdown .lmat-lang-item a:hover, {{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.horizontal .lmat-lang-item a:hover, {{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.vertical .lmat-lang-item a:hover',
             ]
         );
         $this->add_control(
             'lmat_language_switcher_background_color_hover',
             [
-                'label'     => __('Switcher Background Color', 'linguator-multilingual-chromeai-translation'),
+                'label'     => __('Switcher Background Color', 'easy-web-translator'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.dropdown:hover'                     => '--lmat-normal-bg-color: {{VALUE}};',
@@ -438,7 +438,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_text_color_hover',
             [
-                'label'     => __('Switcher Text Color', 'linguator-multilingual-chromeai-translation'),
+                'label'     => __('Switcher Text Color', 'easy-web-translator'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.dropdown:hover .lmat-active-language,{{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.dropdown .lmat-lang-item:hover a, {{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.horizontal .lmat-lang-item a:hover, {{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.vertical .lmat-lang-item a:hover' => '--lmat-normal-text-color: {{VALUE}};',
@@ -454,7 +454,7 @@ class LMAT_Widget extends Widget_Base
         $this->start_controls_section(
             'section_dropdown_style',
             [
-                'label'     => __('Dropdown Style', 'linguator-multilingual-chromeai-translation'),
+                'label'     => __('Dropdown Style', 'easy-web-translator'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'lmat_language_switcher_type' => 'dropdown',
@@ -465,11 +465,11 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_dropown_direction',
             [
-                'label'        => __('Dropdown Direction', 'linguator-multilingual-chromeai-translation'),
+                'label'        => __('Dropdown Direction', 'easy-web-translator'),
                 'type'         => Controls_Manager::SELECT,
                 'options'      => [
-                    'up'   => __('Up', 'linguator-multilingual-chromeai-translation'),
-                    'down' => __('Down', 'linguator-multilingual-chromeai-translation'),
+                    'up'   => __('Up', 'easy-web-translator'),
+                    'down' => __('Down', 'easy-web-translator'),
                 ],
                 'default'      => 'down',
                 'condition'    => [
@@ -482,7 +482,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_icon',
             [
-                'label'                  => __('Switcher Icon', 'linguator-multilingual-chromeai-translation'),
+                'label'                  => __('Switcher Icon', 'easy-web-translator'),
                 'type'                   => Controls_Manager::ICONS,
                 'default'                => [
                     'value'   => 'fas fa-caret-down',
@@ -501,7 +501,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_icon_size',
             [
-                'label'      => __('Icon Size', 'linguator-multilingual-chromeai-translation'),
+                'label'      => __('Icon Size', 'easy-web-translator'),
                 'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
                 'range'      => [
@@ -528,7 +528,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_icon_color',
             [
-                'label'     => __('Icon Color', 'linguator-multilingual-chromeai-translation'),
+                'label'     => __('Icon Color', 'easy-web-translator'),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'lmat_language_switcher_type' => 'dropdown',
@@ -542,7 +542,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_icon_spacing',
             [
-                'label'      => __('Icon Spacing', 'linguator-multilingual-chromeai-translation'),
+                'label'      => __('Icon Spacing', 'easy-web-translator'),
                 'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
                 'range'      => [
@@ -564,7 +564,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_dropdwon_spacing',
             [
-                'label'      => __('Dropdown Spacing', 'linguator-multilingual-chromeai-translation'),
+                'label'      => __('Dropdown Spacing', 'easy-web-translator'),
                 'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px'],
                 'range'      => [
@@ -589,18 +589,18 @@ class LMAT_Widget extends Widget_Base
             \Elementor\Group_Control_Border::get_type(),
             [
                 'name'           => 'lmat_language_switcher_dropdown_list_border',
-                'label'          => __('Dropdown List Border', 'linguator-multilingual-chromeai-translation'),
+                'label'          => __('Dropdown List Border', 'easy-web-translator'),
                 'separator'      => 'before',
                 'selector'       => '{{WRAPPER}} .lmat-main-wrapper .lmat-wrapper.dropdown ul',
                 'fields_options' => [
                     'border' => [
-                        'label' => __('Dropdown List Border', 'linguator-multilingual-chromeai-translation'),
+                        'label' => __('Dropdown List Border', 'easy-web-translator'),
                     ],
                     'width'  => [
-                        'label' => __('Border Width', 'linguator-multilingual-chromeai-translation'),
+                        'label' => __('Border Width', 'easy-web-translator'),
                     ],
                     'color'  => [
-                        'label' => __('Border Color', 'linguator-multilingual-chromeai-translation'),
+                        'label' => __('Border Color', 'easy-web-translator'),
                     ],
                 ],
             ]
@@ -609,7 +609,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_dropdown_language_item_separator',
             [
-                'label'      => __('Language Item Separator', 'linguator-multilingual-chromeai-translation'),
+                'label'      => __('Language Item Separator', 'easy-web-translator'),
                 'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px'],
                 'range'      => [
@@ -628,7 +628,7 @@ class LMAT_Widget extends Widget_Base
         $this->add_control(
             'lmat_language_switcher_dropdown_language_item_separator_color',
             [
-                'label'     => __('Separator Color', 'linguator-multilingual-chromeai-translation'),
+                'label'     => __('Separator Color', 'easy-web-translator'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .lmat-wrapper.dropdown ul.lmat-language-list li.lmat-lang-item:not(:last-child)' => 'border-bottom-color: {{VALUE}};',

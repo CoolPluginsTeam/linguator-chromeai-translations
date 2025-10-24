@@ -38,8 +38,8 @@ class LMAT_Settings_Sync extends LMAT_Settings_Module {
 			$linguator,
 			array(
 				'module'      => 'sync',
-				'title'       => __( 'Synchronization', 'linguator-multilingual-chromeai-translation' ),
-				'description' => __( 'The synchronization options allow to maintain exact same values (or translations in the case of taxonomies and page parent) of meta content between the translations of a post or page.', 'linguator-multilingual-chromeai-translation' ),
+				'title'       => __( 'Synchronization', 'easy-web-translator' ),
+				'description' => __( 'The synchronization options allow to maintain exact same values (or translations in the case of taxonomies and page parent) of meta content between the translations of a post or page.', 'easy-web-translator' ),
 			)
 		);
 	}
@@ -89,17 +89,17 @@ class LMAT_Settings_Sync extends LMAT_Settings_Module {
 	 */
 	public static function list_metas_to_sync() {
 		return array(
-			'taxonomies'        => __( 'Taxonomies', 'linguator-multilingual-chromeai-translation' ),
-			'post_meta'         => __( 'Custom fields', 'linguator-multilingual-chromeai-translation' ),
-			'comment_status'    => __( 'Comment status', 'linguator-multilingual-chromeai-translation' ),
-			'ping_status'       => __( 'Ping status', 'linguator-multilingual-chromeai-translation' ),
-			'sticky_posts'      => __( 'Sticky posts', 'linguator-multilingual-chromeai-translation' ),
-			'post_date'         => __( 'Published date', 'linguator-multilingual-chromeai-translation' ),
-			'post_format'       => __( 'Post format', 'linguator-multilingual-chromeai-translation' ),
-			'post_parent'       => __( 'Page parent', 'linguator-multilingual-chromeai-translation' ),
-			'_wp_page_template' => __( 'Page template', 'linguator-multilingual-chromeai-translation' ),
-			'menu_order'        => __( 'Page order', 'linguator-multilingual-chromeai-translation' ),
-			'_thumbnail_id'     => __( 'Featured image', 'linguator-multilingual-chromeai-translation' ),
+			'taxonomies'        => __( 'Taxonomies', 'easy-web-translator' ),
+			'post_meta'         => __( 'Custom fields', 'easy-web-translator' ),
+			'comment_status'    => __( 'Comment status', 'easy-web-translator' ),
+			'ping_status'       => __( 'Ping status', 'easy-web-translator' ),
+			'sticky_posts'      => __( 'Sticky posts', 'easy-web-translator' ),
+			'post_date'         => __( 'Published date', 'easy-web-translator' ),
+			'post_format'       => __( 'Post format', 'easy-web-translator' ),
+			'post_parent'       => __( 'Page parent', 'easy-web-translator' ),
+			'_wp_page_template' => __( 'Page template', 'easy-web-translator' ),
+			'menu_order'        => __( 'Page order', 'easy-web-translator' ),
+			'_thumbnail_id'     => __( 'Featured image', 'easy-web-translator' ),
 		);
 	}
 }

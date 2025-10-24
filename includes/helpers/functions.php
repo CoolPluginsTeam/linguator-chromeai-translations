@@ -171,7 +171,7 @@ function lmat_add_notice( WP_Error $error ) {
 			)
 		);
 
-		add_settings_error( 'linguator-multilingual-chromeai-translation', $error_code, $message, $type );
+		add_settings_error( 'easy-web-translator', $error_code, $message, $type );
 	}
 }
 

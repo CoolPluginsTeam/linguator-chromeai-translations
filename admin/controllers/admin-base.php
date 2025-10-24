@@ -136,13 +136,13 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 		global $admin_page_hooks;
 
 		// Prepare the list of tabs
-		$tabs = array( 'lang' => __( 'Manage Languages', 'linguator-multilingual-chromeai-translation' ) );
+		$tabs = array( 'lang' => __( 'Manage Languages', 'easy-web-translator' ) );
 
 		// Only if at least one language has been created
 		$languages = $this->model->get_languages_list();
 		
 
-		$tabs['settings'] = __( 'Settings', 'linguator-multilingual-chromeai-translation' );
+		$tabs['settings'] = __( 'Settings', 'easy-web-translator' );
 
 		/**
 		 * Filter the list of tabs in Linguator settings
@@ -159,7 +159,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 			$page = 'lang' === $tab ? 'lmat' : "lmat_$tab";
 			if ( empty( $parent ) ) {
 				$parent = $page;
-				add_menu_page( $title, __( 'Linguator', 'linguator-multilingual-chromeai-translation' ), 'manage_options', $page, '__return_null', 'dashicons-translation' );
+				add_menu_page( $title, __( 'Linguator', 'easy-web-translator' ), 'manage_options', $page, '__return_null', 'dashicons-translation' );
 				$admin_page_hooks[ $page ] = 'languages'; // Hack to avoid the localization of the hook name.
 			}
 
@@ -527,7 +527,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 	public function admin_bar_menu( $wp_admin_bar ) {
 		$all_item = (object) array(
 			'slug' => 'all',
-			'name' => __( 'Show all languages', 'linguator-multilingual-chromeai-translation' ),
+			'name' => __( 'Show all languages', 'easy-web-translator' ),
 			'flag' => '<span class="ab-icon"></span>',
 		);
 
@@ -536,7 +536,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 		$title = sprintf(
 			'<span class="ab-label"%1$s><span class="screen-reader-text">%2$s</span>%3$s</span>',
 			$selected instanceof LMAT_Language ? sprintf( ' lang="%s"', esc_attr( $selected->get_locale( 'display' ) ) ) : '',
-			__( 'Filters content by language', 'linguator-multilingual-chromeai-translation' ),
+			__( 'Filters content by language', 'easy-web-translator' ),
 			esc_html( $selected->name )
 		);
 
@@ -565,7 +565,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 				'title' => $selected->flag . $title,
 				'href'  => esc_url( add_query_arg( 'lang', $selected->slug, remove_query_arg( 'paged' ) ) ),
 				'meta'  => array(
-					'title' => __( 'Filters content by language', 'linguator-multilingual-chromeai-translation' ),
+					'title' => __( 'Filters content by language', 'easy-web-translator' ),
 					'class' => 'all' === $selected->slug ? '' : 'lmat-filtered-languages',
 				),
 			)

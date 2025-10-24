@@ -87,17 +87,17 @@ class LMAT_Admin_Site_Health {
 
 		// Get effective translated post types and taxonomies. The options doesn't show all translated ones.
 		if ( ! empty( $this->model->get_translated_post_types() ) ) {
-			$fields['cpt']['label'] = __( 'Post Types', 'linguator-multilingual-chromeai-translation' );
+			$fields['cpt']['label'] = __( 'Post Types', 'easy-web-translator' );
 			$fields['cpt']['value'] = implode( ', ', $this->model->get_translated_post_types() );
 		}
 		if ( ! empty( $this->model->get_translated_taxonomies() ) ) {
-			$fields['taxonomies']['label'] = __( 'Custom Taxonomies', 'linguator-multilingual-chromeai-translation' );
+			$fields['taxonomies']['label'] = __( 'Custom Taxonomies', 'easy-web-translator' );
 			$fields['taxonomies']['value'] = implode( ', ', $this->model->get_translated_taxonomies() );
 		}
 
 		$debug_info['lmat_options'] = array(
 			/* translators: placeholder is the plugin name */
-			'label'  => sprintf( __( '%s options', 'linguator-multilingual-chromeai-translation' ), LINGUATOR ),
+			'label'  => sprintf( __( '%s options', 'easy-web-translator' ), LINGUATOR ),
 			'fields' => $fields,
 		);
 
@@ -139,9 +139,9 @@ class LMAT_Admin_Site_Health {
 
 			$debug_info[ 'lmat_language_' . $language->slug ] = array(
 				/* translators: %1$s placeholder is the language name, %2$s is the language code */
-				'label'  => sprintf( __( 'Language: %1$s - %2$s', 'linguator-multilingual-chromeai-translation' ), $language->name, $language->slug ),
+				'label'  => sprintf( __( 'Language: %1$s - %2$s', 'easy-web-translator' ), $language->name, $language->slug ),
 				/* translators: placeholder is the flag image */
-				'description' => sprintf( esc_html__( 'Flag used in the language switcher: %s', 'linguator-multilingual-chromeai-translation' ), $this->get_flag( $language ) ),
+				'description' => sprintf( esc_html__( 'Flag used in the language switcher: %s', 'easy-web-translator' ), $this->get_flag( $language ) ),
 				'fields' => $fields,
 			);
 		}
@@ -186,7 +186,7 @@ class LMAT_Admin_Site_Health {
 	 */
 	protected function get_flag( $language ) {
 		$flag = $language->get_display_flag();
-		return empty( $flag ) ? '<span>' . esc_html__( 'Undefined', 'linguator-multilingual-chromeai-translation' ) . '</span>' : $flag;
+		return empty( $flag ) ? '<span>' . esc_html__( 'Undefined', 'easy-web-translator' ) . '</span>' : $flag;
 	}
 
 	/**
@@ -200,7 +200,7 @@ class LMAT_Admin_Site_Health {
 		// Add the test only if the homepage displays static page.
 		if ( 'page' === get_option( 'show_on_front' ) && get_option( 'page_on_front' ) ) {
 			$tests['direct']['lmat_homepage'] = array(
-				'label' => esc_html__( 'Homepage translated', 'linguator-multilingual-chromeai-translation' ),
+				'label' => esc_html__( 'Homepage translated', 'easy-web-translator' ),
 				'test'  => array( $this, 'homepage_test' ),
 			);
 		}
@@ -215,7 +215,7 @@ class LMAT_Admin_Site_Health {
 	 */
 	public function homepage_test() {
 		$result = array(
-			'label'       => __( 'All languages have a translated homepage', 'linguator-multilingual-chromeai-translation' ),
+			'label'       => __( 'All languages have a translated homepage', 'easy-web-translator' ),
 			'status'      => 'good',
 			'badge'       => array(
 				'label' => LINGUATOR,
@@ -223,7 +223,7 @@ class LMAT_Admin_Site_Health {
 			),
 			'description' => sprintf(
 				'<p>%s</p>',
-				esc_html__( 'It is mandatory to translate the static front page in all languages.', 'linguator-multilingual-chromeai-translation' )
+				esc_html__( 'It is mandatory to translate the static front page in all languages.', 'easy-web-translator' )
 			),
 			'actions'     => '',
 			'test'        => 'lmat_homepage',
@@ -233,7 +233,7 @@ class LMAT_Admin_Site_Health {
 
 		if ( ! empty( $message ) ) {
 			$result['status']      = 'critical';
-			$result['label']       = __( 'The homepage is not translated in all languages', 'linguator-multilingual-chromeai-translation' );
+			$result['label']       = __( 'The homepage is not translated in all languages', 'easy-web-translator' );
 			$result['description'] = sprintf( '<p>%s</p>', $message );
 		}
 		return $result;
@@ -253,14 +253,14 @@ class LMAT_Admin_Site_Health {
 		$posts_no_lang = $this->get_post_ids_without_lang();
 
 		if ( ! empty( $posts_no_lang ) ) {
-			$fields['post-no-lang']['label'] = __( 'Posts without language', 'linguator-multilingual-chromeai-translation' );
+			$fields['post-no-lang']['label'] = __( 'Posts without language', 'easy-web-translator' );
 			$fields['post-no-lang']['value'] = $posts_no_lang;
 		}
 
 		$terms_no_lang = $this->get_term_ids_without_lang();
 
 		if ( ! empty( $terms_no_lang ) ) {
-			$fields['term-no-lang']['label'] = __( 'Terms without language', 'linguator-multilingual-chromeai-translation' );
+			$fields['term-no-lang']['label'] = __( 'Terms without language', 'easy-web-translator' );
 			$fields['term-no-lang']['value'] = $terms_no_lang;
 		}
 
@@ -268,7 +268,7 @@ class LMAT_Admin_Site_Health {
 		if ( ! empty( $fields ) ) {
 			$debug_info['lmat_warnings'] = array(
 				/* translators: placeholder is the plugin name */
-				'label'  => sprintf( __( '%s information', 'linguator-multilingual-chromeai-translation' ), LINGUATOR ),
+				'label'  => sprintf( __( '%s information', 'easy-web-translator' ), LINGUATOR ),
 				'fields' => $fields,
 			);
 		}

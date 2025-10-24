@@ -46,9 +46,9 @@ class Redirect_Lang extends Abstract_Boolean {
 	 */
 	public function add_to_site_health_info( array $info, Options $options ): array { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		if ( $this->get() ) {
-			$value = '1: ' . __( 'The front page URL contains the language code instead of the page name or page id', 'linguator-multilingual-chromeai-translation' );
+			$value = '1: ' . __( 'The front page URL contains the language code instead of the page name or page id', 'easy-web-translator' );
 		} else {
-			$value = '0: ' . __( 'The front page URL contains the page name or page id instead of the language code', 'linguator-multilingual-chromeai-translation' );
+			$value = '0: ' . __( 'The front page URL contains the page name or page id instead of the language code', 'easy-web-translator' );
 		}
 
 		return $this->get_site_health_info( $info, $value, self::key() );
@@ -64,7 +64,7 @@ class Redirect_Lang extends Abstract_Boolean {
 	protected function get_description(): string {
 		return sprintf(
 			/* translators: %1$s and %2$s are "true/false" values. */
-			__( 'Remove the page name or page ID from the URL of the front page: %1$s to remove, %2$s to keep.', 'linguator-multilingual-chromeai-translation' ),
+			__( 'Remove the page name or page ID from the URL of the front page: %1$s to remove, %2$s to keep.', 'easy-web-translator' ),
 			'`true`',
 			'`false`'
 		);

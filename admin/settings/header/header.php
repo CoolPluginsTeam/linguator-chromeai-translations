@@ -81,19 +81,19 @@ if ( ! class_exists( 'Linguator\Settings\Header\Header' ) ) {
 			}
 
 			$tabs = array(
-				'general'     => array( 'title' => __( 'General Settings', 'linguator-multilingual-chromeai-translation' ) ),
-				'lang'   => array( 'title' => __( 'Manage Languages', 'linguator-multilingual-chromeai-translation' ), 'redirect' => true, 'redirect_url' => 'lmat' ),
-				'translation' => array( 'title' => __( 'AI Translation', 'linguator-multilingual-chromeai-translation' ) ),
-				'switcher'    => array( 'title' => __( 'Language Switcher', 'linguator-multilingual-chromeai-translation' ) ),
-				'supported-blocks' => array( 'title' => __( 'Supported Blocks', 'linguator-multilingual-chromeai-translation' ), 'redirect' => true, 'redirect_url' => 'lmat_settings&tab=supported-blocks' ),
-				'custom-fields' => array( 'title' => __( 'Custom Fields', 'linguator-multilingual-chromeai-translation' ), 'redirect' => true, 'redirect_url' => 'lmat_settings&tab=custom-fields' ),
+				'general'     => array( 'title' => __( 'General Settings', 'easy-web-translator' ) ),
+				'lang'   => array( 'title' => __( 'Manage Languages', 'easy-web-translator' ), 'redirect' => true, 'redirect_url' => 'lmat' ),
+				'translation' => array( 'title' => __( 'AI Translation', 'easy-web-translator' ) ),
+				'switcher'    => array( 'title' => __( 'Language Switcher', 'easy-web-translator' ) ),
+				'supported-blocks' => array( 'title' => __( 'Supported Blocks', 'easy-web-translator' ), 'redirect' => true, 'redirect_url' => 'lmat_settings&tab=supported-blocks' ),
+				'custom-fields' => array( 'title' => __( 'Custom Fields', 'easy-web-translator' ), 'redirect' => true, 'redirect_url' => 'lmat_settings&tab=custom-fields' ),
 			);
 
             $languages = $this->model->get_languages_list();
             $static_strings_visibility = $this->model->options->get( 'static_strings_visibility' );
             if(!empty($languages) && $static_strings_visibility){
                 $tabs['strings']     = array(
-					'title'        => __( 'Static Strings', 'linguator-multilingual-chromeai-translation' ),
+					'title'        => __( 'Static Strings', 'easy-web-translator' ),
 					'redirect'     => true,
 					'redirect_url' => 'lmat_settings&tab=strings',
 				);

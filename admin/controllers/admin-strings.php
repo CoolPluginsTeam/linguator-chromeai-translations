@@ -58,7 +58,7 @@ class LMAT_Admin_Strings {
 	 *
 	 * @param string $name      A unique name for the string
 	 * @param string $string    The string to register
-	 * @param string $context   Optional, the group in which the string is registered, defaults to 'linguator-multilingual-chromeai-translation'
+	 * @param string $context   Optional, the group in which the string is registered, defaults to 'easy-web-translator'
 	 * @param bool   $multiline Optional, whether the string table should display a multiline textarea or a single line input, defaults to single line
 	 * @return void
 	 */
@@ -77,8 +77,8 @@ class LMAT_Admin_Strings {
 	 */
 	public static function &get_strings() {
 		self::$default_strings = array(
-			'widget_title' => __( 'Widget title', 'linguator-multilingual-chromeai-translation' ),
-			'widget_text'  => __( 'Widget text', 'linguator-multilingual-chromeai-translation' ),
+			'widget_title' => __( 'Widget title', 'easy-web-translator' ),
+			'widget_text'  => __( 'Widget text', 'easy-web-translator' ),
 		);
 
 		global $wp_registered_widgets;

@@ -66,7 +66,7 @@ class LMAT_Admin_Filters_Media extends LMAT_Admin_Filters_Post_Base {
 
 		$dropdown = new LMAT_Walker_Dropdown();
 		$fields['language'] = array(
-			'label' => __( 'Language', 'linguator-multilingual-chromeai-translation' ),
+			'label' => __( 'Language', 'easy-web-translator' ),
 			'input' => 'html',
 			'html'  => $dropdown->walk(
 				$this->model->get_languages_list(),

@@ -59,12 +59,12 @@ class LMAT_Switcher {
 	 */
 	public static function get_switcher_options( $type = 'widget', $key = 'string' ) {
 		$options = array(
-			'dropdown'               => array( 'string' => __( 'Displays as a dropdown', 'linguator-multilingual-chromeai-translation' ), 'default' => 0 ),
-			'show_names'             => array( 'string' => __( 'Displays language names', 'linguator-multilingual-chromeai-translation' ), 'default' => 1 ),
-			'show_flags'             => array( 'string' => __( 'Displays flags', 'linguator-multilingual-chromeai-translation' ), 'default' => 0 ),
-			'force_home'             => array( 'string' => __( 'Forces link to front page', 'linguator-multilingual-chromeai-translation' ), 'default' => 0 ),
-			'hide_current'           => array( 'string' => __( 'Hides the current language', 'linguator-multilingual-chromeai-translation' ), 'default' => 0 ),
-			'hide_if_no_translation' => array( 'string' => __( 'Hides languages with no translation', 'linguator-multilingual-chromeai-translation' ), 'default' => 0 ),
+			'dropdown'               => array( 'string' => __( 'Displays as a dropdown', 'easy-web-translator' ), 'default' => 0 ),
+			'show_names'             => array( 'string' => __( 'Displays language names', 'easy-web-translator' ), 'default' => 1 ),
+			'show_flags'             => array( 'string' => __( 'Displays flags', 'easy-web-translator' ), 'default' => 0 ),
+			'force_home'             => array( 'string' => __( 'Forces link to front page', 'easy-web-translator' ), 'default' => 0 ),
+			'hide_current'           => array( 'string' => __( 'Hides the current language', 'easy-web-translator' ), 'default' => 0 ),
+			'hide_if_no_translation' => array( 'string' => __( 'Hides languages with no translation', 'easy-web-translator' ), 'default' => 0 ),
 		);
 		return wp_list_pluck( $options, $key );
 	}

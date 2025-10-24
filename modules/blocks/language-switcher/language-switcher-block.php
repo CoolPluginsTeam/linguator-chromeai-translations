@@ -49,7 +49,7 @@ class LMAT_Language_Switcher_Block extends LMAT_Abstract_Language_Switcher_Block
 			return '';
 		}
 
-		$aria_label = __( 'Choose a language', 'linguator-multilingual-chromeai-translation' );
+		$aria_label = __( 'Choose a language', 'easy-web-translator' );
 		if ( $attributes['dropdown'] ) {
 			$switcher_output = '<label class="screen-reader-text" for="' . esc_attr( 'lang_choice_' . $attributes['dropdown'] ) . '">' . esc_html( $aria_label ) . '</label>' . $switcher_output;
 

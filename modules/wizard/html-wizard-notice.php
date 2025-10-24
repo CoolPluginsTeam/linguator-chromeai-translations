@@ -22,14 +22,14 @@ $wizard_url = add_query_arg(
 	<?php
 	printf(
 		/* translators: %s is the plugin name */
-		esc_html__( 'Welcome to %s', 'linguator-multilingual-chromeai-translation' ),
+		esc_html__( 'Welcome to %s', 'easy-web-translator' ),
 		esc_html( LINGUATOR )
 	);
 	?>
 	</strong>
 	<?php
 	echo ' &#8211; ';
-	esc_html_e( 'You&lsquo;re almost ready to translate your contents!', 'linguator-multilingual-chromeai-translation' );
+	esc_html_e( 'You&lsquo;re almost ready to translate your contents!', 'easy-web-translator' );
 	?>
 </p>
 <p class="buttons">
@@ -37,12 +37,12 @@ $wizard_url = add_query_arg(
 		href="<?php echo esc_url( $wizard_url ); ?>"
 		class="button button-primary"
 	>
-		<?php esc_html_e( 'Run the Setup Wizard', 'linguator-multilingual-chromeai-translation' ); ?>
+		<?php esc_html_e( 'Run the Setup Wizard', 'easy-web-translator' ); ?>
 	</a>
 	<a
 		class="button button-secondary skip"
 		href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'lmat-hide-notice', 'wizard' ), 'wizard', '_lmat_notice_nonce' ) ); ?>"
 	>
-		<?php esc_html_e( 'Skip setup', 'linguator-multilingual-chromeai-translation' ); ?>
+		<?php esc_html_e( 'Skip setup', 'easy-web-translator' ); ?>
 	</a>
 </p>

@@ -18,11 +18,11 @@ export default (props) => {
             title: "Chrome Built-in AI",
             SettingBtnText: "Translate",
             serviceLabel: "Chrome AI Translator",
-            heading: sprintf(__("Translate Using %s", "linguator-multilingual-chromeai-translation"), "Chrome built-in API"),
+            heading: sprintf(__("Translate Using %s", "easy-web-translator"), "Chrome built-in API"),
             Docs: "https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=lmat_plugin&utm_medium=inside&utm_campaign=docs&utm_content=popup_chrome_pro",
             BetaEnabled: true,
             ButtonDisabled: props.localAiTranslatorButtonDisabled,
-            ErrorMessage: props.localAiTranslatorButtonDisabled ? <div className="lmat-page-translation-provider-error button button-primary" onClick={() => openErrorModalHandler("localAiTranslator")}><img src={errorIcon} alt="error" /> {__('View Error', 'linguator-multilingual-chromeai-translation')}</div> : <></>,
+            ErrorMessage: props.localAiTranslatorButtonDisabled ? <div className="lmat-page-translation-provider-error button button-primary" onClick={() => openErrorModalHandler("localAiTranslator")}><img src={errorIcon} alt="error" /> {__('View Error', 'easy-web-translator')}</div> : <></>,
             Logo: <ChromeIcon className="icon-size"/>
         }
     };
