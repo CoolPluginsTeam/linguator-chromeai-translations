@@ -41,8 +41,6 @@ abstract class Abstract_List extends Abstract_Option {
 	 * Possible values are `'string'`, `'null'`, `'number'` (float), `'integer'`, `'boolean'`,
 	 * `'array'` (array with integer keys), and `'object'` (array with string keys).
 	 *
-	 *  
-	 * @see https://developer.wordpress.org/rest-api/extending-the-rest-api/schema/#primitive-types
 	 *
 	 * @return string
 	 *

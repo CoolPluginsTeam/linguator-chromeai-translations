@@ -19,7 +19,7 @@ use Linguator\Includes\Walkers\LMAT_Walker_Dropdown;
  *
  *  
  *
- * Add new options to {@see https://developer.wordpress.org/reference/classes/wp_widget/ WP_Widget} and saves them.
+ * Add new options to  WP_Widget and saves them.
  */
 class LMAT_Filters_Widgets_Options {
 

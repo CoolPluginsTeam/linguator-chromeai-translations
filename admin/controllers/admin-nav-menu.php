@@ -73,9 +73,6 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 		add_action( 'load-nav-menus.php', array( $this, 'maybe_update_selected_menu' ), 10 );
 		add_action( 'admin_init', array( $this, 'maybe_update_selected_menu_on_init' ), 10 );
 		add_filter( 'wp_redirect', array( $this, 'preserve_lang_param_on_redirect' ), 10, 2 );
-		
-		// FIXME is it possible to choose the order ( after theme locations in WP3.5 and older ) ?
-		// FIXME not displayed if Linguator is activated before the first time the user goes to nav menus http://core.trac.wordpress.org/ticket/16828
 		add_meta_box( 'lmat_lang_switch_box', __( 'Language switcher', 'linguator-multilingual-chromeai-translation' ), array( $this, 'lang_switch' ), 'nav-menus', 'side', 'high' );
 
 		$this->create_nav_menu_locations();
@@ -250,7 +247,6 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 
 			// Customizer
 			// Don't reset locations in this case.
-			// see http://wordpress.org/support/topic/menus-doesnt-show-and-not-saved-in-theme-settings-multilingual-site
 			elseif ( isset( $_POST['action'] ) && 'customize_save' == $_POST['action'] ) {
 				check_ajax_referer( 'save-customize_' . $GLOBALS['wp_customize']->get_stylesheet(), 'nonce' );
 			}

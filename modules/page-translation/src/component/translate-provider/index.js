@@ -18,7 +18,7 @@ export default (props) => {
             title: "Chrome Built-in AI",
             SettingBtnText: "Translate",
             serviceLabel: "Chrome AI Translator",
-            heading: sprintf(__("Translate Using %s", "linguator-multilingual-ai-translation"), "Chrome built-in API"),
+            heading: sprintf(__("Translate Using %s", "linguator-multilingual-chromeai-translation"), "Chrome built-in API"),
             Docs: "https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=lmat_plugin&utm_medium=inside&utm_campaign=docs&utm_content=popup_chrome_pro",
             BetaEnabled: true,
             ButtonDisabled: props.localAiTranslatorButtonDisabled,

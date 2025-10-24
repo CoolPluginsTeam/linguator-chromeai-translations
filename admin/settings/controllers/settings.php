@@ -114,22 +114,16 @@ class LMAT_Settings extends LMAT_Admin_Base {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only parameter for filtering
 		$selected_tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : '';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only parameter for filtering
-		$loco=isset($_GET['loco']) ? sanitize_text_field(wp_unslash($_GET['loco'])) : '';
 		
 		if ( isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			$this->active_tab = 'lmat' === $_GET['page'] ? 'lang' : substr( sanitize_key( $_GET['page'] ), 5 ); // phpcs:ignore WordPress.Security.NonceVerification
-		}
-
-		
-		if($loco === 'true'){
-			add_action( 'load-languages_page_lmat_settings', array( $this, 'loco_page_redirect' ) );
 		}
 
 		if($this->active_tab === 'lang'){
 			$selected_tab='lang';
 		}
 
-		if('loco' === $selected_tab || '' === $selected_tab){
+		if('' === $selected_tab){
 			$this->selected_tab = 'general';
 			$selected_tab='general';
 		}
@@ -239,62 +233,6 @@ class LMAT_Settings extends LMAT_Admin_Base {
 			)
 		);
 	}
-
-	/**
-	 * Adds screen options in the localizations admin panel
-	 *
-	 *  
-	 *
-	 * @return void
-	 */
-	public function loco_page_assets() {
-
-		if(!function_exists('is_plugin_active')){
-			include_once(ABSPATH . 'wp-admin/includes/plugin.php');
-		}
-		$loco_plugin_active=is_plugin_active('loco-translate/loco.php');
-		$loco_install="false";
-		
-		if($loco_plugin_active){
-			$loco_install="true";
-			$plugin_info_url=admin_url('admin.php?page=loco');
-		}else{
-
-			if ( ! current_user_can( 'install_plugins' ) ) {
-				return;
-			}
-
-			// Load ThickBox and updates JS
-			add_thickbox();
-			wp_enqueue_script( 'updates' );
-
-			$plugin_info_url=admin_url('plugin-install.php?tab=plugin-information&plugin=loco-translate&TB_iframe=true&width=772&height=800');
-		}
-		
-
-		wp_enqueue_script('lmat-loco-redirect-script', plugins_url('admin/assets/js/loco-redirect-script.js', LINGUATOR_ROOT_FILE), array('jquery'), LINGUATOR_VERSION, true);
-		wp_localize_script('lmat-loco-redirect-script', 'lmat_loco_redirect_script', array('admin_' => esc_url(admin_url('admin.php?page=lmat_settings')), 'loco_iframe_page_url' => array("url" => $plugin_info_url, "title" => esc_js( __( 'Plugin: Loco Translate', 'linguator-multilingual-chromeai-translation' ) )), 'loco_install' => $loco_install));
-	}
-
-	/**
-	 * Redirects to the loco page
-	 *
-	 *  
-	 *
-	 * @return void
-	 */
-	public function loco_page_redirect() {
-		if(!function_exists('is_plugin_active')){
-			include_once(ABSPATH . 'wp-admin/includes/plugin.php');
-		}
-
-		$loco_plugin_active=is_plugin_active('loco-translate/loco.php');
-
-		if($loco_plugin_active){
-			wp_safe_redirect(admin_url('admin.php?page=loco'));
-		};
-	}
-
 	/**
 	 * Saves the number of rows in the languages or strings table set by this user.
 	 *
@@ -628,13 +566,11 @@ class LMAT_Settings extends LMAT_Admin_Base {
 					'dismiss_notice' => esc_html__( 'Dismiss this notice.', 'linguator-multilingual-chromeai-translation' ),
 					'api_url'        => rest_url( 'lmat/v1/' ),
 					'nonce'          => wp_create_nonce( 'wp_rest' ),
-					'activate_nonce' => wp_create_nonce( 'activate-plugin_automatic-translator-addon-for-loco-translate/automatic-translator-addon-for-loco-translate.php' ),
 					'languages'      => $this->model->get_languages_list(),
 					'all_languages'  => self::get_predefined_languages(),
 					'home_url'       => get_home_url(),
 					'modules'        => ( $this->modules ? array_keys( $this->modules ) : array() ),
 					'active_tab'     => $this->active_tab,
-					'locoai_plugin_status' => $this->get_locoai_plugin_status(),
 					'sync_options'   => $this->get_sync_options(),
 					'language_switcher_options' => $this->get_language_switcher_options(),
 					'translations_data' => $translations_data,
@@ -681,8 +617,6 @@ class LMAT_Settings extends LMAT_Admin_Base {
 
 			wp_enqueue_style( 'lmat_selectmenu', plugins_url( 'admin/assets/css/build/selectmenu' . $suffix . '.css', LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION );
 		}
-
-		$this->loco_page_assets();
 	}
 
 	function lmat_format_time_taken($time_taken) {
@@ -797,32 +731,5 @@ class LMAT_Settings extends LMAT_Admin_Base {
 		}
 
 		return $languages;
-	}
-
-	/**
-	 * Check LocoAI plugin installation and activation status.
-	 *
-	 *  
-	 *
-	 * @return array Plugin status information
-	 */
-	private function get_locoai_plugin_status() {
-		// Ensure plugin functions are available
-		if ( ! function_exists( 'get_plugins' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
-		
-		// Check if plugin is installed
-		$plugin_path = 'automatic-translator-addon-for-loco-translate/automatic-translator-addon-for-loco-translate.php';
-		$all_plugins = get_plugins();
-		$is_installed = isset( $all_plugins[ $plugin_path ] );
-		
-		// Check if plugin is active
-		$is_active = is_plugin_active( $plugin_path );
-		return array(
-			'installed' => $is_installed,
-			'active'    => $is_active,
-			'status'    => $is_active ? 'active' : ( $is_installed ? 'installed' : 'not_installed' )
-		);
 	}
 }

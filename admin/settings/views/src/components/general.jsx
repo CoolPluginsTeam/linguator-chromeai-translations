@@ -29,7 +29,6 @@ const General = ({ data, setData }) => {
     const [selectAllPostTypes, setSelectAllPostTypes] = useState(false);
     const [selectAllTaxonomies, setSelectAllTaxonomies] = useState(false);
     const previousDomains = React.useRef([])
-    const [lmatFeedbackData, setLmatFeedbackData] = useState(data.lmat_feedback_data !== undefined ? data.lmat_feedback_data : false); // For Usage Data Sharing
     const [selectedLanguageSwitchers, setSelectedLanguageSwitchers] = useState(data.lmat_language_switcher_options || ['default']); // Selected Language Switcher options
     const [showTerms, setShowTerms] = useState(false); // For showing/hiding terms box
     const [staticStringsVisibility, setStaticStringsVisibility] = useState(data.static_strings_visibility !== undefined ? data.static_strings_visibility : false); // For Static Strings tab visibility
@@ -62,11 +61,6 @@ const General = ({ data, setData }) => {
             selectedLanguageSwitchers: true,
             staticStringsVisibility: true
         }
-        
-        // Only include lmatFeedbackData in the checker if the setting is available
-        if (data.lmat_feedback_data !== undefined) {
-            sameChecker.lmatFeedbackData = true;
-        }
         if (forceLang !== data.force_lang) {
             sameChecker.forceLang = false
 
@@ -79,10 +73,6 @@ const General = ({ data, setData }) => {
         if (browser !== data.browser) {
             sameChecker.browser = false
 
-        }
-
-        if (data.lmat_feedback_data !== undefined && lmatFeedbackData !== data.lmat_feedback_data) {
-            sameChecker.lmatFeedbackData = false
         }
 
         if (rewrite !== data.rewrite) {
@@ -160,7 +150,7 @@ const General = ({ data, setData }) => {
         if (flag) {
             setHandleButtonDisabled(true)
         }
-    }, [browser, mediaSupport, hideDefault, forceLang, rewrite, domains, selectedSynchronization, selectedPostTypes, selectedTaxonomies, lmatFeedbackData, selectedLanguageSwitchers, staticStringsVisibility])
+    }, [browser, mediaSupport, hideDefault, forceLang, rewrite, domains, selectedSynchronization, selectedPostTypes, selectedTaxonomies, selectedLanguageSwitchers, staticStringsVisibility])
 
     //Make the post types and taxonomies from  posttype->posttype_name   to {value: postype ,label:posttype_name (posttype)}
     useEffect(() => {
@@ -324,12 +314,12 @@ const General = ({ data, setData }) => {
                 for (const domain of domains) {
                     // Check if domain is empty
                     if (!domain.value || domain.value.trim() === '') {
-                        throw new Error(__("Domain URL is required for all languages", "linguator-multilingual-ai-translation"));
+                        throw new Error(__("Domain URL is required for all languages", "linguator-multilingual-chromeai-translation"));
                     }
                     
                     // Check if domain has proper protocol
                     if (!domain.value.includes("http://") && !domain.value.includes("https://")) {
-                        throw new Error(__("Please enter valid URLs with http:// or https://", "linguator-multilingual-ai-translation"));
+                        throw new Error(__("Please enter valid URLs with http:// or https://", "linguator-multilingual-chromeai-translation"));
                     }
                     final_domain[domain.code] = domain.value;
                     
@@ -347,13 +337,6 @@ const General = ({ data, setData }) => {
                     taxonomies: selectedTaxonomies,
                     static_strings_visibility: staticStringsVisibility,
                 }
-                
-                
-                
-                // Only include lmat_feedback_data if the setting is available
-                if (data.lmat_feedback_data !== undefined) {
-                    apiBody.lmat_feedback_data = lmatFeedbackData;
-                }
             } else {
                 apiBody = {
                     hide_default: hideDefault,
@@ -365,11 +348,6 @@ const General = ({ data, setData }) => {
                     post_types: selectedPostTypes,
                     taxonomies: selectedTaxonomies,
                     static_strings_visibility: staticStringsVisibility,
-                }
-                
-                // Only include lmat_feedback_data if the setting is available
-                if (data.lmat_feedback_data !== undefined) {
-                    apiBody.lmat_feedback_data = lmatFeedbackData;
                 }
             }
             setData(prev => ({
@@ -421,17 +399,17 @@ const General = ({ data, setData }) => {
             
         } catch (error) {
             // Handle domain validation errors
-            if (error.message.includes(__("Please enter valid URLs", "linguator-multilingual-ai-translation")) ||
-                error.message.includes(__("Domain URL is required", "linguator-multilingual-ai-translation")) ||
-                error.message.includes(__("Invalid URL format", "linguator-multilingual-ai-translation")) ||
-                error.message.includes(__("Invalid domain format", "linguator-multilingual-ai-translation")) ||
-                error.message.includes(__("Duplicate domain host", "linguator-multilingual-ai-translation")) ||
+            if (error.message.includes(__("Please enter valid URLs", "linguator-multilingual-chromeai-translation")) ||
+                error.message.includes(__("Domain URL is required", "linguator-multilingual-chromeai-translation")) ||
+                error.message.includes(__("Invalid URL format", "linguator-multilingual-chromeai-translation")) ||
+                error.message.includes(__("Invalid domain format", "linguator-multilingual-chromeai-translation")) ||
+                error.message.includes(__("Duplicate domain host", "linguator-multilingual-chromeai-translation")) ||
                 error.message.includes("domain") || error.message.includes("Domain")) {
                 toast.error(error.message);
-            } else if (error.message.includes(__("Linguator was unable to access", "linguator-multilingual-ai-translation"))) {
+            } else if (error.message.includes(__("Linguator was unable to access", "linguator-multilingual-chromeai-translation"))) {
                 toast.error(error.message);
             } else {
-                toast.error(error.message || __("Something went wrong", "linguator-multilingual-ai-translation"));
+                toast.error(error.message || __("Something went wrong", "linguator-multilingual-chromeai-translation"));
             }
         }
     }
@@ -853,45 +831,6 @@ const General = ({ data, setData }) => {
                         />
                     </Container.Item>
                 </div>
-
-                
-                
-                {data.lmat_feedback_data !== undefined && (
-                    <>
-                        <hr className="w-full border-b-0 border-x-0 border-t border-solid border-t-border-subtle" />
-                        <div className='switcher'>
-                            <Container.Item>
-                                <h3 className='flex items-center gap-2'>
-                                    <Share2 className="flex-shrink-0 size-5 text-icon-secondary" />
-                                    {__('Usage Data Sharing', 'linguator-multilingual-chromeai-translation')}
-                                </h3>
-                                <div>
-                                    <p>{__('Help us make this plugin more compatible with your site by sharing non-sensitive site data.', 'linguator-multilingual-chromeai-translation')}</p>
-                                    <a href="#" className="lmat-see-terms" onClick={handleTermsToggle}>[{showTerms ? 'Hide terms' : 'See terms'}]</a>
-                                    <div id="termsBox" className="lmat-terms-box" style={{display: showTerms ? 'block' : 'none', paddingLeft: '20px', marginTop: '10px', fontSize: '12px', color: '#999'}}>
-                                        <p>{__("Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We'll collect:", 'linguator-multilingual-chromeai-translation')} <a href='https://my.coolplugins.net/terms/usage-tracking/' target='_blank' rel="noopener noreferrer">Click Here</a></p>
-                                        <ul style={{listStyleType: 'auto', paddingLeft: '20px'}}>
-                                            <li>{__("Your website home URL and WordPress admin email.", 'linguator-multilingual-chromeai-translation')}</li>
-                                            <li>{__("To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.", 'linguator-multilingual-chromeai-translation')}</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </Container.Item>
-                            <Container.Item className='flex items-center justify-end' style={{paddingRight: '30%'}}>
-                                <Switch
-                                    aria-label="Switch Element"
-                                    id="lmat_feedback_data"
-                                    onChange={() => {
-                                        
-                                        setLmatFeedbackData(!lmatFeedbackData)
-                                    }}
-                                    size="sm"
-                                    value={lmatFeedbackData}
-                                />
-                            </Container.Item>
-                        </div>
-                    </>
-                )}
                 <hr className="w-full border-b-0 border-x-0 border-t border-solid border-t-border-subtle" />
                 <Container className='flex items-center justify-end'>
                     <Container.Item className='flex gap-6'>

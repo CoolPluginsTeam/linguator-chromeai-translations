@@ -87,8 +87,7 @@ const ChromeLocalAINotice = () => {
                     <li>${__('The Translator AI modal should now be enabled and ready for use.', 'linguator-multilingual-chromeai-translation')}</li>
                 </ol>
                 <p>${sprintf(__('For more information, please refer to the %sdocumentation%s.', 'linguator-multilingual-chromeai-translation'), '<a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">', '</a>')}</p>   
-                <p>${__('If the issue persists, please ensure that your browser is up to date and restart your browser.', 'linguator-multilingual-chromeai-translation')}</p>
-                <p>${sprintf(__('If you continue to experience issues after following the above steps, please %sopen a support ticket%s with our team. We are here to help you resolve any problems and ensure a smooth translation experience.', 'linguator-multilingual-chromeai-translation'), '<a href="https://my.coolplugins.net/account/support-tickets/" target="_blank" rel="noopener">', '</a>')}</p>`;
+                <p>${__('If the issue persists, please ensure that your browser is up to date and restart your browser.', 'linguator-multilingual-chromeai-translation')}</p>`;
     }
 
     return (
@@ -199,10 +198,10 @@ const TranslationConfig = ({ data, setData }) => {
 
         } catch (error) {
             // Handle domain validation errors
-            if (error.message.includes(__("Linguator was unable to access", "linguator-multilingual-ai-translation"))) {
+            if (error.message.includes(__("Linguator was unable to access", "linguator-multilingual-chromeai-translation"))) {
                 toast.error(error.message);
             } else {
-                toast.error(error.message || __("Something went wrong", "linguator-multilingual-ai-translation"));
+                toast.error(error.message || __("Something went wrong", "linguator-multilingual-chromeai-translation"));
             }
         }
     }

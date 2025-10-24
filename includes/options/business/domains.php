@@ -65,7 +65,7 @@ class Domains extends Abstract_Option {
 	 */
 	protected function get_data_structure(): array {
 		return array(
-			'type'                 => 'object', // Correspond to associative array in PHP, @see{https://developer.wordpress.org/rest-api/extending-the-rest-api/schema/#primitive-types}.
+			'type'                 => 'object', // Correspond to associative array in PHP.
 			'patternProperties'    => array(
 				Languages::SLUG_PATTERN => array( // Language slug as key.
 					'type'   => 'string',

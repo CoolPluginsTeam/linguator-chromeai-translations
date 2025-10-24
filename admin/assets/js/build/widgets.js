@@ -57,7 +57,6 @@ jQuery(function ($) {
       /**
        * WP Customizer add control listener.
        *
-       * @link https://wordpress.stackexchange.com/questions/256536/callback-after-wordpress-customizer-complete-loading
        *
        * @param {object} control The control type.
        * @return {void} Nothing.

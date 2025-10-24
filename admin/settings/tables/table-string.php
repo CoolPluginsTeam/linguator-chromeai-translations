@@ -111,7 +111,7 @@ class LMAT_Table_String extends WP_List_Table {
 			'<label class="screen-reader-text" for="cb-select-%1$s">%2$s</label><input id="cb-select-%1$s" type="checkbox" name="strings[]" value="%1$s" %3$s />',
 			esc_attr( isset( $item['row'] ) ? $item['row'] : '' ),
 			/* translators:  accessibility text, %s is a string potentially in any language */
-			sprintf( __( 'Select %s', 'linguator-multilingual-chromeai-translation' ), format_to_edit( $item['string'] ) ),
+			sprintf( __( 'Select %s', 'linguator-multilingual-ai-translation' ), format_to_edit( $item['string'] ) ),
 			empty( $item['icl'] ) ? 'disabled' : '' // Only strings registered with WPML API can be removed.
 		);
 	}
@@ -173,10 +173,10 @@ class LMAT_Table_String extends WP_List_Table {
 	public function get_columns() {
 		return array(
 			'cb'           => '<input type="checkbox" />', // Checkbox.
-			'string'       => esc_html__( 'String', 'linguator-multilingual-chromeai-translation' ),
-			'name'         => esc_html__( 'Name', 'linguator-multilingual-chromeai-translation' ),
-			'context'      => esc_html__( 'Group', 'linguator-multilingual-chromeai-translation' ),
-			'translations' => esc_html__( 'Translations', 'linguator-multilingual-chromeai-translation' ),
+			'string'       => esc_html__( 'String', 'linguator-multilingual-ai-translation' ),
+			'name'         => esc_html__( 'Name', 'linguator-multilingual-ai-translation' ),
+			'context'      => esc_html__( 'Group', 'linguator-multilingual-ai-translation' ),
+			'translations' => esc_html__( 'Translations', 'linguator-multilingual-ai-translation' ),
 		);
 	}
 
@@ -348,13 +348,13 @@ class LMAT_Table_String extends WP_List_Table {
 		printf(
 			'<label class="screen-reader-text" for="select-group" >%s</label>',
 			/* translators: accessibility text */
-			esc_html__( 'Filter by group', 'linguator-multilingual-chromeai-translation' )
+			esc_html__( 'Filter by group', 'linguator-multilingual-ai-translation' )
 		);
 		echo '<select id="select-group" name="group">' . "\n";
 		printf(
 			'<option value="-1"%s>%s</option>' . "\n",
 			selected( $this->selected_group, -1, false ),
-			esc_html__( 'View all groups', 'linguator-multilingual-chromeai-translation' )
+			esc_html__( 'View all groups', 'linguator-multilingual-ai-translation' )
 		);
 
 		foreach ( $this->groups as $group ) {
@@ -367,7 +367,7 @@ class LMAT_Table_String extends WP_List_Table {
 		}
 		echo '</select>' . "\n";
 
-		submit_button( __( 'Filter', 'linguator-multilingual-chromeai-translation' ), 'button', 'filter_action', false, array( 'id' => 'post-query-submit' ) );
+		submit_button( __( 'Filter', 'linguator-multilingual-ai-translation' ), 'button', 'filter_action', false, array( 'id' => 'post-query-submit' ) );
 		echo '</div>';
 	}
 
@@ -428,7 +428,7 @@ class LMAT_Table_String extends WP_List_Table {
 				isset( $new_mo ) ? $new_mo->export_to_db( $language ) : $mo->export_to_db( $language );
 			}
 
-			lmat_add_notice( new WP_Error( 'lmat_strings_translations_updated', __( 'Translations updated.', 'linguator-multilingual-chromeai-translation' ), 'success' ) );
+			lmat_add_notice( new WP_Error( 'lmat_strings_translations_updated', __( 'Translations updated.', 'linguator-multilingual-ai-translation' ), 'success' ) );
 
 			/**
 			 * Fires after the strings translations are saved in DB

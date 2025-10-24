@@ -64,7 +64,6 @@ class LMAT_Frontend_Links extends LMAT_Links {
 		}
 
 		// Make sure that we have the queried object
-		// See https://wordpress.org/support/topic/patch-for-fixing-a-notice
 		$queried_object_id = $wp_query->get_queried_object_id();
 
 		/**

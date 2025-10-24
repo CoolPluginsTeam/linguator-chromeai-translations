@@ -116,25 +116,6 @@ class Settings extends Abstract_Controller {
 			)
 		);
 		
-		// Add specific endpoint for video status
-		register_rest_route(
-			$this->namespace,
-			"/{$this->rest_base}/video-status",
-			array(
-				array(
-					'methods'             => WP_REST_Server::EDITABLE,
-					'callback'            => array( $this, 'update_video_status' ),
-					'permission_callback' => array( $this, 'update_item_permissions_check' ),
-					'args'                => array(
-						'status' => array(
-							'required' => true,
-							'type'     => 'boolean',
-						),
-					),
-				),
-			)
-		);
-		
 		// Add specific endpoint for setup completion
 		register_rest_route(
 			$this->namespace,
@@ -153,34 +134,6 @@ class Settings extends Abstract_Controller {
 				),
 			)
 		);
-	}
-
-	/**
-	 * Updates video status option.
-	 *
-	 *  
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-	 */
-	public function update_video_status( $request ) {
-		$status = $request->get_param( 'status' );
-		
-		$result = update_option( 'lmat_video_status', $status );
-		
-		if ( $result ) {
-			return rest_ensure_response( array(
-				'success' => true,
-				'lmat_video_status' => $status,
-				'message' => 'Video status updated successfully'
-			) );
-		} else {
-			return new WP_Error(
-				'update_failed',
-				'Failed to update video status',
-				array( 'status' => 500 )
-			);
-		}
 	}
 
 	/**
@@ -267,16 +220,6 @@ class Settings extends Abstract_Controller {
 		$response['available_post_types'] = $available_post_types;
 		$response['available_taxonomies'] = $available_taxonomies;
 		$response['disabled_post_types'] = $disabled_post_types;
-		$response['lmat_video_status'] = get_option('lmat_video_status');
-		// Check if CPFM opt-in choice exists for LMAT
-		$cpfm_opt_in_choice = get_option( 'cpfm_opt_in_choice_lmat' );
-		
-		if ( $cpfm_opt_in_choice === false ) {
-			// Remove the Usage Data Sharing setting if CPFM opt-in choice doesn't exist
-			unset( $response['lmat_feedback_data'] );
-		} else {
-			$response['lmat_feedback_data'] = $this->options->get( 'lmat_feedback_data' );
-		}
 		
 		return $response;
 		// return $this->prepare_item_for_response( $this->options->get_all(), $request);
@@ -345,50 +288,11 @@ class Settings extends Abstract_Controller {
 			}
 		}
 		
-		// Handle cron job scheduling/removal based on CPFM opt-in choice and data usage sharing
-		$this->handle_cron_scheduling();
-		
 		if ( $errors->has_errors() ) {
 			return $this->add_status_to_error( $errors );
 		}
 
 		return $this->prepare_item_for_response( $this->options->get_all(), $request );
-	}
-
-	/**
-	 * Handles cron job scheduling/removal based on CPFM opt-in choice and data usage sharing.
-	 *
-	 *  
-	 */
-	private function handle_cron_scheduling() {
-		$cpfm_opt_in_choice = get_option( 'cpfm_opt_in_choice_lmat' );
-		$lmat_feedback_data = $this->options->get( 'lmat_feedback_data' );
-		
-		// Determine if cron should be scheduled based on the conditions
-		$should_schedule_cron = false;
-		
-		if ( $cpfm_opt_in_choice === 'no' && $lmat_feedback_data === true ) {
-			// Case 1: CPFM is 'no' but data usage sharing is 'yes' -> schedule cron
-			$should_schedule_cron = true;
-		} elseif ( $cpfm_opt_in_choice === 'yes' && $lmat_feedback_data === false ) {
-			// Case 2: CPFM is 'yes' but data usage sharing is 'no' -> remove cron
-			$should_schedule_cron = false;
-		} elseif ( $cpfm_opt_in_choice === 'yes' && $lmat_feedback_data === true ) {
-			// Case 3: Both are 'yes' -> schedule cron
-			$should_schedule_cron = true;
-		} else {
-			// All other cases -> remove cron
-			$should_schedule_cron = false;
-		}
-		
-		// Schedule or remove the cron job
-		if ( $should_schedule_cron ) {
-			if ( ! wp_next_scheduled( 'lmat_extra_data_update' ) ) {
-				wp_schedule_event( time(), 'every_30_days', 'lmat_extra_data_update' );
-			}
-		} else {
-			wp_clear_scheduled_hook( 'lmat_extra_data_update' );
-		}
 	}
 
 	/**
@@ -561,14 +465,6 @@ class Settings extends Abstract_Controller {
 			if ( rest_is_field_included( $option, $fields ) ) {
 				$response[ $option ] = $value;
 			}
-		}
-		
-		// Apply CPFM opt-in choice logic for lmat_feedback_data
-		$cpfm_opt_in_choice = get_option( 'cpfm_opt_in_choice_lmat' );
-		
-		if ( $cpfm_opt_in_choice === false ) {
-			// Remove the Usage Data Sharing setting if CPFM opt-in choice doesn't exist
-			unset( $response['lmat_feedback_data'] );
 		}
 		
 		/** @var WP_REST_Response */

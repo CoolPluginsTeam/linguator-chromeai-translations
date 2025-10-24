@@ -811,10 +811,6 @@
   height: 100vh;
 }
 
-.lmat-styles .max-h-24 {
-  max-height: 6rem;
-}
-
 .lmat-styles .max-h-\[10\.75rem\] {
   max-height: 10.75rem;
 }
@@ -988,16 +984,8 @@
   width: 22.5rem;
 }
 
-.lmat-styles .w-\[30\%\] {
-  width: 30%;
-}
-
 .lmat-styles .w-\[4\.375rem\] {
   width: 4.375rem;
-}
-
-.lmat-styles .w-\[70\%\] {
-  width: 70%;
 }
 
 .lmat-styles .w-\[calc\(100\%\+0\.75rem\)\] {
@@ -2588,11 +2576,6 @@
 .lmat-styles .text-badge-color-yellow {
   --tw-text-opacity: 1;
   color: rgb(161 98 7 / var(--tw-text-opacity, 1));
-}
-
-.lmat-styles .text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
 .lmat-styles .text-blue-600 {

@@ -99,7 +99,6 @@ class ChromeAiTranslator {
                 </ol>
                 <p>For more information, please refer to the <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">documentation</a>.</p>   
                 <p>If the issue persists, please ensure that your browser is up to date and restart your browser.</p>
-                <p>If you continue to experience issues after following the above steps, please <a href="https://my.coolplugins.net/account/support-tickets/" target="_blank" rel="noopener">open a support ticket</a> with our team. We are here to help you resolve any problems and ensure a smooth translation experience.</p>
             </span>`);
             return {html:message, message: 'Translation API not available', type: 'translation-api-not-available'};
         }

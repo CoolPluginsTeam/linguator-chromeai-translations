@@ -1,6 +1,5 @@
 import React from 'react'
 import SetupProgress from '../components/setup-progress'
-import VideoIntro from '../components/video-intro'
 import { LoaderPinwheel } from "lucide-react"
 import { RenderedLanguage } from '../components/languages'
 import { Loader, Dialog, Button } from "@bsf/force-ui"
@@ -207,35 +206,6 @@ const SetupPage = () => {
     localStorage.setItem("setupProgress", "url");
   }
 
-  // Handle "Get Started" button click
-  const handleGetStarted = async () => {
-    try {
-      // Update the video status to true using the dedicated endpoint
-      const response = await apiFetch({
-        path: 'lmat/v1/settings/video-status',
-        method: 'POST',
-        data: {
-          status: true
-        },
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': getNonce()
-        }
-      });
-      // Update local state to reflect the change
-      setData(prevData => ({
-        ...prevData,
-        lmat_video_status: true
-      }));
-      // Show the wizard
-      setShowWizard(true);
-    } catch (error) {
-      console.error('Failed to update video status:', error);
-      // Still show the wizard even if the API call fails
-      setShowWizard(true);
-    }
-  }
-
   async function handleLanguageDelete() {
     setLanguageDeleteLoader(true)
     try {
@@ -277,7 +247,7 @@ const SetupPage = () => {
               <div className="flex items-center justify-between">
                 <Dialog.Title className='flex gap-2 items-center leading-[0px]'>
                   <IoIosWarning className='size-10 text-yellow-500' />
-                  <h4 className='leading-[0px] text-lg'>{__("A language wasn't added.", "linguator-multilingual-ai-translation")}</h4>
+                  <h4 className='leading-[0px] text-lg'>{__("A language wasn't added.", "linguator-multilingual-chromeai-translation")}</h4>
                 </Dialog.Title>
                 <Dialog.CloseButton onClick={() => { setLanguageDialog(false); setLanguageLoader(false); setLanguageAddLoader(false) }} />
               </div>
@@ -286,8 +256,8 @@ const SetupPage = () => {
             </Dialog.Header>
             <Dialog.Body>
               <div className="m-0 text-text-secondary">
-                <p className='text-base m-0'> {__("You selected", "linguator-multilingual-ai-translation")} {selectedLanguage && <RenderedLanguage languageName={selectedLanguage.name} languageFlag={selectedLanguage.flag} flagUrl={false} languageLocale={selectedLanguage.locale} />}{__(", but you didn't add it to the list before continuing to the next step.", "linguator-multilingual-ai-translation")}</p>
-                <p className='text-sm'>{__("Do you want to add this language before continuing to the next step?", "linguator-multilingual-ai-translation")}</p>
+                <p className='text-base m-0'> {__("You selected", "linguator-multilingual-chromeai-translation")} {selectedLanguage && <RenderedLanguage languageName={selectedLanguage.name} languageFlag={selectedLanguage.flag} flagUrl={false} languageLocale={selectedLanguage.locale} />}{__(", but you didn't add it to the list before continuing to the next step.", "linguator-multilingual-chromeai-translation")}</p>
+                <p className='text-sm'>{__("Do you want to add this language before continuing to the next step?", "linguator-multilingual-chromeai-translation")}</p>
                 <ul>
                   {selectedLanguageData.length === 0 && currentSelectedLanguage.length === 0 && <li>{__("Note: You cannot continue this page without adding a language")} </li>}
                 </ul>
@@ -303,13 +273,13 @@ const SetupPage = () => {
                     </svg>
                   </Button> :
                   <Button onClick={handleLanguageAdd}>
-                    {__("Add Language & continue", "linguator-multilingual-ai-translation")}
+                    {__("Add Language & continue", "linguator-multilingual-chromeai-translation")}
                   </Button>
               }
               {
                 (selectedLanguageData.length > 0 || currentSelectedLanguage.length > 0) &&
                 <Button variant='outline' onClick={handleLanguageDontAdd}>
-                  {__("Discard & Continue", "linguator-multilingual-ai-translation")}
+                  {__("Discard & Continue", "linguator-multilingual-chromeai-translation")}
                 </Button>
               }
             </Dialog.Footer>
@@ -329,12 +299,12 @@ const SetupPage = () => {
               <div className="flex items-center justify-between">
                 <Dialog.Title className='flex gap-2 items-center leading-[0px]'>
                   <GoTrash className='size-8 text-yellow-500' />
-                  <h4 className='leading-[0px] text-lg'>{__("Confirm Language Deletion", "linguator-multilingual-ai-translation")}</h4>
+                  <h4 className='leading-[0px] text-lg'>{__("Confirm Language Deletion", "linguator-multilingual-chromeai-translation")}</h4>
                 </Dialog.Title>
                 <Dialog.CloseButton onClick={() => { setLanguageDeleteConfirmer(false) }} />
               </div>
               <Dialog.Description>
-                <p className='text-base leading-[0px] m-0'>{__("On Confirmation, ", "linguator-multilingual-ai-translation")}<RenderedLanguage languageName={languageToDelete.name} languageFlag={languageToDelete.flag} flagUrl={true} languageLocale={languageToDelete.locale} /> {__(" will be deleted. ", "linguator-multilingual-ai-translation")}</p>
+                <p className='text-base leading-[0px] m-0'>{__("On Confirmation, ", "linguator-multilingual-chromeai-translation")}<RenderedLanguage languageName={languageToDelete.name} languageFlag={languageToDelete.flag} flagUrl={true} languageLocale={languageToDelete.locale} /> {__(" will be deleted. ", "linguator-multilingual-chromeai-translation")}</p>
               </Dialog.Description>
             </Dialog.Header>
             <Dialog.Body className='flex justify-center items-center gap-3'>
@@ -347,13 +317,13 @@ const SetupPage = () => {
                     </svg>
                   </Button>:
                   <Button className='w-[100%]' onClick={handleLanguageDelete}>
-                {__("Yes", "linguator-multilingual-ai-translation")}
+                {__("Yes", "linguator-multilingual-chromeai-translation")}
               </Button>
               }
               
               {
                 <Button className='w-[100%]' variant='outline' onClick={() => { setLanguageDeleteConfirmer(false); }}>
-                  {__("No", "linguator-multilingual-ai-translation")}
+                  {__("No", "linguator-multilingual-chromeai-translation")}
                 </Button>
               }
             </Dialog.Body>
@@ -372,15 +342,11 @@ const SetupPage = () => {
                   icon={<LoaderPinwheel className="animate-spin" />}
                   size="md"
                   variant="primary"
-                /></h1> <h1 className='m-0'>{__("Loading", "linguator-multilingual-ai-translation")}</h1>
+                /></h1> <h1 className='m-0'>{__("Loading", "linguator-multilingual-chromeai-translation")}</h1>
             </div> :
             <>
-            <h1 style={{paddingTop: "30px"}} className='bg-background-secondary text-center m-0'>{__("Linguator – Multilingual AI Translation ", "linguator-multilingual-ai-translation")}</h1>
-              {data.lmat_video_status === false ? (
-                <VideoIntro onGetStarted={handleGetStarted} />
-              ) : (
-                  <SetupProgress lmat_setup_data={lmat_setup_data} />
-              )}
+            <h1 style={{paddingTop: "30px"}} className='bg-background-secondary text-center m-0'>{__("Linguator – Multilingual Chrome AI Translation ", "linguator-multilingual-chromeai-translation")}</h1>
+              <SetupProgress lmat_setup_data={lmat_setup_data} />
             </>
         }
 

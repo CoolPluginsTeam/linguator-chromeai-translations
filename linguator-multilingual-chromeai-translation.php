@@ -1,13 +1,11 @@
 <?php
 /**
  * Plugin Name:       Linguator – Multilingual Chrome AI Translation
- * Plugin URI:        https://linguator.com/
+ * Plugin URI:        https://github.com/CoolPluginsTeam/linguator-chromeai-translations
  * Description:       Create a multilingual WordPress website in minutes with Linguator – Multilingual Chrome AI Translation.
  * Version:           0.0.6
  * Requires at least: 6.2
  * Requires PHP:      7.2
- * Author:            Cool Plugins
- * Author URI:        https://profiles.wordpress.org/coolplugins/
  * Text Domain:       linguator-multilingual-chromeai-translation
  * License:           GPL2
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -27,7 +25,6 @@ define( 'LMAT_MIN_PHP_VERSION', '7.2' );
 define( 'LINGUATOR_FILE', __FILE__ ); 
 define( 'LINGUATOR_DIR', __DIR__ );
 define('LINGUATOR_URL', plugin_dir_url(LINGUATOR_FILE));
-define( 'LINGUATOR_FEEDBACK_API', 'https://feedback.coolplugins.net/' );
 
 // Whether we are using Linguator, get the filename of the plugin in use.
 if ( ! defined( 'LINGUATOR_ROOT_FILE' ) ) {

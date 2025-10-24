@@ -64,7 +64,7 @@ class LMAT_Choose_Lang_Url extends LMAT_Choose_Lang {
 			add_action( 'setup_theme', array( $this, 'home_requested' ) );
 		}
 
-		// Take care to post & page preview http://wordpress.org/support/topic/static-frontpage-url-parameter-url-language-information
+		// Take care to post & page preview
 		elseif ( isset( $_GET['preview'] ) && ( ( isset( $_GET['p'] ) && $id = (int) $_GET['p'] ) || ( isset( $_GET['page_id'] ) && $id = (int) $_GET['page_id'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			$curlang = ( $lg = $this->model->post->get_language( $id ) ) ? $lg : $this->model->get_default_language();
 		}

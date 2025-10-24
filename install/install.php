@@ -84,7 +84,7 @@ class LMAT_Install extends LMAT_Install_Base {
 		?>
 		<div class="notice notice-error">
 			<p>
-				<strong><?php esc_html_e( 'Linguator – Multilingual AI Translation', 'linguator-multilingual-chromeai-translation' ); ?></strong>
+				<strong><?php esc_html_e( 'Linguator – Multilingual Chrome AI Translation', 'linguator-multilingual-chromeai-translation' ); ?></strong>
 			</p>
 			<p>
 				<?php 
@@ -173,11 +173,6 @@ class LMAT_Install extends LMAT_Install_Base {
 
 		// Don't use flush_rewrite_rules at network activation. 
 		delete_option( 'rewrite_rules' );
-		$options = get_option( 'linguator' );
-		$lmat_feedback_data = $options['lmat_feedback_data'];
-		if ( $lmat_feedback_data === true && ! wp_next_scheduled( 'lmat_extra_data_update' ) ) {
-			wp_schedule_event( time(), 'every_30_days', 'lmat_extra_data_update' );
-		}
 	}
 
 	/**

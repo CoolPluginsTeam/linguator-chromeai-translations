@@ -143,8 +143,6 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 		
 
 		$tabs['settings'] = __( 'Settings', 'linguator-multilingual-chromeai-translation' );
-		
-		$tabs['settings&tab=general&loco=true'] = __( 'Theme & plugins localization', 'linguator-multilingual-chromeai-translation' );
 
 		/**
 		 * Filter the list of tabs in Linguator settings
@@ -162,7 +160,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 			if ( empty( $parent ) ) {
 				$parent = $page;
 				add_menu_page( $title, __( 'Linguator', 'linguator-multilingual-chromeai-translation' ), 'manage_options', $page, '__return_null', 'dashicons-translation' );
-				$admin_page_hooks[ $page ] = 'languages'; // Hack to avoid the localization of the hook name. See: https://core.trac.wordpress.org/ticket/18857
+				$admin_page_hooks[ $page ] = 'languages'; // Hack to avoid the localization of the hook name.
 			}
 
 			add_submenu_page( $parent, $title, $title, 'manage_options', $page, array( $this, 'languages_page' ) );
@@ -505,10 +503,6 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 
 	/**
 	 * Avoids parsing a tax query when all languages are requested
-	 * Fixes https://wordpress.org/support/topic/notice-undefined-offset-0-in-wp-includesqueryphp-on-line-3877 introduced in WP 4.1
-	 *
-	 * @see https://core.trac.wordpress.org/ticket/31246 the suggestion of @boonebgorges.
-	 *
 	 *  
 	 *
 	 * @param array $qvars The array of requested query variables.

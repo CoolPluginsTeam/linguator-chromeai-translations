@@ -33,7 +33,7 @@ const Media = () => {
             setSetupProgress("translation_configuration")
             localStorage.setItem("setupProgress", "translation_configuration");
         } catch (error) {
-            toast.error(__("Please try again later", "linguator-multilingual-ai-translation"))
+            toast.error(__("Please try again later", "linguator-multilingual-chromeai-translation"))
         }
     }
     return (

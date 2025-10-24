@@ -18,7 +18,6 @@ class LMAT_Walker_List extends LMAT_Walker {
 	/**
 	 * Database fields to use.
 	 *
-	 * @see https://developer.wordpress.org/reference/classes/walker/#properties Walker::$db_fields.
 	 *
 	 * @var string[]
 	 */

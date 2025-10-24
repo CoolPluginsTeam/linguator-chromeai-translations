@@ -18,8 +18,6 @@ class LMAT_Walker_Dropdown extends LMAT_Walker {
 	/**
 	 * Database fields to use.
 	 *
-	 * @see https://developer.wordpress.org/reference/classes/walker/#properties Walker::$db_fields.
-	 *
 	 * @var string[]
 	 */
 	public $db_fields = array( 'parent' => 'parent', 'id' => 'id' );

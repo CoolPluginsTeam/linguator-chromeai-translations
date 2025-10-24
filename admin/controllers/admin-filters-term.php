@@ -85,7 +85,7 @@ class LMAT_Admin_Filters_Term {
 		// Adds actions related to languages when creating or saving categories and post tags
 		add_filter( 'wp_dropdown_cats', array( $this, 'wp_dropdown_cats' ) );
 		add_action( 'create_term', array( $this, 'save_term' ), 900, 3 );
-		add_action( 'edit_term', array( $this, 'save_term' ), 900, 3 ); // Late as it may conflict with other plugins, see http://wordpress.org/support/topic/linguator-and-wordpress-seo-by-yoast
+		add_action( 'edit_term', array( $this, 'save_term' ), 900, 3 ); // Late as it may conflict with other plugins.
 		add_action( 'pre_post_update', array( $this, 'pre_post_update' ) );
 		add_filter( 'lmat_inserted_term_language', array( $this, 'get_inserted_term_language' ) );
 		add_filter( 'lmat_inserted_term_parent', array( $this, 'get_inserted_term_parent' ), 10, 2 );

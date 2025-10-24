@@ -94,12 +94,12 @@ class Nav_Menus extends Abstract_Option {
 	 */
 	protected function get_data_structure(): array {
 		return array(
-			'type'                 => 'object', // Correspond to associative array in PHP, @see{https://developer.wordpress.org/rest-api/extending-the-rest-api/schema/#primitive-types}.
+			'type'                 => 'object', // Correspond to associative array in PHP.
 			'patternProperties'    => array(
-				'[^\/:<>\*\?"\|]+' => array( // Excludes invalid directory name characters @see https://developer.wordpress.org/reference/classes/wp_rest_themes_controller/register_routes/
+				'[^\/:<>\*\?"\|]+' => array( // Excludes invalid directory name characters.
 					'type'                 => 'object',
 					'patternProperties'    => array(
-						'[\w-]+' => array( // Accepted characters for menu locations @see https://developer.wordpress.org/reference/classes/wp_rest_menu_locations_controller/register_routes/
+						'[\w-]+' => array( // Accepted characters for menu locations.
 							'type'              => 'object',
 							'patternProperties' => array(
 								Languages::SLUG_PATTERN => array( // Language slug as key.

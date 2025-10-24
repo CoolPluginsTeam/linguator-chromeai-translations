@@ -32,14 +32,14 @@ const SetupProgress = ({lmat_setup_data}) => {
     React.useEffect(()=>{
         let step = 1;
         let temp_setupSetups = [{
-            label: __("Default","linguator-multilingual-ai-translation"),
+            label: __("Default","linguator-multilingual-chromeai-translation"),
             value: "default",
             visible: true,
             step:step++
         }]
 
         temp_setupSetups.push({
-            label: __("Languages","linguator-multilingual-ai-translation"),
+            label: __("Languages","linguator-multilingual-chromeai-translation"),
             value: "languages",
             visible: true,
             step: step++
@@ -47,14 +47,14 @@ const SetupProgress = ({lmat_setup_data}) => {
 
         
         temp_setupSetups.push({
-            label: __("URL","linguator-multilingual-ai-translation"),
+            label: __("URL","linguator-multilingual-chromeai-translation"),
             value: "url",
             visible: true,
             step:step++
         })
         if(window.lmat_setup.media == "1"){
             temp_setupSetups.push({
-                label: __("Media","linguator-multilingual-ai-translation"),
+                label: __("Media","linguator-multilingual-chromeai-translation"),
                 value: "media",
                 visible: true,
                 step: step++
@@ -63,7 +63,7 @@ const SetupProgress = ({lmat_setup_data}) => {
         }
         // if(lmat_setup_data.untranslated_contents == "1"){
         //     temp_setupSetups.push({
-        //         label: __("Content","linguator-multilingual-ai-translation"),
+        //         label: __("Content","linguator-multilingual-chromeai-translation"),
         //         value: "content",
         //         visible: true,
         //         step: step++
@@ -71,20 +71,20 @@ const SetupProgress = ({lmat_setup_data}) => {
         // }
         
         temp_setupSetups.push({
-            label: __("AI Translation","linguator-multilingual-ai-translation"),
+            label: __("AI Translation","linguator-multilingual-chromeai-translation"),
             value: "translation_configuration",
             visible: true,
             step: step++
         })
 
         temp_setupSetups.push({
-            label: __("Language Switcher","linguator-multilingual-ai-translation"),
+            label: __("Language Switcher","linguator-multilingual-chromeai-translation"),
             value: "language_switcher",
             visible: true,
             step: step++
         })
         temp_setupSetups.push({
-            label: __("Ready","linguator-multilingual-ai-translation"),
+            label: __("Ready","linguator-multilingual-chromeai-translation"),
             value: "ready",
             visible: true,
             step:step++
@@ -123,7 +123,7 @@ const SetupProgress = ({lmat_setup_data}) => {
             </div>
             {setupProgress != "ready" &&
                 <div className='text-center text-sm' style={{marginTop:"14px"}}>
-                    <a style={{ color: "gray" }} className='' onClick={()=>localStorage.removeItem("setupProgress")} href={`${currentDomain}/admin.php?page=lmat_settings`}>{__("Skip","linguator-multilingual-ai-translation")}</a>
+                    <a style={{ color: "gray" }} className='' onClick={()=>localStorage.removeItem("setupProgress")} href={`${currentDomain}/admin.php?page=lmat_settings`}>{__("Skip","linguator-multilingual-chromeai-translation")}</a>
                 </div>
             }
         </div>

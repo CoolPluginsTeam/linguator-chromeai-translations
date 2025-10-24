@@ -38,7 +38,7 @@ const URLModifications = () => {
             if (domain.value.includes("http://") || domain.value.includes("https://")) {
               final_domain[domain.code] = domain.value;
             } else {
-              throw new Error(__("Please enter valid URLs", "linguator-multilingual-ai-translation"))
+              throw new Error(__("Please enter valid URLs", "linguator-multilingual-chromeai-translation"))
             }
 
           });
@@ -74,13 +74,13 @@ const URLModifications = () => {
         handleNavigate()
       }
     } catch (error) {
-      if (error.message.includes(__("Please enter valid URLs", "linguator-multilingual-ai-translation"))) {
+      if (error.message.includes(__("Please enter valid URLs", "linguator-multilingual-chromeai-translation"))) {
         toast.warning(error.message)
-      } else if (error.message.includes(__("Linguator was unable to access", "linguator-multilingual-ai-translation"))) {
+      } else if (error.message.includes(__("Linguator was unable to access", "linguator-multilingual-chromeai-translation"))) {
         toast.error(error.message)
       }
       else {
-        toast.error(__("Something went wrong", "linguator-multilingual-ai-translation"))
+        toast.error(__("Something went wrong", "linguator-multilingual-chromeai-translation"))
       }
     } finally {
       setUrlLoader(false)

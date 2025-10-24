@@ -204,7 +204,7 @@ class LMAT_Links_Directory extends LMAT_Links_Permalinks {
 
 		foreach ( $rules as $key => $rule ) {
 			if ( ! is_string( $rule ) || ! is_string( $key ) ) {
-				// Protection against a bug in Sendinblue for WooCommerce. See: https://wordpress.org/support/topic/bug-introduced-in-rewrite-rules/
+				// Protection against a bug in Sendinblue for WooCommerce.
 				continue;
 			}
 

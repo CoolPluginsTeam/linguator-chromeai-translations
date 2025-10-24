@@ -1,4 +1,4 @@
-=== Linguator – Multilingual AI Translation  ===
+=== Linguator – Multilingual Chrome AI Translation  ===
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: translation, multilingual, language, ai translation 
 Requires at least: 6.2
@@ -14,8 +14,6 @@ https://youtu.be/TNSWCCmHQPg?si=LQXRkszBIFPMG9vg
 **Create a Multilingual WordPress Website 10X Faster – Powered by AI, Built for Global Reach.**
 **Note:** Linguator is currently in **Beta**, and we’re actively improving features and performance based on user feedback.
 https://youtu.be/20MbjUb6AnM?si=-1qipV1fFH89KtgT
-[Check Live Demo](https://wordpress.org/plugins/linguator-multilingual-ai-translation/?preview=1) | 
- [Learn more](https://linguator.com/?utm_source=lmat_plugin&utm_medium=readme&utm_campaign=view_plugin&utm_content=learn_more) 
 ### Why Use Linguator?
 Linguator makes it simple to create and manage multilingual websites directly inside WordPress — no coding or external service needed. It’s the easiest way to go global using the power of AI, right from your dashboard.
 With Linguator, you can:
@@ -46,8 +44,6 @@ With Linguator, you can:
 * **RTL Language Support:** Linguator offers full support for right-to-left (RTL) languages like Arabic and Hebrew. It automatically adjusts text direction, alignment, and layout to ensure your multilingual site displays correctly in every supported language.
 * **Browser Language Detection:** Automatically display your site in the visitor's preferred language based on their browser settings.
 * **Supports Popular Page Builders:** Linguator works smoothly with page builders like Elementor and Gutenberg — making it easy to translate visually designed pages without breaking layouts.
- **Trusted by 80,000+ users worldwide**, Linguator is built by experts in AI translation — the same team behind [**LocoAI – Auto Translate for Loco Translate**](https://wordpress.org/plugins/automatic-translator-addon-for-loco-translate).
- With [**580+ five-star reviews**](https://wordpress.org/plugins/automatic-translator-addon-for-loco-translate/#reviews), our plugins are proven to deliver quality and user satisfaction.
  **Note:** Linguator is currently in **Beta**, and we’re actively improving features and performance based on user feedback.
 #### Service Provider 
 This plugin offers AI translation services via Chrome's built-in AI APIs. Learn more about Chrome AI using the links below.
@@ -66,7 +62,7 @@ This plugin offers AI translation services via Chrome's built-in AI APIs. Learn 
 2. Navigate to the Plugins section.
 3. Search for "Linguator".
 4. Click Install and then Activate the plugin.
-That's it! Linguator – Multilingual AI Translation (Beta Version) is now installed and activated. You can start translating your website automatically using the power of AI.
+That's it! Linguator – Multilingual Chrome AI Translation (Beta Version) is now installed and activated. You can start translating your website automatically using the power of AI.
 **Language Configuration**
 When you first activate Linguator, a simple Setup Wizard will guide you through configuring your multilingual website.
 Follow these steps to complete the setup:

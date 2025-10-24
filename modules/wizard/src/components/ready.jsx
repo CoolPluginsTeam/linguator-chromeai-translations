@@ -36,24 +36,12 @@ const Ready = () => {
     href: `${currentDomain}admin.php?page=lmat_settings`,
     variant: 'outline'
   },{
-    button: __('Video Tutorial', 'linguator-multilingual-chromeai-translation'),
-    href: "https://linguator.com/docs/video-tutorials/?utm_source=lmat_plugin&utm_medium=inside&utm_campaign=video&utm_content=setup",
-    variant: 'outline'
-  },{
-    button: __('Docs', 'linguator-multilingual-chromeai-translation'),
-    href: "https://linguator.com/docs/?utm_source=lmat_plugin&utm_medium=inside&utm_campaign=docs&utm_content=setup",
-    variant: 'outline'
-  },{
     button: __('View Pages', 'linguator-multilingual-chromeai-translation'),
     href: `${currentDomain}edit.php?post_type=page`,
     variant: 'outline'
   },{
     button: __('View Posts', 'linguator-multilingual-chromeai-translation'),
     href: `${currentDomain}edit.php`,
-    variant: 'outline'
-  },{
-    button: __('FAQs', 'linguator-multilingual-chromeai-translation'),
-    href: "https://linguator.com/?utm_source=lmat_plugin&utm_medium=inside&utm_campaign=faqs&utm_content=setup#support",
     variant: 'outline'
   }]
 

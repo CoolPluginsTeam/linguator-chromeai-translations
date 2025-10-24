@@ -207,7 +207,7 @@ class LMAT_Frontend_Filters_Links extends LMAT_Filters_Links {
 	 * @return void
 	 */
 	public function wp_head() {
-		// Don't output anything on paged archives: see https://wordpress.org/support/topic/hreflang-on-page2
+		// Don't output anything on paged archives
 		// Don't output anything on paged pages and paged posts
 		if ( is_paged() || ( is_singular() && ( $page = get_query_var( 'page' ) ) && $page > 1 ) ) {
 			return;
@@ -215,7 +215,7 @@ class LMAT_Frontend_Filters_Links extends LMAT_Filters_Links {
 
 		$urls = array();
 
-		// Google recommends to include self link https://support.google.com/webmasters/answer/189077?hl=en
+		// Google recommends to include self link
 		foreach ( $this->model->get_languages_list() as $language ) {
 			if ( $url = $this->links->get_translation_url( $language ) ) {
 				$urls[ $language->get_locale( 'display' ) ] = $url;
@@ -241,7 +241,6 @@ class LMAT_Frontend_Filters_Links extends LMAT_Filters_Links {
 			}
 
 			// Adds the site root url when the default language code is not hidden
-			// See https://wordpress.org/support/topic/implementation-of-hreflangx-default
 			if ( is_front_page() && ! $this->options['hide_default'] && $this->options['force_lang'] < 3 ) {
 				$hreflangs['x-default'] = home_url( '/' );
 			}

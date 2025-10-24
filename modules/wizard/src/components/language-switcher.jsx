@@ -42,7 +42,7 @@ const LanguageSwitcher = () => {
                 })
 
         } catch (error) {
-            toast.error(error.message || __("Something went wrong", "linguator-multilingual-ai-translation"));
+            toast.error(error.message || __("Something went wrong", "linguator-multilingual-chromeai-translation"));
         }
     }
     return (

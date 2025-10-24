@@ -16,7 +16,7 @@ use Linguator\Includes\Filters\LMAT_Filters_Widgets_Options;
  *
  *  
  *
- * Adds new options to {@see https://developer.wordpress.org/reference/classes/wp_widget/ WP_Widget} and saves them.
+ * Adds new options to WP_Widget and saves them.
  */
 class LMAT_Admin_Filters_Widgets_Options extends LMAT_Filters_Widgets_Options {
 	/**

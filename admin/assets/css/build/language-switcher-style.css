@@ -178,30 +178,6 @@
     opacity: 1;
     pointer-events: auto;
   }
-  
-  
-  .lmat_elementor_review_notice .lmat_elementor_review_wrapper{
-    padding: 10px; border:
-    2px solid #EDACFB;
-  }
-  .lmat_elementor_review_notice #lmat_elementor_review_dismiss{
-    position: absolute;
-    bottom: 4px;
-    background: #EDACFB;
-    color: #0C0D0E;
-    font-size: 10px;
-    padding: 5px;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  .lmat_elementor_review_notice .lmat_elementor_review_msg{
-    font-size: 12px;
-    line-height: 18px;
-  }
-  
-  .lmat_elementor_review_notice .lmat_elementor_review_msg a{
-    color: #EDACFB;
-  }
   .lmat_elementor_demo_btn{
     position: absolute;
     bottom: 4px;

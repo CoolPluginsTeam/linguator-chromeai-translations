@@ -98,7 +98,6 @@ abstract class LMAT_Choose_Lang {
 		}
 		
 		// Final check in case $curlang has an unexpected value
-		// See https://wordpress.org/support/topic/detect-browser-language-sometimes-setting-null-language
 		if ( ! $curlang instanceof LMAT_Language ) {
 			$curlang = $this->model->get_default_language();
 
@@ -256,7 +255,6 @@ abstract class LMAT_Choose_Lang {
 		}
 		// Redirect to the home page in the right language
 		// Test to avoid crash if get_home_url returns something wrong
-		// FIXME why this happens? http://wordpress.org/support/topic/linguator-crashes-1
 		// Don't redirect if $_POST is not empty as it could break other plugins
 		elseif ( is_string( $redirect = $this->curlang->get_home_url() ) && empty( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			// Don't forget the query string which may be added by plugins

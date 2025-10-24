@@ -56,7 +56,6 @@ class LMAT_MO extends \MO {
 		 * It would be convenient to store the whole object, but it would take a huge space in DB.
 		 * So let's keep only the strings in an array.
 		 * The strings are slashed to avoid breaking slashed strings in update_term_meta.
-		 * @see https://codex.wordpress.org/Function_Reference/update_post_meta#Character_Escaping.
 		 */
 		$strings = array();
 		foreach ( $this->entries as $entry ) {

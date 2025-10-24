@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * The list of predefined languages
- * For WordPress locales, see https://translate.wordpress.org/
+ * For WordPress locales.
  * For W3C locales, see http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
  * See also #33511
  * Facebook locales used to be available at https://www.facebook.com/translations/FacebookLocales.xml

@@ -620,7 +620,6 @@ function lmat_count_posts( $lang, $args = array() ) {
  *
  * @param array               $postarr {
  *     An array of elements that make up a post to insert.
- *     @See https://developer.wordpress.org/reference/functions/wp_insert_post/ wp_insert_post() for accepted arguments.
  *
  *     @type string[] $translations The translation group to assign to the post with language slug as keys and post ID as values.
  * }
@@ -679,7 +678,6 @@ function lmat_insert_term( string $term, string $taxonomy, $language, array $arg
  *
  * @param array $postarr {
  *     Optional. An array of elements that make up a post to update.
- *     @See https://developer.wordpress.org/reference/functions/wp_insert_post/ wp_insert_post() for accepted arguments.
  *
  *     @type LMAT_Language|string $lang         The post language object or slug.
  *     @type string[]            $translations The translation group to assign to the post with language slug as keys and post ID as values.

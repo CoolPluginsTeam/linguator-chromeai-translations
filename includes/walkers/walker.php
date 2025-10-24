@@ -19,7 +19,6 @@ use Linguator\Includes\Other\LMAT_Language;
  * A class for displaying various tree-like language structures.
  *
  * Extend the `LMAT_Walker` class to use it, and implement some of the methods from `Walker`.
- * See: {https://developer.wordpress.org/reference/classes/walker/#methods}.
  *
  *  
  */
@@ -27,7 +26,6 @@ class LMAT_Walker extends Walker {
 	/**
 	 * Database fields to use.
 	 *
-	 * @see https://developer.wordpress.org/reference/classes/walker/#properties Walker::$db_fields.
 	 *
 	 * @var string[]
 	 */

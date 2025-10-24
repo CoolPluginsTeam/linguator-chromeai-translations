@@ -1,4 +1,4 @@
-# 🧠 Linguator – Multilingual AI Translation (Beta)
+# 🧠 Linguator – Multilingual Chrome AI Translation (Beta)
 
 **Translate Your WordPress Website 10X Faster – Powered by AI, Built for Global Reach.**
 
