@@ -2,7 +2,7 @@ import Button from './button';
 import { createElement } from "@wordpress/element";
 
 export const ButtonCompat = (props: any) =>
-  createElement(Button as any, props);
+    createElement(Button as any, props);
 
 interface ButtonProps {
     label: string;

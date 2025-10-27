@@ -1,5 +1,4 @@
-import ControlBase from './control-base.js';
-import elementorLanguageListBtn from './elementor-language-list.js';
+import ControlBase from './control-base';
 
 const App = () => {
     const prefix = 'ewtElementorInlineTranslation';
@@ -8,5 +7,4 @@ const App = () => {
 
 jQuery(window).on('elementor:loaded', function () {
     App();
-    elementorLanguageListBtn.appendElementorLanguageListBtn();
 })

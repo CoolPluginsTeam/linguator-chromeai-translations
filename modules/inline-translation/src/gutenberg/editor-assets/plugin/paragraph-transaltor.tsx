@@ -6,7 +6,8 @@ import {
   ToolbarGroup
 } from "@wordpress/components";
 import { useState, useEffect } from "@wordpress/element";
-import * as styles from "./paragraph-translator.module.css";
+import * as styles from "./paragraph-transaltor.module.css";
+import isTranslatorApiAvailable from "../../../inline-translate-modal/is-translator-api-available";
 import { createElement } from "@wordpress/element";
 
 export const ToolbarButtonCompat = (props: any) =>
@@ -16,7 +17,6 @@ export const RiTranslateAi2Compat = (props: any) =>
   createElement(RiTranslateAi2 as any, props);
 
 export const TranslatorModalCompat = (props: any) =>{
-
   // @ts-ignore
   // eslint-disable-next-line no-undef
   const TranslatorModal = window?.ewtInlineTranslation?.TranslatorModal;

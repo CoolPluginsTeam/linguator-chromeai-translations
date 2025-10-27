@@ -2,7 +2,6 @@ const ClassicWidgetTranslator = (props) => {
   const value = props.getContent();
 
   const activePageLanguage = window.ewtInlineTranslation?.pageLanguage || 'en';
-
   const TranslatorModal = window?.ewtInlineTranslation?.TranslatorModal;
 
   if (!TranslatorModal) {

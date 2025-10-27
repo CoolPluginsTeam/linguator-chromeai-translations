@@ -1,4 +1,4 @@
-import TranslateToolTip from './classic-tooltip.js';
+import TranslateToolTip from './classic-tooltip';
 
 class ClassicTranslationTooltip {
     constructor(contentTinyMCE) {
