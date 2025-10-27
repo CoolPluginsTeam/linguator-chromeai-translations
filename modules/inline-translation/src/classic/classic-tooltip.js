@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import ClassicWidgetTranslator from './translator-modal';
+import ClassicWidgetTranslator from './translator-modal/index.js';
 import ReactDom from 'react-dom/client';
 import { RiTranslateAi2 } from "react-icons/ri";
 import * as styles from './style.modules.css';

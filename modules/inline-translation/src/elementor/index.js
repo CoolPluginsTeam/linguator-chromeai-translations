@@ -1,4 +1,4 @@
-import ControlBase from './control-base';
+import ControlBase from './control-base.js';
 
 const App = () => {
     const prefix = 'ewtElementorInlineTranslation';

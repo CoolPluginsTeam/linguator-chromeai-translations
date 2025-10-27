@@ -1,4 +1,4 @@
-import ElementorTranslator from "./elementor-translator-button";
+import ElementorTranslator from "./elementor-translator-button.js";
 
 export default class ControlBase extends elementorModules.editor.utils.Module {
     constructor(prefix) {
