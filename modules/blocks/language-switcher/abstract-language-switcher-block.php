@@ -1,22 +1,22 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Modules\Blocks;
+namespace EasyWPTranslator\Modules\Blocks;
 
 /**
  * Abstract class for language switcher block.
  *
  */
-abstract class LMAT_Abstract_Language_Switcher_Block {
+abstract class EWT_Abstract_Language_Switcher_Block {
 	/**
-	 * @var LMAT_Links
+	 * @var EWT_Links
 	 */
 	protected $links;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
@@ -39,11 +39,11 @@ abstract class LMAT_Abstract_Language_Switcher_Block {
 	 * Constructor
 	 *
 	 *
-	 * @param LMAT_Base $linguator Linguator object.
+	 * @param EWT_Base $easywptranslator EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->model = &$linguator->model;
-		$this->links = &$linguator->links;
+	public function __construct( &$easywptranslator ) {
+		$this->model = &$easywptranslator->model;
+		$this->links = &$easywptranslator->links;
 	}
 
 	/**
@@ -63,7 +63,7 @@ abstract class LMAT_Abstract_Language_Switcher_Block {
 	}
 
 	/**
-	 * Returns the block name with the Linguator's namespace.
+	 * Returns the block name with the EasyWPTranslator's namespace.
 	 *
 	 *
 	 * @return string The block name.
@@ -71,7 +71,7 @@ abstract class LMAT_Abstract_Language_Switcher_Block {
 	abstract protected function get_block_name();
 
 	/**
-	 * Renders the Linguator's block on server.
+	 * Renders the EasyWPTranslator's block on server.
 	 *
 	 *  Accepts two new parameters, $content and $block.
 	 *
@@ -92,7 +92,7 @@ abstract class LMAT_Abstract_Language_Switcher_Block {
 	}
 
 	/**
-	 * Registers the Linguator's block.
+	 * Registers the EasyWPTranslator's block.
 	 *
 	 *  Renamed and now handle any type of block registration based on a dynamic name.
 	 *
@@ -109,10 +109,10 @@ abstract class LMAT_Abstract_Language_Switcher_Block {
 
 		// Build output lives under admin/assets/js/build per webpack config
 		$script_filename = 'admin/assets/js/build/blocks' . $suffix . '.js';
-		$script_handle = 'lmat_blocks';
+		$script_handle = 'ewt_blocks';
 		wp_register_script(
 			$script_handle,
-			plugins_url( $script_filename, LINGUATOR_ROOT_FILE ),
+			plugins_url( $script_filename, EASY_WP_TRANSLATOR_ROOT_FILE ),
 			array(
 				'wp-block-editor',
 				'wp-blocks',
@@ -123,11 +123,11 @@ abstract class LMAT_Abstract_Language_Switcher_Block {
 				'wp-server-side-render',
 				'lodash',
 			),
-			LINGUATOR_VERSION,
+			EASY_WP_TRANSLATOR_VERSION,
 			true
 		);
 
-		wp_localize_script( $script_handle, 'lmat_block_editor_blocks_settings', \Linguator\Includes\Controllers\LMAT_Switcher::get_switcher_options( 'block', 'string' ) );
+		wp_localize_script( $script_handle, 'ewt_block_editor_blocks_settings', \EasyWPTranslator\Includes\Controllers\EWT_Switcher::get_switcher_options( 'block', 'string' ) );
 
 		// Ensure the block editor script is enqueued in the editor context
 		add_action( 'enqueue_block_editor_assets', function() use ( $script_handle, $script_filename ) {
@@ -142,12 +142,12 @@ abstract class LMAT_Abstract_Language_Switcher_Block {
 				'type'    => 'string',
 				'default' => '',
 			),
-			'lmatLang' => array(
+			'ewtLang' => array(
 				'type'    => 'string',
 				'default' => '',
 			),
 		);
-		foreach ( \Linguator\Includes\Controllers\LMAT_Switcher::get_switcher_options( 'block', 'default' ) as $option => $default ) {
+		foreach ( \EasyWPTranslator\Includes\Controllers\EWT_Switcher::get_switcher_options( 'block', 'default' ) as $option => $default ) {
 			$attributes[ $option ] = array(
 				'type'    => 'boolean',
 				'default' => $default,
@@ -167,13 +167,13 @@ abstract class LMAT_Abstract_Language_Switcher_Block {
 		
 
 		// Translated strings used in JS code
-		wp_set_script_translations( $script_handle, 'easy-web-translator' );
+		wp_set_script_translations( $script_handle, 'easy-wp-translator' );
 	}
 
 	/**
 	 * Returns the REST parameters for language switcher block.
 	 * Used to store the request's language and context locally.
-	 * Previously was in the `LMAT_Block_Editor_Switcher_Block` class.
+	 * Previously was in the `EWT_Block_Editor_Switcher_Block` class.
 	 *
 	 * @see WP_REST_Server::dispatch()
 	 *
@@ -187,7 +187,7 @@ abstract class LMAT_Abstract_Language_Switcher_Block {
 	 * @phpstan-param T $request
 	 */
 	public function get_rest_query_params( $result, $server, $request ) {
-		if ( lmat_is_edit_rest_request( $request ) ) {
+		if ( ewt_is_edit_rest_request( $request ) ) {
 			$this->is_edit_context = true;
 
 			$lang = $request->get_param( 'lang' );

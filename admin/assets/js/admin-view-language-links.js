@@ -1,31 +1,31 @@
 jQuery(document).ready(function(){
-    const lmatSubsubsubList = jQuery('.lmat_subsubsub');
-    const lmatBulkTranslateBtn = jQuery('.lmat-bulk-translate-btn');
+    const ewtSubsubsubList = jQuery('.ewt_subsubsub');
+    const ewtBulkTranslateBtn = jQuery('.ewt-bulk-translate-btn');
 
-    if(lmatSubsubsubList.length){
-        const $defaultSubsubsub = jQuery('ul.subsubsub:not(.lmat_subsubsub_list)');
+    if(ewtSubsubsubList.length){
+        const $defaultSubsubsub = jQuery('ul.subsubsub:not(.ewt_subsubsub_list)');
 
         if($defaultSubsubsub.length){
-            $defaultSubsubsub.before(lmatSubsubsubList);
-            lmatSubsubsubList.show();
+            $defaultSubsubsub.before(ewtSubsubsubList);
+            ewtSubsubsubList.show();
         }
     }
 
-    if(lmatBulkTranslateBtn.length){
+    if(ewtBulkTranslateBtn.length){
         const $defaultFilter = jQuery('#posts-filter .actions:not(.bulkactions)');
         const $bulkAction=jQuery('.actions.bulkactions');
 
         if($defaultFilter.length){
             $defaultFilter.each(function(){
-                const clone=lmatBulkTranslateBtn.clone(true);
+                const clone=ewtBulkTranslateBtn.clone(true);
                 jQuery(this).append(clone);
                 clone.show();
             });
 
-            lmatBulkTranslateBtn.remove();
+            ewtBulkTranslateBtn.remove();
         }else if($bulkAction.length){
             $bulkAction.each(function(){
-                const clone=lmatBulkTranslateBtn.clone(true);
+                const clone=ewtBulkTranslateBtn.clone(true);
                 jQuery(this).after(clone);
                 clone.show();
             });

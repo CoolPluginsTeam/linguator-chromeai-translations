@@ -1,14 +1,14 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Walkers\LMAT_Walker_Dropdown;
+use EasyWPTranslator\Includes\Walkers\EWT_Walker_Dropdown;
 use WP_Screen;
 use WP_Ajax_Response;
 use WP_Term;
@@ -20,21 +20,21 @@ use WP_Term;
  *
  *  
  */
-class LMAT_Admin_Filters_Columns {
+class EWT_Admin_Filters_Columns {
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
 	/**
-	 * @var LMAT_Admin_Links|null
+	 * @var EWT_Admin_Links|null
 	 */
 	public $links;
 
 	/**
 	 * Language selected in the admin language filter.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $filter_lang;
 
@@ -43,12 +43,12 @@ class LMAT_Admin_Filters_Columns {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->links = &$linguator->links;
-		$this->model = &$linguator->model;
-		$this->filter_lang = &$linguator->filter_lang;
+	public function __construct( &$easywptranslator ) {
+		$this->links = &$easywptranslator->links;
+		$this->model = &$easywptranslator->model;
+		$this->filter_lang = &$easywptranslator->filter_lang;
 
 		// Hide the column of the filtered language.
 		add_filter( 'hidden_columns', array( $this, 'hidden_columns' ) ); // Since WP 4.4.
@@ -72,8 +72,8 @@ class LMAT_Admin_Filters_Columns {
 		}
 
 		// Ajax responses to update list table rows.
-		add_action( 'wp_ajax_lmat_update_post_rows', array( $this, 'ajax_update_post_rows' ) );
-		add_action( 'wp_ajax_lmat_update_term_rows', array( $this, 'ajax_update_term_rows' ) );
+		add_action( 'wp_ajax_ewt_update_post_rows', array( $this, 'ajax_update_post_rows' ) );
+		add_action( 'wp_ajax_ewt_update_term_rows', array( $this, 'ajax_update_term_rows' ) );
 	}
 
 	/**
@@ -177,13 +177,13 @@ class LMAT_Admin_Filters_Columns {
 				$flag = '';
 				if ( $id === $post_id ) {
 					$flag = $this->get_flag_html( $language );
-					$class = 'lmat_column_flag';
+					$class = 'ewt_column_flag';
 					/* translators: accessibility text, %s is a native language name */
-					$s = sprintf( __( 'Edit this item in %s', 'easy-web-translator' ), $language->name );
+					$s = sprintf( __( 'Edit this item in %s', 'easy-wp-translator' ), $language->name );
 				} else {
-					$class = esc_attr( 'lmat_icon_edit translation_' . $id );
+					$class = esc_attr( 'ewt_icon_edit translation_' . $id );
 					/* translators: accessibility text, %s is a native language name */
-					$s = sprintf( __( 'Edit the translation in %s', 'easy-web-translator' ), $language->name );
+					$s = sprintf( __( 'Edit the translation in %s', 'easy-wp-translator' ), $language->name );
 				}
 
 				$post = get_post( $id );
@@ -200,9 +200,9 @@ class LMAT_Admin_Filters_Columns {
 				}
 			} elseif ( $id === $post_id ) {
 				printf(
-					'<span class="lmat_column_flag" style=""><span class="screen-reader-text">%1$s</span>%2$s</span>',
+					'<span class="ewt_column_flag" style=""><span class="screen-reader-text">%1$s</span>%2$s</span>',
 					/* translators: accessibility text, %s is a native language name */
-					esc_html( sprintf( __( 'This item is in %s', 'easy-web-translator' ), $language->name ) ),
+					esc_html( sprintf( __( 'This item is in %s', 'easy-wp-translator' ), $language->name ) ),
 					$this->get_flag_html( $language ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				);
 			}
@@ -226,10 +226,10 @@ class LMAT_Admin_Filters_Columns {
 
 			$elements = $this->model->get_languages_list();
 			if ( current_filter() == 'bulk_edit_custom_box' ) {
-				array_unshift( $elements, (object) array( 'slug' => -1, 'name' => __( '&mdash; No Change &mdash;', 'easy-web-translator' ) ) );
+				array_unshift( $elements, (object) array( 'slug' => -1, 'name' => __( '&mdash; No Change &mdash;', 'easy-wp-translator' ) ) );
 			}
 
-			$dropdown = new LMAT_Walker_Dropdown();
+			$dropdown = new EWT_Walker_Dropdown();
 			// The hidden field 'old_lang' allows to pass the old language to ajax request
 			printf(
 				'<fieldset class="inline-edit-col-left">
@@ -240,7 +240,7 @@ class LMAT_Admin_Filters_Columns {
 						</label>
 					</div>
 				</fieldset>',
-				esc_html__( 'Language', 'easy-web-translator' ),
+				esc_html__( 'Language', 'easy-wp-translator' ),
 				wp_kses( $dropdown->walk( $elements, -1, array( 'name' => 'inline_lang_choice', 'id' => '' ) ), array(
 					'select' => array( 'name' => true, 'id' => true, 'class' => true ),
 					'option' => array( 'value' => true, 'selected' => true )
@@ -320,13 +320,13 @@ class LMAT_Admin_Filters_Columns {
 				$flag = '';
 				if ( $id === $term_id ) {
 					$flag = $this->get_flag_html( $language );
-					$class = 'lmat_column_flag';
+					$class = 'ewt_column_flag';
 					/* translators: accessibility text, %s is a native language name */
-					$s = sprintf( __( 'Edit this item in %s', 'easy-web-translator' ), $language->name );
+					$s = sprintf( __( 'Edit this item in %s', 'easy-wp-translator' ), $language->name );
 				} else {
-					$class = esc_attr( 'lmat_icon_edit translation_' . $id );
+					$class = esc_attr( 'ewt_icon_edit translation_' . $id );
 					/* translators: accessibility text, %s is a native language name */
-					$s = sprintf( __( 'Edit the translation in %s', 'easy-web-translator' ), $language->name );
+					$s = sprintf( __( 'Edit the translation in %s', 'easy-wp-translator' ), $language->name );
 				}
 				$out .= sprintf(
 					'<a class="%1$s" title="%2$s" href="%3$s"><span class="screen-reader-text">%4$s</span>%5$s</a>',
@@ -338,9 +338,9 @@ class LMAT_Admin_Filters_Columns {
 				);
 			} elseif ( $id === $term_id ) {
 				$out .= sprintf(
-					'<span class="lmat_column_flag"><span class="screen-reader-text">%1$s</span>%2$s</span>',
+					'<span class="ewt_column_flag"><span class="screen-reader-text">%1$s</span>%2$s</span>',
 					/* translators: accessibility text, %s is a native language name */
-					esc_html( sprintf( __( 'This item is in %s', 'easy-web-translator' ), $language->name ) ),
+					esc_html( sprintf( __( 'This item is in %s', 'easy-wp-translator' ), $language->name ) ),
 					$this->get_flag_html( $language )
 				);
 			}
@@ -363,7 +363,7 @@ class LMAT_Admin_Filters_Columns {
 			 * @param int    $term_id Term ID.
 			 * @param string $lang    Language code.
 			 */
-			$out = apply_filters( 'lmat_first_language_term_column', $out, $term_id, $lang->slug );
+			$out = apply_filters( 'ewt_first_language_term_column', $out, $term_id, $lang->slug );
 		}
 
 		return $out;
@@ -377,7 +377,7 @@ class LMAT_Admin_Filters_Columns {
 	 * @return void
 	 */
 	public function ajax_update_post_rows() {
-		check_ajax_referer( 'inlineeditnonce', '_lmat_nonce' );
+		check_ajax_referer( 'inlineeditnonce', '_ewt_nonce' );
 
 		if ( ! isset( $_POST['post_type'], $_POST['post_id'], $_POST['screen'] ) ) {
 			wp_die( 0 );
@@ -421,7 +421,7 @@ class LMAT_Admin_Filters_Columns {
 	 * @return void
 	 */
 	public function ajax_update_term_rows() {
-		check_ajax_referer( 'lmat_language', '_lmat_nonce' );
+		check_ajax_referer( 'ewt_language', '_ewt_nonce' );
 
 		if ( ! isset( $_POST['taxonomy'], $_POST['term_id'], $_POST['screen'] ) ) {
 			wp_die( 0 );
@@ -467,7 +467,7 @@ class LMAT_Admin_Filters_Columns {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language $language LMAT_Language object.
+	 * @param EWT_Language $language EWT_Language object.
 	 * @return string
 	 */
 	protected function get_flag_html( $language ) {

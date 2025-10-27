@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Services\Links;
+namespace EasyWPTranslator\Includes\Services\Links;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 
 
 
@@ -20,9 +20,9 @@ use Linguator\Includes\Other\LMAT_Language;
  *
  *  
  */
-abstract class LMAT_Links_Permalinks extends LMAT_Links_Model {
+abstract class EWT_Links_Permalinks extends EWT_Links_Model {
 	/**
-	 * Tells this child class of LMAT_Links_Model is for pretty permalinks.
+	 * Tells this child class of EWT_Links_Model is for pretty permalinks.
 	 *
 	 * @var bool
 	 */
@@ -63,7 +63,7 @@ abstract class LMAT_Links_Permalinks extends LMAT_Links_Model {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Model $model LMAT_Model instance.
+	 * @param EWT_Model $model EWT_Model instance.
 	 */
 	public function __construct( &$model ) {
 		parent::__construct( $model );
@@ -92,7 +92,7 @@ abstract class LMAT_Links_Permalinks extends LMAT_Links_Model {
 	}
 
 	/**
-	 * Fires our own action telling Linguator plugins
+	 * Fires our own action telling EasyWPTranslator plugins
 	 * and third parties are able to prepare rewrite rules.
 	 *
 	 *  
@@ -103,14 +103,14 @@ abstract class LMAT_Links_Permalinks extends LMAT_Links_Model {
 		self::$can_filter_rewrite_rules = true;
 
 		/**
-		 * Tells when Linguator is able to prepare rewrite rules filters.
+		 * Tells when EasyWPTranslator is able to prepare rewrite rules filters.
 		 * Action fired right after `wp_loaded` and just before WordPress `WP_Rewrite::flush_rules()` callback.
 		 *
 		 *  
 		 *
-		 * @param LMAT_Links_Permalinks $links Current links object.
+		 * @param EWT_Links_Permalinks $links Current links object.
 		 */
-		do_action( 'lmat_prepare_rewrite_rules', $this );
+		do_action( 'ewt_prepare_rewrite_rules', $this );
 	}
 
 	/**
@@ -130,7 +130,7 @@ abstract class LMAT_Links_Permalinks extends LMAT_Links_Model {
 		 * @param string $modified_url The link to the first page.
 		 * @param string $original_url The link to the original paged page.
 		 */
-		return apply_filters( 'lmat_remove_paged_from_link', preg_replace( '#/page/[0-9]+/?#', $this->use_trailing_slashes ? '/' : '', $url ), $url );
+		return apply_filters( 'ewt_remove_paged_from_link', preg_replace( '#/page/[0-9]+/?#', $this->use_trailing_slashes ? '/' : '', $url ), $url );
 	}
 
 	/**
@@ -152,7 +152,7 @@ abstract class LMAT_Links_Permalinks extends LMAT_Links_Model {
 		 * @param string $original_url The link to the original first page.
 		 * @param int    $page         The page number.
 		 */
-		return apply_filters( 'lmat_add_paged_to_link', user_trailingslashit( trailingslashit( $url ) . 'page/' . $page, 'paged' ), $url, $page );
+		return apply_filters( 'ewt_add_paged_to_link', user_trailingslashit( trailingslashit( $url ) . 'page/' . $page, 'paged' ), $url, $page );
 	}
 
 	/**
@@ -161,11 +161,11 @@ abstract class LMAT_Links_Permalinks extends LMAT_Links_Model {
 	 *  
 	 *   Accepts now a language slug.
 	 *
-	 * @param LMAT_Language|string $language Language object or slug.
+	 * @param EWT_Language|string $language Language object or slug.
 	 * @return string
 	 */
 	public function home_url( $language ) {
-		if ( $language instanceof LMAT_Language ) {
+		if ( $language instanceof EWT_Language ) {
 			$language = $language->slug;
 		}
 
@@ -178,11 +178,11 @@ abstract class LMAT_Links_Permalinks extends LMAT_Links_Model {
 	 *  
 	 *   Accepts now an array of language properties.
 	 *
-	 * @param LMAT_Language|array $language Language object or array of language properties.
+	 * @param EWT_Language|array $language Language object or array of language properties.
 	 * @return string The static front page url.
 	 */
 	public function front_page_url( $language ) {
-		if ( $language instanceof LMAT_Language ) {
+		if ( $language instanceof EWT_Language ) {
 			$language = $language->to_array();
 		}
 
@@ -207,17 +207,17 @@ abstract class LMAT_Links_Permalinks extends LMAT_Links_Model {
 		$types = array_merge( $this->always_rewrite, $types );
 
 		/**
-		 * Filters the list of rewrite rules filters to be used by Linguator.
+		 * Filters the list of rewrite rules filters to be used by EasyWPTranslator.
 		 *
 		 *  
 		 *
 		 * @param array $types The list of filters (without '_rewrite_rules' at the end).
 		 */
-		return apply_filters( 'lmat_rewrite_rules', $types );
+		return apply_filters( 'ewt_rewrite_rules', $types );
 	}
 
 	/**
-	 * Removes hooks to filter rewrite rules, called when switching blog @see {LMAT_Base::switch_blog()}.
+	 * Removes hooks to filter rewrite rules, called when switching blog @see {EWT_Base::switch_blog()}.
 	 *
 	 *  
 	 *
@@ -226,6 +226,6 @@ abstract class LMAT_Links_Permalinks extends LMAT_Links_Model {
 	public function remove_filters() {
 		parent::remove_filters();
 
-		remove_all_actions( 'lmat_prepare_rewrite_rules' );
+		remove_all_actions( 'ewt_prepare_rewrite_rules' );
 	}
 }

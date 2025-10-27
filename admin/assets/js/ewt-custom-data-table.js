@@ -1,8 +1,8 @@
 class BlockFilterSorter {
   constructor() {
-    this.tableBody = document.querySelector('.lmat-custom-data-table-table tbody');
-    this.filters = document.querySelectorAll('.lmat-custom-data-table-filters .lmat-filter-tab');
-    this.lmatDataTableObj = null;
+    this.tableBody = document.querySelector('.ewt-custom-data-table-table tbody');
+    this.filters = document.querySelectorAll('.ewt-custom-data-table-filters .ewt-filter-tab');
+    this.ewtDataTableObj = null;
     this.saveButtonEnabled = false;
     this.saveButtonText = false;
     this.saveButtonClass = false;
@@ -11,34 +11,34 @@ class BlockFilterSorter {
     this.displayAjaxNotice=false;
     this.ajaxUrl = false;
 
-    if (window.lmatCustomTableDataObject) {
-      if (lmatCustomTableDataObject.save_button_enabled && '' !== lmatCustomTableDataObject.save_button_enabled) {
-        this.saveButtonEnabled = lmatCustomTableDataObject.save_button_enabled;
+    if (window.ewtCustomTableDataObject) {
+      if (ewtCustomTableDataObject.save_button_enabled && '' !== ewtCustomTableDataObject.save_button_enabled) {
+        this.saveButtonEnabled = ewtCustomTableDataObject.save_button_enabled;
       }
-      if (lmatCustomTableDataObject.save_button_text && '' !== lmatCustomTableDataObject.save_button_text) {
-        this.saveButtonText = lmatCustomTableDataObject.save_button_text;
+      if (ewtCustomTableDataObject.save_button_text && '' !== ewtCustomTableDataObject.save_button_text) {
+        this.saveButtonText = ewtCustomTableDataObject.save_button_text;
       }
-      if (lmatCustomTableDataObject.save_button_class && '' !== lmatCustomTableDataObject.save_button_class) {
-        this.saveButtonClass = lmatCustomTableDataObject.save_button_class;
+      if (ewtCustomTableDataObject.save_button_class && '' !== ewtCustomTableDataObject.save_button_class) {
+        this.saveButtonClass = ewtCustomTableDataObject.save_button_class;
       }
-      if (lmatCustomTableDataObject.save_button_handler && '' !== lmatCustomTableDataObject.save_button_handler) {
-        this.saveButtonAction = lmatCustomTableDataObject.save_button_handler;
+      if (ewtCustomTableDataObject.save_button_handler && '' !== ewtCustomTableDataObject.save_button_handler) {
+        this.saveButtonAction = ewtCustomTableDataObject.save_button_handler;
       }
-      if (lmatCustomTableDataObject.save_button_nonce && '' !== lmatCustomTableDataObject.save_button_nonce) {
-        this.saveButtonNonce = lmatCustomTableDataObject.save_button_nonce;
+      if (ewtCustomTableDataObject.save_button_nonce && '' !== ewtCustomTableDataObject.save_button_nonce) {
+        this.saveButtonNonce = ewtCustomTableDataObject.save_button_nonce;
       }
-      if (lmatCustomTableDataObject.admin_url && '' !== lmatCustomTableDataObject.admin_url) {
-        this.ajaxUrl = lmatCustomTableDataObject.admin_url;
+      if (ewtCustomTableDataObject.admin_url && '' !== ewtCustomTableDataObject.admin_url) {
+        this.ajaxUrl = ewtCustomTableDataObject.admin_url;
       }
 
-      const inputFields = document.querySelectorAll('#lmat-custom-datatable tbody input[name="lmat_fields_status"]');
+      const inputFields = document.querySelectorAll('#ewt-custom-datatable tbody input[name="ewt_fields_status"]');
       inputFields.forEach(input => {
         input.addEventListener('change', this.updateStatusHandler.bind(this));
       });
     }
 
     if (this.tableBody) {
-      this.lmatDataTable();
+      this.ewtDataTable();
 
       this.filters.forEach(filter => {
         filter.addEventListener('input', this.datatableFilterHandler.bind(this));
@@ -46,20 +46,20 @@ class BlockFilterSorter {
     }
   }
 
-  lmatDataTable() {
+  ewtDataTable() {
     if (this.tableBody) {
-      this.lmatDataTableObj = new DataTable('#lmat-custom-datatable', {
+      this.ewtDataTableObj = new DataTable('#ewt-custom-datatable', {
         pageLength: 25,
         infoCallback: function (settings, start, end, total, max) {
           return `Showing ${start} to ${end} of ${max} records`;
         }
       });
 
-      this.lmatDataTableObj.on('draw.dt', function (e) {
+      this.ewtDataTableObj.on('draw.dt', function (e) {
         const rows = jQuery(this).find('tbody tr');
 
         if (rows.length.length === 0) {
-          this.lmatDataTableObj.empty();
+          this.ewtDataTableObj.empty();
         }
 
         const length = e.dt.page.info().length;
@@ -73,8 +73,8 @@ class BlockFilterSorter {
         });
       });
 
-      const tableWrp = document.getElementById('lmat-custom-datatable_wrapper');
-      const selectWrapper = document.querySelector('.lmat-custom-data-table-filters');
+      const tableWrp = document.getElementById('ewt-custom-datatable_wrapper');
+      const selectWrapper = document.querySelector('.ewt-custom-data-table-filters');
       selectWrapper.remove();
       tableWrp.prepend(selectWrapper);
 
@@ -89,18 +89,18 @@ class BlockFilterSorter {
   }
 
   datatableFilterHandler(e) {
-    if (this.lmatDataTableObj) {
+    if (this.ewtDataTableObj) {
       let value = e.target.value;
-      let wrapper = e.target.closest('.lmat-filter-tab');
+      let wrapper = e.target.closest('.ewt-filter-tab');
       let column = parseInt(wrapper.dataset.column);
       let defaultValue = wrapper.dataset.default;
       value = value === defaultValue ? false : value;
-      this.lmatDataTableObj.column(column).search(value ? new RegExp('^' + value, 'i') : '', false, false, false).draw();
+      this.ewtDataTableObj.column(column).search(value ? new RegExp('^' + value, 'i') : '', false, false, false).draw();
     }
   }
 
   updateStatusHandler(e) {
-    const table = jQuery('#lmat-custom-datatable').DataTable();
+    const table = jQuery('#ewt-custom-datatable').DataTable();
 
     if (!table) return; // DataTable not initialized
   
@@ -134,7 +134,7 @@ class BlockFilterSorter {
     }
 
     const selectedCheckbox = [];
-    const tdNodes = this.lmatDataTableObj.column(4).nodes();
+    const tdNodes = this.ewtDataTableObj.column(4).nodes();
 
     if (tdNodes.length > 0) {
       Array.from(tdNodes).forEach(tdNode => {
@@ -151,7 +151,7 @@ class BlockFilterSorter {
 
     const apiSendData = {
       action: this.saveButtonAction,
-      lmat_nonce: this.saveButtonNonce,
+      ewt_nonce: this.saveButtonNonce,
       save_custom_fields_data: JSON.stringify(selectedCheckbox)
     };
 
@@ -188,18 +188,18 @@ class BlockFilterSorter {
   appendMessageNotice(message, type) {
 
     if(this.displayAjaxNotice){
-      jQuery('#lmat-custom-fields-message-notice').remove();
+      jQuery('#ewt-custom-fields-message-notice').remove();
       clearTimeout(this.displayAjaxNotice);
     }
 
     this.displayAjaxNotice=setTimeout(() => {
       this.displayAjaxNotice=false;
-      jQuery('#lmat-custom-fields-message-notice').remove();
+      jQuery('#ewt-custom-fields-message-notice').remove();
     }, 10000);
 
-    let messageNotice = jQuery('<div id="lmat-custom-fields-message-notice" style="margin-bottom: 10px;"><p>' + message + '</p></div>');
+    let messageNotice = jQuery('<div id="ewt-custom-fields-message-notice" style="margin-bottom: 10px;"><p>' + message + '</p></div>');
     messageNotice.addClass('is-dismissible notice notice-' + type);
-    jQuery('#lmat-settings-header').after(messageNotice);
+    jQuery('#ewt-settings-header').after(messageNotice);
   }
 
   appendSaveButton() {

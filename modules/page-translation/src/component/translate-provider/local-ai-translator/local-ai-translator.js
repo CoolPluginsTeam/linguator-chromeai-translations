@@ -200,7 +200,7 @@ class ChromeAiTranslator {
                     </li>
                 </ol>
                 <div style="text-align: right;">
-                    <button onclick="location.reload()" class="lmat-page-translation-error-reload-btn">Reload Page</button>
+                    <button onclick="location.reload()" class="ewt-page-translation-error-reload-btn">Reload Page</button>
                 </div>
             </span>`);
             return message;

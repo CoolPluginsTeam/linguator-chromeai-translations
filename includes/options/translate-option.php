@@ -1,20 +1,20 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options;
+namespace EasyWPTranslator\Includes\Options;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 
-use Linguator\Admin\Controllers\LMAT_Admin_Strings;
-use Linguator\Includes\Other\Linguator;
-use Linguator\Includes\Helpers\LMAT_Cache;
-use Linguator\Includes\Helpers\LMAT_MO;
-use Linguator\Includes\Helpers\LMAT_Format_Util;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin_Strings;
+use EasyWPTranslator\Includes\Other\EasyWPTranslator;
+use EasyWPTranslator\Includes\Helpers\EWT_Cache;
+use EasyWPTranslator\Includes\Helpers\EWT_MO;
+use EasyWPTranslator\Includes\Helpers\EWT_Format_Util;
 
 
 
@@ -24,7 +24,7 @@ use Linguator\Includes\Helpers\LMAT_Format_Util;
  *
  *  
  */
-class LMAT_Translate_Option {
+class EWT_Translate_Option {
 
 	/**
 	 * Array of option keys to translate.
@@ -62,14 +62,14 @@ class LMAT_Translate_Option {
 	private $updated_strings = array();
 
 	/**
-	 * @var LMAT_MO[]
+	 * @var EWT_MO[]
 	 */
 	private $translations;
 
 	/**
 	 * Cache for the translated values.
 	 *
-	 * @var LMAT_Cache<array|string>
+	 * @var EWT_Cache<array|string>
 	 */
 	private $cache;
 
@@ -98,10 +98,10 @@ class LMAT_Translate_Option {
 	 * }
 	 */
 	public function __construct( $name, $keys = array(), $args = array() ) {
-		$this->cache = new LMAT_Cache();
+		$this->cache = new EWT_Cache();
 
 		// Registers the strings.
-		$context = $args['context'] ?? 'Linguator';
+		$context = $args['context'] ?? 'EasyWPTranslator';
 		$this->register_string_recursive( $context, $name, get_option( $name ), $keys );
 
 		// Translates the strings.
@@ -116,7 +116,7 @@ class LMAT_Translate_Option {
 		if ( ! empty( $args['sanitize_callback'] ) ) {
 			$this->sanitize_callback = $args['sanitize_callback'];
 		}
-		add_filter( 'lmat_sanitize_string_translation', array( $this, 'sanitize_option' ), 10, 4 );
+		add_filter( 'ewt_sanitize_string_translation', array( $this, 'sanitize_option' ), 10, 4 );
 	}
 
 	/**
@@ -132,11 +132,11 @@ class LMAT_Translate_Option {
 			return $value;
 		}
 
-		if ( empty( $GLOBALS['l10n']['lmat_string'] ) || ! $GLOBALS['l10n']['lmat_string'] instanceof LMAT_MO ) {
+		if ( empty( $GLOBALS['l10n']['ewt_string'] ) || ! $GLOBALS['l10n']['ewt_string'] instanceof EWT_MO ) {
 			return $value;
 		}
 
-		$lang = $GLOBALS['l10n']['lmat_string']->get_header( 'Language' );
+		$lang = $GLOBALS['l10n']['ewt_string']->get_header( 'Language' );
 
 		if ( ! is_string( $lang ) || '' === $lang ) {
 			return $value;
@@ -166,7 +166,7 @@ class LMAT_Translate_Option {
 		if ( is_array( $values ) || is_object( $values ) ) {
 			/** @var array|Traversable $values */
 			if ( count( $children ) ) {
-				$matcher = new LMAT_Format_Util();
+				$matcher = new EWT_Format_Util();
 
 				foreach ( $children as $name => $child ) {
 					if ( is_array( $values ) && isset( $values[ $name ] ) ) {
@@ -193,7 +193,7 @@ class LMAT_Translate_Option {
 				}
 			}
 		} else {
-			$values = lmat__( $values );
+			$values = ewt__( $values );
 		}
 
 		return $values;
@@ -220,7 +220,7 @@ class LMAT_Translate_Option {
 			$children = is_array( $key ) ? $key : array();
 
 			if ( count( $children ) ) {
-				$matcher = new LMAT_Format_Util();
+				$matcher = new EWT_Format_Util();
 
 				foreach ( $children as $name => $child ) {
 					if ( isset( $values[ $name ] ) ) {
@@ -247,7 +247,7 @@ class LMAT_Translate_Option {
 		} elseif ( is_scalar( $values ) ) {
 			$string         = (string) $values;
 			$this->hashes[] = md5( "$string|$option|$context" );
-			LMAT_Admin_Strings::register_string( $option, $string, $context, true );
+			EWT_Admin_Strings::register_string( $option, $string, $context, true );
 		}
 	}
 
@@ -288,7 +288,7 @@ class LMAT_Translate_Option {
 		// Stores the unfiltered old option value before it is updated in DB.
 		$unfiltered_old_value = $this->get_raw_option( $name );
 
-		$languages = LMAT()->model->get_languages_list();
+		$languages = EWT()->model->get_languages_list();
 
 		if ( empty( $languages ) ) {
 			return $value;
@@ -296,13 +296,13 @@ class LMAT_Translate_Option {
 
 		// Load translations in all languages.
 		foreach ( $languages as $language ) {
-			$this->translations[ $language->slug ] = new LMAT_MO();
+			$this->translations[ $language->slug ] = new EWT_MO();
 			$this->translations[ $language->slug ]->import_from_db( $language );
 		}
 
-		$lang = lmat_current_language();
+		$lang = ewt_current_language();
 		if ( empty( $lang ) ) {
-			$lang = lmat_default_language();
+			$lang = ewt_default_language();
 		}
 
 		if ( empty( $lang ) ) {
@@ -327,10 +327,10 @@ class LMAT_Translate_Option {
 	 * @return void
 	 */
 	public function update_option() {
-		$curlang = lmat_current_language();
+		$curlang = ewt_current_language();
 
 		if ( ! empty( $this->updated_strings ) ) {
-			foreach ( LMAT()->model->get_languages_list() as $language ) {
+			foreach ( EWT()->model->get_languages_list() as $language ) {
 
 				$mo = &$this->translations[ $language->slug ];
 
@@ -356,9 +356,9 @@ class LMAT_Translate_Option {
 	 *
 	 * This is the heart of the update process. If an updated string is found to be
 	 * the same as the translation of the old string, we restore the old string to
-	 * prevent the update in {@see LMAT_Translate_Option::pre_update_option()}, otherwise
-	 * the updated string is stored in {@see LMAT_Translate_Option::updated_strings} to be able to
-	 * later assign the translations to the new value in {@see LMAT_Translate_Option::update_option()}.
+	 * prevent the update in {@see EWT_Translate_Option::pre_update_option()}, otherwise
+	 * the updated string is stored in {@see EWT_Translate_Option::updated_strings} to be able to
+	 * later assign the translations to the new value in {@see EWT_Translate_Option::update_option()}.
 	 *
 	 *  
 	 *   Added $mo parameter.
@@ -366,7 +366,7 @@ class LMAT_Translate_Option {
 	 * @param mixed      $old_values The old option value.
 	 * @param mixed      $values     The new option value.
 	 * @param array|bool $key        Array of option keys to translate.
-	 * @param LMAT_MO     $mo         Translations used to compare the updated string to the translated old string.
+	 * @param EWT_MO     $mo         Translations used to compare the updated string to the translated old string.
 	 * @return mixed
 	 */
 	protected function check_value_recursive( $old_values, $values, $key, $mo ) {
@@ -375,7 +375,7 @@ class LMAT_Translate_Option {
 		if ( is_array( $values ) || is_object( $values ) ) {
 			/** @var array|Traversable $values */
 			if ( count( $children ) ) {
-				$matcher = new LMAT_Format_Util();
+				$matcher = new EWT_Format_Util();
 
 				foreach ( $children as $name => $child ) {
 					if ( is_array( $values ) && is_array( $old_values ) && isset( $old_values[ $name ], $values[ $name ] ) ) {

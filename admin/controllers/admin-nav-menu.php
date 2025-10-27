@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
-use Linguator\Includes\Controllers\LMAT_Nav_Menu;
-use Linguator\Includes\Controllers\LMAT_Switcher;
+use EasyWPTranslator\Includes\Controllers\EWT_Nav_Menu;
+use EasyWPTranslator\Includes\Controllers\EWT_Switcher;
 
 
 
@@ -21,12 +21,12 @@ use Linguator\Includes\Controllers\LMAT_Switcher;
  *
  *  
  */
-class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
+class EWT_Admin_Nav_Menu extends EWT_Nav_Menu {
 
 	/**
 	 * Current language (used to filter the content).
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $filter_lang;
 
@@ -35,20 +35,20 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		parent::__construct( $linguator );
+	public function __construct( &$easywptranslator ) {
+		parent::__construct( $easywptranslator );
 		
 		// Reference to global filter language (same as posts/pages)
-		$this->filter_lang = &$linguator->filter_lang;
+		$this->filter_lang = &$easywptranslator->filter_lang;
 
 		// Populates nav menus locations
 		// Since WP 4.4, must be done before customize_register is fired
 		add_filter( 'theme_mod_nav_menu_locations', array( $this, 'theme_mod_nav_menu_locations' ), 20 );
 
 		// Integration in the WP menu interface
-		add_action( 'admin_init', array( $this, 'admin_init' ) ); // after Linguator upgrade
+		add_action( 'admin_init', array( $this, 'admin_init' ) ); // after EasyWPTranslator upgrade
 	}
 
 	/**
@@ -66,14 +66,14 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 		// Translation of menus based on chosen locations
 		add_filter( 'pre_update_option_theme_mods_' . $this->theme, array( $this, 'pre_update_option_theme_mods' ) );
 		add_action( 'delete_nav_menu', array( $this, 'delete_nav_menu' ) );
-		add_action( 'admin_footer', array( $this, 'lmat_nav_menu_language_controls' ), 10 );
+		add_action( 'admin_footer', array( $this, 'ewt_nav_menu_language_controls' ), 10 );
 		
 		// Filter menu dropdown list by language
 		add_filter( 'wp_get_nav_menus', array( $this, 'filter_nav_menus_by_language' ), 10, 1 );
 		add_action( 'load-nav-menus.php', array( $this, 'maybe_update_selected_menu' ), 10 );
 		add_action( 'admin_init', array( $this, 'maybe_update_selected_menu_on_init' ), 10 );
 		add_filter( 'wp_redirect', array( $this, 'preserve_lang_param_on_redirect' ), 10, 2 );
-		add_meta_box( 'lmat_lang_switch_box', __( 'Language switcher', 'easy-web-translator' ), array( $this, 'lang_switch' ), 'nav-menus', 'side', 'high' );
+		add_meta_box( 'ewt_lang_switch_box', __( 'Language switcher', 'easy-wp-translator' ), array( $this, 'lang_switch' ), 'nav-menus', 'side', 'high' );
 
 		$this->create_nav_menu_locations();
 	}
@@ -95,17 +95,17 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 				<ul id="lang-switch-checklist" class="categorychecklist form-no-clear">
 					<li>
 						<label class="menu-item-title">
-							<input type="checkbox" class="menu-item-checkbox" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-object-id]" value="-1" > <?php esc_html_e( 'Languages', 'easy-web-translator' ); ?>
+							<input type="checkbox" class="menu-item-checkbox" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-object-id]" value="-1" > <?php esc_html_e( 'Languages', 'easy-wp-translator' ); ?>
 						</label>
 						<input type="hidden" class="menu-item-type" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-type]" value="custom">
-						<input type="hidden" class="menu-item-title" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-title]" value="<?php esc_attr_e( 'Languages', 'easy-web-translator' ); ?>">
-						<input type="hidden" class="menu-item-url" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-url]" value="#lmat_switcher">
+						<input type="hidden" class="menu-item-title" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-title]" value="<?php esc_attr_e( 'Languages', 'easy-wp-translator' ); ?>">
+						<input type="hidden" class="menu-item-url" name="menu-item[<?php echo (int) $_nav_menu_placeholder; ?>][menu-item-url]" value="#ewt_switcher">
 					</li>
 				</ul>
 			</div>
 			<p class="button-controls">
 				<span class="add-to-menu">
-					<input type="submit" <?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', 'easy-web-translator' ); ?>" name="add-post-type-menu-item" id="submit-posttype-lang-switch">
+					<input type="submit" <?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', 'easy-wp-translator' ); ?>" name="add-post-type-menu-item" id="submit-posttype-lang-switch">
 					<span class="spinner"></span>
 				</span>
 			</p>
@@ -127,32 +127,32 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 		}
 
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		wp_enqueue_script( 'lmat_nav_menu', plugins_url( "admin/assets/js/build/nav-menu{$suffix}.js", LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION, false );
-		wp_enqueue_style( 'lmat_nav_menu_filter', plugins_url( "admin/assets/css/admin-nav-menu-filter.css", LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION );
-		wp_enqueue_script( 'lmat_nav_menu_filter_js', plugins_url( "admin/assets/js/admin-nav-menu-filter.js", LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION, false );
+		wp_enqueue_script( 'ewt_nav_menu', plugins_url( "admin/assets/js/build/nav-menu{$suffix}.js", EASY_WP_TRANSLATOR_ROOT_FILE ), array(), EASY_WP_TRANSLATOR_VERSION, false );
+		wp_enqueue_style( 'ewt_nav_menu_filter', plugins_url( "admin/assets/css/admin-nav-menu-filter.css", EASY_WP_TRANSLATOR_ROOT_FILE ), array(), EASY_WP_TRANSLATOR_VERSION );
+		wp_enqueue_script( 'ewt_nav_menu_filter_js', plugins_url( "admin/assets/js/admin-nav-menu-filter.js", EASY_WP_TRANSLATOR_ROOT_FILE ), array(), EASY_WP_TRANSLATOR_VERSION, false );
 		
 		// Pass current language filter to JavaScript
 		$current_filter_lang = ! empty( $this->filter_lang ) ? $this->filter_lang->slug : 'all';
-		wp_localize_script( 'lmat_nav_menu_filter_js', 'lmat_nav_menu_filter', array(
+		wp_localize_script( 'ewt_nav_menu_filter_js', 'ewt_nav_menu_filter', array(
 			'current_lang' => $current_filter_lang
 		) );
 		$data = array(
-			'strings' => LMAT_Switcher::get_switcher_options( 'menu', 'string' ), // The strings for the options
-			'title'   => __( 'Languages', 'easy-web-translator' ), // The title
+			'strings' => EWT_Switcher::get_switcher_options( 'menu', 'string' ), // The strings for the options
+			'title'   => __( 'Languages', 'easy-wp-translator' ), // The title
 			'val'     => array(),
 		);
 
 		// Get all language switcher menu items
 		// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- This query is intentionally using meta_key to fetch all nav_menu_item posts with our custom meta for language switcher options. This is required to gather all relevant menu items for admin JS config.
-		$items = get_posts( array('numberposts' => -1, 'nopaging'  => true, 'post_type' => 'nav_menu_item', 'fields' => 'ids', 'meta_key' => '_lmat_menu_item'));
+		$items = get_posts( array('numberposts' => -1, 'nopaging'  => true, 'post_type' => 'nav_menu_item', 'fields' => 'ids', 'meta_key' => '_ewt_menu_item'));
 
 		// The options values for the language switcher
 		foreach ( $items as $item ) {
-			$data['val'][ $item ] = get_post_meta( $item, '_lmat_menu_item', true );
+			$data['val'][ $item ] = get_post_meta( $item, '_ewt_menu_item', true );
 		}
 
 		// Send all these data to javascript
-		wp_localize_script( 'lmat_nav_menu', 'lmat_data', $data );
+		wp_localize_script( 'ewt_nav_menu', 'ewt_data', $data );
 	}
 
 	/**
@@ -165,7 +165,7 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 	 * @return void
 	 */
 	public function wp_update_nav_menu_item( $menu_id = 0, $menu_item_db_id = 0 ) {
-		if ( empty( $_POST['menu-item-url'][ $menu_item_db_id ] ) || '#lmat_switcher' !== $_POST['menu-item-url'][ $menu_item_db_id ] ) { // phpcs:ignore WordPress.Security.NonceVerification
+		if ( empty( $_POST['menu-item-url'][ $menu_item_db_id ] ) || '#ewt_switcher' !== $_POST['menu-item-url'][ $menu_item_db_id ] ) { // phpcs:ignore WordPress.Security.NonceVerification
 			return;
 		}
 
@@ -175,16 +175,16 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 
 			$options = array( 'hide_if_no_translation' => 0, 'hide_current' => 0, 'force_home' => 0, 'show_flags' => 0, 'show_names' => 1, 'dropdown' => 0 ); // Default values
 			// Our jQuery form has not been displayed
-			if ( empty( $_POST['menu-item-lmat-detect'][ $menu_item_db_id ] ) ) {
-				if ( ! get_post_meta( $menu_item_db_id, '_lmat_menu_item', true ) ) { // Our options were never saved
-					update_post_meta( $menu_item_db_id, '_lmat_menu_item', $options );
+			if ( empty( $_POST['menu-item-ewt-detect'][ $menu_item_db_id ] ) ) {
+				if ( ! get_post_meta( $menu_item_db_id, '_ewt_menu_item', true ) ) { // Our options were never saved
+					update_post_meta( $menu_item_db_id, '_ewt_menu_item', $options );
 				}
 			}
 			else {
 				foreach ( array_keys( $options ) as $opt ) {
 					$options[ $opt ] = empty( $_POST[ 'menu-item-' . $opt ][ $menu_item_db_id ] ) ? 0 : 1;
 				}
-				update_post_meta( $menu_item_db_id, '_lmat_menu_item', $options ); // Allow us to easily identify our nav menu item
+				update_post_meta( $menu_item_db_id, '_ewt_menu_item', $options ); // Allow us to easily identify our nav menu item
 			}
 		}
 	}
@@ -290,7 +290,7 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 	}
 
 	/**
-	 * Removes the nav menu term_id from the locations stored in Linguator options when a nav menu is deleted
+	 * Removes the nav menu term_id from the locations stored in EasyWPTranslator options when a nav menu is deleted
 	 *
 	 *  
 	 *
@@ -324,16 +324,16 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 	 *
 	 * @return void
 	 */
-	public function lmat_nav_menu_language_controls() {
+	public function ewt_nav_menu_language_controls() {
 		$screen = get_current_screen();
 		if ( empty( $screen ) || 'nav-menus' !== $screen->base ) {
 			return;
 		}
 
 		// Get all available languages
-		$lmat_languages = $this->model->get_languages_list();
+		$ewt_languages = $this->model->get_languages_list();
 		
-		if ( count( $lmat_languages ) <= 1 ) {
+		if ( count( $ewt_languages ) <= 1 ) {
 			return; // No need for language filters if there's only one language
 		}
 
@@ -346,8 +346,8 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 		$current_action = isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : '';
 
 		?>
-		<div class='lmat_subsubsub' style='display:none; clear:both;'>
-			<ul class='lmat_subsubsub_list'>
+		<div class='ewt_subsubsub' style='display:none; clear:both;'>
+			<ul class='ewt_subsubsub_list'>
 				<?php
 				// All Languages link
 				$all_class = 'all' === $current_lang ? 'current' : '';
@@ -359,13 +359,13 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 				// Get total count directly from database - count nav menu terms
 				$total_menus = wp_count_terms( array( 'taxonomy' => 'nav_menu' ) );
 				?>
-				<li class='lmat_lang_all'>
+				<li class='ewt_lang_all'>
 					<a href="<?php echo esc_url( $all_url ); ?>" class="<?php echo esc_attr( $all_class ); ?>">
 						All <span class="count">(<?php echo esc_html( $total_menus ); ?>)</span>
 					</a>
 				</li>
 				
-				<?php foreach ( $lmat_languages as $lang ) : ?>
+				<?php foreach ( $ewt_languages as $lang ) : ?>
 					<?php
 					$lang_class = $lang->slug === $current_lang ? 'current' : '';
 					$lang_url_args = array(
@@ -388,7 +388,7 @@ class LMAT_Admin_Nav_Menu extends LMAT_Nav_Menu {
 						}
 					}
 					?>
-					<li class='lmat_lang_<?php echo esc_attr( $lang->slug ); ?>'>
+					<li class='ewt_lang_<?php echo esc_attr( $lang->slug ); ?>'>
 						<a href="<?php echo esc_url( $lang_url ); ?>" class="<?php echo esc_attr( $lang_class ); ?>">
 							<?php if ( ! empty( $flag_url ) ) : ?>
 								<img src="<?php echo esc_url( $flag_url ); ?>" alt="<?php echo esc_attr( $lang->name ); ?>" width="16" style="margin-right: 5px;">

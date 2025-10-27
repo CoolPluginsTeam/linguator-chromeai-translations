@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Models\Translatable;
+namespace EasyWPTranslator\Includes\Models\Translatable;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Trait to use for objects that can have one or more types.
- * This must be used with {@see LMAT_Translatable_Object_With_Types_Interface}.
+ * This must be used with {@see EWT_Translatable_Object_With_Types_Interface}.
  *
  *  
  */
-trait LMAT_Translatable_Object_With_Types_Trait {
+trait EWT_Translatable_Object_With_Types_Trait {
 
 	/**
 	 * Fetches the IDs of the objects without language.
@@ -71,7 +71,7 @@ trait LMAT_Translatable_Object_With_Types_Trait {
 		// Get objects that DO have language assignments
 		$objects_with_language = array();
 		foreach ( $all_objects as $object_id ) {
-			$object_terms = wp_get_object_terms( $object_id, 'lmat_language', array( 'fields' => 'tt_ids' ) );
+			$object_terms = wp_get_object_terms( $object_id, 'ewt_language', array( 'fields' => 'tt_ids' ) );
 			if ( ! is_wp_error( $object_terms ) && ! empty( $object_terms ) ) {
 				// Check if any of the assigned language terms match our language_ids
 				if ( array_intersect( $object_terms, $language_ids ) ) {
@@ -87,7 +87,7 @@ trait LMAT_Translatable_Object_With_Types_Trait {
 	}
 
 	/**
-	 * Returns true if Linguator manages languages for this object type.
+	 * Returns true if EasyWPTranslator manages languages for this object type.
 	 *
 	 *  
 	 *

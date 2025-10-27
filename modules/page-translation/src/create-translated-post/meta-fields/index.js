@@ -2,7 +2,7 @@ import { select } from "@wordpress/data";
 
 const translatedMetaFields = (sourceMetaFields, service) => {
 
-    const AllowedMetaFields = select('block-lmatPageTranslation/translate').getAllowedMetaFields();
+    const AllowedMetaFields = select('block-ewtPageTranslation/translate').getAllowedMetaFields();
     const metaFields = sourceMetaFields;
 
     const updateFieldOnPage=(key, value, sourceValue)=>{
@@ -43,9 +43,9 @@ const translatedMetaFields = (sourceMetaFields, service) => {
     const translateObjectMetaFields = (keys, value) => {
         Object.keys(value).forEach(key => {
             const keyArr = [...keys, key];
-            const uniqueKey = keyArr.join('_lmat_page_translation_');
+            const uniqueKey = keyArr.join('_ewt_page_translation_');
             if(typeof value[key] === 'string'){
-                const translatedValue = select('block-lmatPageTranslation/translate').getTranslatedString('metaFields', value[key], uniqueKey, service);
+                const translatedValue = select('block-ewtPageTranslation/translate').getTranslatedString('metaFields', value[key], uniqueKey, service);
                 let currentObject = metaFields;
                 if(translatedValue && '' !== translatedValue){
                     keyArr.forEach((key, index) => {
@@ -79,7 +79,7 @@ const translatedMetaFields = (sourceMetaFields, service) => {
             } else if(typeof sourceMetaFields[key] === 'string'){
                 if (AllowedMetaFields[key] && AllowedMetaFields[key].status) {
                     const sourceValue = sourceMetaFields[key];
-                    const translatedValue = select('block-lmatPageTranslation/translate').getTranslatedString('metaFields', sourceValue, key, service);
+                    const translatedValue = select('block-ewtPageTranslation/translate').getTranslatedString('metaFields', sourceValue, key, service);
 
                     if (translatedValue && '' !== translatedValue) {
                         updateFieldOnPage(key, translatedValue, sourceValue);

@@ -13,10 +13,10 @@ const URLModifications = () => {
   const [rewrite, setRewrite] = React.useState(data.rewrite)
   const [domains, setDomains] = React.useState([])
   const [urlLoader, setUrlLoader] = React.useState(false)
-  const currentDomain = window.lmat_setup.home_url; // Fetch the current domain of website
+  const currentDomain = window.ewt_setup.home_url; // Fetch the current domain of website
   React.useEffect(() => {
 
-    let newDomains = window.lmat_setup.languages.map((item) => {
+    let newDomains = window.ewt_setup.languages.map((item) => {
       const code = item.slug;
       return {
         value: data?.domains?.[code] || "",
@@ -38,7 +38,7 @@ const URLModifications = () => {
             if (domain.value.includes("http://") || domain.value.includes("https://")) {
               final_domain[domain.code] = domain.value;
             } else {
-              throw new Error(__("Please enter valid URLs", "easy-web-translator"))
+              throw new Error(__("Please enter valid URLs", "easy-wp-translator"))
             }
 
           });
@@ -60,7 +60,7 @@ const URLModifications = () => {
         }
         //API Call
         const response = await apiFetch({
-          path: 'lmat/v1/settings',
+          path: 'ewt/v1/settings',
           method: 'POST',
           'headers': {
             'Content-Type': 'application/json',
@@ -74,13 +74,13 @@ const URLModifications = () => {
         handleNavigate()
       }
     } catch (error) {
-      if (error.message.includes(__("Please enter valid URLs", "easy-web-translator"))) {
+      if (error.message.includes(__("Please enter valid URLs", "easy-wp-translator"))) {
         toast.warning(error.message)
-      } else if (error.message.includes(__("Linguator was unable to access", "easy-web-translator"))) {
+      } else if (error.message.includes(__("EasyWPTranslator was unable to access", "easy-wp-translator"))) {
         toast.error(error.message)
       }
       else {
-        toast.error(__("Something went wrong", "easy-web-translator"))
+        toast.error(__("Something went wrong", "easy-wp-translator"))
       }
     } finally {
       setUrlLoader(false)
@@ -89,7 +89,7 @@ const URLModifications = () => {
   }
 
   function handleNavigate() {
-    if (window.lmat_setup.media == "1") {
+    if (window.ewt_setup.media == "1") {
       setSetupProgress("media")
       localStorage.setItem("setupProgress", "media");
     } else {
@@ -100,30 +100,30 @@ const URLModifications = () => {
 
   //label and descriptions of URL modifications
   const urlCheckboxes = [{
-    description: sprintf(__('Example1: %s/en/my-post', 'easy-web-translator'), currentDomain),
-    description2: sprintf(__('Example2: %s/hi/my-post', 'easy-web-translator'), currentDomain),
-    heading: __("Different languages in directories", 'easy-web-translator'),
+    description: sprintf(__('Example1: %s/en/my-post', 'easy-wp-translator'), currentDomain),
+    description2: sprintf(__('Example2: %s/hi/my-post', 'easy-wp-translator'), currentDomain),
+    heading: __("Different languages in directories", 'easy-wp-translator'),
     value: 1
   }, {
 
-    description: sprintf(__('Example1: %sen.%s/my-post', 'easy-web-translator'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
-    description2: sprintf(__('Example2: %shi.%s/my-post', 'easy-web-translator'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
-    heading: __("The language is set from the subdomain name ", 'easy-web-translator'),
+    description: sprintf(__('Example1: %sen.%s/my-post', 'easy-wp-translator'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
+    description2: sprintf(__('Example2: %shi.%s/my-post', 'easy-wp-translator'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
+    heading: __("The language is set from the subdomain name ", 'easy-wp-translator'),
     value: 2
   }, {
     description: '',
     description2: '',
-    heading: __("A different domain per language", 'easy-web-translator'),
+    heading: __("A different domain per language", 'easy-wp-translator'),
     value: 3
   }]
 
   const directoryNamesLinks = [{
-    description: sprintf(__('Example: %s/en/', 'easy-web-translator'), currentDomain),
-    heading: __("Remove /language/ in pretty permalinks", 'easy-web-translator'),
+    description: sprintf(__('Example: %s/en/', 'easy-wp-translator'), currentDomain),
+    heading: __("Remove /language/ in pretty permalinks", 'easy-wp-translator'),
     value: true
   }, {
-    description: sprintf(__('Example: %s/language/en', 'easy-web-translator'), currentDomain),
-    heading: __("Keep /language/ in pretty permalinks", 'easy-web-translator'),
+    description: sprintf(__('Example: %s/language/en', 'easy-wp-translator'), currentDomain),
+    heading: __("Keep /language/ in pretty permalinks", 'easy-wp-translator'),
     value: false
   },]
   return (
@@ -135,8 +135,8 @@ const URLModifications = () => {
           :
           <div className='mx-auto p-10 max-w-[600px] min-h-[40vh] bg-white shadow-sm flex flex-col'>
             <div className='flex-grow'>
-              <h2>{__("Format your site's URL", 'easy-web-translator')}</h2>
-              <p className='text-justify text-sm/6'>{__('Linguator lets you display different languages using domains, directories, or URL parameters, while all content is managed in a single WordPress database. This gives visitors a seamless multilingual experience.', 'easy-web-translator')}</p>
+              <h2>{__("Format your site's URL", 'easy-wp-translator')}</h2>
+              <p className='text-justify text-sm/6'>{__('EasyWPTranslator lets you display different languages using domains, directories, or URL parameters, while all content is managed in a single WordPress database. This gives visitors a seamless multilingual experience.', 'easy-wp-translator')}</p>
               <div className='flex justify-between items-center p-6 rounded-lg' style={{ border: "1px solid #e5e7eb" }}>
                 <Container >
                   <Container.Item>
@@ -171,7 +171,7 @@ const URLModifications = () => {
                         forceLang === 1 &&
                         <Checkbox
                           label={{
-                            heading: __('Hide URL language information for default language', 'easy-web-translator')
+                            heading: __('Hide URL language information for default language', 'easy-wp-translator')
                           }}
                           size="sm"
                           className='cursor-pointer'
@@ -235,7 +235,7 @@ const URLModifications = () => {
                         forceLang === 2 &&
                         <Checkbox
                           label={{
-                            heading: __('Hide URL language information for default language', 'easy-web-translator')
+                            heading: __('Hide URL language information for default language', 'easy-wp-translator')
                           }}
                           size="sm"
                           className='cursor-pointer'

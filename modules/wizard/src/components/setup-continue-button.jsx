@@ -30,7 +30,7 @@ export const SetupBackButton = ({handleClick}) => {
                 onClick={handleClick}
                 variant="primary"
             >
-                {__('Back', 'easy-web-translator')}
+                {__('Back', 'easy-wp-translator')}
             </Button>
         </>
     )

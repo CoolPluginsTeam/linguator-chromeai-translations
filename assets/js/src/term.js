@@ -1,5 +1,5 @@
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 /**
@@ -59,13 +59,13 @@ jQuery(
 					);
 
 					var data = {
-						action:       'lmat_update_term_rows',
+						action:       'ewt_update_term_rows',
 						term_id:      term_id,
 						translations: translations.join( ',' ),
 						taxonomy:     $( "input[name='taxonomy']" ).val(),
 						post_type:    $( "input[name='post_type']" ).val(),
 						screen:       $( "input[name='screen']" ).val(),
-						_lmat_nonce:   $( '#_lmat_nonce' ).val()
+						_ewt_nonce:   $( '#_ewt_nonce' ).val()
 					};
 
 					// get the modified rows in ajax and update them
@@ -75,14 +75,14 @@ jQuery(
 						function ( response ) {
 							if ( response ) {
 								// Target a non existing WP HTML id to avoid a conflict with WP ajax requests.
-								var res = wpAjax.parseAjaxResponse( response, 'lmat-ajax-response' );
+								var res = wpAjax.parseAjaxResponse( response, 'ewt-ajax-response' );
 								$.each(
 									res.responses,
 									function () {
 										if ( 'row' == this.what ) {
 											// data is built with a call to WP_Terms_List_Table::single_row method
 											// which uses internally other WordPress methods which escape correctly values.
-											// For Linguator language columns the HTML code is correctly escaped in LMAT_Admin_Filters_Columns::term_column method.
+											// For EasyWPTranslator language columns the HTML code is correctly escaped in EWT_Admin_Filters_Columns::term_column method.
 											$( "#tag-" + this.supplemental.term_id ).replaceWith( this.data ); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.replaceWith
 										}
 									}
@@ -98,7 +98,7 @@ jQuery(
 						// when adding a term, the new term_id is in the ajax response
 						case 'add-tag':
 							// Target a non existing WP HTML id to avoid a conflict with WP ajax requests.
-							var res = wpAjax.parseAjaxResponse( xhr.responseXML, 'lmat-ajax-response' );
+							var res = wpAjax.parseAjaxResponse( xhr.responseXML, 'ewt-ajax-response' );
 							$.each(
 								res.responses,
 								function () {
@@ -135,18 +135,18 @@ jQuery(
 			$( '.tr_lang' ).each(
 				function () {
 					var tr_lang = $( this ).attr( 'id' ).substring( 8 );
-					var td = $( this ).parent().parent().siblings( '.lmat-edit-column' );
+					var td = $( this ).parent().parent().siblings( '.ewt-edit-column' );
 
 					$( this ).autocomplete(
 						{
 							minLength: 0,
-							source: ajaxurl + '?action=lmat_terms_not_translated' +
+							source: ajaxurl + '?action=ewt_terms_not_translated' +
 								'&term_language=' + $( '#term_lang_choice' ).val() +
 								'&term_id=' + $( "input[name='tag_ID']" ).val() +
 								'&taxonomy=' + $( "input[name='taxonomy']" ).val() +
 								'&translation_language=' + tr_lang +
 								'&post_type=' + typenow +
-								'&_lmat_nonce=' + $( '#_lmat_nonce' ).val(),
+								'&_ewt_nonce=' + $( '#_ewt_nonce' ).val(),
 							select: function ( event, ui ) {
 								$( '#htr_lang_' + tr_lang ).val( ui.item.id );
 								// ui.item.link is built and come from server side and is well escaped when necessary
@@ -181,13 +181,13 @@ jQuery(
 				const selectedOption = event.target;
 
 				var data = {
-					action:     'lmat_term_lang_choice',
+					action:     'ewt_term_lang_choice',
 					lang:       value,
 					from_tag:   $( "input[name='from_tag']" ).val(),
 					term_id:    $( "input[name='tag_ID']" ).val(),
 					taxonomy:   $( "input[name='taxonomy']" ).val(),
 					post_type:  typenow,
-					_lmat_nonce: $( '#_lmat_nonce' ).val()
+					_ewt_nonce: $( '#_ewt_nonce' ).val()
 				};
 
 				$.post(
@@ -195,7 +195,7 @@ jQuery(
 					data,
 					function ( response ) {
 						// Target a non existing WP HTML id to avoid a conflict with WP ajax requests.
-						var res = wpAjax.parseAjaxResponse( response, 'lmat-ajax-response' );
+						var res = wpAjax.parseAjaxResponse( response, 'ewt-ajax-response' );
 						$.each(
 							res.responses,
 							function () {
@@ -206,16 +206,16 @@ jQuery(
 										init_translations();
 									break;
 									case 'parent': // parent dropdown list for hierarchical taxonomies
-										// data correctly escaped in LMAT_Admin_Filters_Term::term_lang_choice method which uses wp_dropdown_categories function.
+										// data correctly escaped in EWT_Admin_Filters_Term::term_lang_choice method which uses wp_dropdown_categories function.
 										$( '#parent' ).replaceWith( this.data ); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.replaceWith
 									break;
 									case 'tag_cloud': // popular items
-										// data correctly escaped in LMAT_Admin_Filters_Term::term_lang_choice method which uses wp_tag_cloud and wp_generate_tag_cloud functions.
+										// data correctly escaped in EWT_Admin_Filters_Term::term_lang_choice method which uses wp_tag_cloud and wp_generate_tag_cloud functions.
 										$( '.tagcloud' ).replaceWith( this.data ); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.replaceWith
 									break;
 									case 'flag': // flag in front of the select dropdown
 										// Data is built and come from server side and is well escaped when necessary
-										$( '.lmat-select-flag' ).html( this.data ); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.html
+										$( '.ewt-select-flag' ).html( this.data ); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.html
 									break;
 								}
 							}
@@ -242,7 +242,7 @@ jQuery(
 			( e ) => {
 				// Modifies the text direction.
 				let dir = e.detail.lang.is_rtl ? 'rtl' : 'ltr'
-				$( 'body' ).removeClass( 'lmat-dir-rtl' ).removeClass( 'lmat-dir-ltr' ).addClass( 'lmat-dir-' + dir );
+				$( 'body' ).removeClass( 'ewt-dir-rtl' ).removeClass( 'ewt-dir-ltr' ).addClass( 'ewt-dir-' + dir );
 			}
 		);
 	}

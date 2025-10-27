@@ -1,14 +1,14 @@
 <?php
 
-namespace Linguator\Modules\REST\V1;
+namespace EasyWPTranslator\Modules\REST\V1;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use Linguator\Includes\Services\Translation\Translation_Term_Model;
-use Linguator\Supported_Blocks\Supported_Blocks;
-use Linguator\Custom_Fields\Custom_Fields;
+use EasyWPTranslator\Includes\Services\Translation\Translation_Term_Model;
+use EasyWPTranslator\Supported_Blocks\Supported_Blocks;
+use EasyWPTranslator\Custom_Fields\Custom_Fields;
 use Translation_Entry;
 use Translations;
 use WP_Error;
@@ -17,7 +17,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 	/**
 	 * Bulk_Translation
 	 *
-	 * @package Linguator\Modules\Bulk_Translation
+	 * @package EasyWPTranslator\Modules\Bulk_Translation
 	 */
 	class Bulk_Translation {
 
@@ -42,7 +42,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 		 * @param string $base_name The base name of the route.
 		 */
 		public function __construct( $model ) {
-			$this->namespace = 'lmat/v1';
+			$this->namespace = 'ewt/v1';
 			$this->rest_base = 'bulk-translate';
 			add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 		}
@@ -71,7 +71,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 							'type'              => 'string',
 							'required'          => true,
 							'sanitize_callback' => 'sanitize_text_field',
-							'validate_callback' => array( $this, 'validate_lmat_bulk_nonce' ),
+							'validate_callback' => array( $this, 'validate_ewt_bulk_nonce' ),
 						),
 					),
 				)
@@ -97,7 +97,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 							'type'              => 'string',
 							'required'          => true,
 							'sanitize_callback' => 'sanitize_text_field',
-							'validate_callback' => array( $this, 'validate_lmat_bulk_nonce' ),
+							'validate_callback' => array( $this, 'validate_ewt_bulk_nonce' ),
 						),
 						'ids'        => array(
 							'type'     => 'string',
@@ -119,7 +119,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 							'type'              => 'string',
 							'required'          => true,
 							'sanitize_callback' => 'sanitize_text_field',
-							'validate_callback' => array( $this, 'validate_lmat_create_post_nonce' ),
+							'validate_callback' => array( $this, 'validate_ewt_create_post_nonce' ),
 						),
 						'post_id'         => array(
 							'type'              => 'integer',
@@ -172,7 +172,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 							'type'              => 'string',
 							'required'          => true,
 							'sanitize_callback' => 'sanitize_text_field',
-							'validate_callback' => array( $this, 'validate_lmat_create_term_nonce' ),
+							'validate_callback' => array( $this, 'validate_ewt_create_term_nonce' ),
 						),
 						'target_language'      => array(
 							'required'          => true,
@@ -215,28 +215,28 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 			$nonce = $request->get_header( 'X-WP-Nonce' );
 
 			if ( ! wp_verify_nonce( $nonce, 'wp_rest' ) ) {
-				return new WP_Error( 'rest_forbidden', __( 'Invalid nonce.', 'easy-web-translator' ), array( 'status' => 403 ) );
+				return new WP_Error( 'rest_forbidden', __( 'Invalid nonce.', 'easy-wp-translator' ), array( 'status' => 403 ) );
 			}
 
 			if ( ! is_user_logged_in() ) {
-				return new \WP_Error( 'rest_forbidden', __( 'You are not authorized to perform this action.', 'easy-web-translator' ), array( 'status' => 401 ) );
+				return new \WP_Error( 'rest_forbidden', __( 'You are not authorized to perform this action.', 'easy-wp-translator' ), array( 'status' => 401 ) );
 			}
 			if ( ! current_user_can( 'edit_posts' ) ) {
-				return new \WP_Error( 'rest_forbidden', __( 'You are not authorized to perform this action.', 'easy-web-translator' ), array( 'status' => 403 ) );
+				return new \WP_Error( 'rest_forbidden', __( 'You are not authorized to perform this action.', 'easy-wp-translator' ), array( 'status' => 403 ) );
 			}
 			return true;
 		}
 
-		public function validate_lmat_bulk_nonce( $value, $request, $param ) {
-			return wp_verify_nonce( $value, 'lmat_bulk_translate_entries_nonce' ) ? true : new \WP_Error( 'rest_invalid_param', __( 'You are not authorized to perform this action.', 'easy-web-translator' ), array( 'status' => 403 ) );
+		public function validate_ewt_bulk_nonce( $value, $request, $param ) {
+			return wp_verify_nonce( $value, 'ewt_bulk_translate_entries_nonce' ) ? true : new \WP_Error( 'rest_invalid_param', __( 'You are not authorized to perform this action.', 'easy-wp-translator' ), array( 'status' => 403 ) );
 		}
 
-		public function validate_lmat_create_post_nonce( $value, $request, $param ) {
-			return wp_verify_nonce( $value, 'lmat_create_translate_post_nonce' ) ? true : new \WP_Error( 'rest_invalid_param', __( 'You are not authorized to perform this action.', 'easy-web-translator' ), array( 'status' => 403 ) );
+		public function validate_ewt_create_post_nonce( $value, $request, $param ) {
+			return wp_verify_nonce( $value, 'ewt_create_translate_post_nonce' ) ? true : new \WP_Error( 'rest_invalid_param', __( 'You are not authorized to perform this action.', 'easy-wp-translator' ), array( 'status' => 403 ) );
 		}
 
-		public function validate_lmat_create_term_nonce( $value, $request, $param ) {
-			return wp_verify_nonce( $value, 'lmat_create_translate_taxonomy_nonce' ) ? true : new \WP_Error( 'rest_invalid_param', __( 'You are not authorized to perform this action.', 'easy-web-translator' ), array( 'status' => 403 ) );
+		public function validate_ewt_create_term_nonce( $value, $request, $param ) {
+			return wp_verify_nonce( $value, 'ewt_create_translate_taxonomy_nonce' ) ? true : new \WP_Error( 'rest_invalid_param', __( 'You are not authorized to perform this action.', 'easy-wp-translator' ), array( 'status' => 403 ) );
 		}
 
 		public function bulk_translate_entries( $params ) {
@@ -249,11 +249,11 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 			}
 
 			// Verify the nonce
-			if ( ! wp_verify_nonce( $params['privateKey'], 'lmat_bulk_translate_entries_nonce' ) ) {
+			if ( ! wp_verify_nonce( $params['privateKey'], 'ewt_bulk_translate_entries_nonce' ) ) {
 				wp_send_json_error( 'You are not authorized to perform this action.' );
 			}
 
-			global $linguator;
+			global $easywptranslator;
 
 			// check language exists or not
 			$translate_lang = json_decode( $params['lang'] );
@@ -263,18 +263,18 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 			$gutenberg_block = false;
 
 			$slug_translation_option = 'title_translate';
-			if(property_exists(LMAT(), 'options') && isset(LMAT()->options['ai_translation_configuration']['slug_translation_option'])){
-				$slug_translation_option = LMAT()->options['ai_translation_configuration']['slug_translation_option'];
+			if(property_exists(EWT(), 'options') && isset(EWT()->options['ai_translation_configuration']['slug_translation_option'])){
+				$slug_translation_option = EWT()->options['ai_translation_configuration']['slug_translation_option'];
 			}
 
 			$post_meta_sync = true;
-			if ( ! isset( LMAT()->options['sync'] ) || ( isset( LMAT()->options['sync'] ) && ! in_array( 'post_meta', LMAT()->options['sync'] ) ) ) {
+			if ( ! isset( EWT()->options['sync'] ) || ( isset( EWT()->options['sync'] ) && ! in_array( 'post_meta', EWT()->options['sync'] ) ) ) {
 				$post_meta_sync = false;
 			}
 
 			if ( count( $translate_lang ) > 0 && ! ( count( $post_ids ) < 1 ) ) {
-				$lmat_langs           = $linguator->model->get_languages_list();
-				$lmat_langs_slugs     = array_column( $lmat_langs, 'slug' );
+				$ewt_langs           = $easywptranslator->model->get_languages_list();
+				$ewt_langs_slugs     = array_column( $ewt_langs, 'slug' );
 				$allowed_meta_fields = Custom_Fields::get_allowed_custom_fields();
 				
 				foreach ( $post_ids as $postId ) {
@@ -283,7 +283,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 						continue;
 					}
 
-					$posts_translate[ $postId ]['sourceLanguage'] = $linguator->model->post->get_language( $postId )->slug;
+					$posts_translate[ $postId ]['sourceLanguage'] = $easywptranslator->model->post->get_language( $postId )->slug;
 					$post_data                                    = get_post( $postId );
 
 					if ( ! $posts_translate[ $postId ]['sourceLanguage'] ) {
@@ -313,7 +313,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 						$posts_translate[ $postId ]['excerpt'] = $post_data->post_excerpt;
 					}
 
-					$posts_translate[ $postId ]['sourceLanguage'] = ! isset( $posts_translate[ $postId ]['sourceLanguage'] ) ? lmat_default_language() : $posts_translate[ $postId ]['sourceLanguage'];
+					$posts_translate[ $postId ]['sourceLanguage'] = ! isset( $posts_translate[ $postId ]['sourceLanguage'] ) ? ewt_default_language() : $posts_translate[ $postId ]['sourceLanguage'];
 
 					if ( ! $post_meta_sync ) {
 						$post_meta_fields    = get_post_meta( $postId );
@@ -350,8 +350,8 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 					}
 
 					foreach ( $translate_lang as $lang ) {
-						if ( in_array( $lang, $lmat_langs_slugs ) ) {
-							$post_translate_status = $linguator->model->post->get_translation( $postId, $lang );
+						if ( in_array( $lang, $ewt_langs_slugs ) ) {
+							$post_translate_status = $easywptranslator->model->post->get_translation( $postId, $lang );
 							if ( ! $post_translate_status ) {
 								$posts_translate[ $postId ]['languages'][] = $lang;
 							} else {
@@ -367,7 +367,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 
 			$data = array(
 				'posts'                    => $posts_translate,
-				'CreateTranslatePostNonce' => wp_create_nonce( 'lmat_create_translate_post_nonce' ),
+				'CreateTranslatePostNonce' => wp_create_nonce( 'ewt_create_translate_post_nonce' ),
 			);
 			if ( ! $post_meta_sync ) {
 				$data['allowedMetaFields'] = json_encode( $allowed_meta_fields );
@@ -395,7 +395,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 			if ( ! isset( $params['target_language'] ) && empty( $params['target_language'] ) ) {
 				wp_send_json_error( 'Invalid target language' );
 			}
-			if ( ! wp_verify_nonce( $params['privateKey'], 'lmat_create_translate_post_nonce' ) ) {
+			if ( ! wp_verify_nonce( $params['privateKey'], 'ewt_create_translate_post_nonce' ) ) {
 				wp_send_json_error( 'You are not authorized to perform this action.' );
 			}
 			if ( empty( $params['post_title'] ) && empty( $params['post_content'] ) ) {
@@ -421,8 +421,8 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 
 			$slug_translation_option = 'title_translate';
 
-			if(property_exists(LMAT(), 'options') && isset(LMAT()->options['ai_translation_configuration']['slug_translation_option'])){
-				$slug_translation_option = LMAT()->options['ai_translation_configuration']['slug_translation_option'];
+			if(property_exists(EWT(), 'options') && isset(EWT()->options['ai_translation_configuration']['slug_translation_option'])){
+				$slug_translation_option = EWT()->options['ai_translation_configuration']['slug_translation_option'];
 			}
 
 			$meta_fields = isset( $params['post_meta_fields'] ) ? $params['post_meta_fields'] : '';
@@ -487,20 +487,20 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
                 }
                 
                 // Apply the allowed tags
-                $allowed_tags=apply_filters('lmat/bulk_translation/allowed_tags', array_merge($default_allowed_tags, $existing_allowed_tags));
+                $allowed_tags=apply_filters('ewt/bulk_translation/allowed_tags', array_merge($default_allowed_tags, $existing_allowed_tags));
                 
                 // Add the filter to allow the flex styles
-                add_filter( 'safe_style_css', array($this, 'lmat_allow_flex_styles'), 10, 1 );
+                add_filter( 'safe_style_css', array($this, 'ewt_allow_flex_styles'), 10, 1 );
 
                 // Apply the allowed tags
                 $post_data['post_content']=wp_kses($post_data['post_content'], $allowed_tags);
 
                 // Remove the filter to allow the flex styles
-                remove_filter( 'safe_style_css', array($this, 'lmat_allow_flex_styles'), 10, 1 );
+                remove_filter( 'safe_style_css', array($this, 'ewt_allow_flex_styles'), 10, 1 );
             }
 
-			global $linguator;
-			$post_clone = new \LMAT_Sync_Post_Model( $linguator );
+			global $easywptranslator;
+			$post_clone = new \EWT_Sync_Post_Model( $easywptranslator );
 			$post_id    = $post_clone->copy_post( $post_id, $source_language, $target_language, false, $post_data, $editor_type );
 
 			if ( ! $post_id ) {
@@ -518,7 +518,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 						'post_link'                   => $post_link,
 						'post_title'                  => $post_title,
 						'post_edit_link'              => $post_edit_link,
-						'update_translate_data_nonce' => wp_create_nonce( 'lmat_update_translate_data_nonce' ),
+						'update_translate_data_nonce' => wp_create_nonce( 'ewt_update_translate_data_nonce' ),
 					)
 				);
 			}
@@ -549,7 +549,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 			$params                  = $params->get_params();
 
 			// Verify the nonce
-			if ( ! wp_verify_nonce( $params['privateKey'], 'lmat_bulk_translate_entries_nonce' ) ) {
+			if ( ! wp_verify_nonce( $params['privateKey'], 'ewt_bulk_translate_entries_nonce' ) ) {
 				wp_send_json_error( 'You are not authorized to perform this action.' );
 			}
 
@@ -558,20 +558,20 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 			$taxonomy_translate = array();
 
 			$slug_translation_option = 'title_translate';
-			if(property_exists(LMAT(), 'options') && isset(LMAT()->options['ai_translation_configuration']['slug_translation_option'])){
-				$slug_translation_option = LMAT()->options['ai_translation_configuration']['slug_translation_option'];
+			if(property_exists(EWT(), 'options') && isset(EWT()->options['ai_translation_configuration']['slug_translation_option'])){
+				$slug_translation_option = EWT()->options['ai_translation_configuration']['slug_translation_option'];
 			}
 
 			if ( $translate_lang && count( $translate_lang ) > 0 ) {
-				global $linguator;
-				$lmat_langs       = $linguator->model->get_languages_list();
-				$lmat_langs_slugs = array_column( $lmat_langs, 'slug' );
+				global $easywptranslator;
+				$ewt_langs       = $easywptranslator->model->get_languages_list();
+				$ewt_langs_slugs = array_column( $ewt_langs, 'slug' );
 
 				$taxonomy     = sanitize_text_field( $params['taxonomy'] );
 				$taxonomy_ids = json_decode( $params['ids'] );
 
 				foreach ( $taxonomy_ids as $taxonomy_id ) {
-					$taxonomy_translate[ $taxonomy_id ]['sourceLanguage'] = lmat_get_term_language( $taxonomy_id );
+					$taxonomy_translate[ $taxonomy_id ]['sourceLanguage'] = ewt_get_term_language( $taxonomy_id );
 					$taxonomy_data                                        = get_term( $taxonomy_id, $taxonomy );
 
 					if ( ! $taxonomy_translate[ $taxonomy_id ]['sourceLanguage'] ) {
@@ -595,8 +595,8 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 					}
 
 					foreach ( $translate_lang as $lang ) {
-						if ( in_array( $lang, $lmat_langs_slugs ) ) {
-							$post_translate_status = lmat_get_term( $taxonomy_id, $lang );
+						if ( in_array( $lang, $ewt_langs_slugs ) ) {
+							$post_translate_status = ewt_get_term( $taxonomy_id, $lang );
 
 							if ( ! $post_translate_status ) {
 								$taxonomy_translate[ $taxonomy_id ]['languages'][] = $lang;
@@ -622,7 +622,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 
 			$data = array(
 				'posts'                    => $taxonomy_translate,
-				'CreateTranslatePostNonce' => wp_create_nonce( 'lmat_create_translate_taxonomy_nonce' ),
+				'CreateTranslatePostNonce' => wp_create_nonce( 'ewt_create_translate_taxonomy_nonce' ),
 			);
 
 			if ( count( $taxonomy_translate ) > 0 ) {
@@ -645,7 +645,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 			if ( ! isset( $params['source_language'] ) || empty( $params['source_language'] ) ) {
 				wp_send_json_error( 'Invalid source language' );
 			}
-			if ( ! wp_verify_nonce( $params['privateKey'], 'lmat_create_translate_taxonomy_nonce' ) ) {
+			if ( ! wp_verify_nonce( $params['privateKey'], 'ewt_create_translate_taxonomy_nonce' ) ) {
 				wp_send_json_error( 'You are not authorized to perform this action.' );
 			}
 
@@ -658,8 +658,8 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 			$taxonomy_slug           = isset( $params['taxonomy_slug'] ) ? sanitize_title( $params['taxonomy_slug'] ) : '';
 			$taxonomy_description    = isset( $params['taxonomy_description'] ) ? wp_kses_post( $params['taxonomy_description'] ) : '';
 					$slug_translation_option = 'title_translate';
-			if(property_exists(LMAT(), 'options') && isset(LMAT()->options['ai_translation_configuration']['slug_translation_option'])){
-				$slug_translation_option = LMAT()->options['ai_translation_configuration']['slug_translation_option'];
+			if(property_exists(EWT(), 'options') && isset(EWT()->options['ai_translation_configuration']['slug_translation_option'])){
+				$slug_translation_option = EWT()->options['ai_translation_configuration']['slug_translation_option'];
 			}
 			if ( ! $target_language ) {
 				wp_send_json_error( 'Invalid target language' );
@@ -695,10 +695,10 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 				$translations->add_entry( $entry );
 			}
 
-			global $linguator;
+			global $easywptranslator;
 
-			$target_language_object = $linguator->model->get_language( $target_language );
-			$term_clone             = new Translation_Term_Model( $linguator );
+			$target_language_object = $easywptranslator->model->get_language( $target_language );
+			$term_clone             = new Translation_Term_Model( $easywptranslator );
 
 			$term_id = $term_clone->translate(
 				array(
@@ -726,7 +726,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
 					'post_link'                   => $term_link,
 					'post_title'                  => $term_title,
 					'post_edit_link'              => $term_edit_link,
-					'update_translate_data_nonce' => wp_create_nonce( 'lmat_update_translate_data_nonce' ),
+					'update_translate_data_nonce' => wp_create_nonce( 'ewt_update_translate_data_nonce' ),
 				)
 			);
 		}
@@ -773,11 +773,11 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
             return $tags;
         }
 
-        public function lmat_allow_flex_styles($styles){
-           return $this->lmat_allow_flex_styles_callback($styles);
+        public function ewt_allow_flex_styles($styles){
+           return $this->ewt_allow_flex_styles_callback($styles);
         }
 
-        private function lmat_allow_flex_styles_callback($styles){
+        private function ewt_allow_flex_styles_callback($styles){
             // Define the extra CSS properties you want to allow
             $extra_allowed = [
                 'display',
@@ -788,7 +788,7 @@ if ( ! class_exists( 'Bulk_Translation' ) ) :
                 'gap',
             ];
 
-            $allowed_styles=apply_filters('lmat/bulk_translation/allowed_flex_styles', array_unique(array_merge($styles, $extra_allowed)));
+            $allowed_styles=apply_filters('ewt/bulk_translation/allowed_flex_styles', array_unique(array_merge($styles, $extra_allowed)));
 
             return $allowed_styles;
         }

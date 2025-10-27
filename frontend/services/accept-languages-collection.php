@@ -1,23 +1,23 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Frontend\Services;
+namespace EasyWPTranslator\Frontend\Services;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 /**
- * Class LMAT_Accept_Languages_Collection.
+ * Class EWT_Accept_Languages_Collection.
  *
  * Represents a collection of values parsed from an Accept-Language HTTP header.
  *
  *  
  */
-class LMAT_Accept_Languages_Collection {
+class EWT_Accept_Languages_Collection {
 	/**
-	 * @var LMAT_Accept_Language[]
+	 * @var EWT_Accept_Language[]
 	 */
 	protected $accept_languages = array();
 
@@ -27,12 +27,12 @@ class LMAT_Accept_Languages_Collection {
 	 *  
 	 *
 	 * @param string $http_header Value of the Accept-Language HTTP Header. Formatted as stated BCP 47 for language tags {@see https://tools.ietf.org/html/bcp47}.
-	 * @return LMAT_Accept_Languages_Collection
+	 * @return EWT_Accept_Languages_Collection
 	 */
 	public static function from_accept_language_header( $http_header ) {
 		$lang_parse = array();
 		// Break up string into pieces ( languages and q factors ).
-		$language_pattern = implode( '', LMAT_Accept_Language::SUBTAG_PATTERNS );
+		$language_pattern = implode( '', EWT_Accept_Language::SUBTAG_PATTERNS );
 		$quality_pattern = '\s*;\s*q\s*=\s*((?>1|0)(?>\.[0-9]+)?)';
 		$full_pattern = "/{$language_pattern}(?:{$quality_pattern})?/i";
 
@@ -43,20 +43,20 @@ class LMAT_Accept_Languages_Collection {
 			PREG_SET_ORDER
 		);
 
-		return new LMAT_Accept_Languages_Collection(
+		return new EWT_Accept_Languages_Collection(
 			array_map(
-				array( LMAT_Accept_Language::class, 'from_array' ),
+				array( EWT_Accept_Language::class, 'from_array' ),
 				$lang_parse
 			)
 		);
 	}
 
 	/**
-	 * LMAT_Accept_Languages_Collection constructor.
+	 * EWT_Accept_Languages_Collection constructor.
 	 *
 	 *  
 	 *
-	 * @param LMAT_Accept_Language[] $accept_languages Objects representing Accept-Language HTTP headers.
+	 * @param EWT_Accept_Language[] $accept_languages Objects representing Accept-Language HTTP headers.
 	 */
 	public function __construct( $accept_languages = array() ) {
 		$this->accept_languages = $accept_languages;
@@ -110,7 +110,7 @@ class LMAT_Accept_Languages_Collection {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language[] $languages The language list.
+	 * @param EWT_Language[] $languages The language list.
 	 * @return string|false A language slug if there's a match, false otherwise.
 	 */
 	public function find_best_match( $languages = array() ) {

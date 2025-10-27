@@ -13,36 +13,36 @@ const addLangChoiceAttribute = ( settings, name ) => {
     if ( ! settings.attributes ) {
         settings.attributes = {};
     }
-    settings.attributes.lmatLang = {
+    settings.attributes.ewtLang = {
         type: 'string',
         default: ''
     };
     return settings;
 };
 
-addFilter( 'blocks.registerBlockType', 'lmat/lang-choice', addLangChoiceAttribute );
+addFilter( 'blocks.registerBlockType', 'ewt/lang-choice', addLangChoiceAttribute );
 
 // UI control: exposes attribute in InspectorControls.
 const withInspectorControls = createHigherOrderComponent( ( BlockEdit ) => {
     return ( props ) => {
         const { attributes, setAttributes } = props;
-        const { lmatLang } = attributes;
+        const { ewtLang } = attributes;
         return (
             <>
                 <BlockEdit { ...props } />
                 <InspectorControls>
-                    <PanelBody title={ __( 'Language', 'easy-web-translator' ) }>
+                    <PanelBody title={ __( 'Language', 'easy-wp-translator' ) }>
                         <SelectControl
-                            label={ __( 'Display in language', 'easy-web-translator' ) }
-                            value={ lmatLang }
+                            label={ __( 'Display in language', 'easy-wp-translator' ) }
+                            value={ ewtLang }
                             options={ [
-                                { label: __( 'Any', 'easy-web-translator' ), value: '' },
+                                { label: __( 'Any', 'easy-wp-translator' ), value: '' },
                                 // Real options should be injected server-side/localized; placeholder values here.
                                 { label: 'en', value: 'en' },
                                 { label: 'fr', value: 'fr' },
                                 { label: 'de', value: 'de' },
                             ] }
-                            onChange={ ( value ) => setAttributes( { lmatLang: value } ) }
+                            onChange={ ( value ) => setAttributes( { ewtLang: value } ) }
                         />
                     </PanelBody>
                 </InspectorControls>
@@ -51,6 +51,6 @@ const withInspectorControls = createHigherOrderComponent( ( BlockEdit ) => {
     };
 }, 'withInspectorControls' );
 
-addFilter( 'editor.BlockEdit', 'lmat/lang-choice/controls', withInspectorControls );
+addFilter( 'editor.BlockEdit', 'ewt/lang-choice/controls', withInspectorControls );
 
 

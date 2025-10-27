@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Helpers;
+namespace EasyWPTranslator\Includes\Helpers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -14,18 +14,18 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Cookie {
+class EWT_Cookie {
 	/**
 	 * Parses the cookie parameters.
 	 *
 	 *  
 	 *
-	 * @param array $args {@see LMAT_Cookie::set()}
+	 * @param array $args {@see EWT_Cookie::set()}
 	 * @return array
 	 */
 	protected static function parse_args( $args ) {
 		/**
-		 * Filters the Linguator cookie duration.
+		 * Filters the EasyWPTranslator cookie duration.
 		 *
 		 * If a cookie duration of 0 is specified, a session cookie will be set.
 		 * If a negative cookie duration is specified, the cookie is removed.
@@ -35,7 +35,7 @@ class LMAT_Cookie {
 		 *
 		 * @param int $duration Cookie duration in seconds.
 		 */
-		$expiration = (int) apply_filters( 'lmat_cookie_expiration', YEAR_IN_SECONDS );
+		$expiration = (int) apply_filters( 'ewt_cookie_expiration', YEAR_IN_SECONDS );
 
 		$defaults = array(
 			'expires'  => 0 !== $expiration ? time() + $expiration : 0,
@@ -49,7 +49,7 @@ class LMAT_Cookie {
 		$args = wp_parse_args( $args, $defaults );
 
 		/**
-		 * Filters the Linguator cookie arguments.
+		 * Filters the EasyWPTranslator cookie arguments.
 		 * /!\ This filter may be fired *before* the theme is loaded.
 		 *
 		 *  
@@ -67,7 +67,7 @@ class LMAT_Cookie {
 		 *   @type string $samesite Either 'Strict', 'Lax' or 'None'.
 		 * }
 		 */
-		return (array) apply_filters( 'lmat_cookie_args', $args );
+		return (array) apply_filters( 'ewt_cookie_args', $args );
 	}
 
 	/**
@@ -90,12 +90,12 @@ class LMAT_Cookie {
 	public static function set( $lang, $args = array() ) {
 		$args = self::parse_args( $args );
 
-		if ( ! headers_sent() && LMAT_COOKIE !== false && self::get() !== $lang ) {
+		if ( ! headers_sent() && EWT_COOKIE !== false && self::get() !== $lang ) {
 			if ( version_compare( PHP_VERSION, '7.3', '<' ) ) {
 				$args['path'] .= '; SameSite=' . $args['samesite']; // Hack to set SameSite value in PHP < 7.3. Doesn't work with newer versions.
-				setcookie( LMAT_COOKIE, $lang, $args['expires'], $args['path'], $args['domain'], $args['secure'], $args['httponly'] );
+				setcookie( EWT_COOKIE, $lang, $args['expires'], $args['path'], $args['domain'], $args['secure'], $args['httponly'] );
 			} else {
-				setcookie( LMAT_COOKIE, $lang, $args );
+				setcookie( EWT_COOKIE, $lang, $args );
 			}
 		}
 	}
@@ -108,6 +108,6 @@ class LMAT_Cookie {
 	 * @return string
 	 */
 	public static function get() {
-		return isset( $_COOKIE[ LMAT_COOKIE ] ) ? sanitize_key( $_COOKIE[ LMAT_COOKIE ] ) : '';
+		return isset( $_COOKIE[ EWT_COOKIE ] ) ? sanitize_key( $_COOKIE[ EWT_COOKIE ] ) : '';
 	}
 }

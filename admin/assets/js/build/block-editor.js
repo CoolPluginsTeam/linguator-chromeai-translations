@@ -3,7 +3,7 @@
 
 ;// ./assets/js/src/lib/confirmation-modal.js
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 var languagesList = jQuery('.post_lang_choice');
@@ -16,9 +16,9 @@ var initializeConfirmationModal = function initializeConfirmationModal() {
 
   // Create dialog container.
   var dialogContainer = jQuery('<div/>', {
-    id: 'lmat-dialog',
+    id: 'ewt-dialog',
     style: 'display:none;'
-  }).text(__('Are you sure you want to change the language of the current content?', 'easy-web-translator'));
+  }).text(__('Are you sure you want to change the language of the current content?', 'easy-wp-translator'));
 
   // Put it after languages list dropdown.
   // PHPCS ignore dialogContainer is a new safe HTML code generated above.
@@ -49,7 +49,7 @@ var initializeConfirmationModal = function initializeConfirmationModal() {
       modal: true,
       draggable: false,
       resizable: false,
-      title: __('Change language', 'easy-web-translator'),
+      title: __('Change language', 'easy-wp-translator'),
       minWidth: 600,
       maxWidth: '100%',
       open: function open(event, ui) {
@@ -66,12 +66,12 @@ var initializeConfirmationModal = function initializeConfirmationModal() {
         confirmDialog('no');
       },
       buttons: [{
-        text: __('OK', 'easy-web-translator'),
+        text: __('OK', 'easy-wp-translator'),
         click: function click(event) {
           confirmDialog('yes');
         }
       }, {
-        text: __('Cancel', 'easy-web-translator'),
+        text: __('Cancel', 'easy-wp-translator'),
         click: function click(event) {
           confirmDialog('no');
         }
@@ -81,7 +81,7 @@ var initializeConfirmationModal = function initializeConfirmationModal() {
     // jQuery UI >= 1.12 is available in WP 6.2+ (our minimum version)
     Object.assign(dialogOptions, {
       classes: {
-        'ui-dialog': 'lmat-confirmation-modal'
+        'ui-dialog': 'ewt-confirmation-modal'
       }
     });
     dialogContainer.dialog(dialogOptions);
@@ -97,17 +97,17 @@ var initializeLanguageOldValue = function initializeLanguageOldValue() {
 };
 ;// ./assets/js/src/lib/metabox-autocomplete.js
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 // Translations autocomplete input box.
 function initMetaboxAutoComplete() {
   jQuery('.tr_lang').each(function () {
     var tr_lang = jQuery(this).attr('id').substring(8);
-    var td = jQuery(this).parent().parent().siblings('.lmat-edit-column');
+    var td = jQuery(this).parent().parent().siblings('.ewt-edit-column');
     jQuery(this).autocomplete({
       minLength: 0,
-      source: ajaxurl + '?action=lmat_posts_not_translated' + '&post_language=' + jQuery('.post_lang_choice').val() + '&translation_language=' + tr_lang + '&post_type=' + jQuery('#post_type').val() + '&_lmat_nonce=' + jQuery('#_lmat_nonce').val(),
+      source: ajaxurl + '?action=ewt_posts_not_translated' + '&post_language=' + jQuery('.post_lang_choice').val() + '&translation_language=' + tr_lang + '&post_type=' + jQuery('#post_type').val() + '&_ewt_nonce=' + jQuery('#_ewt_nonce').val(),
       select: function select(event, ui) {
         jQuery('#htr_lang_' + tr_lang).val(ui.item.id);
         // ui.item.link is built and come from server side and is well escaped when necessary
@@ -127,12 +127,12 @@ function initMetaboxAutoComplete() {
 }
 ;// ./assets/js/src/lib/filter-path-middleware.js
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 /**
  * Filters requests for translatable entities.
- * This logic is shared across all Linguator plugins.
+ * This logic is shared across all EasyWPTranslator plugins.
  *
  *
  * @param {APIFetchOptions} options
@@ -150,7 +150,7 @@ var filterPathMiddleware = function filterPathMiddleware(options, filteredRoutes
 /* harmony default export */ const filter_path_middleware = (filterPathMiddleware);
 ;// ./assets/js/src/block-editor.js
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 
@@ -166,10 +166,10 @@ wp.apiFetch.use(function (options, next) {
    * If options.url is defined, this is not a REST request but a direct call to post.php for legacy metaboxes.
    * If `filteredRoutes` is not defined, return early.
    */
-  if ('undefined' !== typeof options.url || 'undefined' === typeof lmatFilteredRoutes) {
+  if ('undefined' !== typeof options.url || 'undefined' === typeof ewtFilteredRoutes) {
     return next(options);
   }
-  return next(filter_path_middleware(options, lmatFilteredRoutes, addLanguageParameter));
+  return next(filter_path_middleware(options, ewtFilteredRoutes, addLanguageParameter));
 });
 
 /**
@@ -181,7 +181,7 @@ wp.apiFetch.use(function (options, next) {
 function getCurrentLanguage() {
   var lang = document.querySelector('[name=post_lang_choice]');
   if (null === lang) {
-    return lmatDefaultLanguage;
+    return ewtDefaultLanguage;
   }
   return lang.value;
 }
@@ -254,11 +254,11 @@ jQuery(function ($) {
     dialogResult.then(function () {
       var data = {
         // phpcs:ignore PEAR.Functions.FunctionCallSignature.Indent
-        action: 'lmat_post_lang_choice',
+        action: 'ewt_post_lang_choice',
         lang: selectedOption.value,
         post_type: $('#post_type').val(),
         post_id: $('#post_ID').val(),
-        _lmat_nonce: $('#_lmat_nonce').val()
+        _ewt_nonce: $('#_ewt_nonce').val()
       };
 
       // Update post language in database as soon as possible.

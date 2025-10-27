@@ -1,5 +1,5 @@
 <?php
-namespace Linguator\Admin\Views;
+namespace EasyWPTranslator\Admin\Views;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -10,10 +10,10 @@ use WP_Term;
 /**
  * Displays the translations fields for terms
  *
- * @package Linguator
+ * @package EasyWPTranslator
  *
- * @var LMAT_Admin_Filters_Term $this      LMAT_Admin_Filters_Term object.
- * @var LMAT_Language           $lang      The post language. Default language if no language assigned yet.
+ * @var EWT_Admin_Filters_Term $this      EWT_Admin_Filters_Term object.
+ * @var EWT_Language           $lang      The post language. Default language if no language assigned yet.
  * @var string                 $taxonomy  Taxonomy name.
  * @var string                 $post_type Post type.
  */
@@ -24,14 +24,14 @@ use WP_Term;
 
 if ( isset( $term_id ) ) {
 	// Edit term form ?>
-	<th scope="row"><?php esc_html_e( 'Translations', 'easy-web-translator' ); ?></th>
+	<th scope="row"><?php esc_html_e( 'Translations', 'easy-wp-translator' ); ?></th>
 	<td>
 	<?php
 }
 else {
 	// Add term form
 	?>
-	<p><?php esc_html_e( 'Translations', 'easy-web-translator' ); ?></p>
+	<p><?php esc_html_e( 'Translations', 'easy-wp-translator' ); ?></p>
 	<?php
 }
 ?>
@@ -61,11 +61,11 @@ else {
 		}
 		?>
 		<tr>
-			<th class = "lmat-language-column">
-				<span class = "lmat-translation-flag"><?php echo $language->flag ? wp_kses( $language->flag, array( 'img' => array( 'src' => true, 'alt' => true, 'class' => true, 'width' => true, 'height' => true, 'style' => true ), 'span' => array( 'class' => true ), 'abbr' => array() ), array_merge( wp_allowed_protocols(), array( 'data' ) ) ) : esc_html( $language->slug ); ?></span>
+			<th class = "ewt-language-column">
+				<span class = "ewt-translation-flag"><?php echo $language->flag ? wp_kses( $language->flag, array( 'img' => array( 'src' => true, 'alt' => true, 'class' => true, 'width' => true, 'height' => true, 'style' => true ), 'span' => array( 'class' => true ), 'abbr' => array() ), array_merge( wp_allowed_protocols(), array( 'data' ) ) ) : esc_html( $language->slug ); ?></span>
 				<?php
 				printf(
-					'<span class="lmat-language-name%1$s">%2$s</span>',
+					'<span class="ewt-language-name%1$s">%2$s</span>',
 					isset( $term_id ) ? '' : ' screen-reader-text',
 					esc_html( $language->name )
 				);
@@ -75,11 +75,11 @@ else {
 			if ( isset( $term_id ) ) {
 				?>
 				<td class = "hidden"><?php echo wp_kses_post( $add_link ); ?></td>
-				<td class = "lmat-edit-column"><?php echo wp_kses_post( $link ); ?></td>
+				<td class = "ewt-edit-column"><?php echo wp_kses_post( $link ); ?></td>
 				<?php
 			}
 			?>
-			<td class = "lmat-translation-column">
+			<td class = "ewt-translation-column">
 				<?php
 				printf(
 					'<label class="screen-reader-text" for="tr_lang_%1$s">%2$s</label>
@@ -87,7 +87,7 @@ else {
 					<span lang="%6$s" dir="%7$s"><input type="text" class="tr_lang" id="tr_lang_%1$s" value="%4$s"%5$s /></span>',
 					esc_attr( $language->slug ),
 					/* translators: accessibility text */
-					esc_html__( 'Translation', 'easy-web-translator' ),
+					esc_html__( 'Translation', 'easy-wp-translator' ),
 					$translation_exists ? (int) $translation->term_id : 0,
 					$translation_exists ? esc_attr( $translation->name ) : '',
 					disabled( empty( $disabled ), false, false ),

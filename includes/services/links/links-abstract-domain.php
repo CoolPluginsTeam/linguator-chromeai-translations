@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Services\Links;
+namespace EasyWPTranslator\Includes\Services\Links;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -14,14 +14,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-abstract class LMAT_Links_Abstract_Domain extends LMAT_Links_Permalinks {
+abstract class EWT_Links_Abstract_Domain extends EWT_Links_Permalinks {
 
 	/**
 	 * Constructor.
 	 *
 	 *  
 	 *
-	 * @param LMAT_Model $model Instance of LMAT_Model.
+	 * @param EWT_Model $model Instance of EWT_Model.
 	 */
 	public function __construct( &$model ) {
 		parent::__construct( $model );
@@ -34,7 +34,7 @@ abstract class LMAT_Links_Abstract_Domain extends LMAT_Links_Permalinks {
 		add_filter( 'upload_dir', array( $this, 'upload_dir' ) );
 
 		// Set the correct domain for each language.
-		add_filter( 'lmat_language_flag_url', array( $this, 'site_url' ) );
+		add_filter( 'ewt_language_flag_url', array( $this, 'site_url' ) );
 	}
 
 	/**
@@ -48,7 +48,7 @@ abstract class LMAT_Links_Abstract_Domain extends LMAT_Links_Permalinks {
 	 */
 	public function get_language_from_url( $url = '' ) {
 		if ( empty( $url ) ) {
-			$url = lmat_get_requested_url();
+			$url = ewt_get_requested_url();
 		}
 
 		$host = wp_parse_url( $url, PHP_URL_HOST );

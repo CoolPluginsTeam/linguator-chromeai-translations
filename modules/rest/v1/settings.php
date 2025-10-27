@@ -1,23 +1,23 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Modules\REST\V1;
+namespace EasyWPTranslator\Modules\REST\V1;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 
-use Linguator\Includes\Other\LMAT_Model;
+use EasyWPTranslator\Includes\Other\EWT_Model;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
-use Linguator\Includes\Models\Languages;
-use Linguator\Includes\Options\Options;
-use Linguator\Modules\REST\Abstract_Controller;
+use EasyWPTranslator\Includes\Models\Languages;
+use EasyWPTranslator\Includes\Options\Options;
+use EasyWPTranslator\Modules\REST\Abstract_Controller;
 
 
 /**
@@ -37,7 +37,7 @@ class Settings extends Abstract_Controller {
 	private $languages;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	private $model;
 
@@ -77,10 +77,10 @@ class Settings extends Abstract_Controller {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Model $model Linguator's model.
+	 * @param EWT_Model $model EasyWPTranslator's model.
 	 */
-	public function __construct( LMAT_Model $model ) {
-		$this->namespace = 'lmat/v1';
+	public function __construct( EWT_Model $model ) {
+		$this->namespace = 'ewt/v1';
 		$this->rest_base = 'settings';
 		$this->model     = $model;
 		$this->options   = $model->options;
@@ -147,12 +147,12 @@ class Settings extends Abstract_Controller {
 	public function update_setup_complete( $request ) {
 		$complete = $request->get_param( 'complete' );
 		
-		$result = update_option( 'lmat_setup_complete', $complete );
+		$result = update_option( 'ewt_setup_complete', $complete );
 		
 		if ( $result ) {
 			return rest_ensure_response( array(
 				'success' => true,
-				'lmat_setup_complete' => $complete,
+				'ewt_setup_complete' => $complete,
 				'message' => 'Setup completion status updated successfully'
 			) );
 		} else {
@@ -178,19 +178,19 @@ class Settings extends Abstract_Controller {
 	public function get_item( $request ) {
 		$public_post_types = get_post_types( array( 'public' => true, '_builtin' => false ) );
 		/** This filter is documented in include/model.php */
-		$this->post_types = array_unique( apply_filters( 'lmat_get_post_types', $public_post_types, true ) );
+		$this->post_types = array_unique( apply_filters( 'ewt_get_post_types', $public_post_types, true ) );
 
 		/** This filter is documented in include/model.php */
-		$programmatically_active_post_types = array_unique( apply_filters( 'lmat_get_post_types', array(), false ) );
+		$programmatically_active_post_types = array_unique( apply_filters( 'ewt_get_post_types', array(), false ) );
 		$this->disabled_post_types = array_intersect( $programmatically_active_post_types, $this->post_types );
 
 		$public_taxonomies = get_taxonomies( array( 'public' => true, '_builtin' => false ) );
-		$public_taxonomies = array_diff( $public_taxonomies, get_taxonomies( array( '_lmat' => true ) ) );
+		$public_taxonomies = array_diff( $public_taxonomies, get_taxonomies( array( '_ewt' => true ) ) );
 		/** This filter is documented in include/model.php */
-		$this->taxonomies = array_unique( apply_filters( 'lmat_get_taxonomies', $public_taxonomies, true ) );
+		$this->taxonomies = array_unique( apply_filters( 'ewt_get_taxonomies', $public_taxonomies, true ) );
 
 		/** This filter is documented in include/model.php */
-		$programmatically_active_taxonomies = array_unique( apply_filters( 'lmat_get_taxonomies', array(), false ) );
+		$programmatically_active_taxonomies = array_unique( apply_filters( 'ewt_get_taxonomies', array(), false ) );
 		$this->disabled_taxonomies = array_intersect( $programmatically_active_taxonomies, $this->taxonomies );
 		$response = $this->options->get_all();
 
@@ -321,7 +321,7 @@ class Settings extends Abstract_Controller {
 		if ( empty( $domains ) || ! is_array( $domains ) ) {
 			$errors->add(
 				'missing_domains',
-				__( 'Domains are required when language is set from different domains.', 'easy-web-translator' ),
+				__( 'Domains are required when language is set from different domains.', 'easy-wp-translator' ),
 				array( 'status' => 400 )
 			);
 			return $errors;
@@ -338,7 +338,7 @@ class Settings extends Abstract_Controller {
 				$errors->add(
 					'invalid_language',
 					// translators: %s is the language slug/code that was provided
-					sprintf( __( 'Invalid language code: %s', 'easy-web-translator' ), $lang_slug ),
+					sprintf( __( 'Invalid language code: %s', 'easy-wp-translator' ), $lang_slug ),
 					array( 'status' => 400 )
 				);
 				continue;
@@ -349,7 +349,7 @@ class Settings extends Abstract_Controller {
 				$errors->add(
 					'empty_domain',
 					// translators: %s is the language slug/code that needs a domain URL
-					sprintf( __( 'Domain URL is required for language: %s', 'easy-web-translator' ), $lang_slug ),
+					sprintf( __( 'Domain URL is required for language: %s', 'easy-wp-translator' ), $lang_slug ),
 					array( 'status' => 400 )
 				);
 				continue;
@@ -361,7 +361,7 @@ class Settings extends Abstract_Controller {
 				$errors->add(
 					'invalid_domain_format',
 					// translators: %1$s is the language slug/code, %2$s is the invalid domain URL provided
-					sprintf( __( 'Invalid domain URL format for language %1$s: %2$s', 'easy-web-translator' ), $lang_slug, $domain_url ),
+					sprintf( __( 'Invalid domain URL format for language %1$s: %2$s', 'easy-wp-translator' ), $lang_slug, $domain_url ),
 					array( 'status' => 400 )
 				);
 				continue;
@@ -377,7 +377,7 @@ class Settings extends Abstract_Controller {
 				$errors->add(
 					'missing_language_domain',
 					// translators: %s is the language slug/code that is missing a domain URL
-					sprintf( __( 'Domain URL is required for language: %s', 'easy-web-translator' ), $lang_slug ),
+					sprintf( __( 'Domain URL is required for language: %s', 'easy-wp-translator' ), $lang_slug ),
 					array( 'status' => 400 )
 				);
 			}
@@ -386,7 +386,7 @@ class Settings extends Abstract_Controller {
 		// Ping all URLs to make sure they are accessible - moved from Domains.php
 		$failed_urls = array();
 		foreach ( array_filter( $domains ) as $url ) {
-			$test_url = add_query_arg( 'deactivate-linguator', 1, $url );
+			$test_url = add_query_arg( 'deactivate-easywptranslator', 1, $url );
 			// Don't redefine vip_safe_wp_remote_get() as it has not the same signature as wp_remote_get().
 			$response = function_exists( 'vip_safe_wp_remote_get' ) ? vip_safe_wp_remote_get( $test_url ) : wp_remote_get( $test_url );
 
@@ -399,13 +399,13 @@ class Settings extends Abstract_Controller {
 			// Blocking error - prevents save
 			if ( 1 === count( $failed_urls ) ) {
 				/* translators: %s is a URL. */
-				$message = __( 'Linguator was unable to access the %s URL. Please check that the URL is valid.', 'easy-web-translator' );
+				$message = __( 'EasyWPTranslator was unable to access the %s URL. Please check that the URL is valid.', 'easy-wp-translator' );
 			} else {
 				/* translators: %s is a list of URLs. */
-				$message = __( 'Linguator was unable to access the %s URLs. Please check that the URLs are valid.', 'easy-web-translator' );
+				$message = __( 'EasyWPTranslator was unable to access the %s URLs. Please check that the URLs are valid.', 'easy-wp-translator' );
 			}
 			$errors->add(
-				'lmat_invalid_domains',
+				'ewt_invalid_domains',
 				sprintf( $message, wp_sprintf_l( '%l', $failed_urls ) ),
 				array( 'status' => 400 )
 			);
@@ -430,7 +430,7 @@ class Settings extends Abstract_Controller {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return new WP_Error(
 				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit options.', 'easy-web-translator' ),
+				__( 'Sorry, you are not allowed to edit options.', 'easy-wp-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -485,7 +485,7 @@ class Settings extends Abstract_Controller {
 		}
 		
 		// Get programmatically active post types
-		$programmatically_active = array_unique( apply_filters( 'lmat_get_post_types', array(), false ) );
+		$programmatically_active = array_unique( apply_filters( 'ewt_get_post_types', array(), false ) );
 		
 		// Remove programmatically active post types from the list to save
 		// They should not be stored in options since they're handled by code

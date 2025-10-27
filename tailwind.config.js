@@ -41,6 +41,6 @@ export default withTW({
 	corePlugins: {
 		preflight: false,
 	},
-	important: '.lmat-styles',
+	important: '.ewt-styles',
 });
 

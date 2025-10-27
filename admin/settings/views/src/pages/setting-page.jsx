@@ -35,8 +35,8 @@ const SettingPage = () => {
 
   const handleTabClick = (e) => {
 
-    const tabBtn=e.target.classList.contains('lmat-settings-header-tab') ? e.target : e.target.closest('.lmat-settings-header-tab');
-    const activeTab=document.querySelector('.lmat-settings-header-tab.active');
+    const tabBtn=e.target.classList.contains('ewt-settings-header-tab') ? e.target : e.target.closest('.ewt-settings-header-tab');
+    const activeTab=document.querySelector('.ewt-settings-header-tab.active');
 
     if(tabBtn.classList.contains('active')){
       return;
@@ -52,7 +52,7 @@ const SettingPage = () => {
   }
 
   useEffect(() => {
-    const tabs=document.querySelectorAll('.lmat-settings-header-tab:not([data-link="true"])');
+    const tabs=document.querySelectorAll('.ewt-settings-header-tab:not([data-link="true"])');
     tabs.forEach(tab => {
       tab.addEventListener('click', handleTabClick);
     });

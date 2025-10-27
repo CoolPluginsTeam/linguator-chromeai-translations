@@ -1,7 +1,7 @@
 const ElementorWidgetTranslator = (props) => {
   const value = props.getControlValue();
-  const activePageLanguage = window.lmatInlineTranslation?.pageLanguage || 'en';
-  const TranslatorModal = window?.lmatInlineTranslation?.TranslatorModal;
+  const activePageLanguage = window.ewtInlineTranslation?.pageLanguage || 'en';
+  const TranslatorModal = window?.ewtInlineTranslation?.TranslatorModal;
 
   if (!TranslatorModal) {
     return <div>TranslatorModal not found</div>;

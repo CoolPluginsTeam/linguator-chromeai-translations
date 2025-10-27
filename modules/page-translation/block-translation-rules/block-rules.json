@@ -1,5 +1,5 @@
 {
-    "LmatBlockParseRules": {
+    "EWTBlockParseRules": {
         "core/paragraph": {
             "attributes": {
                 "content": true

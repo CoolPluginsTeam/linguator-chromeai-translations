@@ -1,16 +1,16 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options;
+namespace EasyWPTranslator\Includes\Options;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 /**
- * Linguator's options registry.
+ * EasyWPTranslator's options registry.
  *
  *  
  */
@@ -48,7 +48,7 @@ class Registry {
 	);
 
 	/**
-	 * Registers Linguator's options.
+	 * Registers EasyWPTranslator's options.
 	 *
 	 *  
 	 *

@@ -1,7 +1,7 @@
 <?php
-namespace Linguator\Includes\Options\Primitive;
+namespace EasyWPTranslator\Includes\Options\Primitive;
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-use Linguator\Includes\Options\Abstract_Option;
+use EasyWPTranslator\Includes\Options\Abstract_Option;
 
 
 

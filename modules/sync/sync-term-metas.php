@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,18 +12,18 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Sync_Term_Metas extends LMAT_Sync_Metas {
+class EWT_Sync_Term_Metas extends EWT_Sync_Metas {
 
 	/**
 	 * Constructor.
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
+	public function __construct( &$easywptranslator ) {
 		$this->meta_type = 'term';
 
-		parent::__construct( $linguator );
+		parent::__construct( $easywptranslator );
 	}
 }

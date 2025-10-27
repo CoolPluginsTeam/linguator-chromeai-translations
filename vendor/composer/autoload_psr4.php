@@ -6,12 +6,12 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Linguator\\includes\\' => array($baseDir . '/includes'),
-    'Linguator\\Tests\\' => array($baseDir . '/tests'),
-    'Linguator\\Settings\\' => array($baseDir . '/admin/settings'),
-    'Linguator\\Modules\\' => array($baseDir . '/modules'),
-    'Linguator\\Integrations\\' => array($baseDir . '/integrations'),
-    'Linguator\\Install\\' => array($baseDir . '/install'),
-    'Linguator\\Frontend\\' => array($baseDir . '/frontend'),
-    'Linguator\\Admin\\' => array($baseDir . '/admin'),
+    'EasyWPTranslator\\includes\\' => array($baseDir . '/includes'),
+    'EasyWPTranslator\\Tests\\' => array($baseDir . '/tests'),
+    'EasyWPTranslator\\Settings\\' => array($baseDir . '/admin/settings'),
+    'EasyWPTranslator\\Modules\\' => array($baseDir . '/modules'),
+    'EasyWPTranslator\\Integrations\\' => array($baseDir . '/integrations'),
+    'EasyWPTranslator\\Install\\' => array($baseDir . '/install'),
+    'EasyWPTranslator\\Frontend\\' => array($baseDir . '/frontend'),
+    'EasyWPTranslator\\Admin\\' => array($baseDir . '/admin'),
 );

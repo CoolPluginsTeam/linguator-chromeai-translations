@@ -1,11 +1,11 @@
 /**
- * LmatActionTypes is an object that defines the action types used in the 
+ * EWTActionTypes is an object that defines the action types used in the 
  * automatic translation feature of the application. Each property in this 
  * object corresponds to a specific action that can be dispatched to the 
  * global store, allowing the application to manage the state related to 
  * source and translated content effectively.
  */
-const LmatActionTypes = {
+const EWTActionTypes = {
     // Action type for saving the title of the source content
     sourceTitle: 'SAVE_SOURCE_TITLE',
     
@@ -49,4 +49,4 @@ const LmatActionTypes = {
     contentFetchStatus: 'CONTENT_FETCH_STATUS',
 };
 
-export default LmatActionTypes;
+export default EWTActionTypes;

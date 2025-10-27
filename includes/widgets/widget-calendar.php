@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Widgets;
+namespace EasyWPTranslator\Includes\Widgets;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,8 +27,8 @@ if ( ! class_exists( 'WP_Widget_Calendar' ) ) {
  *
  *  
  */
-class LMAT_Widget_Calendar extends WP_Widget_Calendar {
-	protected static $lmat_instance = 0; // Can't use $instance of WP_Widget_Calendar as it's private :/.
+class EWT_Widget_Calendar extends WP_Widget_Calendar {
+	protected static $ewt_instance = 0; // Can't use $instance of WP_Widget_Calendar as it's private :/.
 
 	/**
 	 * Outputs the content for the current Calendar widget instance.
@@ -52,17 +52,17 @@ class LMAT_Widget_Calendar extends WP_Widget_Calendar {
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Output is trusted as per widget API usage.
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
-		if ( 0 === self::$lmat_instance ) { #modified#
+		if ( 0 === self::$ewt_instance ) { #modified#
 			echo '<div id="calendar_wrap" class="calendar_wrap">';
 		} else {
 			echo '<div class="calendar_wrap">';
 		}
-		empty( LMAT()->curlang ) ? get_calendar() : self::get_calendar(); #modified#
+		empty( EWT()->curlang ) ? get_calendar() : self::get_calendar(); #modified#
 		echo '</div>';
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Output is trusted as per widget API usage.
 		echo $args['after_widget'];
 
-		++self::$lmat_instance; #modified#
+		++self::$ewt_instance; #modified#
 	}
 
 	/**
@@ -137,9 +137,9 @@ class LMAT_Widget_Calendar extends WP_Widget_Calendar {
 		}
 
 		/** This filter is documented in wp-includes/general-template.php */
-		$args = apply_filters( 'lmat_get_calendar_args', wp_parse_args( $args, $defaults ) );
+		$args = apply_filters( 'ewt_get_calendar_args', wp_parse_args( $args, $defaults ) );
 
-		$args['lang'] = LMAT()->curlang->slug; #added#
+		$args['lang'] = EWT()->curlang->slug; #added#
 
 		if ( ! post_type_exists( $args['post_type'] ) ) {
 			$args['post_type'] = 'post';
@@ -249,8 +249,8 @@ class LMAT_Widget_Calendar extends WP_Widget_Calendar {
 		$unixmonth = mktime( 0, 0, 0, $thismonth, 1, $thisyear );
 		$last_day  = gmdate( 't', $unixmonth );
 
-		$join_clause  = LMAT()->model->post->join_clause(); #added#
-		$where_clause = LMAT()->model->post->where_clause( LMAT()->curlang ); #added#
+		$join_clause  = EWT()->model->post->join_clause(); #added#
+		$where_clause = EWT()->model->post->where_clause( EWT()->curlang ); #added#
 
 		// Get the next and previous month and year with at least one post.
 
@@ -348,7 +348,7 @@ class LMAT_Widget_Calendar extends WP_Widget_Calendar {
 				// phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- This is a default WordPress text domain.
 				$date_format = gmdate( _x( 'F j, Y', 'daily archives date format' ), strtotime( "{$thisyear}-{$thismonth}-{$day}" ) );
 				/* translators: Post calendar label. %s: Date. */
-				$label            = sprintf( __( 'Posts published on %s','easy-web-translator' ), $date_format ); // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- This is a default WordPress text domain.
+				$label            = sprintf( __( 'Posts published on %s','easy-wp-translator' ), $date_format ); // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- This is a default WordPress text domain.
 				$calendar_output .= sprintf(
 					'<a href="%s" aria-label="%s">%s</a>',
 					get_day_link( $thisyear, $thismonth, $day ),
@@ -376,7 +376,7 @@ class LMAT_Widget_Calendar extends WP_Widget_Calendar {
 		$calendar_output .= "\n\t</table>";
 
 		// phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- This is a default WordPress text domain.
-		$calendar_output .= '<nav aria-label="' . __( 'Previous and next months', 'easy-web-translator' ) . '" class="wp-calendar-nav">';
+		$calendar_output .= '<nav aria-label="' . __( 'Previous and next months', 'easy-wp-translator' ) . '" class="wp-calendar-nav">';
 
 		if ( $previous ) {
 			$calendar_output .= "\n\t\t" . '<span class="wp-calendar-nav-prev"><a href="' . get_month_link( $previous->year, $previous->month ) . '">&laquo; ' .

@@ -1,51 +1,51 @@
-.lmat-main-wrapper{
-    --lmat-flag-radius: 0px;
-    --lmat-flag-ratio: 4/3;
-    --lmat-normal-bg-color: #fff;
-    --lmat-normal-text-color: #000;
+.ewt-main-wrapper{
+    --ewt-flag-radius: 0px;
+    --ewt-flag-ratio: 4/3;
+    --ewt-normal-bg-color: #fff;
+    --ewt-normal-text-color: #000;
   }
   /* General reset */
-  .lmat-language-list,
-  .lmat-language-list li {
+  .ewt-language-list,
+  .ewt-language-list li {
       list-style: none;
       margin: 0;
       padding: 0;
   }
   
-  .lmat-main-wrapper .lmat-language-list{
+  .ewt-main-wrapper .ewt-language-list{
     overflow: hidden;
   }
   
   /* Base wrapper */
-  .lmat-main-wrapper {
+  .ewt-main-wrapper {
       font-family: inherit;
       font-size: inherit;
       line-height: 1.5;
   }
   
-  .lmat-main-wrapper .lmat-wrapper a{
+  .ewt-main-wrapper .ewt-wrapper a{
     text-decoration: none;
   }
   
-  .lmat-main-wrapper .lmat-wrapper.horizontal {
+  .ewt-main-wrapper .ewt-wrapper.horizontal {
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
   }
   
-  .lmat-main-wrapper .lmat-wrapper.vertical {
+  .ewt-main-wrapper .ewt-wrapper.vertical {
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
   
   /* Language switcher container */
-  .lmat-wrapper {
+  .ewt-wrapper {
       padding: 10px;
   }
   
   /* Language item styling */
-  .lmat-lang-item {
+  .ewt-lang-item {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -55,26 +55,26 @@
       line-height: 1;
   }
   
-  .lmat-wrapper.horizontal .lmat-lang-item a,
-  .lmat-wrapper.vertical .lmat-lang-item a{
-    background-color: var(--lmat-normal-bg-color);
+  .ewt-wrapper.horizontal .ewt-lang-item a,
+  .ewt-wrapper.vertical .ewt-lang-item a{
+    background-color: var(--ewt-normal-bg-color);
   }
   
   
-  .lmat-lang-image{
-    aspect-ratio: var(--lmat-flag-ratio);
+  .ewt-lang-image{
+    aspect-ratio: var(--ewt-flag-ratio);
   }
   
   /* Flag image styling */
-  .lmat-lang-image img {
+  .ewt-lang-image img {
       object-fit: cover;
-      border-radius: var(--lmat-flag-radius);
+      border-radius: var(--ewt-flag-radius);
   }
   
   /* Name, code, and flag inline */
-  .lmat-lang-image,
-  .lmat-lang-name,
-  .lmat-lang-code {
+  .ewt-lang-image,
+  .ewt-lang-name,
+  .ewt-lang-code {
       display: inline-block;
       vertical-align: middle;
       flex-shrink: 0;
@@ -82,49 +82,49 @@
   }
   
   /* Link reset */
-  .lmat-lang-item a,
-  .lmat-active-language a {
+  .ewt-lang-item a,
+  .ewt-active-language a {
       text-decoration: none;
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--lmat-normal-text-color);
+      color: var(--ewt-normal-text-color);
   }
   
   /* Active language button (dropdown trigger) */
-  .lmat-active-language {
+  .ewt-active-language {
       display: flex;
       align-items: center;
       gap: 8px;
       cursor: pointer;
       padding: 6px 8px;
       border-radius: 4px;
-      color: var(--lmat-normal-text-color);
+      color: var(--ewt-normal-text-color);
   }
   
   /* DROPDOWN STYLING */
-  .lmat-wrapper.dropdown {
+  .ewt-wrapper.dropdown {
     position: relative;
     display: inline-flex;
     margin: 0 auto;
     padding: 10px 15px;
     cursor: pointer;
     outline: none;
-    background-color: var(--lmat-normal-bg-color);
+    background-color: var(--ewt-normal-bg-color);
     overflow: visible;
     align-items: center;
   }
   
-  .lmat-active-language .lmat-dropdown-icon {
+  .ewt-active-language .ewt-dropdown-icon {
     transition: transform 0.3s ease;
     display: inline-block;
   }
   
-  .lmat-wrapper.dropdown:hover .lmat-dropdown-icon {
+  .ewt-wrapper.dropdown:hover .ewt-dropdown-icon {
     transform: rotate(180deg);
   }
   
-  .lmat-wrapper.dropdown span a{
+  .ewt-wrapper.dropdown span a{
     display: flex;
     flex-wrap: wrap;
     gap: .6rem;
@@ -133,7 +133,7 @@
             align-items: center;
   }
   
-  .lmat-wrapper.dropdown ul {
+  .ewt-wrapper.dropdown ul {
     position: absolute;
     top: 100%;
     left: 0px;
@@ -151,34 +151,34 @@
     width: 100%;
   }
   
-  .lmat-wrapper.dropdown ul li{
+  .ewt-wrapper.dropdown ul li{
     text-decoration: none;
-    background: var(--lmat-normal-bg-color);
+    background: var(--ewt-normal-bg-color);
     display: block
   }
-  .lmat-wrapper.dropdown li a{
-    color: var(--lmat-normal-text-color);
+  .ewt-wrapper.dropdown li a{
+    color: var(--ewt-normal-text-color);
     padding: 5px 15px;
     -webkit-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
     white-space: nowrap;
   }
   
-  .lmat-dropdown-direction-up .lmat-wrapper.dropdown ul {
+  .ewt-dropdown-direction-up .ewt-wrapper.dropdown ul {
     top: auto;
     bottom: 100%;
     justify-content: flex-start;
   }
   
-  .lmat-wrapper.dropdown.active::after, .lmat-wrapper.dropdown:hover::after {
+  .ewt-wrapper.dropdown.active::after, .ewt-wrapper.dropdown:hover::after {
     border-width: 0 6px 6px 6px;
   }
   
-  .lmat-wrapper.dropdown.active ul, .lmat-wrapper.dropdown:hover ul {
+  .ewt-wrapper.dropdown.active ul, .ewt-wrapper.dropdown:hover ul {
     opacity: 1;
     pointer-events: auto;
   }
-  .lmat_elementor_demo_btn{
+  .ewt_elementor_demo_btn{
     position: absolute;
     bottom: 4px;
     right: 30px;
@@ -188,10 +188,10 @@
     border-radius: 3px;
     cursor: pointer;
   }
-  .lmat_elementor_demo_btn a{
+  .ewt_elementor_demo_btn a{
     color: black;
   }
-  .lmat_elementor_demo_btn a:hover{
+  .ewt_elementor_demo_btn a:hover{
     color:black;
     text-decoration: none;
   }

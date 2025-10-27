@@ -15,11 +15,11 @@ const ErrorModalBox = ({ message, onClose, Title }) => {
         if (clipboardElements.length > 0) {
             clipboardElements.forEach(element => {
 
-                element.classList.add('lmat-page-translation-tooltip-element');
+                element.classList.add('ewt-page-translation-tooltip-element');
 
                 element.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const toolTipExists = element.querySelector('.lmat-page-translation-tooltip');
+                    const toolTipExists = element.querySelector('.ewt-page-translation-tooltip');
                     
                     if(toolTipExists){
                         return;
@@ -27,11 +27,11 @@ const ErrorModalBox = ({ message, onClose, Title }) => {
 
                     let toolTipElement = document.createElement('span');
                     toolTipElement.textContent = "Text to be copied.";
-                    toolTipElement.className = 'lmat-page-translation-tooltip';
+                    toolTipElement.className = 'ewt-page-translation-tooltip';
                     element.appendChild(toolTipElement);
 
                     CopyClipboard({ text: element.getAttribute('data-clipboard-text'), startCopyStatus: () => {
-                        toolTipElement.classList.add('lmat-page-translation-tooltip-active');
+                        toolTipElement.classList.add('ewt-page-translation-tooltip-active');
                     }, endCopyStatus: () => {
                         setTimeout(() => {
                             toolTipElement.remove();
@@ -49,17 +49,17 @@ const ErrorModalBox = ({ message, onClose, Title }) => {
     }, []);
 
     return (
-        <div className="lmat-page-translation-error-modal-box-container">
-            <div className="lmat-page-translation-error-modal-box">
-                <div className="lmat-page-translation-error-modal-box-header">
-                    <span className="lmat-page-translation-error-modal-box-close" onClick={onClose}>×</span>
+        <div className="ewt-page-translation-error-modal-box-container">
+            <div className="ewt-page-translation-error-modal-box">
+                <div className="ewt-page-translation-error-modal-box-header">
+                    <span className="ewt-page-translation-error-modal-box-close" onClick={onClose}>×</span>
                     {Title && <h3>{Title}</h3>}
                 </div>
-                <div className="lmat-page-translation-error-modal-box-body">
+                <div className="ewt-page-translation-error-modal-box-body">
                     <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(stringifiedMessage) }} />
                 </div>
-                <div className="lmat-page-translation-error-modal-box-footer">
-                    <button className="lmat-page-translation-error-modal-box-close button button-primary" onClick={onClose}>Close</button>
+                <div className="ewt-page-translation-error-modal-box-footer">
+                    <button className="ewt-page-translation-error-modal-box-close button button-primary" onClick={onClose}>Close</button>
                 </div>
             </div>
         </div>

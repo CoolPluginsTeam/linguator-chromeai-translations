@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\custom_field_template;
+namespace EasyWPTranslator\Integrations\custom_field_template;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Cft {
+class EWT_Cft {
 	/**
 	 * Setups actions.
 	 *

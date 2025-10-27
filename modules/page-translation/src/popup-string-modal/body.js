@@ -8,7 +8,7 @@ import TranslateService from "../component/translate-provider/index.js";
 const StringPopUpBody = (props) => {
 
     const { service: service } = props;
-    const translateContent = select("block-lmatPageTranslation/translate").getTranslationEntry();
+    const translateContent = select("block-ewtPageTranslation/translate").getTranslationEntry();
     const StringModalBodyNotice = props.stringModalBodyNotice;
 
     useEffect(() => {
@@ -23,9 +23,9 @@ const StringPopUpBody = (props) => {
          * For example, it can call services like yandex Translate.
         */
         const service = props.service;
-        const id = `lmat_page_translation_${service}_translate_element`;
+        const id = `ewt_page_translation_${service}_translate_element`;
 
-        const translateContent = wp.data.select('block-lmatPageTranslation/translate').getTranslationEntry();
+        const translateContent = wp.data.select('block-ewtPageTranslation/translate').getTranslationEntry();
 
         if (translateContent.length > 0 && props.postDataFetchStatus) {
             const ServiceSetting = TranslateService({ Service: service });
@@ -37,23 +37,23 @@ const StringPopUpBody = (props) => {
         <div className="modal-body">
             {translateContent.length > 0 && props.postDataFetchStatus ?
                 <>
-                    {StringModalBodyNotice && <div className="lmat-page-translation-body-notice-wrapper"><StringModalBodyNotice /></div>}
-                    <div className="lmat_page_translation_translate_progress" key={props.modalRender}>{__("Automatic translation is in progress....", 'easy-web-translator')}<br />{__("It will take few minutes, enjoy ☕ coffee in this time!", 'easy-web-translator')}<br /><br />{__("Please do not leave this window or browser tab while translation is in progress...", 'easy-web-translator')}</div>
+                    {StringModalBodyNotice && <div className="ewt-page-translation-body-notice-wrapper"><StringModalBodyNotice /></div>}
+                    <div className="ewt_page_translation_translate_progress" key={props.modalRender}>{__("Automatic translation is in progress....", 'easy-wp-translator')}<br />{__("It will take few minutes, enjoy ☕ coffee in this time!", 'easy-wp-translator')}<br /><br />{__("Please do not leave this window or browser tab while translation is in progress...", 'easy-wp-translator')}</div>
                     <div className={`translator-widget ${service}`} style={{ display: 'flex' }}>
                         <h3 className="choose-lang">{TranslateService({ Service: props.service }).heading} <span className="dashicons-before dashicons-translation"></span></h3>
 
-                        <div className={`lmat_page_translation_translate_element_wrapper ${props.translateStatus ? 'translate-completed' : ''}`}>
-                            <div id={`lmat_page_translation_${props.service}_translate_element`}></div>
+                        <div className={`ewt_page_translation_translate_element_wrapper ${props.translateStatus ? 'translate-completed' : ''}`}>
+                            <div id={`ewt_page_translation_${props.service}_translate_element`}></div>
                         </div>
                     </div>
 
-                    <div className="lmat_page_translation_string_container">
+                    <div className="ewt_page_translation_string_container">
                         <table className="scrolldown" id="stringTemplate">
                             <thead>
                                 <tr>
-                                    <th className="notranslate">{__("S.No", 'easy-web-translator')}</th>
-                                    <th className="notranslate">{__("Source Text", 'easy-web-translator')}</th>
-                                    <th className="notranslate">{__("Translation", 'easy-web-translator')}</th>
+                                    <th className="notranslate">{__("S.No", 'easy-wp-translator')}</th>
+                                    <th className="notranslate">{__("Source Text", 'easy-wp-translator')}</th>
+                                    <th className="notranslate">{__("Translation", 'easy-wp-translator')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,28 +87,28 @@ const StringPopUpBody = (props) => {
                     </div>
                 </> :
                 props.postDataFetchStatus ?
-                    <p>{__('No strings are available for translation', 'easy-web-translator')}</p> :
+                    <p>{__('No strings are available for translation', 'easy-wp-translator')}</p> :
 
-                    <div className="lmat-page-translation-skeleton-loader-wrapper">
+                    <div className="ewt-page-translation-skeleton-loader-wrapper">
                         <div className="translate-widget">
-                            <div className="lmat-page-translation-skeleton-loader-mini"></div>
-                            <div className="lmat-page-translation-skeleton-loader-mini"></div>
+                            <div className="ewt-page-translation-skeleton-loader-mini"></div>
+                            <div className="ewt-page-translation-skeleton-loader-mini"></div>
                         </div>
                         <table>
                             <thead>
                                 <tr>
-                                    <th className="notranslate">{__("S.No", 'easy-web-translator')}</th>
-                                    <th className="notranslate">{__("Source Text", 'easy-web-translator')}</th>
-                                    <th className="notranslate">{__("Translation", 'easy-web-translator')}</th>
+                                    <th className="notranslate">{__("S.No", 'easy-wp-translator')}</th>
+                                    <th className="notranslate">{__("Source Text", 'easy-wp-translator')}</th>
+                                    <th className="notranslate">{__("Translation", 'easy-wp-translator')}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {[...Array(10)].map((_, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td><div className="lmat-page-translation-skeleton-loader-mini"></div></td>
-                                            <td><div className="lmat-page-translation-skeleton-loader-mini"></div></td>
-                                            <td><div className="lmat-page-translation-skeleton-loader-mini"></div></td>
+                                            <td><div className="ewt-page-translation-skeleton-loader-mini"></div></td>
+                                            <td><div className="ewt-page-translation-skeleton-loader-mini"></div></td>
+                                            <td><div className="ewt-page-translation-skeleton-loader-mini"></div></td>
                                         </tr>
                                     );
                                 })}

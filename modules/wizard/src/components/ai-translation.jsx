@@ -47,47 +47,47 @@ const ChromeLocalAINotice = () => {
     let heading='';
 
     if(showBrowserNotice){
-      heading = __('⚠️ Important Notice: Browser Compatibility', 'easy-web-translator');
+      heading = __('⚠️ Important Notice: Browser Compatibility', 'easy-wp-translator');
       message = `<ul className="list-disc ml-5 mt-2"><li>
-                ${sprintf(__('The %sTranslator API%s, which uses Chrome Local AI Models, is designed exclusively for use with the %sChrome browser%s.', 'easy-web-translator'), '<strong>', '</strong>', '<strong>', '</strong>')}
+                ${sprintf(__('The %sTranslator API%s, which uses Chrome Local AI Models, is designed exclusively for use with the %sChrome browser%s.', 'easy-wp-translator'), '<strong>', '</strong>', '<strong>', '</strong>')}
               </li>
               <li>
-                ${sprintf(__('If you are using a different browser (such as Edge, Firefox, or Safari), the API may not function correctly.', 'easy-web-translator'))}
+                ${sprintf(__('If you are using a different browser (such as Edge, Firefox, or Safari), the API may not function correctly.', 'easy-wp-translator'))}
               </li>
               <li>
-                ${sprintf(__('Learn more in the %sofficial documentation%s.', 'easy-web-translator'), '<a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank" rel="noreferrer" class="underline text-blue-600">', '</a>')}
+                ${sprintf(__('Learn more in the %sofficial documentation%s.', 'easy-wp-translator'), '<a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank" rel="noreferrer" class="underline text-blue-600">', '</a>')}
               </li>
       </ul>`;
     }else if(showSecureNotice){
-      heading = __('⚠️ Important Notice: Secure Connection Required', 'easy-web-translator');
+      heading = __('⚠️ Important Notice: Secure Connection Required', 'easy-wp-translator');
       message = `<ul className="list-disc ml-5 mt-2">
               <li>
-                ${sprintf(__('The %sTranslator API%s requires a secure (HTTPS) connection to function properly.', 'easy-web-translator'), '<strong>', '</strong>')}
+                ${sprintf(__('The %sTranslator API%s requires a secure (HTTPS) connection to function properly.', 'easy-wp-translator'), '<strong>', '</strong>')}
               </li>
               <li>
-                ${__('If you are on an insecure connection (HTTP), the API will not work.', 'easy-web-translator')}
+                ${__('If you are on an insecure connection (HTTP), the API will not work.', 'easy-wp-translator')}
               </li>
             </ul>
-            <p className="mt-2">${__('👉 How to Fix This:', 'easy-web-translator')}</p>
+            <p className="mt-2">${__('👉 How to Fix This:', 'easy-wp-translator')}</p>
             <ol className="list-decimal ml-5 mt-2">
-              <li>${sprintf(__('Switch to a secure connection by using %s.', 'easy-web-translator'), '<strong><code>https://</code></strong>')}
+              <li>${sprintf(__('Switch to a secure connection by using %s.', 'easy-wp-translator'), '<strong><code>https://</code></strong>')}
               </li>
               <li>
-                ${sprintf(__('Alternatively, add this URL to Chrome’s list of insecure origins treated as secure: %s.', 'easy-web-translator'), '<strong><code>chrome://flags/#unsafely-treat-insecure-origin-as-secure</code></strong>')}
+                ${sprintf(__('Alternatively, add this URL to Chrome’s list of insecure origins treated as secure: %s.', 'easy-wp-translator'), '<strong><code>chrome://flags/#unsafely-treat-insecure-origin-as-secure</code></strong>')}
                 <br />
-                ${__('Copy the URL and then open a new window and paste this URL to access the settings.', 'easy-web-translator')}
+                ${__('Copy the URL and then open a new window and paste this URL to access the settings.', 'easy-wp-translator')}
               </li>
             </ol>`;
     }else if(showApiNotice){
-      heading = __('⚠️ Important Notice: API Availability', 'easy-web-translator');
+      heading = __('⚠️ Important Notice: API Availability', 'easy-wp-translator');
       message = `<ol>
-                    <li>${sprintf(__('Open this URL in a new Chrome tab: %s. Copy this URL and then open a new window and paste this URL to access the settings.', 'easy-web-translator'), '<strong><code>chrome://flags/#translation-api</code></strong>')}</li>
-                    <li>${sprintf(__('Ensure that the %sExperimental translation API%s option is set to <strong>Enabled</strong>.', 'easy-web-translator'), '<strong>', '</strong>')}</li>
-                    <li>${sprintf(__('After change the setting, Click on the %sRelaunch%s button to apply the changes.', 'easy-web-translator'), '<strong>', '</strong>')}</li>
-                    <li>${__('The Translator AI modal should now be enabled and ready for use.', 'easy-web-translator')}</li>
+                    <li>${sprintf(__('Open this URL in a new Chrome tab: %s. Copy this URL and then open a new window and paste this URL to access the settings.', 'easy-wp-translator'), '<strong><code>chrome://flags/#translation-api</code></strong>')}</li>
+                    <li>${sprintf(__('Ensure that the %sExperimental translation API%s option is set to <strong>Enabled</strong>.', 'easy-wp-translator'), '<strong>', '</strong>')}</li>
+                    <li>${sprintf(__('After change the setting, Click on the %sRelaunch%s button to apply the changes.', 'easy-wp-translator'), '<strong>', '</strong>')}</li>
+                    <li>${__('The Translator AI modal should now be enabled and ready for use.', 'easy-wp-translator')}</li>
                 </ol>
-                <p>${sprintf(__('For more information, please refer to the %sdocumentation%s.', 'easy-web-translator'), '<a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">', '</a>')}</p>   
-                <p>${__('If the issue persists, please ensure that your browser is up to date and restart your browser.', 'easy-web-translator')}</p>`;
+                <p>${sprintf(__('For more information, please refer to the %sdocumentation%s.', 'easy-wp-translator'), '<a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">', '</a>')}</p>   
+                <p>${__('If the issue persists, please ensure that your browser is up to date and restart your browser.', 'easy-wp-translator')}</p>`;
     }
 
     return (
@@ -111,7 +111,7 @@ const AiTranslation = () => {
     const [lastUpdatedValue, setLastUpdatedValue] = React.useState({chromeLocalAITranslation})
 
     const handleBack = () => {
-       if (window.lmat_setup.media == "1") {
+       if (window.ewt_setup.media == "1") {
         setSetupProgress("media")
         localStorage.setItem("setupProgress", "media");
       } else {
@@ -125,7 +125,7 @@ const AiTranslation = () => {
             //handle if there are changes then make api call and save to databse or else no api call
             if (aiTranslation && (lastUpdatedValue.chromeLocalAITranslation !== chromeLocalAITranslation)) {
                 const AITranslationResponse = await apiFetch({
-                    path: 'lmat/v1/settings',
+                    path: 'ewt/v1/settings',
                     method: 'POST',
                     'headers': {
                         'Content-Type': 'application/json',
@@ -147,20 +147,20 @@ const AiTranslation = () => {
             setSetupProgress("language_switcher")
             localStorage.setItem("setupProgress", "language_switcher");
         } catch (error) {
-            toast.error(__("Please try again later", "easy-web-translator"))
+            toast.error(__("Please try again later", "easy-wp-translator"))
         }
     }
 
     return (
         <div className='mx-auto p-10 max-w-[600px] min-h-[40vh] bg-white shadow-sm flex flex-col'>
             <div className='flex-grow'>
-                <h2>{__('Translation Configuration', 'easy-web-translator')}</h2>
-                <p className='text-justify text-sm/6'>{__('Linguator lets you translate content using AI. You can translate the content of your website using AI.', 'easy-web-translator')}</p>
+                <h2>{__('Translation Configuration', 'easy-wp-translator')}</h2>
+                <p className='text-justify text-sm/6'>{__('EasyWPTranslator lets you translate content using AI. You can translate the content of your website using AI.', 'easy-wp-translator')}</p>
                 <div className='p-6 rounded-lg' style={{ border: "1px solid #e5e7eb" }}>
                     <div className='flex justify-between items-center'>
                     <div className="flex items-center  gap-2">
                       <ChromeIcon className="w-4 h-4" />
-                      <p className="text-sm/6">{__('Chrome Local AI Translation', 'easy-web-translator')}</p>
+                      <p className="text-sm/6">{__('Chrome Local AI Translation', 'easy-wp-translator')}</p>
                     </div>
                     <Switch
                         aria-label="Chrome Local AI Translation"

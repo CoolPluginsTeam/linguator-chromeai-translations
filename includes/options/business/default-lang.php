@@ -1,18 +1,18 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 
-use Linguator\Includes\Models\Languages;
-use Linguator\Includes\Options\Options;
-use Linguator\Includes\Options\Primitive\Abstract_String;
+use EasyWPTranslator\Includes\Models\Languages;
+use EasyWPTranslator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Options\Primitive\Abstract_String;
 use WP_Error;
 
 
@@ -60,7 +60,7 @@ class Default_Lang extends Abstract_String {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'Slug of the default language.', 'easy-web-translator' );
+		return __( 'Slug of the default language.', 'easy-wp-translator' );
 	}
 
 	/**
@@ -82,8 +82,8 @@ class Default_Lang extends Abstract_String {
 		}
 
 		/** @var string $value */
-		if ( ! get_term_by( 'slug', $value, 'lmat_language' ) ) {
-			return new WP_Error( 'lmat_invalid_language', sprintf( 'The language slug \'%s\' is not a valid language.', $value ) );
+		if ( ! get_term_by( 'slug', $value, 'ewt_language' ) ) {
+			return new WP_Error( 'ewt_invalid_language', sprintf( 'The language slug \'%s\' is not a valid language.', $value ) );
 		}
 
 		return $value;

@@ -1,20 +1,20 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Models\Translatable;
+namespace EasyWPTranslator\Includes\Models\Translatable;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Models\Languages;
-use Linguator\Includes\Options\Options;
-use Linguator\Includes\Other\LMAT_Model;
-use Linguator\Includes\Helpers\LMAT_Cache;
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Models\Languages;
+use EasyWPTranslator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Other\EWT_Model;
+use EasyWPTranslator\Includes\Helpers\EWT_Cache;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 
 
 
@@ -29,7 +29,7 @@ use Linguator\Includes\Other\LMAT_Language;
  *     default_alias: non-empty-string
  * }
  */
-abstract class LMAT_Translatable_Object {
+abstract class EWT_Translatable_Object {
 	/**
 	 * Model for the languages.
 	 *
@@ -38,7 +38,7 @@ abstract class LMAT_Translatable_Object {
 	protected $languages;
 
 	/**
-	 * Linguator's options.
+	 * EasyWPTranslator's options.
 	 *
 	 * @var Options
 	 */
@@ -47,7 +47,7 @@ abstract class LMAT_Translatable_Object {
 	/**
 	 * Internal non persistent cache object.
 	 *
-	 * @var LMAT_Cache<mixed>
+	 * @var EWT_Cache<mixed>
 	 */
 	protected $cache;
 
@@ -55,7 +55,7 @@ abstract class LMAT_Translatable_Object {
 	 * List of taxonomies to cache.
 	 *
 	 * @var string[]
-	 * @see LMAT_Translatable_Object::get_object_term()
+	 * @see EWT_Translatable_Object::get_object_term()
 	 *
 	 * @phpstan-var list<non-empty-string>
 	 */
@@ -104,9 +104,9 @@ abstract class LMAT_Translatable_Object {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Model $model Instance of `LMAT_Model`.
+	 * @param EWT_Model $model Instance of `EWT_Model`.
 	 */
-	public function __construct( LMAT_Model $model ) {
+	public function __construct( EWT_Model $model ) {
 		$this->languages      = $model->languages;
 		$this->options        = $model->options;
 		$this->cache          = $model->cache;
@@ -134,7 +134,7 @@ abstract class LMAT_Translatable_Object {
 				'public'    => false,
 				'query_var' => false,
 				'rewrite'   => false,
-				'_lmat'      => true,
+				'_ewt'      => true,
 			)
 		);
 	}
@@ -182,7 +182,7 @@ abstract class LMAT_Translatable_Object {
 	 *  
 	 *
 	 * @param int                     $id   Object ID.
-	 * @param LMAT_Language|string|int $lang Language (object, slug, or term ID).
+	 * @param EWT_Language|string|int $lang Language (object, slug, or term ID).
 	 * @return bool True when successfully assigned. False otherwise (or if the given language is already assigned to
 	 *              the object).
 	 */
@@ -217,7 +217,7 @@ abstract class LMAT_Translatable_Object {
 	 *   Renamed the parameter $post_id into $id.
 	 *
 	 * @param int $id Object ID.
-	 * @return LMAT_Language|false A `LMAT_Language` object. `false` if no language is associated to that object or if the
+	 * @return EWT_Language|false A `EWT_Language` object. `false` if no language is associated to that object or if the
 	 *                            ID is invalid.
 	 */
 	public function get_language( $id ) {
@@ -227,7 +227,7 @@ abstract class LMAT_Translatable_Object {
 			return false;
 		}
 
-		// Get the language and make sure it is a LMAT_Language object.
+		// Get the language and make sure it is a EWT_Language object.
 		$lang = $this->get_object_term( $id, $this->tax_language );
 
 		if ( empty( $lang ) ) {
@@ -262,7 +262,7 @@ abstract class LMAT_Translatable_Object {
 	 *  
 	 *
 	 * @param int    $id       Object ID.
-	 * @param string $taxonomy Linguator taxonomy depending if we are looking for a post (or term, or else) language.
+	 * @param string $taxonomy EasyWPTranslator taxonomy depending if we are looking for a post (or term, or else) language.
 	 * @return WP_Term|false The term associated to the object in the requested taxonomy if it exists, `false` otherwise.
 	 */
 	protected function get_object_terms( array $object_ids, string $taxonomy ) {
@@ -351,7 +351,7 @@ abstract class LMAT_Translatable_Object {
 	 *
 	 *
 	 * @param int    $object_id Object ID.
-	 * @param string $taxonomy  Linguator taxonomy depending if we are looking for a post (or term, or else) language.
+	 * @param string $taxonomy  EasyWPTranslator taxonomy depending if we are looking for a post (or term, or else) language.
 	 * @return WP_Term|null The term associated to the object in the requested taxonomy if it exists, `false` otherwise.
 	 */
 	public function get_object_term( $object_id, $taxonomy ) {
@@ -378,7 +378,7 @@ abstract class LMAT_Translatable_Object {
 			$alias = $db['default_alias'];
 		}
 
-		return " INNER JOIN {$wpdb->term_relationships} AS lmat_tr ON lmat_tr.object_id = {$alias}.{$db['id_column']}";
+		return " INNER JOIN {$wpdb->term_relationships} AS ewt_tr ON ewt_tr.object_id = {$alias}.{$db['id_column']}";
 	}
 
 	/**
@@ -386,23 +386,23 @@ abstract class LMAT_Translatable_Object {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language|LMAT_Language[]|string|string[] $lang A `LMAT_Language` object, or a comma separated list of language slugs, or an array of language slugs or objects.
+	 * @param EWT_Language|EWT_Language[]|string|string[] $lang A `EWT_Language` object, or a comma separated list of language slugs, or an array of language slugs or objects.
 	 * @return string The WHERE clause.
 	 *
-	 * @phpstan-param LMAT_Language|LMAT_Language[]|non-empty-string|non-empty-string[] $lang
+	 * @phpstan-param EWT_Language|EWT_Language[]|non-empty-string|non-empty-string[] $lang
 	 */
 	public function where_clause( $lang ) {
 		/*
 		 * $lang is an object.
-		 * This is generally the case if the query is coming from Linguator.
+		 * This is generally the case if the query is coming from EasyWPTranslator.
 		 */
-		if ( $lang instanceof LMAT_Language ) {
-			return ' AND lmat_tr.term_taxonomy_id = ' . absint( $lang->get_tax_prop( $this->tax_language, 'term_taxonomy_id' ) );
+		if ( $lang instanceof EWT_Language ) {
+			return ' AND ewt_tr.term_taxonomy_id = ' . absint( $lang->get_tax_prop( $this->tax_language, 'term_taxonomy_id' ) );
 		}
 
 		/*
 		 * $lang is an array of objects, an array of slugs, or a comma separated list of slugs.
-		 * The comma separated list of slugs can happen if the query is coming from outside with a 'lmat_lang' parameter.
+		 * The comma separated list of slugs can happen if the query is coming from outside with a 'ewt_lang' parameter.
 		 */
 		$languages        = is_array( $lang ) ? $lang : explode( ',', $lang );
 		$languages_tt_ids = array();
@@ -419,7 +419,7 @@ abstract class LMAT_Translatable_Object {
 			return '';
 		}
 
-		return ' AND lmat_tr.term_taxonomy_id IN ( ' . implode( ',', $languages_tt_ids ) . ' )';
+		return ' AND ewt_tr.term_taxonomy_id IN ( ' . implode( ',', $languages_tt_ids ) . ' )';
 	}
 
 	/**
@@ -566,7 +566,7 @@ abstract class LMAT_Translatable_Object {
 	 *  
 	 *
 	 * @param int[]        $ids  Array of post ids or term ids.
-	 * @param LMAT_Language $lang Language to assign to the posts or terms.
+	 * @param EWT_Language $lang Language to assign to the posts or terms.
 	 * @return void
 	 */
 	public function set_language_in_mass( $ids, $lang ) {
@@ -605,21 +605,21 @@ abstract class LMAT_Translatable_Object {
 	 * Returns the description to use for the "language properties" in the REST API.
 	 *
 	 *  
-	 * @see Linguator\modules\REST\V2\Languages::get_item_schema()
+	 * @see EasyWPTranslator\modules\REST\V2\Languages::get_item_schema()
 	 *
 	 * @return string
 	 */
 	public function get_rest_description(): string {
 		/* translators: %s is the name of a database table. */
-		return sprintf( __( 'Language taxonomy properties for table %s.', 'easy-web-translator' ), $this->get_db_infos()['table'] );
+		return sprintf( __( 'Language taxonomy properties for table %s.', 'easy-wp-translator' ), $this->get_db_infos()['table'] );
 	}
 
 	/**
 	 * Returns database-related information that can be used in some of this class methods.
 	 * These are specific to the table containing the objects.
 	 *
-	 * @see LMAT_Translatable_Object::join_clause()
-	 * @see LMAT_Translatable_Object::get_raw_objects_with_no_lang()
+	 * @see EWT_Translatable_Object::join_clause()
+	 * @see EWT_Translatable_Object::get_raw_objects_with_no_lang()
 	 *
 	 *  
 	 *

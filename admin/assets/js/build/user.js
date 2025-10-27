@@ -3,7 +3,7 @@
 /**
  * Adds one biography input field per language in the user profile.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 jQuery(function ($) {

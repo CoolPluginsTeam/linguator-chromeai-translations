@@ -3,7 +3,7 @@
 /**
  * Adds a flag to the widgets filtered by a language.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 jQuery(function ($) {
@@ -11,8 +11,8 @@ jQuery(function ($) {
     widgets_selector,
     flags,
     isBlockEditor = 'undefined' !== typeof wp.blockEditor;
-  if ('undefined' !== typeof lmat_widgets && lmat_widgets.hasOwnProperty('flags')) {
-    flags = lmat_widgets.flags;
+  if ('undefined' !== typeof ewt_widgets && ewt_widgets.hasOwnProperty('flags')) {
+    flags = ewt_widgets.flags;
   }
 
   /**
@@ -27,21 +27,21 @@ jQuery(function ($) {
     }
     widget = $(widget);
     var title = isBlockEditor ? widget.prev('h3') : $('.widget-top .widget-title h3', widget),
-      locale = $('.lmat-lang-choice option:selected', widget).val(),
+      locale = $('.ewt-lang-choice option:selected', widget).val(),
       // Icon is HTML built and come from server side and is well escaped when necessary
       icon = locale && flags.hasOwnProperty(locale) ? flags[locale] : null;
     if (icon) {
       icon += ' &nbsp; ';
-      var current = $('.lmat-lang', title);
+      var current = $('.ewt-lang', title);
       if (current.length) {
         current.html(icon); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.html
       } else {
-        flag = $('<span />').addClass('lmat-lang').html(icon); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.html
+        flag = $('<span />').addClass('ewt-lang').html(icon); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.html
         // See the comment above about the icon which is safe. So it is also safe to prepend flag which uses icon.
         title.prepend(flag); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.prepend
       }
     } else {
-      $('.lmat-lang', title).remove();
+      $('.ewt-lang', title).remove();
     }
   }
   if (isBlockEditor) {
@@ -57,6 +57,7 @@ jQuery(function ($) {
       /**
        * WP Customizer add control listener.
        *
+       * @link https://wordpress.stackexchange.com/questions/256536/callback-after-wordpress-customizer-complete-loading
        *
        * @param {object} control The control type.
        * @return {void} Nothing.
@@ -91,23 +92,23 @@ jQuery(function ($) {
   }
 
   // Update flags.
-  widgets_container.on('change', '.lmat-lang-choice', function () {
+  widgets_container.on('change', '.ewt-lang-choice', function () {
     add_flag($(this).parents('.widget'));
   });
-  function lmat_toggle(a, test) {
+  function ewt_toggle(a, test) {
     test ? a.show() : a.hide();
   }
 
   // Remove all options if dropdown is checked.
-  $('.widgets-sortables,.control-section-sidebar,.edit-widgets-main-block-list').on('change', '.lmat-dropdown', function () {
+  $('.widgets-sortables,.control-section-sidebar,.edit-widgets-main-block-list').on('change', '.ewt-dropdown', function () {
     var this_id = $(this).parent().parent().parent().children('.widget-id').attr('value');
-    lmat_toggle($('.no-dropdown-' + this_id), true != $(this).prop('checked'));
+    ewt_toggle($('.no-dropdown-' + this_id), true != $(this).prop('checked'));
   });
 
   // Disallow unchecking both show names and show flags.
   var options = ['-show_flags', '-show_names'];
   $.each(options, function (i, v) {
-    $('.widgets-sortables,.control-section-sidebar,.edit-widgets-main-block-list').on('change', '.lmat' + v, function () {
+    $('.widgets-sortables,.control-section-sidebar,.edit-widgets-main-block-list').on('change', '.ewt' + v, function () {
       var this_id = $(this).parent().parent().parent().children('.widget-id').attr('value');
       if (true != $(this).prop('checked')) {
         $('#widget-' + this_id + options[1 - i]).prop('checked', true);

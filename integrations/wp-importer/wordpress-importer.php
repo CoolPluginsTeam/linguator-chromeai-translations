@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\wp_importer;
+namespace EasyWPTranslator\Integrations\wp_importer;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_WordPress_Importer {
+class EWT_WordPress_Importer {
 
 	/**
 	 * Setups filters.
@@ -38,15 +38,15 @@ class LMAT_WordPress_Importer {
 	}
 
 	/**
-	 * Loads our child class LMAT_WP_Import instead of WP_Import.
+	 * Loads our child class EWT_WP_Import instead of WP_Import.
 	 *
 	 *  
 	 */
 	public function wordpress_importer_init() {
 		$class = new \ReflectionClass( 'WP_Import' );
 
-		$GLOBALS['wp_import'] = new \LMAT_WP_Import(); // WordPress core global variable for WP Importer
-		register_importer( 'wordpress', 'WordPress', __( 'Import <strong>posts, pages, comments, custom fields, categories, and tags</strong> from a WordPress export file.', 'easy-web-translator' ), array( $GLOBALS['wp_import'], 'dispatch' ) ); // phpcs:ignore WordPress.WP.CapitalPDangit.MisspelledInText
+		$GLOBALS['wp_import'] = new \EWT_WP_Import(); // WordPress core global variable for WP Importer
+		register_importer( 'wordpress', 'WordPress', __( 'Import <strong>posts, pages, comments, custom fields, categories, and tags</strong> from a WordPress export file.', 'easy-wp-translator' ), array( $GLOBALS['wp_import'], 'dispatch' ) ); // phpcs:ignore WordPress.WP.CapitalPDangit.MisspelledInText
 	}
 
 	/**

@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Frontend\Services;
+namespace EasyWPTranslator\Frontend\Services;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -18,7 +18,7 @@ use WP_Post;
  *
  *  
  */
-class LMAT_Canonical {
+class EWT_Canonical {
 	/**
 	 * Stores the plugin options.
 	 *
@@ -27,21 +27,21 @@ class LMAT_Canonical {
 	protected $options;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
 	/**
-	 * Instance of a child class of LMAT_Links_Model.
+	 * Instance of a child class of EWT_Links_Model.
 	 *
-	 * @var LMAT_Links_Model
+	 * @var EWT_Links_Model
 	 */
 	protected $links_model;
 
 	/**
 	 * Current language.
 	 *
-	 * @var LMAT_Language
+	 * @var EWT_Language
 	 */
 	protected $curlang;
 
@@ -50,13 +50,13 @@ class LMAT_Canonical {
 	 *
 	 *  
 	 *
-	 * @param object $linguator Main Linguator object.
+	 * @param object $easywptranslator Main EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->links_model = &$linguator->links_model;
-		$this->model       = &$linguator->model;
-		$this->options     = &$linguator->options;
-		$this->curlang     = &$linguator->curlang;
+	public function __construct( &$easywptranslator ) {
+		$this->links_model = &$easywptranslator->links_model;
+		$this->model       = &$easywptranslator->model;
+		$this->options     = &$easywptranslator->options;
+		$this->curlang     = &$easywptranslator->curlang;
 	}
 
 	/**
@@ -94,7 +94,7 @@ class LMAT_Canonical {
 		}
 
 		if ( empty( $requested_url ) ) {
-			$requested_url = lmat_get_requested_url();
+			$requested_url = ewt_get_requested_url();
 		}
 
 		if ( ( is_single() && ( ! is_attachment() || get_option( 'wp_attachment_pages_enabled' ) ) ) || ( is_page() && ! is_front_page() ) ) {
@@ -145,14 +145,14 @@ class LMAT_Canonical {
 
 
 		/**
-		 * Filters the canonical url detected by Linguator.
+		 * Filters the canonical url detected by EasyWPTranslator.
 		 *
 		 *  
 		 *
 		 * @param string|false $redirect_url False or the url to redirect to.
-		 * @param LMAT_Language $language The language detected.
+		 * @param EWT_Language $language The language detected.
 		 */
-		$redirect_url = apply_filters( 'lmat_check_canonical_url', $redirect_url, $language );
+		$redirect_url = apply_filters( 'ewt_check_canonical_url', $redirect_url, $language );
 
 		if ( ! $redirect_url || $requested_url === $redirect_url ) {
 			return $requested_url;
@@ -164,7 +164,7 @@ class LMAT_Canonical {
 
 		// Protect against chained redirects.
 		if ( $redirect_url === $this->check_canonical_url( $redirect_url, false ) && wp_validate_redirect( $redirect_url ) ) {
-			wp_safe_redirect( $redirect_url, 301, LINGUATOR );
+			wp_safe_redirect( $redirect_url, 301, EASY_WP_TRANSLATOR );
 			exit;
 		}
 	}
@@ -186,7 +186,7 @@ class LMAT_Canonical {
 		}
 		$field = $queried_terms[ $taxonomy ]['field'];
 		$term  = reset( $queried_terms[ $taxonomy ]['terms'] );
-		$lang  = isset( $queried_terms['lmat_language']['terms'] ) ? reset( $queried_terms['lmat_language']['terms'] ) : '';
+		$lang  = isset( $queried_terms['ewt_language']['terms'] ) ? reset( $queried_terms['ewt_language']['terms'] ) : '';
 
 		// We can get a term_id when requesting a plain permalink, eg /?cat=1.
 		if ( 'term_id' === $field ) {
@@ -195,7 +195,7 @@ class LMAT_Canonical {
 
 		// We get a slug when requesting a pretty permalink. Let's query all corresponding terms.
 		$args = array(
-			'lmat_lang'       => '',
+			'ewt_lang'       => '',
 			'taxonomy'   => $taxonomy,
 			$field       => $term,
 			'hide_empty' => false,
@@ -239,7 +239,7 @@ class LMAT_Canonical {
 	 */
 	protected function get_queried_taxonomy( $tax_query ) {
 		$queried_terms = $tax_query->queried_terms;
-		unset( $queried_terms['lmat_language'] );
+		unset( $queried_terms['ewt_language'] );
 
 		return (string) key( $queried_terms );
 	}
@@ -252,7 +252,7 @@ class LMAT_Canonical {
 	 * @global WP_Query $wp_query WordPress Query object.
 	 *
 	 * @param string       $url      Requested url.
-	 * @param LMAT_Language $language Language of the queried object.
+	 * @param EWT_Language $language Language of the queried object.
 	 * @return string
 	 */
 	protected function redirect_canonical( $url, $language ) {
@@ -266,8 +266,8 @@ class LMAT_Canonical {
 		$backup_wp_query = $wp_query;
 
 		if ( isset( $wp_query->tax_query ) ) {
-			unset( $wp_query->tax_query->queried_terms['lmat_language'] );
-			unset( $wp_query->query['lmat_lang'] );
+			unset( $wp_query->tax_query->queried_terms['ewt_language'] );
+			unset( $wp_query->query['ewt_lang'] );
 		}
 
 		$redirect_url = redirect_canonical( $url, false );

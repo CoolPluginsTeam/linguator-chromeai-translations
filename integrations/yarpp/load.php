@@ -2,7 +2,7 @@
 /**
  * Loads the integration with Yet Another Related Posts Plugin.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,14 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/yarpp.php';
 
-use Linguator\Integrations\yarpp\LMAT_Yarpp;
-use Linguator\Integrations\LMAT_Integrations;
+use EasyWPTranslator\Integrations\yarpp\EWT_Yarpp;
+use EasyWPTranslator\Integrations\EWT_Integrations;
 
 add_action(
 	'plugins_loaded',
 	function () {
 		if ( defined( 'YARPP_VERSION' ) ) {
-			add_action( 'init', array( LMAT_Integrations::instance()->yarpp = new LMAT_Yarpp(), 'init' ) );
+			add_action( 'init', array( EWT_Integrations::instance()->yarpp = new EWT_Yarpp(), 'init' ) );
 		}
 	},
 	0

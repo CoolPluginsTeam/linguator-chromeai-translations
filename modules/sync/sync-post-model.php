@@ -1,16 +1,16 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-use Linguator\Custom_Fields\Custom_Fields;
+use EasyWPTranslator\Custom_Fields\Custom_Fields;
 
 /**
  * Model for synchronizing posts
  *
  *  
  */
-class LMAT_Sync_Post_Model {
+class EWT_Sync_Post_Model {
 	/**
 	 * Stores the plugin options.
 	 *
@@ -19,17 +19,17 @@ class LMAT_Sync_Post_Model {
 	public $options;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
 	/**
-	 * @var LMAT_Sync
+	 * @var EWT_Sync
 	 */
 	public $sync;
 
 	/**
-	 * @var LMAT_Sync_Content
+	 * @var EWT_Sync_Content
 	 */
 	public $sync_content;
 
@@ -45,16 +45,16 @@ class LMAT_Sync_Post_Model {
 	 *
 	 *  
 	 *
-	 * @param object $linguator Linguator object.
+	 * @param object $easywptranslator EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->options      = &$linguator->options;
-		$this->model        = &$linguator->model;
-		$this->sync         = &$linguator->sync;
-		$this->sync_content = new LMAT_Sync_Post($linguator);
+	public function __construct( &$easywptranslator ) {
+		$this->options      = &$easywptranslator->options;
+		$this->model        = &$easywptranslator->model;
+		$this->sync         = &$easywptranslator->sync;
+		$this->sync_content = new EWT_Sync_Post($easywptranslator);
 
-		add_filter( 'lmat_copy_taxonomies', array( $this, 'copy_taxonomies' ), 5, 4 );
-		add_filter( 'lmat_copy_post_metas', array( $this, 'copy_post_metas' ), 5, 4 );
+		add_filter( 'ewt_copy_taxonomies', array( $this, 'copy_taxonomies' ), 5, 4 );
+		add_filter( 'ewt_copy_post_metas', array( $this, 'copy_post_metas' ), 5, 4 );
 	}
 
 	/**
@@ -70,7 +70,7 @@ class LMAT_Sync_Post_Model {
 	 */
 	public function copy_taxonomies( $taxonomies, $sync, $from, $to ) {
 		if ( ! empty( $from ) && ! empty( $to ) && $this->are_synchronized( $from, $to ) ) {
-			$taxonomies = array_diff( get_post_taxonomies( $from ), get_taxonomies( array( '_lmat' => true ) ) );
+			$taxonomies = array_diff( get_post_taxonomies( $from ), get_taxonomies( array( '_ewt' => true ) ) );
 		}
 		return $taxonomies;
 	}
@@ -127,7 +127,7 @@ class LMAT_Sync_Post_Model {
 		}
 
 		if(isset($tr_post->post_content)){
-			$tr_post->post_content=wp_kses_post(lmat_replace_links_with_translations($tr_post->post_content, $target_language, $source_language));
+			$tr_post->post_content=wp_kses_post(ewt_replace_links_with_translations($tr_post->post_content, $target_language, $source_language));
 		}
 
 		$post_status='draft';
@@ -147,7 +147,7 @@ class LMAT_Sync_Post_Model {
 			$translations = $this->model->post->get_translations( $post_id );
 			$translations[ $target_language ] = $tr_id;
 
-			$language_link=apply_filters('lmat_bulk_post_language_link', true);
+			$language_link=apply_filters('ewt_bulk_post_language_link', true);
 
 			if($language_link){
 				$this->model->post->save_translations( $post_id, $translations ); // Saves translations in case we created a post.
@@ -160,10 +160,10 @@ class LMAT_Sync_Post_Model {
 
 			// Maybe duplicates the featured image.
 			if ( $this->options['media_support'] ) {
-				add_filter( 'lmat_translate_post_meta', array( $this->sync_content, 'duplicate_thumbnail' ), 10, 3 );
+				add_filter( 'ewt_translate_post_meta', array( $this->sync_content, 'duplicate_thumbnail' ), 10, 3 );
 			}
 
-			add_filter( 'lmat_maybe_translate_term', array( $this->sync_content, 'duplicate_term' ), 10, 3 );
+			add_filter( 'ewt_maybe_translate_term', array( $this->sync_content, 'duplicate_term' ), 10, 3 );
 
 			$this->sync->taxonomies->copy( $post_id, $tr_id, $target_language );
 			$this->sync->post_metas->copy( $post_id, $tr_id, $target_language );
@@ -179,10 +179,10 @@ class LMAT_Sync_Post_Model {
 			 * @param int    $tr_id   Id of the newly created post.
 			 * @param string $lang    Language of the newly created post.
 			 */
-			do_action( 'lmat_created_sync_post', $post_id, $tr_id, $target_language );
+			do_action( 'ewt_created_sync_post', $post_id, $tr_id, $target_language );
 
 			$post=get_post($post_id);
-			do_action( 'lmat_save_post', $post_id, $post, $translations ); // Fire again as we just updated $translations.
+			do_action( 'ewt_save_post', $post_id, $post, $translations ); // Fire again as we just updated $translations.
 
 			unset( $this->temp_synchronized[ $post_id ][ $tr_id ] );
 		}
@@ -233,7 +233,7 @@ class LMAT_Sync_Post_Model {
 		 * @param string $lang       Target language slug.
 		 * @param bool   $save_group True to update the synchronization group, false otherwise.
 		 */
-		$columns = apply_filters( 'lmat_sync_post_fields', array_combine( $columns, $columns ), $post_id, $target_language, $save_group );
+		$columns = apply_filters( 'ewt_sync_post_fields', array_combine( $columns, $columns ), $post_id, $target_language, $save_group );
 		
 		$tr_post = array_intersect_key( (array) $tr_post, $columns );
 		
@@ -260,7 +260,7 @@ class LMAT_Sync_Post_Model {
 		 * @param string $lang    Language of the target post.
 		 * @param string $strategy `copy`.
 		 */
-		do_action( 'lmat_post_synchronized', $post_id, $tr_id, $target_language, 'copy' );
+		do_action( 'ewt_post_synchronized', $post_id, $tr_id, $target_language, 'copy' );
 
 		// Update Elementor Translations
 		$this->update_elementor_data($tr_id, $post_data, $post_id);

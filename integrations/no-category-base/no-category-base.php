@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\no_category_base;
+namespace EasyWPTranslator\Integrations\no_category_base;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_No_Category_Base {
+class EWT_No_Category_Base {
 	/**
 	 * Setups actions.
 	 *

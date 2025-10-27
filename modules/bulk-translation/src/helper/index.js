@@ -16,9 +16,9 @@ export const updateTranslateData = ({ provider, sourceLang, targetLang, parentPo
     const sourceStringCount = parentPostInfo.stringsCount || 0;
     const date = new Date().toISOString();
 
-    const data = { provider, totalStringCount, totalWordCount, totalCharacterCount, editorType, date, sourceStringCount, sourceWordCount, sourceCharacterCount, sourceLang, targetLang, timeTaken, action: lmatBulkTranslationGlobal.update_translate_data, update_translation_key: updateTranslateDataNonce, post_id: currentPostId, ajax_url: lmatBulkTranslationGlobal.ajax_url, extraData: JSON.stringify(extraData) };
+    const data = { provider, totalStringCount, totalWordCount, totalCharacterCount, editorType, date, sourceStringCount, sourceWordCount, sourceCharacterCount, sourceLang, targetLang, timeTaken, action: ewtBulkTranslationGlobal.update_translate_data, update_translation_key: updateTranslateDataNonce, post_id: currentPostId, ajax_url: ewtBulkTranslationGlobal.ajax_url, extraData: JSON.stringify(extraData) };
 
-    fetch(lmatBulkTranslationGlobal.ajax_url, {
+    fetch(ewtBulkTranslationGlobal.ajax_url, {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',

@@ -1,17 +1,17 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Services\Crud;
+namespace EasyWPTranslator\Includes\Services\Crud;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Other\LMAT_Language;
-use Linguator\Includes\Other\LMAT_Model;
-use Linguator\Includes\Helpers\LMAT_Term_Slug;
+use EasyWPTranslator\Includes\Other\EWT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Model;
+use EasyWPTranslator\Includes\Helpers\EWT_Term_Slug;
 
 
 
@@ -22,30 +22,30 @@ use Linguator\Includes\Helpers\LMAT_Term_Slug;
  *
  *  
  */
-class LMAT_CRUD_Terms {
+class EWT_CRUD_Terms {
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
 	/**
 	 * Current language (used to filter the content).
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $curlang;
 
 	/**
 	 * Language selected in the admin language filter.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $filter_lang;
 
 	/**
 	 * Preferred language to assign to new contents.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $pref_lang;
 
@@ -64,7 +64,7 @@ class LMAT_CRUD_Terms {
 	private $pre_term_name = '';
 
 	/**
-	 * Reference to the Linguator options array.
+	 * Reference to the EasyWPTranslator options array.
 	 *
 	 * @var array
 	 */
@@ -75,18 +75,18 @@ class LMAT_CRUD_Terms {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->options     = &$linguator->options;
-		$this->model       = &$linguator->model;
-		$this->curlang     = &$linguator->curlang;
-		$this->filter_lang = &$linguator->filter_lang;
-		$this->pref_lang   = &$linguator->pref_lang;
+	public function __construct( &$easywptranslator ) {
+		$this->options     = &$easywptranslator->options;
+		$this->model       = &$easywptranslator->model;
+		$this->curlang     = &$easywptranslator->curlang;
+		$this->filter_lang = &$easywptranslator->filter_lang;
+		$this->pref_lang   = &$easywptranslator->pref_lang;
 
 		// Saving terms
 		add_action( 'create_term', array( $this, 'save_term' ), 999, 3 );
-		add_action( 'edit_term', array( $this, 'save_term' ), 999, 3 ); // After LMAT_Admin_Filters_Term
+		add_action( 'edit_term', array( $this, 'save_term' ), 999, 3 ); // After EWT_Admin_Filters_Term
 		add_filter( 'pre_term_name', array( $this, 'set_pre_term_name' ) );
 		add_filter( 'pre_term_slug', array( $this, 'set_pre_term_slug' ), 10, 2 );
 
@@ -159,7 +159,7 @@ class LMAT_CRUD_Terms {
 			 * @param string $taxonomy     Taxonomy name.
 			 * @param int[]  $translations The list of translations term ids.
 			 */
-			do_action( 'lmat_save_term', $term_id, $taxonomy, $this->model->term->get_translations( $term_id ) );
+			do_action( 'ewt_save_term', $term_id, $taxonomy, $this->model->term->get_translations( $term_id ) );
 		}
 	}
 
@@ -170,7 +170,7 @@ class LMAT_CRUD_Terms {
 	 *
 	 * @param string[] $taxonomies Queried taxonomies.
 	 * @param array    $args       WP_Term_Query arguments.
-	 * @return LMAT_Language|string|false The language(s) to use in the filter, false otherwise.
+	 * @return EWT_Language|string|false The language(s) to use in the filter, false otherwise.
 	 */
 	protected function get_queried_language( $taxonomies, $args ) {
 		global $pagenow;
@@ -242,7 +242,7 @@ class LMAT_CRUD_Terms {
 	 * @return void
 	 */
 	public function set_tax_query_lang( $query ) {
-		$this->tax_query_lang = $query->query_vars['lmat_lang'] ?? '';
+		$this->tax_query_lang = $query->query_vars['ewt_lang'] ?? '';
 	}
 
 	/**
@@ -305,7 +305,7 @@ class LMAT_CRUD_Terms {
 			return $slug;
 		}
 
-		$term_slug = new LMAT_Term_Slug( $this->model, $slug, $taxonomy, $this->pre_term_name );
+		$term_slug = new EWT_Term_Slug( $this->model, $slug, $taxonomy, $this->pre_term_name );
 
 		return $term_slug->get_suffixed_slug( '-' );
 	}

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,14 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Sitemaps extends LMAT_Abstract_Sitemaps {
+class EWT_Sitemaps extends EWT_Abstract_Sitemaps {
 	/**
-	 * @var LMAT_Links_Model
+	 * @var EWT_Links_Model
 	 */
 	protected $links_model;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
@@ -35,12 +35,12 @@ class LMAT_Sitemaps extends LMAT_Abstract_Sitemaps {
 	 *
 	 *  
 	 *
-	 * @param object $linguator Main Linguator object.
+	 * @param object $easywptranslator Main EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->links_model = &$linguator->links_model;
-		$this->model = &$linguator->model;
-		$this->options = &$linguator->options;
+	public function __construct( &$easywptranslator ) {
+		$this->links_model = &$easywptranslator->links_model;
+		$this->model = &$easywptranslator->model;
+		$this->options = &$easywptranslator->options;
 	}
 
 	/**
@@ -53,7 +53,7 @@ class LMAT_Sitemaps extends LMAT_Abstract_Sitemaps {
 	public function init() {
 		parent::init();
 
-		add_filter( 'lmat_set_language_from_query', array( $this, 'set_language_from_query' ), 10, 2 );
+		add_filter( 'ewt_set_language_from_query', array( $this, 'set_language_from_query' ), 10, 2 );
 		add_filter( 'rewrite_rules_array', array( $this, 'rewrite_rules' ) );
 		add_filter( 'wp_sitemaps_add_provider', array( $this, 'replace_provider' ) );
 	}
@@ -69,7 +69,7 @@ class LMAT_Sitemaps extends LMAT_Abstract_Sitemaps {
 	 * @return string|bool
 	 */
 	public function set_language_from_query( $lang, $query ) {
-		if ( isset( $query->query['sitemap'] ) && empty( $query->query['lmat_lang'] ) ) {
+		if ( isset( $query->query['sitemap'] ) && empty( $query->query['ewt_lang'] ) ) {
 			$lang = $this->options['default_lang'];
 		}
 		return $lang;
@@ -105,7 +105,7 @@ class LMAT_Sitemaps extends LMAT_Abstract_Sitemaps {
 			if ( false !== strpos( $rule, 'sitemap=$matches[1]' ) ) {
 				$newrules[ str_replace( '^wp-sitemap', $slug . 'wp-sitemap', $key ) ] = str_replace(
 					array( '[8]', '[7]', '[6]', '[5]', '[4]', '[3]', '[2]', '[1]', '?' ),
-					array( '[9]', '[8]', '[7]', '[6]', '[5]', '[4]', '[3]', '[2]', '?lmat_lang=$matches[1]&' ),
+					array( '[9]', '[8]', '[7]', '[6]', '[5]', '[4]', '[3]', '[2]', '?ewt_lang=$matches[1]&' ),
 					$rule
 					); // Should be enough!
 			}
@@ -125,7 +125,7 @@ class LMAT_Sitemaps extends LMAT_Abstract_Sitemaps {
 	 */
 	public function replace_provider( $provider ) {
 		if ( $provider instanceof WP_Sitemaps_Provider ) {
-			$provider = new LMAT_Multilingual_Sitemaps_Provider( $provider, $this->links_model );
+			$provider = new EWT_Multilingual_Sitemaps_Provider( $provider, $this->links_model );
 		}
 		return $provider;
 	}

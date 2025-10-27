@@ -1,20 +1,20 @@
 <?php
-namespace Linguator\Includes\Walkers;
+namespace EasyWPTranslator\Includes\Walkers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 /**
  * Displays a language list
  *
  *  
- *   Extends `LMAT_Walker` now.
+ *   Extends `EWT_Walker` now.
  */
-class LMAT_Walker_List extends LMAT_Walker {
+class EWT_Walker_List extends EWT_Walker {
 	/**
 	 * Database fields to use.
 	 *

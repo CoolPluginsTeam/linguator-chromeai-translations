@@ -4,11 +4,11 @@ import RankMathSeo from '../../component/translate-seo-fields/rank-math-seo.js';
 import translatedMetaFields from '../meta-fields/index.js';
 
 // Update widget content with translations
-const lmatUpdateWidgetContent = (translations) => {
+const ewtUpdateWidgetContent = (translations) => {
 
     translations.forEach(translation => {
-        // Find the model by ID using the lmatFindModelById function
-        const model = lmatFindModelById(elementor.elements.models, translation.ID);
+        // Find the model by ID using the ewtFindModelById function
+        const model = ewtFindModelById(elementor.elements.models, translation.ID);
         if (model) {
             const settings = model.get('settings');
             
@@ -42,8 +42,8 @@ const lmatUpdateWidgetContent = (translations) => {
     $e.internal('document/save/set-is-modified', { status: true });
 }
 
-const lmatUpdateMetaFields = (metaFields, service) => {
-    const AllowedMetaFields = select('block-lmatPageTranslation/translate').getAllowedMetaFields();
+const ewtUpdateMetaFields = (metaFields, service) => {
+    const AllowedMetaFields = select('block-ewtPageTranslation/translate').getAllowedMetaFields();
 
         if(!metaFields){
             return;
@@ -52,7 +52,7 @@ const lmatUpdateMetaFields = (metaFields, service) => {
         Object.keys(metaFields).forEach(key => {
             // Update yoast seo meta fields
             if (Object.keys(AllowedMetaFields).includes(key)) {
-                const translatedMetaFields = select('block-lmatPageTranslation/translate').getTranslatedString('metaFields', metaFields[key], key, service);
+                const translatedMetaFields = select('block-ewtPageTranslation/translate').getTranslatedString('metaFields', metaFields[key], key, service);
                 if (key.startsWith('_yoast_wpseo_') && AllowedMetaFields[key].inputType === 'string') {
                     YoastSeoFields({ key: key, value: translatedMetaFields });
                 } else if (key.startsWith('rank_math_') && AllowedMetaFields[key].inputType === 'string') {
@@ -64,9 +64,9 @@ const lmatUpdateMetaFields = (metaFields, service) => {
         });
 }
 
-const lmatUpdateTitle = (title, service) => {
+const ewtUpdateTitle = (title, service) => {
     if(title && '' !== title){
-        const translatedTitle = select('block-lmatPageTranslation/translate').getTranslatedString('title', title, null, service);
+        const translatedTitle = select('block-ewtPageTranslation/translate').getTranslatedString('title', title, null, service);
 
         if(translatedTitle && '' !== translatedTitle){
             elementor?.settings?.page?.model?.setExternalChange('post_title', translatedTitle);
@@ -75,13 +75,13 @@ const lmatUpdateTitle = (title, service) => {
 }
 
 // Find Elementor model by ID
-const lmatFindModelById = (elements, id) => {
+const ewtFindModelById = (elements, id) => {
     for (const model of elements) {
         if (model.get('id') === id) {
             return model;
         }
         const nestedElements = model.get('elements').models;
-        const foundModel = lmatFindModelById(nestedElements, id);
+        const foundModel = ewtFindModelById(nestedElements, id);
         if (foundModel) {
             return foundModel;
         }
@@ -128,9 +128,9 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                 // Check if the key includes any of the specified substrings
                 if (subStringsToCheck(key) &&
                     typeof settings[key] === 'string' && settings[key].trim() !== '') {
-                    const uniqueKey = ids.join('_lmat_page_translation_') + '_lmat_page_translation_settings_lmat_page_translation_' + key;
+                    const uniqueKey = ids.join('_ewt_page_translation_') + '_ewt_page_translation_settings_ewt_page_translation_' + key;
 
-                    const translatedData = select('block-lmatPageTranslation/translate').getTranslatedString('content', settings[key], uniqueKey, service);
+                    const translatedData = select('block-ewtPageTranslation/translate').getTranslatedString('content', settings[key], uniqueKey, service);
 
                     translations.push({
                         ID: widgetId,
@@ -154,9 +154,9 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                                     typeof item[repeaterKey] === 'string' && item[repeaterKey].trim() !== '') {
 
                                     const fieldKey = `${key}[${index}].${repeaterKey}`
-                                    const uniqueKey = ids.join('_lmat_page_translation_') + '_lmat_page_translation_settings_lmat_page_translation_' + key + '_lmat_page_translation_' + index + '_lmat_page_translation_' + repeaterKey;
+                                    const uniqueKey = ids.join('_ewt_page_translation_') + '_ewt_page_translation_settings_ewt_page_translation_' + key + '_ewt_page_translation_' + index + '_ewt_page_translation_' + repeaterKey;
 
-                                    const translatedData = select('block-lmatPageTranslation/translate').getTranslatedString('content', item[repeaterKey], uniqueKey, service);
+                                    const translatedData = select('block-ewtPageTranslation/translate').getTranslatedString('content', item[repeaterKey], uniqueKey, service);
 
                                     translations.push({
                                         ID: widgetId,
@@ -182,17 +182,17 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
     postContent.widgetsContent.map((widget,index) => storeSourceStrings(widget,index,[]));
 
     // Update widget content with translations
-    lmatUpdateWidgetContent(translations);
+    ewtUpdateWidgetContent(translations);
     
     // Update Meta Fields
-    lmatUpdateMetaFields(postContent.metaFields, service);
+    ewtUpdateMetaFields(postContent.metaFields, service);
 
     // Update Title
-    lmatUpdateTitle(postContent.title, service);
+    ewtUpdateTitle(postContent.title, service);
 
     const replaceSourceString=()=>{
-        const elementorData = lmatPageTranslationGlobal.elementorData;
-        const translateStrings=wp.data.select('block-lmatPageTranslation/translate').getTranslationEntry();
+        const elementorData = ewtPageTranslationGlobal.elementorData;
+        const translateStrings=wp.data.select('block-ewtPageTranslation/translate').getTranslationEntry();
 
         translateStrings.forEach(translation => {
             const sourceString = translation.source;
@@ -204,7 +204,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                 return;
             }
             
-            const keyArray = ids.split('_lmat_page_translation_');
+            const keyArray = ids.split('_ewt_page_translation_');
             
             const translateValue = translatedContent[service];
             let parentElement = null;
@@ -230,27 +230,27 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
     const elementorData = replaceSourceString();
 
     const requestBody={
-        action: lmatPageTranslationGlobal.update_elementor_data,
+        action: ewtPageTranslationGlobal.update_elementor_data,
         post_id: postID,
         elementor_data: JSON.stringify(elementorData),
-        lmat_page_translation_nonce: lmatPageTranslationGlobal.ajax_nonce,
-        parent_post_id: lmatPageTranslationGlobal.parent_post_id
+        ewt_page_translation_nonce: ewtPageTranslationGlobal.ajax_nonce,
+        parent_post_id: ewtPageTranslationGlobal.parent_post_id
     }
 
-    if(postContent.slug_name && '' !== postContent.slug_name && lmatPageTranslationGlobal.slug_translation_option === 'slug_translate'){
+    if(postContent.slug_name && '' !== postContent.slug_name && ewtPageTranslationGlobal.slug_translation_option === 'slug_translate'){
         const slug_name=postContent.slug_name;
-        const translatedSlug=select('block-lmatPageTranslation/translate').getTranslatedString('slug', slug_name, null, service);
+        const translatedSlug=select('block-ewtPageTranslation/translate').getTranslatedString('slug', slug_name, null, service);
 
         if(translatedSlug && '' !== translatedSlug){
             requestBody.post_name=translatedSlug;
         }
     }
 
-    if("false" === lmatPageTranslationGlobal.postMetaSync){
+    if("false" === ewtPageTranslationGlobal.postMetaSync){
         requestBody.meta_fields=JSON.stringify(translatedMetaFields(postContent.metaFields, service));
     }
 
-    fetch(lmatPageTranslationGlobal.ajax_url, {
+    fetch(ewtPageTranslationGlobal.ajax_url, {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -261,7 +261,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                const translateButton = document.querySelector('.lmat-page-translation-button[name="lmat_page_translation_meta_box_translate"]');
+                const translateButton = document.querySelector('.ewt-page-translation-button[name="ewt_page_translation_meta_box_translate"]');
                 if(translateButton){
                     translateButton.setAttribute('title', 'Translation process completed successfully.');
                 }

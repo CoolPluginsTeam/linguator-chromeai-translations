@@ -18,7 +18,7 @@ const ClassicSaveSource = (post_data) => {
           // Escape line break and wrap with marker
           const escapedBreak = match[0];
       
-          result.push(`lmat_skip_content_open_${escapedBreak}_lmat_skip_content_end`);
+          result.push(`ewt_skip_content_open_${escapedBreak}_ewt_skip_content_end`);
       
           lastIndex = regex.lastIndex;
         }
@@ -42,8 +42,8 @@ const ClassicSaveSource = (post_data) => {
 
             const plainText=!entity && !htmlTag && !isEmptyHtmlTag && !blockCommentTag; 
 
-            if(text !== '' && !text.includes('lmat_skip_content_open_') && plainText){
-                dispatch('block-lmatPageTranslation/translate').contentSaveSource('classic_index_'+index, text);
+            if(text !== '' && !text.includes('ewt_skip_content_open_') && plainText){
+                dispatch('block-ewtPageTranslation/translate').contentSaveSource('classic_index_'+index, text);
             }
         });
     }
@@ -54,11 +54,11 @@ const ClassicSaveSource = (post_data) => {
         }else if(['title', 'excerpt'].includes(key)){
             if(post_data[key] && post_data[key].trim() !== ''){
                 const action = `${key}SaveSource`;
-                dispatch('block-lmatPageTranslation/translate')[action](post_data[key]);
+                dispatch('block-ewtPageTranslation/translate')[action](post_data[key]);
             }
-        }else if(key === 'slug_name' && lmatPageTranslationGlobal.slug_translation_option === 'slug_translate'){
+        }else if(key === 'slug_name' && ewtPageTranslationGlobal.slug_translation_option === 'slug_translate'){
             if(post_data[key] && post_data[key].trim() !== ''){
-                dispatch('block-lmatPageTranslation/translate').slugSaveSource(post_data[key]);
+                dispatch('block-ewtPageTranslation/translate').slugSaveSource(post_data[key]);
             }
         }
     });

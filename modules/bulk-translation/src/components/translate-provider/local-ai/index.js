@@ -44,7 +44,7 @@ class LocalAiTranslate {
         this.completedTranslateIndex=0;
         this.localAiTranslator = null;
 
-        const languageObject=lmatBulkTranslationGlobal.languageObject;
+        const languageObject=ewtBulkTranslationGlobal.languageObject;
         this.completedPostStatus=selectProgressStatus(store.getState());
 
         this.activeTargetLangs=targetLang;
@@ -149,7 +149,7 @@ class LocalAiTranslate {
             this.targetLangs.forEach(lang=>{
                 this.storeDispatch(unsetPendingPost(this.postId+'_'+lang));
                 this.storeDispatch(updateProgressStatus(100 / this.totalPosts));
-                this.storeDispatch(updateTranslatePostInfo({[this.postId+'_'+lang]: { status: 'error', messageClass: 'error', errorMessage: __('No content to translate', 'easy-web-translator'), errorHtml: false}}));
+                this.storeDispatch(updateTranslatePostInfo({[this.postId+'_'+lang]: { status: 'error', messageClass: 'error', errorMessage: __('No content to translate', 'easy-wp-translator'), errorHtml: false}}));
             });
         }
     }

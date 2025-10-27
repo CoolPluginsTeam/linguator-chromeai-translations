@@ -1,5 +1,5 @@
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 import {
@@ -23,11 +23,11 @@ wp.apiFetch.use(
 		 * If options.url is defined, this is not a REST request but a direct call to post.php for legacy metaboxes.
 		 * If `filteredRoutes` is not defined, return early.
 		 */
-		if ( 'undefined' !== typeof options.url || 'undefined' === typeof lmatFilteredRoutes ) {
+		if ( 'undefined' !== typeof options.url || 'undefined' === typeof ewtFilteredRoutes ) {
 			return next( options );
 		}
 
-		return next( filterPathMiddleware( options, lmatFilteredRoutes, addLanguageParameter ) );
+		return next( filterPathMiddleware( options, ewtFilteredRoutes, addLanguageParameter ) );
 	}
 );
 
@@ -41,7 +41,7 @@ function getCurrentLanguage() {
 	const lang = document.querySelector( '[name=post_lang_choice]' );
 
 	if ( null === lang ) {
-		return lmatDefaultLanguage;
+		return ewtDefaultLanguage;
 	}
 
 	return lang.value;
@@ -118,11 +118,11 @@ jQuery(
 				dialogResult.then(
 					() => {
 						let data = { // phpcs:ignore PEAR.Functions.FunctionCallSignature.Indent
-							action:     'lmat_post_lang_choice',
+							action:     'ewt_post_lang_choice',
 							lang:       selectedOption.value,
 							post_type:  $( '#post_type' ).val(),
 							post_id:    $( '#post_ID' ).val(),
-							_lmat_nonce: $( '#_lmat_nonce' ).val()
+							_ewt_nonce: $( '#_ewt_nonce' ).val()
 						}
 
 						// Update post language in database as soon as possible.

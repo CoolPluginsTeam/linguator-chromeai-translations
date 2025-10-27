@@ -1,4 +1,4 @@
-.lmat-bulk-translate-btn {
+.ewt-bulk-translate-btn {
   background: #3db63d !important;
   color: #fff !important;
   border-color: #33a133 !important;
@@ -6,25 +6,25 @@
   transition: all .3s ease-in-out;
 }
 
-.lmat-bulk-translate-btn:hover {
+.ewt-bulk-translate-btn:hover {
   background: #37a737 !important;
   color: #fff !important;
   border-color: #238b23 !important;
 }
 
-.lmat-bulk-translate-btn.providers-config-no-active {
+.ewt-bulk-translate-btn.providers-config-no-active {
   background: #f6f7f7 !important;
   border-color: #c3c4c7 !important;
   color: #50575e !important;
 }
 
-.lmat-bulk-translate-btn.providers-config-no-active:hover {
+.ewt-bulk-translate-btn.providers-config-no-active:hover {
   background: #e1e1e1 !important;
   color: #50575e !important;
   border-color: #c9c9c9 !important;
 }
 
-.lmat-bulk-translate-notice {
+.ewt-bulk-translate-notice {
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   border: 1px solid #c3c4c7;
@@ -33,29 +33,29 @@
   margin-top: 8px;
 }
 
-.lmat-bulk-translate-notice p {
+.ewt-bulk-translate-notice p {
   padding: 0;
   margin: 0;
   font-size: 14px;
 }
 
-.lmat-bulk-translate-notice-warning {
+.ewt-bulk-translate-notice-warning {
   border-right-color: #f0ad4e;
 }
 
-.lmat-bulk-translate-notice-error {
+.ewt-bulk-translate-notice-error {
   border-right-color: #d9534f;
 }
 
-.lmat-bulk-translate-notice-success {
+.ewt-bulk-translate-notice-success {
   border-right-color: #5cb85c;
 }
 
-#lmat-bulk-translate-wrapper {
+#ewt-bulk-translate-wrapper {
   display: none;
 }
 
-#lmat-bulk-translate-wrapper.lmat-bulk-translate-active {
+#ewt-bulk-translate-wrapper.ewt-bulk-translate-active {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -83,7 +83,7 @@
           align-items: center;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container {
   background: white;
   position: relative;
   border-radius: 8px;
@@ -93,22 +93,22 @@
   /* Setting Modal CSS End */
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container.lmat-bulk-translate-status-modal-active {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container.ewt-bulk-translate-status-modal-active {
   width: clamp(200px, 800px, 90%);
   height: auto;
   max-height: 70vh;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container.lmat-bulk-translate-status-modal-active.lmat-bulk-translate-empty-posts {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container.ewt-bulk-translate-status-modal-active.ewt-bulk-translate-empty-posts {
   height: auto;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container.lmat-bulk-translate-status-modal-active.lmat-bulk-translate-empty-posts h2 {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container.ewt-bulk-translate-status-modal-active.ewt-bulk-translate-empty-posts h2 {
   border-bottom: 1px solid #c3c3c3;
   padding-bottom: 1.5rem !important;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container.lmat-bulk-translate-status-modal-active.lmat-bulk-translate-empty-posts p {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container.ewt-bulk-translate-status-modal-active.ewt-bulk-translate-empty-posts p {
   font-size: 1.2rem;
   color: red;
   font-weight: 600;
@@ -118,7 +118,7 @@
   margin-top: 0;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container.lmat-bulk-translate-status-modal-active .lmat-bulk-translate-progress-skeleton {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container.ewt-bulk-translate-status-modal-active .ewt-bulk-translate-progress-skeleton {
   background: -webkit-gradient(linear, right top, left top, color-stop(25%, #e0e0e0), color-stop(50%, #f5f5f5), color-stop(75%, #e0e0e0));
   background: linear-gradient(-90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
   background-size: 200% 100%;
@@ -133,20 +133,20 @@
   margin-bottom: .5rem;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container.lmat-bulk-translate-setting-modal-active {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container.ewt-bulk-translate-setting-modal-active {
   height: auto;
   max-height: 90vh;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-language-container {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-language-container {
   max-width: 500px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container {
   height: 100%;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content {
   border-radius: 0px;
   padding: 0px;
   display: -webkit-box;
@@ -159,7 +159,7 @@
   height: 100%;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-header h2 {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-header h2 {
   height: unset;
   padding: 8px 25px 8px 36px;
   border: none;
@@ -171,7 +171,7 @@
   margin: 0;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-header .lmat-bulk-translate-setting-modal-close {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-header .ewt-bulk-translate-setting-modal-close {
   left: 15px;
   top: 13px;
   border-radius: 0 !important;
@@ -184,21 +184,21 @@
   cursor: pointer;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body {
   max-width: 100vw;
   overflow-x: auto;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body table {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body table {
   width: 100%;
   border-collapse: collapse;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body thead {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body thead {
   background: #f3f3f3;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body thead th {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body thead th {
   text-align: right;
   font-weight: 500;
   font-size: 14px;
@@ -206,25 +206,25 @@
   padding-block: 1rem;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body thead th:nth-child(1) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body thead th:nth-child(1) {
   padding-right: 28px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body thead th:nth-child(2) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body thead th:nth-child(2) {
   padding-right: 90px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body thead th:nth-child(3) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body thead th:nth-child(3) {
   padding-left: 25px;
   text-align: center;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody tr {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody tr {
   border-top: 1px solid #eee;
   height: 64px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody td.lmat-bulk-translate-provider-name {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody td.ewt-bulk-translate-provider-name {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -236,31 +236,31 @@
   margin-block: .5rem;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody td.lmat-bulk-translate-provider-name svg {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody td.ewt-bulk-translate-provider-name svg {
   width: 45px;
   height: auto;
   margin-left: 15px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody td:nth-child(1) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody td:nth-child(1) {
   padding-right: 25px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody td:nth-child(2) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody td:nth-child(2) {
   padding-right: 90px;
   padding-left: 20px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody td:nth-child(3) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody td:nth-child(3) {
   padding-left: 25px;
   text-align: center;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody .button {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody .button {
   width: 123px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody .button.lmat-bulk-translate-service-btn {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody .button.ewt-bulk-translate-service-btn {
   padding: 2px 11px;
   white-space: nowrap;
   background: #3db63d;
@@ -268,12 +268,12 @@
   color: #fff;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody .button.lmat-bulk-translate-service-btn:hover {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody .button.ewt-bulk-translate-service-btn:hover {
   background: #37a737;
   border-color: #238b23;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody .button.lmat-bulk-translate-provider-error {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody .button.ewt-bulk-translate-provider-error {
   background: #ee4237;
   border-color: #dd362b;
   color: #fff;
@@ -286,7 +286,7 @@
           align-items: center;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody .button.lmat-bulk-translate-provider-error img {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody .button.ewt-bulk-translate-provider-error img {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -298,12 +298,12 @@
   margin-left: 3px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody .button.lmat-bulk-translate-provider-error:hover {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody .button.ewt-bulk-translate-provider-error:hover {
   background: #dd382e;
   border-color: #c72a20;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody .lmat-bulk-translate-doc-icon {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody .ewt-bulk-translate-doc-icon {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -311,18 +311,18 @@
   height: 26px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody .lmat-bulk-translate-doc-icon:focus {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody .ewt-bulk-translate-doc-icon:focus {
   outline: none;
   -webkit-box-shadow: unset;
           box-shadow: unset;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-body tbody .lmat-bulk-translate-doc-icon svg {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-body tbody .ewt-bulk-translate-doc-icon svg {
   width: 20px;
   height: 28px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-footer {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-footer {
   background: 100% 0;
   border: none;
   border-top: 1px solid #dcdcde;
@@ -331,18 +331,18 @@
   text-align: end;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-footer .lmat-bulk-translate-setting-close {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-footer .ewt-bulk-translate-setting-close {
   background: #f6f7f7;
   border: 1px solid #c3c4c7;
   color: #50575e;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-setting-modal-container .lmat-bulk-translate-setting-modal-content .lmat-bulk-translate-setting-modal-footer .lmat-bulk-translate-setting-close:hover {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-setting-modal-container .ewt-bulk-translate-setting-modal-content .ewt-bulk-translate-setting-modal-footer .ewt-bulk-translate-setting-close:hover {
   background-color: #e1e1e1;
   border-color: #c9c9c9;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container {
   width: 100%;
   height: 100%;
   background-color: white;
@@ -363,7 +363,7 @@
   border-radius: 8px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-modal-close {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-modal-close {
   position: absolute;
   left: 1rem;
   top: .8rem;
@@ -371,7 +371,7 @@
   font-size: 2rem;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container h2 {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container h2 {
   font-size: 22px;
   padding: 0px;
   margin: 0px;
@@ -379,7 +379,7 @@
   text-align: center;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container h2.running span {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container h2.running span {
   width: 18px;
   aspect-ratio: 3;
   background: radial-gradient(circle closest-side, #1d2327 50%, #0000 80%) 0/calc(100%/3) 100% space;
@@ -411,7 +411,7 @@
   }
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-overall-progress .lmat-bulk-translate-progress-bar {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-overall-progress .ewt-bulk-translate-progress-bar {
   width: 100%;
   background: #ddd;
   height: 19px;
@@ -429,7 +429,7 @@
   animation-direction: reverse;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-overall-progress .lmat-bulk-translate-progress-bar .lmat-bulk-translate-progress {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-overall-progress .ewt-bulk-translate-progress-bar .ewt-bulk-translate-progress {
   height: 100%;
   background: #3db63d;
   width: 0%;
@@ -457,7 +457,7 @@
   }
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-translator-strings-count {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-translator-strings-count {
   color: #4caf50;
   text-align: center;
   font-size: 1rem;
@@ -465,7 +465,7 @@
   margin-top: 5px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-count-container {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-count-container {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: auto auto auto;
@@ -482,16 +482,16 @@
           justify-content: space-between;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-count-container .lmat-bulk-translate-count-text-heading {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-count-container .ewt-bulk-translate-count-text-heading {
   font-weight: 600;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-count-container ~ .lmat-bulk-translate-status-table-container {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-count-container ~ .ewt-bulk-translate-status-table-container {
   border-radius: 0 0 8px 8px;
   margin-top: 0;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table-container {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table-container {
   height: 100%;
   border: 1px solid #c9c9c9;
   overflow: hidden;
@@ -499,81 +499,81 @@
   margin-top: 8px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table-container > div {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table-container > div {
   height: 100%;
   overflow-y: auto;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table tr.lmat-bulk-translate-td-error {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table tr.ewt-bulk-translate-td-error {
   background: #ff000014;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table tr.lmat-bulk-translate-td-error td:nth-child(2) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table tr.ewt-bulk-translate-td-error td:nth-child(2) {
   color: red;
   font-size: .8rem;
   font-weight: bold;
   text-align: center;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table th,
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table td {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table th,
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table td {
   text-align: right;
   padding: 10px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table tbody td:nth-child(2) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table tbody td:nth-child(2) {
   height: 44.2px;
   padding: 0px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table tbody td:nth-child(2) span.lmat-bulk-translate-status.running {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table tbody td:nth-child(2) span.ewt-bulk-translate-status.running {
   display: inline-block;
   height: 0px;
   background-color: transparent !important;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table tbody td:nth-child(1) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table tbody td:nth-child(1) {
   min-width: 120px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table tbody td:nth-child(1) img {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table tbody td:nth-child(1) img {
   margin-left: 6px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table tbody td:not(:nth-child(1)) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table tbody td:not(:nth-child(1)) {
   width: 23%;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table tbody td:nth-child(3) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table tbody td:nth-child(3) {
   width: 33%;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-progress-bar-circular {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-progress-bar-circular {
   position: relative;
   width: 40px;
   height: 40px;
   display: inline-block;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-progress-bar-circular .lmat-bulk-translate-circle {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-progress-bar-circular .ewt-bulk-translate-circle {
   width: 100%;
   height: 100%;
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-progress-bar-circular .lmat-bulk-translate-bg {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-progress-bar-circular .ewt-bulk-translate-bg {
   fill: none;
   stroke: #eee;
   stroke-width: 3;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-progress-bar-circular .lmat-bulk-translate-progress {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-progress-bar-circular .ewt-bulk-translate-progress {
   fill: none;
   stroke: #4caf50;
   stroke-width: 3;
@@ -582,7 +582,7 @@
   transition: stroke-dasharray 0.6s ease;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-progress-bar-circular .lmat-bulk-translate-percentage {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-progress-bar-circular .ewt-bulk-translate-percentage {
   position: absolute;
   top: 50%;
   right: 50%;
@@ -593,17 +593,17 @@
   color: #333;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-group-title {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-group-title {
   border-block: 1px solid #ebebeb;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-group-title td {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-group-title td {
   font-weight: bold;
   background: #f7f7f7;
   padding-top: 15px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-status-error-button {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-status-error-button {
   padding: 0.2rem 0.5rem;
   border-radius: 3px;
   cursor: pointer;
@@ -615,12 +615,12 @@
   background: #ff3e51;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-status-error-button:hover {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-status-error-button:hover {
   background: #ff2037;
   border-color: #ff152d;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-status {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-status {
   padding: 4px 8px;
   border-radius: 5px;
   font-size: 12px;
@@ -628,28 +628,28 @@
   border: 1px solid transparent;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-status.success {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-status.success {
   background: #3db63d;
   border-color: #33a133;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-status.error {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-status.error {
   background: #ee4237;
   border-color: #dd362b;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-status.warning {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-status.warning {
   background: #fff297;
   color: #000000;
   border-color: #f7e241;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-status.primary {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-status.primary {
   background: #2271b1;
   border-color: #2271b1;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-progress-skeleton {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-progress-skeleton {
   background: -webkit-gradient(linear, right top, left top, color-stop(25%, #e0e0e0), color-stop(50%, #f5f5f5), color-stop(75%, #e0e0e0));
   background: linear-gradient(-90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
   background-size: 200% 100%;
@@ -659,12 +659,12 @@
           animation: shimmer 1.2s infinite linear;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-progress-skeleton.short {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-progress-skeleton.short {
   padding: 0;
   width: 30px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-td-in-progress .lmat-bulk-translate-in-progress-text {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-td-in-progress .ewt-bulk-translate-in-progress-text {
   background-color: #3db63d;
   border-color: #33a133;
   color: #fff;
@@ -680,7 +680,7 @@
   border-radius: 27px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-status-table .lmat-bulk-translate-td-in-progress .lmat-bulk-translate-in-progress-text span {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-status-table .ewt-bulk-translate-td-in-progress .ewt-bulk-translate-in-progress-text span {
   width: 15px;
   aspect-ratio: 3;
   background: radial-gradient(circle closest-side, #fff 40%, #0000 90%) 0/calc(100%/3) 100% space;
@@ -705,16 +705,16 @@
   }
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-progress-footer {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-progress-footer {
   text-align: center;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-progress-footer a {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-progress-footer a {
   padding: 2px 11px;
   margin-top: 1.2rem;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-header .close {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-header .close {
   border-radius: 0 !important;
   color: #646970;
   cursor: pointer;
@@ -727,7 +727,7 @@
   width: 20px !important;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-header h2 {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-header h2 {
   background: 100% 0;
   border: none;
   border-bottom: 1px solid #dcdcde;
@@ -739,19 +739,19 @@
   padding: 8px 25px 8px 36px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-message {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-message {
   color: red;
   padding: 1rem;
   font-weight: 600;
   font-size: 16px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-message span {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-message span {
   font-weight: 500;
   font-size: 16px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-message span ol {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-message span ol {
   margin-block: 16px;
   list-style-type: decimal;
   margin-right: 32px;
@@ -760,18 +760,18 @@
   padding: 0;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-message span ol li {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-message span ol li {
   margin-bottom: 12px;
   list-style: decimal;
   line-height: 1.2;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-message span p {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-message span p {
   margin: 0;
   padding: 0;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-message span p * {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-message span p * {
   color: red !important;
   font-size: 16px;
   -webkit-box-shadow: unset;
@@ -781,22 +781,22 @@
   line-height: 1.5;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-message span p a {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-message span p a {
   color: #2271b1 !important;
   text-decoration: underline;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-body .lmat-bulk-translate-notice {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-body .ewt-bulk-translate-notice {
   margin-top: 1rem;
   margin-inline: 25px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-body .lmat-bulk-translate-loading {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-body .ewt-bulk-translate-loading {
   color: #000;
   padding: 1rem;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-body .lmat-bulk-translate-languages {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-body .ewt-bulk-translate-languages {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: auto auto auto;
@@ -806,30 +806,30 @@
   padding-bottom: 0;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-body .lmat-bulk-translate-languages .lmat-bulk-translate-language {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-body .ewt-bulk-translate-languages .ewt-bulk-translate-language {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   padding-left: .5rem;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-body .lmat-bulk-translate-languages .lmat-bulk-translate-language input[name="languages"]:disabled ~ img {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-body .ewt-bulk-translate-languages .ewt-bulk-translate-language input[name="languages"]:disabled ~ img {
   opacity: 0.5;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-body .lmat-bulk-translate-languages .lmat-bulk-translate-language input[name="languages"]:disabled ~ span {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-body .ewt-bulk-translate-languages .ewt-bulk-translate-language input[name="languages"]:disabled ~ span {
   opacity: 0.5;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-body .lmat-bulk-translate-select-all-languages {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-body .ewt-bulk-translate-select-all-languages {
   padding: 1rem 25px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-body .lmat-bulk-translate-select-all-languages label {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-body .ewt-bulk-translate-select-all-languages label {
   margin-right: 2px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-footer {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-footer {
   background: 100% 0;
   border: none;
   border-top: 1px solid #dcdcde;
@@ -838,36 +838,36 @@
   text-align: end;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-footer .lmat-bulk-translate-footer-button:nth-of-type(1) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-footer .ewt-bulk-translate-footer-button:nth-of-type(1) {
   background: #f6f7f7;
   border: 1px solid #c3c4c7;
   color: #50575e;
   margin-left: 10px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-footer .lmat-bulk-translate-footer-button:nth-of-type(2) {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-footer .ewt-bulk-translate-footer-button:nth-of-type(2) {
   background: #2271b1;
   border: 1px solid #2271b1;
   color: #fff;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-footer .lmat-bulk-translate-footer-button:nth-of-type(2):disabled {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-footer .ewt-bulk-translate-footer-button:nth-of-type(2):disabled {
   background: #5493c5 !important;
   border: 1px solid #3f8dcf !important;
   color: white !important;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-footer .lmat-bulk-translate-footer-button:nth-child(1):hover {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-footer .ewt-bulk-translate-footer-button:nth-child(1):hover {
   background-color: #e1e1e1;
   border-color: #c9c9c9;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-footer .lmat-bulk-translate-footer-button:not(:disabled):nth-child(2):hover {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-footer .ewt-bulk-translate-footer-button:not(:disabled):nth-child(2):hover {
   background-color: #135e96;
   border-color: #135e96;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container {
   position: fixed;
   top: 0;
   right: 0;
@@ -887,7 +887,7 @@
   z-index: 99999;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-reload-btn {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-reload-btn {
   background: #0073aa;
   color: #fff;
   border: none;
@@ -895,14 +895,14 @@
   padding: 8px 20px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-tooltip-element {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-tooltip-element {
   position: relative;
   overflow: visible;
   cursor: pointer;
   white-space: nowrap;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-tooltip-element .lmat-bulk-translate-tooltip {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-tooltip-element .ewt-bulk-translate-tooltip {
   display: block;
   font-size: 12.8px;
   position: absolute;
@@ -919,7 +919,7 @@
   white-space: nowrap;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-tooltip-element .lmat-bulk-translate-tooltip:after {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-tooltip-element .ewt-bulk-translate-tooltip:after {
   content: "";
   position: absolute;
   top: 98%;
@@ -932,12 +932,12 @@
   border-right: 8px solid transparent;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-tooltip-element .lmat-bulk-translate-tooltip.lmat-bulk-translate-tooltip-active {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-tooltip-element .ewt-bulk-translate-tooltip.ewt-bulk-translate-tooltip-active {
   -webkit-animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
   animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box {
   background-color: #fefefe;
   width: clamp(200px, 500px, 80%);
   height: auto;
@@ -946,11 +946,11 @@
   border-radius: 8px;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-header {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-header {
   position: relative;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-header h3 {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-header h3 {
   height: unset;
   padding: 8px 25px 8px 36px;
   border: none;
@@ -963,7 +963,7 @@
   color: black;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-header .lmat-bulk-translate-error-modal-box-close {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-header .ewt-bulk-translate-error-modal-box-close {
   left: 15px;
   top: 13px;
   border-radius: 0 !important;
@@ -976,7 +976,7 @@
   cursor: pointer;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-body {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-body {
   min-height: 0px;
   max-height: 65vh;
   height: auto;
@@ -984,7 +984,7 @@
   overflow: auto;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-body h4 {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-body h4 {
   margin: 0;
   margin-top: 0;
   margin-bottom: 24px;
@@ -995,7 +995,7 @@
           box-sizing: border-box;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-body ol {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-body ol {
   margin-top: 16px;
   margin-bottom: 0px;
   list-style-type: decimal;
@@ -1005,17 +1005,17 @@
   padding: 0;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-body ol li {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-body ol li {
   margin-bottom: 6px;
   list-style: decimal;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-body p {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-body p {
   margin: 0;
   padding: 0;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-body p * {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-body p * {
   color: red !important;
   font-size: 16px;
   -webkit-box-shadow: unset;
@@ -1025,12 +1025,12 @@
   line-height: 1.5;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-body p a {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-body p a {
   color: #2271b1 !important;
   text-decoration: underline;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-body button.lmat-bulk-translate-error-reload-btn {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-body button.ewt-bulk-translate-error-reload-btn {
   background: #0073aa;
   color: #fff !important;
   border: none;
@@ -1039,11 +1039,11 @@
   cursor: pointer;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-body button.lmat-bulk-translate-error-reload-btn:hover {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-body button.ewt-bulk-translate-error-reload-btn:hover {
   background: #005682;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-footer {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-footer {
   background: 100% 0;
   border: none;
   border-top: 1px solid #dcdcde;
@@ -1052,32 +1052,32 @@
   text-align: end;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-footer .lmat-bulk-translate-error-modal-box-close {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-footer .ewt-bulk-translate-error-modal-box-close {
   background: #f6f7f7;
   border: 1px solid #c3c4c7;
   color: #50575e;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-error-modal-box-footer .lmat-bulk-translate-error-modal-box-close:hover {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-error-modal-box-footer .ewt-bulk-translate-error-modal-box-close:hover {
   background-color: #e1e1e1;
   border-color: #c9c9c9;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-ai-pending-request {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-ai-pending-request {
   text-align: center;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-ai-pending-request .lmat-bulk-translate-ai-pending-request-heading {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-ai-pending-request .ewt-bulk-translate-ai-pending-request-heading {
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: .4rem !important;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-ai-pending-request p {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-ai-pending-request p {
   margin-block: .4rem !important;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-ai-error-buttons {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-ai-error-buttons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1088,7 +1088,7 @@
   margin-top: 1rem;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-ai-error-buttons button[data-status="translateAgain"] {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-ai-error-buttons button[data-status="translateAgain"] {
   background: #30b230 !important;
   color: #fff !important;
   border-color: #239d23 !important;
@@ -1096,12 +1096,12 @@
   transition: all .3s ease-in-out;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-ai-error-buttons button[data-status="translateAgain"]:hover {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-ai-error-buttons button[data-status="translateAgain"]:hover {
   background: #2da52d !important;
   border-color: #209120 !important;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-ai-error-buttons button[data-status="continue"] {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-ai-error-buttons button[data-status="continue"] {
   background: #0073aa !important;
   color: #fff !important;
   border-color: #2271b1 !important;
@@ -1109,7 +1109,7 @@
   transition: all .3s ease-in-out;
 }
 
-#lmat-bulk-translate-wrapper #lmat-bulk-translate-container .lmat-bulk-translate-error-modal-box-container .lmat-bulk-translate-ai-error-buttons button[data-status="continue"]:hover {
+#ewt-bulk-translate-wrapper #ewt-bulk-translate-container .ewt-bulk-translate-error-modal-box-container .ewt-bulk-translate-ai-error-buttons button[data-status="continue"]:hover {
   background: #005682 !important;
   border-color: #004466 !important;
 }
@@ -1159,7 +1159,7 @@
 }
 
 @media (max-width: 992px) {
-  #lmat-bulk-translate-wrapper #lmat-bulk-translate-container.lmat-bulk-translate-translation-active #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-count-container {
+  #ewt-bulk-translate-wrapper #ewt-bulk-translate-container.ewt-bulk-translate-translation-active #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-count-container {
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: 1fr 1fr;
@@ -1167,18 +1167,18 @@
     -ms-grid-rows: auto auto;
         grid-template-rows: auto auto;
   }
-  #lmat-bulk-translate-wrapper #lmat-bulk-translate-container.lmat-bulk-translate-translation-active #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-count-container > div:nth-child(1) {
+  #ewt-bulk-translate-wrapper #ewt-bulk-translate-container.ewt-bulk-translate-translation-active #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-count-container > div:nth-child(1) {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
   }
-  #lmat-bulk-translate-wrapper #lmat-bulk-translate-container.lmat-bulk-translate-translation-active #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-count-container > div:nth-child(2) {
+  #ewt-bulk-translate-wrapper #ewt-bulk-translate-container.ewt-bulk-translate-translation-active #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-count-container > div:nth-child(2) {
     -ms-grid-column: 1;
     grid-column: 1;
     -ms-grid-row: 2;
     grid-row: 2;
   }
-  #lmat-bulk-translate-wrapper #lmat-bulk-translate-container.lmat-bulk-translate-translation-active #lmat-bulk-translate-status-modal-container .lmat-bulk-translate-count-container > div:nth-child(3) {
+  #ewt-bulk-translate-wrapper #ewt-bulk-translate-container.ewt-bulk-translate-translation-active #ewt-bulk-translate-status-modal-container .ewt-bulk-translate-count-container > div:nth-child(3) {
     -ms-grid-column: 2;
     grid-column: 2;
     -ms-grid-row: 2;
@@ -1187,7 +1187,7 @@
 }
 
 @media (max-width: 576px) {
-  #lmat-bulk-translate-wrapper #lmat-bulk-translate-container.lmat-bulk-translate-translation-active {
+  #ewt-bulk-translate-wrapper #ewt-bulk-translate-container.ewt-bulk-translate-translation-active {
     width: clamp(200px, 800px, 80%);
   }
 }

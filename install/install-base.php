@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Install;
+namespace EasyWPTranslator\Install;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Install_Base {
+class EWT_Install_Base {
 	/**
 	 * The plugin basename.
 	 *

@@ -24,7 +24,7 @@ const translatePost = (props) => {
         editPostData.forEach(key => {
             const sourceData = postContent[key];
             if (sourceData.trim() !== '') {
-                const translateContent = select('block-lmatPageTranslation/translate').getTranslatedString(key, sourceData, null, service);
+                const translateContent = select('block-ewtPageTranslation/translate').getTranslatedString(key, sourceData, null, service);
 
                 data[key] = translateContent;
             }
@@ -32,14 +32,14 @@ const translatePost = (props) => {
 
         editPost(data);
 
-        if(lmatPageTranslationGlobal.slug_translation_option === 'slug_translate'){
-            const slugData = select('block-lmatPageTranslation/translate').getTranslatedString('slug', postContent.slug_name, null, service);
+        if(ewtPageTranslationGlobal.slug_translation_option === 'slug_translate'){
+            const slugData = select('block-ewtPageTranslation/translate').getTranslatedString('slug', postContent.slug_name, null, service);
 
             editPost({ slug: slugData });
         }
 
-        if(lmatPageTranslationGlobal.slug_translation_option === 'slug_keep'){
-            const slugData=lmatPageTranslationGlobal.slug_name;
+        if(ewtPageTranslationGlobal.slug_translation_option === 'slug_keep'){
+            const slugData=ewtPageTranslationGlobal.slug_name;
             setTimeout(() => {
                 editPost({ slug: slugData });
             }, 500);
@@ -56,12 +56,12 @@ const translatePost = (props) => {
             return;
         }
 
-        const AllowedMetaFields = select('block-lmatPageTranslation/translate').getAllowedMetaFields();
+        const AllowedMetaFields = select('block-ewtPageTranslation/translate').getAllowedMetaFields();
 
         Object.keys(metaFieldsData).forEach(key => {
             // Update yoast seo meta fields
             if (Object.keys(AllowedMetaFields).includes(key)) {
-                const translatedMetaFields = select('block-lmatPageTranslation/translate').getTranslatedString('metaFields', metaFieldsData[key], key, service);
+                const translatedMetaFields = select('block-ewtPageTranslation/translate').getTranslatedString('metaFields', metaFieldsData[key], key, service);
                 if (key.startsWith('_yoast_wpseo_') && AllowedMetaFields[key].inputType === 'string') {
                     YoastSeoFields({ key: key, value: translatedMetaFields });
                 } else if (key.startsWith('rank_math_') && AllowedMetaFields[key].inputType === 'string') {
@@ -77,7 +77,7 @@ const translatePost = (props) => {
      * Updates the post ACF fields based on translation.
      */
     const postAcfFieldsUpdate = () => {
-        const AllowedMetaFields = select('block-lmatPageTranslation/translate').getAllowedMetaFields();
+        const AllowedMetaFields = select('block-ewtPageTranslation/translate').getAllowedMetaFields();
         const metaFieldsData = postContent.metaFields;
 
         
@@ -106,7 +106,7 @@ const translatePost = (props) => {
 
                    const sourceValue = metaFieldsData[fieldName]? metaFieldsData[fieldName] : field?.val();
 
-                    const translatedMetaFields = select('block-lmatPageTranslation/translate').getTranslatedString('metaFields', sourceValue, fieldData.name, service);
+                    const translatedMetaFields = select('block-ewtPageTranslation/translate').getTranslatedString('metaFields', sourceValue, fieldData.name, service);
 
                     if('wysiwyg' === inputType && tinymce){
                         const editorId = field.data.id;
@@ -120,10 +120,10 @@ const translatePost = (props) => {
     }
 
     const updatePostMetaFields = () => {
-        const ajaxUrl=window.lmatPageTranslationGlobal.ajax_url;
-        const postId=window.lmatPageTranslationGlobal.current_post_id;
-        const nonce=window.lmatPageTranslationGlobal.post_meta_fields_key;
-        const action=window.lmatPageTranslationGlobal.update_post_meta_fields;
+        const ajaxUrl=window.ewtPageTranslationGlobal.ajax_url;
+        const postId=window.ewtPageTranslationGlobal.current_post_id;
+        const nonce=window.ewtPageTranslationGlobal.post_meta_fields_key;
+        const action=window.ewtPageTranslationGlobal.update_post_meta_fields;
         
         if(!postId || !nonce || !action){
             return;
@@ -176,7 +176,7 @@ const translatePost = (props) => {
     postContentUpdate();
 
     // Update all translation supported post meta fields using ajax request
-    if(lmatPageTranslationGlobal.postMetaSync === 'false'){
+    if(ewtPageTranslationGlobal.postMetaSync === 'false'){
         updatePostMetaFields();
     }
 

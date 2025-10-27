@@ -2,7 +2,7 @@ import ControlBase from './control-base.js';
 import elementorLanguageListBtn from './elementor-language-list.js';
 
 const App = () => {
-    const prefix = 'lmatElementorInlineTranslation';
+    const prefix = 'ewtElementorInlineTranslation';
     return new ControlBase(prefix);
 }
 

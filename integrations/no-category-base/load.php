@@ -2,7 +2,7 @@
 /**
  * Loads the integration with No Category Base (WPML).
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/no-category-base.php';
 
-use Linguator\Integrations\no_category_base\LMAT_No_Category_Base;
-use Linguator\Integrations\LMAT_Integrations;
+use EasyWPTranslator\Integrations\no_category_base\EWT_No_Category_Base;
+use EasyWPTranslator\Integrations\EWT_Integrations;
 
-LMAT_Integrations::instance()->no_category_base = new LMAT_No_Category_Base();
-LMAT_Integrations::instance()->no_category_base->init();
+EWT_Integrations::instance()->no_category_base = new EWT_No_Category_Base();
+EWT_Integrations::instance()->no_category_base->init();

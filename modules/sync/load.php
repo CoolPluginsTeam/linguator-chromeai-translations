@@ -2,28 +2,28 @@
 /**
  * Loads the module for general synchronization such as metas and taxonomies.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Don't access directly
 }
 
-use Linguator\Admin\Controllers\LMAT_Admin_Base;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin_Base;
 
 
 
-if ( $linguator->model->has_languages() ) {
-	if ( $linguator instanceof LMAT_Admin_Base ) {
-		$linguator->sync = new LMAT_Admin_Sync( $linguator );
+if ( $easywptranslator->model->has_languages() ) {
+	if ( $easywptranslator instanceof EWT_Admin_Base ) {
+		$easywptranslator->sync = new EWT_Admin_Sync( $easywptranslator );
 	} else {
-		$linguator->sync = new LMAT_Sync( $linguator );
+		$easywptranslator->sync = new EWT_Sync( $easywptranslator );
 	}
 
 	add_filter(
-		'lmat_settings_modules',
+		'ewt_settings_modules',
 		function ( $modules ) {
-			$modules[] = 'LMAT_Settings_Sync';
+			$modules[] = 'EWT_Settings_Sync';
 			return $modules;
 		}
 	);

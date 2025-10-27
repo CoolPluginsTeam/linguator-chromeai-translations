@@ -1,19 +1,19 @@
 <?php
-namespace Linguator\Frontend\Filters;
+namespace EasyWPTranslator\Frontend\Filters;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 
-use Linguator\Includes\Core\Linguator;
-use Linguator\Includes\Filters\LMAT_Filters;
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Core\EasyWPTranslator;
+use EasyWPTranslator\Includes\Filters\EWT_Filters;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 
 
 
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 /**
@@ -21,16 +21,16 @@ use Linguator\Includes\Other\LMAT_Language;
  *
  *  
  */
-class LMAT_Frontend_Filters extends LMAT_Filters {
+class EWT_Frontend_Filters extends EWT_Filters {
 	/**
 	 * Constructor: setups filters and actions
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		parent::__construct( $linguator );
+	public function __construct( &$easywptranslator ) {
+		parent::__construct( $easywptranslator );
 
 		// Filters the WordPress locale
 		add_filter( 'locale', array( $this, 'get_locale' ) );
@@ -51,13 +51,13 @@ class LMAT_Frontend_Filters extends LMAT_Filters {
 
 		// Strings translation ( must be applied before WordPress applies its default formatting filters )
 		foreach ( array( 'widget_text', 'widget_title' ) as $filter ) {
-			add_filter( $filter, 'lmat__', 1 );
+			add_filter( $filter, 'ewt__', 1 );
 		}
 
 		// Translates biography
 		add_filter( 'get_user_metadata', array( $this, 'get_user_metadata' ), 10, 4 );
 
-		if ( Linguator::is_ajax_on_front() ) {
+		if ( EasyWPTranslator::is_ajax_on_front() ) {
 			add_filter( 'load_textdomain_mofile', array( $this, 'load_textdomain_mofile' ) );
 		}
 	}
@@ -100,7 +100,7 @@ class LMAT_Frontend_Filters extends LMAT_Filters {
 		}
 
 		$_posts = wp_cache_get( 'sticky_posts', 'options' ); // This option is usually cached in 'all_options' by WP.
-		$tt_id  = $this->curlang->get_tax_prop( 'lmat_language', 'term_taxonomy_id' );
+		$tt_id  = $this->curlang->get_tax_prop( 'ewt_language', 'term_taxonomy_id' );
 
 		if ( ! empty( $_posts ) && is_array( $_posts ) && ! empty( $_posts[ $tt_id ] ) && is_array( $_posts[ $tt_id ] ) ) {
 			return $_posts[ $tt_id ];
@@ -108,12 +108,12 @@ class LMAT_Frontend_Filters extends LMAT_Filters {
 
 		$languages = array();
 		foreach ( $this->model->get_languages_list() as $language ) {
-			$languages[] = $language->get_tax_prop( 'lmat_language', 'term_taxonomy_id' );
+			$languages[] = $language->get_tax_prop( 'ewt_language', 'term_taxonomy_id' );
 		}
 
 		$relations = array();
 		foreach ( $posts as $post_id ) {
-			$post_languages = wp_get_object_terms( $post_id, 'lmat_language', array( 'fields' => 'tt_ids' ) );
+			$post_languages = wp_get_object_terms( $post_id, 'ewt_language', array( 'fields' => 'tt_ids' ) );
 			if ( ! is_wp_error( $post_languages ) ) {
 				foreach ( $post_languages as $tt_id ) {
 					if ( in_array( $tt_id, $languages, true ) ) {
@@ -159,7 +159,7 @@ class LMAT_Frontend_Filters extends LMAT_Filters {
 	 * @return string modified WHERE clause
 	 */
 	public function getarchives_where( $sql, $r ) {
-		if ( ! $this->curlang instanceof LMAT_Language ) {
+		if ( ! $this->curlang instanceof EWT_Language ) {
 			return $sql;
 		}
 
@@ -179,7 +179,7 @@ class LMAT_Frontend_Filters extends LMAT_Filters {
 	 * @return bool|array false if we hide the widget, unmodified $instance otherwise
 	 */
 	public function widget_display_callback( $instance ) {
-		return ! empty( $instance['lmat_lang'] ) && $instance['lmat_lang'] != $this->curlang->slug ? false : $instance;
+		return ! empty( $instance['ewt_lang'] ) && $instance['ewt_lang'] != $this->curlang->slug ? false : $instance;
 	}
 
 	/**
@@ -191,7 +191,7 @@ class LMAT_Frontend_Filters extends LMAT_Filters {
 	 * @return array
 	 */
 	public function widget_media_instance( $instance ) {
-		if ( empty( $instance['lmat_lang'] ) && $instance['attachment_id'] && $tr_id = lmat_get_post( $instance['attachment_id'] ) ) {
+		if ( empty( $instance['ewt_lang'] ) && $instance['attachment_id'] && $tr_id = ewt_get_post( $instance['attachment_id'] ) ) {
 			$instance['attachment_id'] = $tr_id;
 			$attachment = get_post( $tr_id );
 

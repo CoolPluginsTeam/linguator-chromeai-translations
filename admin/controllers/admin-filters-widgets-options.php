@@ -1,24 +1,24 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Filters\LMAT_Filters_Widgets_Options;
+use EasyWPTranslator\Includes\Filters\EWT_Filters_Widgets_Options;
 
 
 /**
- * Class LMAT_Widgets_Filters
+ * Class EWT_Widgets_Filters
  *
  *  
  *
  * Adds new options to WP_Widget and saves them.
  */
-class LMAT_Admin_Filters_Widgets_Options extends LMAT_Filters_Widgets_Options {
+class EWT_Admin_Filters_Widgets_Options extends EWT_Filters_Widgets_Options {
 	/**
 	 * Modifies the widgets forms to add our language dropdown list.
 	 *

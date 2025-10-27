@@ -1,15 +1,15 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Services\Crud;
+namespace EasyWPTranslator\Includes\Services\Crud;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 use WP_Term;
 
 
@@ -20,28 +20,28 @@ use WP_Term;
  *
  *  
  */
-class LMAT_CRUD_Posts {
+class EWT_CRUD_Posts {
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
 	/**
 	 * Preferred language to assign to a new post.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	protected $pref_lang;
 
 	/**
 	 * Current language.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	protected $curlang;
 
 	/**
-	 * Reference to the Linguator options array.
+	 * Reference to the EasyWPTranslator options array.
 	 *
 	 * @var array
 	 */
@@ -52,13 +52,13 @@ class LMAT_CRUD_Posts {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->options   = &$linguator->options;
-		$this->model     = &$linguator->model;
-		$this->pref_lang = &$linguator->pref_lang;
-		$this->curlang   = &$linguator->curlang;
+	public function __construct( &$easywptranslator ) {
+		$this->options   = &$easywptranslator->options;
+		$this->model     = &$easywptranslator->model;
+		$this->pref_lang = &$easywptranslator->pref_lang;
+		$this->curlang   = &$easywptranslator->curlang;
 
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
 		add_action( 'set_object_terms', array( $this, 'set_object_terms' ), 10, 4 );
@@ -71,7 +71,7 @@ class LMAT_CRUD_Posts {
 		add_action( 'admin_init', array( $this, 'capture_add_translation_intent' ) );
 
 		// Specific for media
-		if ( $linguator->options['media_support'] ) {
+		if ( $easywptranslator->options['media_support'] ) {
 			add_action( 'add_attachment', array( $this, 'set_default_language' ) );
 			add_action( 'delete_attachment', array( $this, 'delete_post' ) );
 			add_filter( 'wp_delete_file', array( $this, 'wp_delete_file' ) );
@@ -101,13 +101,13 @@ class LMAT_CRUD_Posts {
 			return;
 		}
 		if ( ! empty( $_GET['from_post'] ) && ! empty( $_GET['new_lang'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-			update_user_meta( $user_id, '_lmat_pending_linking_intent', array(
+			update_user_meta( $user_id, '_ewt_pending_linking_intent', array(
 				'from_post' => (int) $_GET['from_post'], // phpcs:ignore WordPress.Security.NonceVerification
 				'new_lang'  => sanitize_key( $_GET['new_lang'] ), // phpcs:ignore WordPress.Security.NonceVerification
 			) );
 		} else {
 			// Visiting the editor without explicit intent: purge any stale intent.
-			delete_user_meta( $user_id, '_lmat_pending_linking_intent' );
+			delete_user_meta( $user_id, '_ewt_pending_linking_intent' );
 		}
 	}
 
@@ -160,16 +160,16 @@ class LMAT_CRUD_Posts {
 			// store it on the post for later linking.
 			if ( 'auto-draft' === get_post_status( $post_id ) ) {
 				$user_id = get_current_user_id();
-				$intent  = $user_id ? get_user_meta( $user_id, '_lmat_pending_linking_intent', true ) : array();
+				$intent  = $user_id ? get_user_meta( $user_id, '_ewt_pending_linking_intent', true ) : array();
 				if ( ! empty( $intent['from_post'] ) && ! empty( $intent['new_lang'] ) ) {
-					update_post_meta( $post_id, '_lmat_from_post', (int) $intent['from_post'] );
-					update_post_meta( $post_id, '_lmat_new_lang', sanitize_key( $intent['new_lang'] ) );
+					update_post_meta( $post_id, '_ewt_from_post', (int) $intent['from_post'] );
+					update_post_meta( $post_id, '_ewt_new_lang', sanitize_key( $intent['new_lang'] ) );
 				}
 				else {
 					// No intent captured for this auto-draft: ensure there is no leftover meta
 					// so a regular Add New action creates an unlinked page.
-					delete_post_meta( $post_id, '_lmat_from_post' );
-					delete_post_meta( $post_id, '_lmat_new_lang' );
+					delete_post_meta( $post_id, '_ewt_from_post' );
+					delete_post_meta( $post_id, '_ewt_new_lang' );
 				}
 			}
 		}
@@ -204,13 +204,13 @@ class LMAT_CRUD_Posts {
 			if ( $is_autodraft ) {
 				// Persist intended linking info to apply on first real save.
 				if ( ! empty( $_GET['from_post'] ) && ! empty( $_GET['new_lang'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-					update_post_meta( $post_id, '_lmat_from_post', (int) $_GET['from_post'] ); // phpcs:ignore WordPress.Security.NonceVerification
-					update_post_meta( $post_id, '_lmat_new_lang', sanitize_key( $_GET['new_lang'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
+					update_post_meta( $post_id, '_ewt_from_post', (int) $_GET['from_post'] ); // phpcs:ignore WordPress.Security.NonceVerification
+					update_post_meta( $post_id, '_ewt_new_lang', sanitize_key( $_GET['new_lang'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 				}
 				else {
 					// Ensure a plain Add New (no query args) doesn't inherit stale intent
-					delete_post_meta( $post_id, '_lmat_from_post' );
-					delete_post_meta( $post_id, '_lmat_new_lang' );
+					delete_post_meta( $post_id, '_ewt_from_post' );
+					delete_post_meta( $post_id, '_ewt_new_lang' );
 				}
 			} else {
 				// Handle from_post parameter or previously stored intent for translation linking
@@ -226,7 +226,7 @@ class LMAT_CRUD_Posts {
 			 * @param WP_Post $post         Post object.
 			 * @param int[]   $translations The list of translations post ids.
 			 */
-			do_action( 'lmat_save_post', $post_id, $post, $this->model->post->get_translations( $post_id ) );
+			do_action( 'ewt_save_post', $post_id, $post, $this->model->post->get_translations( $post_id ) );
 		}
 
 	}
@@ -247,8 +247,8 @@ class LMAT_CRUD_Posts {
 			$from_post_id = (int) $_GET['from_post']; // phpcs:ignore WordPress.Security.NonceVerification
 			$new_lang_slug = sanitize_key( $_GET['new_lang'] ); // phpcs:ignore WordPress.Security.NonceVerification
 		} else {
-			$from_post_id = (int) get_post_meta( $post_id, '_lmat_from_post', true );
-			$new_lang_slug = sanitize_key( (string) get_post_meta( $post_id, '_lmat_new_lang', true ) );
+			$from_post_id = (int) get_post_meta( $post_id, '_ewt_from_post', true );
+			$new_lang_slug = sanitize_key( (string) get_post_meta( $post_id, '_ewt_new_lang', true ) );
 		}
 
 		if ( empty( $from_post_id ) || empty( $new_lang_slug ) ) {
@@ -280,8 +280,8 @@ class LMAT_CRUD_Posts {
 		$this->create_translation_link( $from_post_id, $post_id, $from_lang, $new_lang );
 
 		// Clear stored intent to avoid re-linking in future saves.
-		delete_post_meta( $post_id, '_lmat_from_post' );
-		delete_post_meta( $post_id, '_lmat_new_lang' );
+		delete_post_meta( $post_id, '_ewt_from_post' );
+		delete_post_meta( $post_id, '_ewt_new_lang' );
 	}
 
 	/**
@@ -291,8 +291,8 @@ class LMAT_CRUD_Posts {
 	 *
 	 * @param int           $from_post_id Original post ID.
 	 * @param int           $to_post_id   New translation post ID.
-	 * @param LMAT_Language $from_lang    Original post language.
-	 * @param LMAT_Language $to_lang      New translation language.
+	 * @param EWT_Language $from_lang    Original post language.
+	 * @param EWT_Language $to_lang      New translation language.
 	 * @return void
 	 */
 	private function create_translation_link( $from_post_id, $to_post_id, $from_lang, $to_lang ) {
@@ -493,7 +493,7 @@ class LMAT_CRUD_Posts {
 
 		$term_ids = wp_list_pluck( $terms, 'term_id' );
 
-		// Let's ensure that `LMAT_CRUD_Posts::set_object_terms()` will do its job.
+		// Let's ensure that `EWT_CRUD_Posts::set_object_terms()` will do its job.
 		wp_set_post_terms( $post_id, $term_ids, 'post_tag' );
 	}
 
@@ -505,12 +505,12 @@ class LMAT_CRUD_Posts {
 	 *
 	 * @param WP_Term[]    $terms    List of terms to translate.
 	 * @param string       $taxonomy The terms' taxonomy.
-	 * @param LMAT_Language $language The language to translate the terms into.
+	 * @param EWT_Language $language The language to translate the terms into.
 	 * @return int[] List of `term_id`s.
 	 *
 	 * @phpstan-return array<positive-int>
 	 */
-	private function translate_terms( array $terms, string $taxonomy, LMAT_Language $language ): array {
+	private function translate_terms( array $terms, string $taxonomy, EWT_Language $language ): array {
 		$term_ids_translated = array();
 
 		foreach ( $terms as $term ) {
@@ -528,12 +528,12 @@ class LMAT_CRUD_Posts {
 	 *
 	 * @param WP_Term      $term     The term to translate.
 	 * @param string       $taxonomy The term's taxonomy.
-	 * @param LMAT_Language $language The language to translate the term into.
+	 * @param EWT_Language $language The language to translate the term into.
 	 * @return int A `term_id` on success, `0` on failure.
 	 *
 	 * @phpstan-return int<0, max>
 	 */
-	private function translate_term( WP_Term $term, string $taxonomy, LMAT_Language $language ): int {
+	private function translate_term( WP_Term $term, string $taxonomy, EWT_Language $language ): int {
 		// Check if the term is in the correct language or if a translation exists.
 		$tr_term_id = $this->model->term->get( $term->term_id, $language );
 
@@ -562,7 +562,7 @@ class LMAT_CRUD_Posts {
 		}
 
 		$lang_callback   = function ( $lang, $tax, $slug ) use ( $language, $term, $taxonomy ) {
-			if ( ! $lang instanceof LMAT_Language && $tax === $taxonomy && $slug === $term->slug ) {
+			if ( ! $lang instanceof EWT_Language && $tax === $taxonomy && $slug === $term->slug ) {
 				return $language;
 			}
 			return $lang;
@@ -573,8 +573,8 @@ class LMAT_CRUD_Posts {
 			}
 			return $parent_id;
 		};
-		add_filter( 'lmat_inserted_term_language', $lang_callback, 10, 3 );
-		add_filter( 'lmat_inserted_term_parent', $parent_callback, 10, 3 );
+		add_filter( 'ewt_inserted_term_language', $lang_callback, 10, 3 );
+		add_filter( 'ewt_inserted_term_parent', $parent_callback, 10, 3 );
 		$new_term_info = wp_insert_term(
 			$term->name,
 			$taxonomy,
@@ -583,8 +583,8 @@ class LMAT_CRUD_Posts {
 				'slug'   => $term->slug, // Useless but prevents the use of `sanitize_title()` and for consistency with `$lang_callback`.
 			)
 		);
-		remove_filter( 'lmat_inserted_term_language', $lang_callback );
-		remove_filter( 'lmat_inserted_term_parent', $parent_callback );
+		remove_filter( 'ewt_inserted_term_language', $lang_callback );
+		remove_filter( 'ewt_inserted_term_parent', $parent_callback );
 
 		if ( is_wp_error( $new_term_info ) ) {
 			// Term creation failed.

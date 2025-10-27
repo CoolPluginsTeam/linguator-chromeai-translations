@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\jetpack;
+namespace EasyWPTranslator\Integrations\jetpack;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Jetpack {
+class EWT_Jetpack {
 	/**
 	 * Constructor.
 	 *
@@ -28,7 +28,7 @@ class LMAT_Jetpack {
 
 		// Jetpack infinite scroll.
 		if ( isset( $_GET['infinity'], $_POST['action'] ) && 'infinite_scroll' == $_POST['action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
-			add_filter( 'lmat_is_ajax_on_front', '__return_true' );
+			add_filter( 'ewt_is_ajax_on_front', '__return_true' );
 		}
 	}
 
@@ -43,8 +43,8 @@ class LMAT_Jetpack {
 		}
 
 		// Infinite scroll ajax url must be on the right domain.
-		if ( did_action( 'lmat_init' ) && LMAT()->options['force_lang'] > 1 ) {
-			add_filter( 'infinite_scroll_ajax_url', array( LMAT()->links_model, 'site_url' ) );
+		if ( did_action( 'ewt_init' ) && EWT()->options['force_lang'] > 1 ) {
+			add_filter( 'infinite_scroll_ajax_url', array( EWT()->links_model, 'site_url' ) );
 			add_filter( 'infinite_scroll_js_settings', array( $this, 'jetpack_infinite_scroll_js_settings' ) );
 		}
 	}
@@ -60,7 +60,7 @@ class LMAT_Jetpack {
 	 */
 	public function jetpack_widget_get_top_posts( $posts ) {
 		foreach ( $posts as $k => $post ) {
-			if ( lmat_current_language() !== lmat_get_post_language( $post['post_id'] ) ) {
+			if ( ewt_current_language() !== ewt_get_post_language( $post['post_id'] ) ) {
 				unset( $posts[ $k ] );
 			}
 		}
@@ -81,7 +81,7 @@ class LMAT_Jetpack {
 	 */
 	public function grunion_contact_form_field_html_filter( $r, $field_label ) {
 		if ( function_exists( 'icl_translate' ) ) {
-			if ( lmat_current_language() !== lmat_default_language() ) {
+			if ( ewt_current_language() !== ewt_default_language() ) {
 				$label_translation = icl_translate( 'jetpack ', $field_label . '_label', $field_label );
 				$r = str_replace( $field_label, $label_translation, $r );
 			}
@@ -99,12 +99,12 @@ class LMAT_Jetpack {
 	 * @return array
 	 */
 	public function jetpack_ogp( $tags ) {
-		if ( did_action( 'lmat_init' ) ) {
-			foreach ( LMAT()->model->get_languages_list() as $language ) {
-				if ( LMAT()->curlang->slug !== $language->slug && LMAT()->links->get_translation_url( $language ) && isset( $language->facebook ) ) {
+		if ( did_action( 'ewt_init' ) ) {
+			foreach ( EWT()->model->get_languages_list() as $language ) {
+				if ( EWT()->curlang->slug !== $language->slug && EWT()->links->get_translation_url( $language ) && isset( $language->facebook ) ) {
 					$tags['og:locale:alternate'][] = $language->facebook;
 				}
-				if ( LMAT()->curlang->slug === $language->slug && isset( $language->facebook ) ) {
+				if ( EWT()->curlang->slug === $language->slug && isset( $language->facebook ) ) {
 					$tags['og:locale'] = $language->facebook;
 				}
 			}
@@ -122,7 +122,7 @@ class LMAT_Jetpack {
 	 * @return array
 	 */
 	public function jetpack_relatedposts_filter_filters( $filters, $post_id ) {
-		$slug = sanitize_title( lmat_get_post_language( $post_id, 'slug' ) );
+		$slug = sanitize_title( ewt_get_post_language( $post_id, 'slug' ) );
 		$filters[] = array( 'term' => array( 'taxonomy.language.slug' => $slug ) );
 		return $filters;
 	}
@@ -136,7 +136,7 @@ class LMAT_Jetpack {
 	 * @return array
 	 */
 	public function jetpack_infinite_scroll_js_settings( $settings ) {
-		$settings['history']['host'] = wp_parse_url( lmat_home_url(), PHP_URL_HOST ); // Jetpack uses get_option( 'home' ).
+		$settings['history']['host'] = wp_parse_url( ewt_home_url(), PHP_URL_HOST ); // Jetpack uses get_option( 'home' ).
 		return $settings;
 	}
 }

@@ -1,76 +1,76 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Filters\LMAT_Filters_Sanitization;
+use EasyWPTranslator\Includes\Filters\EWT_Filters_Sanitization;
 
 
 
 
 /**
- * Main Linguator class for admin (except Linguator pages), accessible from @see LMAT().
+ * Main EasyWPTranslator class for admin (except EasyWPTranslator pages), accessible from @see EWT().
  *
  *  
  */
 #[AllowDynamicProperties]
-class LMAT_Admin extends LMAT_Admin_Base {
+class EWT_Admin extends EWT_Admin_Base {
 	/**
-	 * @var LMAT_Admin_Filters|null
+	 * @var EWT_Admin_Filters|null
 	 */
 	public $filters;
 
 	/**
-	 * @var LMAT_Admin_Filters_Columns|null
+	 * @var EWT_Admin_Filters_Columns|null
 	 */
 	public $filters_columns;
 
 	/**
-	 * @var LMAT_Admin_Filters_Post|null
+	 * @var EWT_Admin_Filters_Post|null
 	 */
 	public $filters_post;
 
 	/**
-	 * @var LMAT_Admin_Filters_Term|null
+	 * @var EWT_Admin_Filters_Term|null
 	 */
 	public $filters_term;
 
 	/**
-	 * @var LMAT_Admin_Filters_Media|null
+	 * @var EWT_Admin_Filters_Media|null
 	 */
 	public $filters_media;
 
 	/**
 	 *  
 	 *
-	 * @var LMAT_Filters_Sanitization|null
+	 * @var EWT_Filters_Sanitization|null
 	 */
 	public $filters_sanitization;
 
 	/**
-	 * @var LMAT_Admin_Block_Editor|null
+	 * @var EWT_Admin_Block_Editor|null
 	 */
 	public $block_editor;
 
 	/**
-	 * @var LMAT_Admin_Classic_Editor|null
+	 * @var EWT_Admin_Classic_Editor|null
 	 */
 	public $classic_editor;
 
 	/**
-	 * @var LMAT_Admin_Nav_Menu|null
+	 * @var EWT_Admin_Nav_Menu|null
 	 */
 	public $nav_menu;
 
 	/**
-	 * @var LMAT_Admin_Filters_Widgets_Options|null
+	 * @var EWT_Admin_Filters_Widgets_Options|null
 	 */
 	public $filters_widgets_options;
 
@@ -138,14 +138,14 @@ class LMAT_Admin extends LMAT_Admin_Base {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Links_Model $links_model Reference to the links model.
+	 * @param EWT_Links_Model $links_model Reference to the links model.
 	 */
 	public function __construct( &$links_model ) {
 		parent::__construct( $links_model );
 		
 		// Adds a 'settings' link in the plugins table
-		add_filter( 'plugin_action_links_' . LINGUATOR_BASENAME, array( $this, 'plugin_action_links' ) );
-		add_action( 'in_plugin_update_message-' . LINGUATOR_BASENAME, array( $this, 'plugin_update_message' ), 10, 2 );
+		add_filter( 'plugin_action_links_' . EASY_WP_TRANSLATOR_BASENAME, array( $this, 'plugin_action_links' ) );
+		add_action( 'in_plugin_update_message-' . EASY_WP_TRANSLATOR_BASENAME, array( $this, 'plugin_update_message' ), 10, 2 );
 	}
 
 	/**
@@ -173,7 +173,7 @@ class LMAT_Admin extends LMAT_Admin_Base {
 	 * @return string[] Modified list of links.
 	 */
 	public function plugin_action_links( $links ) {
-		array_unshift( $links, '<a href="admin.php?page=lmat_settings">' . __( 'Settings', 'easy-web-translator' ) . '</a>' );
+		array_unshift( $links, '<a href="admin.php?page=ewt_settings">' . __( 'Settings', 'easy-wp-translator' ) . '</a>' );
 		return $links;
 	}
 
@@ -196,12 +196,12 @@ class LMAT_Admin extends LMAT_Admin_Base {
 	 * Setup filters for admin pages
 	 *
 	 *  
-	 *   instantiate a LMAT_Bulk_Translate instance.
+	 *   instantiate a EWT_Bulk_Translate instance.
 	 * @return void
 	 */
 	public function add_filters() {
-		$this->filters_sanitization = new LMAT_Filters_Sanitization( $this->get_locale_for_sanitization() );
-		$this->filters_widgets_options = new LMAT_Admin_Filters_Widgets_Options( $this );
+		$this->filters_sanitization = new EWT_Filters_Sanitization( $this->get_locale_for_sanitization() );
+		$this->filters_widgets_options = new EWT_Admin_Filters_Widgets_Options( $this );
 
 		// All these are separated just for convenience and maintainability
 		$classes = array( 'Filters', 'Filters_Columns', 'Filters_Post', 'Filters_Term', 'Classic_Editor', 'Block_Editor', 'Nav_Menu' );
@@ -222,10 +222,10 @@ class LMAT_Admin extends LMAT_Admin_Base {
 			 *
 			 * @param string $class class name
 			 */
-			$class = apply_filters( 'lmat_' . $obj, 'LMAT_Admin_' . $class );
+			$class = apply_filters( 'ewt_' . $obj, 'EWT_Admin_' . $class );
 			
 			// Handle namespaced classes for dynamic instantiation
-			if ( strpos( $class, 'LMAT_Admin_' ) === 0 && strpos( $class, '\\' ) === false ) {
+			if ( strpos( $class, 'EWT_Admin_' ) === 0 && strpos( $class, '\\' ) === false ) {
 				$class = __NAMESPACE__ . '\\' . $class;
 			}
 			

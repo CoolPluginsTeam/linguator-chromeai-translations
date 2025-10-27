@@ -2,23 +2,23 @@
 /**
  * Loads the integration with cache plugins.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\cache;
+namespace EasyWPTranslator\Integrations\cache;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Don't access directly.
 }
-use Linguator\Includes\Helpers\LMAT_Cache;
-use Linguator\Integrations\cache\LMAT_Cache_Compat;
-use Linguator\Integrations\LMAT_Integrations;
+use EasyWPTranslator\Includes\Helpers\EWT_Cache;
+use EasyWPTranslator\Integrations\cache\EWT_Cache_Compat;
+use EasyWPTranslator\Integrations\EWT_Integrations;
 
 
 add_action(
 	'plugins_loaded',
 	function () {
-		if ( lmat_is_cache_active() ) {
-			add_action( 'lmat_init', array( LMAT_Integrations::instance()->cache_compat = new LMAT_Cache_Compat(), 'init' ) );
+		if ( ewt_is_cache_active() ) {
+			add_action( 'ewt_init', array( EWT_Integrations::instance()->cache_compat = new EWT_Cache_Compat(), 'init' ) );
 		}
 	},
 	0

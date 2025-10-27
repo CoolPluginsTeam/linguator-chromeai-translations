@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
-use Linguator\Includes\Options\Primitive\Abstract_String;
+use EasyWPTranslator\Includes\Options\Primitive\Abstract_String;
 
 
 /**
@@ -41,7 +41,7 @@ class Version extends Abstract_String {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( "Linguator's version.", 'easy-web-translator' );
+		return __( "EasyWPTranslator's version.", 'easy-wp-translator' );
 	}
 
 	/**

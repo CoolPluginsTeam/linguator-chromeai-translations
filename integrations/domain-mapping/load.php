@@ -2,7 +2,7 @@
 /**
  * Loads the integration with WordPress MU Domain Mapping.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/domain-mapping.php';
 
-use Linguator\Integrations\domain_mapping\LMAT_Domain_Mapping;
-use Linguator\Integrations\LMAT_Integrations;
+use EasyWPTranslator\Integrations\domain_mapping\EWT_Domain_Mapping;
+use EasyWPTranslator\Integrations\EWT_Integrations;
 
-LMAT_Integrations::instance()->dm = new LMAT_Domain_Mapping();
+EWT_Integrations::instance()->dm = new EWT_Domain_Mapping();

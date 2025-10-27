@@ -126,8 +126,8 @@ function createConfig({ srcDir, outDir, sourceFiles }, opts = {}) {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       modules: [path.resolve(__dirname, srcDir), 'node_modules'],
       alias: {
-        '@linguator_icon.svg': path.resolve(__dirname, 'Assets/logo/linguator_icon.svg'),
-        '@linguator-menu-icon.svg': path.resolve(__dirname, 'Assets/logo/lmat_menu_icon.svg'),
+        '@easywptranslator_icon.svg': path.resolve(__dirname, 'Assets/logo/easywptranslator_icon.svg'),
+        '@easywptranslator-menu-icon.svg': path.resolve(__dirname, 'Assets/logo/ewt_menu_icon.svg'),
       },
     },
     plugins,

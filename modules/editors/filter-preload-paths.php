@@ -1,15 +1,15 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Modules\Editors;
+namespace EasyWPTranslator\Modules\Editors;
 
 use WP_Post;
-use Linguator\Includes\Base\LMAT_Base;
-use Linguator\Includes\Other\LMAT_Model;
-use Linguator\Includes\Other\LMAT_Language;
-use Linguator\Admin\Controllers\LMAT_Admin_Block_Editor;
+use EasyWPTranslator\Includes\Base\EWT_Base;
+use EasyWPTranslator\Includes\Other\EWT_Model;
+use EasyWPTranslator\Includes\Other\EWT_Language;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin_Block_Editor;
 use WP_Block_Editor_Context;
 
 /**
@@ -18,17 +18,17 @@ use WP_Block_Editor_Context;
  */
 class Filter_Preload_Paths {
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
 	/**
-	 * @var LMAT_Language|false|null
+	 * @var EWT_Language|false|null
 	 */
 	protected $curlang;
 
 	/**
-	 * @var LMAT_Admin_Block_Editor|null
+	 * @var EWT_Admin_Block_Editor|null
 	 */
 	protected $block_editor;
 
@@ -36,12 +36,12 @@ class Filter_Preload_Paths {
 	 * Constructor
 	 *
 	 *
-	 * @param LMAT_Base $linguator Linguator object.
+	 * @param EWT_Base $easywptranslator EasyWPTranslator object.
 	 */
-	public function __construct( LMAT_Base &$linguator ) {
-		$this->model        = &$linguator->model;
-		$this->curlang      = &$linguator->curlang;
-		$this->block_editor = &$linguator->block_editor;
+	public function __construct( EWT_Base &$easywptranslator ) {
+		$this->model        = &$easywptranslator->model;
+		$this->curlang      = &$easywptranslator->curlang;
+		$this->block_editor = &$easywptranslator->block_editor;
 	}
 
 	/**
@@ -52,7 +52,7 @@ class Filter_Preload_Paths {
 	 */
 	public function init(): self {
 		add_filter( 'block_editor_rest_api_preload_paths', array( $this, 'filter_preload_paths' ), 50, 2 );
-		add_filter( 'lmat_filtered_rest_routes', array( $this, 'filter_navigation_fallback_route' ) );
+		add_filter( 'ewt_filtered_rest_routes', array( $this, 'filter_navigation_fallback_route' ) );
 
 		return $this;
 	}
@@ -76,7 +76,7 @@ class Filter_Preload_Paths {
 
 		$preload_paths = (array) $preload_paths;
 
-		// Do nothing if in post editor since `LMAT_Admin_Block_Editor` has already filtered.
+		// Do nothing if in post editor since `EWT_Admin_Block_Editor` has already filtered.
 		if ( 'core/edit-post' !== $context->name ) {
 			$lang = ! empty( $this->curlang ) ? $this->curlang->slug : null;
 
@@ -97,7 +97,7 @@ class Filter_Preload_Paths {
 			}
 		}
 
-		$preload_paths[] = '/lmat/v1/languages';
+		$preload_paths[] = '/ewt/v1/languages';
 
 		return $preload_paths;
 	}

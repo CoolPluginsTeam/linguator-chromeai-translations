@@ -25,21 +25,21 @@ const SetupFileRouting = () => {
     else if (setupProgress === "translation_configuration") return <AiTranslation />
     else if(setupProgress === "language_switcher") return <LanguageSwitcher/>
 }
-const SetupProgress = ({lmat_setup_data}) => {
+const SetupProgress = ({ewt_setup_data}) => {
     const {setupProgress,setSetupProgress,setupSteps, setSetupSteps} = React.useContext(setupContext) //get the context
 
     //creating steps according to scenerios to show and hide which tabs of setup
     React.useEffect(()=>{
         let step = 1;
         let temp_setupSetups = [{
-            label: __("Default","easy-web-translator"),
+            label: __("Default","easy-wp-translator"),
             value: "default",
             visible: true,
             step:step++
         }]
 
         temp_setupSetups.push({
-            label: __("Languages","easy-web-translator"),
+            label: __("Languages","easy-wp-translator"),
             value: "languages",
             visible: true,
             step: step++
@@ -47,23 +47,23 @@ const SetupProgress = ({lmat_setup_data}) => {
 
         
         temp_setupSetups.push({
-            label: __("URL","easy-web-translator"),
+            label: __("URL","easy-wp-translator"),
             value: "url",
             visible: true,
             step:step++
         })
-        if(window.lmat_setup.media == "1"){
+        if(window.ewt_setup.media == "1"){
             temp_setupSetups.push({
-                label: __("Media","easy-web-translator"),
+                label: __("Media","easy-wp-translator"),
                 value: "media",
                 visible: true,
                 step: step++
             })
         
         }
-        // if(lmat_setup_data.untranslated_contents == "1"){
+        // if(ewt_setup_data.untranslated_contents == "1"){
         //     temp_setupSetups.push({
-        //         label: __("Content","easy-web-translator"),
+        //         label: __("Content","easy-wp-translator"),
         //         value: "content",
         //         visible: true,
         //         step: step++
@@ -71,20 +71,20 @@ const SetupProgress = ({lmat_setup_data}) => {
         // }
         
         temp_setupSetups.push({
-            label: __("AI Translation","easy-web-translator"),
+            label: __("AI Translation","easy-wp-translator"),
             value: "translation_configuration",
             visible: true,
             step: step++
         })
 
         temp_setupSetups.push({
-            label: __("Language Switcher","easy-web-translator"),
+            label: __("Language Switcher","easy-wp-translator"),
             value: "language_switcher",
             visible: true,
             step: step++
         })
         temp_setupSetups.push({
-            label: __("Ready","easy-web-translator"),
+            label: __("Ready","easy-wp-translator"),
             value: "ready",
             visible: true,
             step:step++
@@ -94,7 +94,7 @@ const SetupProgress = ({lmat_setup_data}) => {
         
     },[setupProgress])
     //get admin url
-    let currentDomain = lmat_setup_data.admin_url;
+    let currentDomain = ewt_setup_data.admin_url;
     return (
         <div className="bg-background-secondary w-full pb-10">
             <Topbar className="bg-background-secondary">
@@ -123,7 +123,7 @@ const SetupProgress = ({lmat_setup_data}) => {
             </div>
             {setupProgress != "ready" &&
                 <div className='text-center text-sm' style={{marginTop:"14px"}}>
-                    <a style={{ color: "gray" }} className='' onClick={()=>localStorage.removeItem("setupProgress")} href={`${currentDomain}/admin.php?page=lmat_settings`}>{__("Skip","easy-web-translator")}</a>
+                    <a style={{ color: "gray" }} className='' onClick={()=>localStorage.removeItem("setupProgress")} href={`${currentDomain}/admin.php?page=ewt_settings`}>{__("Skip","easy-wp-translator")}</a>
                 </div>
             }
         </div>

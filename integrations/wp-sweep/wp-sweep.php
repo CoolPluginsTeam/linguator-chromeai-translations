@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\wp_sweep;
+namespace EasyWPTranslator\Integrations\wp_sweep;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_WP_Sweep {
+class EWT_WP_Sweep {
 	/**
 	 * Setups actions.
 	 *
@@ -25,7 +25,7 @@ class LMAT_WP_Sweep {
 	}
 
 	/**
-	 * Add 'lmat_term_language' and 'lmat_term_translations' to excluded taxonomies otherwise terms loose their language and translation group.
+	 * Add 'ewt_term_language' and 'ewt_term_translations' to excluded taxonomies otherwise terms loose their language and translation group.
 	 *
 	 *  
 	 *
@@ -33,7 +33,7 @@ class LMAT_WP_Sweep {
 	 * @return array
 	 */
 	public function wp_sweep_excluded_taxonomies( $excluded_taxonomies ) {
-		return array_merge( $excluded_taxonomies, array( 'lmat_term_language', 'lmat_term_translations' ) );
+		return array_merge( $excluded_taxonomies, array( 'ewt_term_language', 'ewt_term_translations' ) );
 	}
 
 	/**
@@ -49,13 +49,13 @@ class LMAT_WP_Sweep {
 		$_term_ids = array();
 
 		foreach ( $excluded_term_ids as $excluded_term_id ) {
-			$_term_ids = array_merge( $_term_ids, array_values( lmat_get_term_translations( $excluded_term_id ) ) );
+			$_term_ids = array_merge( $_term_ids, array_values( ewt_get_term_translations( $excluded_term_id ) ) );
 		}
 
 		$excluded_term_ids = array_merge( $excluded_term_ids, $_term_ids );
 
 		// Add the terms of our languages.
-		foreach ( LMAT()->model->get_languages_list() as $language ) {
+		foreach ( EWT()->model->get_languages_list() as $language ) {
 			$excluded_term_ids = array_merge(
 				$excluded_term_ids,
 				array_values( $language->get_tax_props( 'term_id' ) )

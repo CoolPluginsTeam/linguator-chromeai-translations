@@ -1,7 +1,7 @@
 <?php
-namespace Linguator\Supported_Blocks;
+namespace EasyWPTranslator\Supported_Blocks;
 
-use Linguator\Modules\Page_Translation\LMAT_Page_Translation_Helper;
+use EasyWPTranslator\Modules\Page_Translation\EWT_Page_Translation_Helper;
 
 use WP_Block_Type_Registry;
 
@@ -16,9 +16,9 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 	/**
 	 * Class Supported_Blocks
 	 *
-	 * This class handles the supported blocks for the Linguator - AI Translation For Polylang plugin.
+	 * This class handles the supported blocks for the EasyWPTranslator - AI Translation For Polylang plugin.
 	 *
-	 * @package LMATP
+	 * @package EWTP
 	 */
 	class Supported_Blocks {
 		/**
@@ -37,11 +37,11 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 		private $custom_block_data_array = array();
 
 		/**
-		 * LMATP plugin category.
+		 * EWTP plugin category.
 		 *
 		 * @var array
 		 */
-		private $lmat_plugin_category = array();
+		private $ewt_plugin_category = array();
 
 		/**
 		 * Get the singleton instance of the class.
@@ -56,55 +56,55 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 		}
 
 		public static function enqueue_editor_assets() {
-			wp_enqueue_script( 'lmat-datatable-script', plugins_url( 'admin/assets/js/dataTables.min.js', LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION, true );
-			wp_enqueue_script( 'lmat-datatable-style', plugins_url( 'admin/assets/js/dataTables.min.js', LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION, true );
-			wp_enqueue_style( 'lmat-custom-data-table', plugins_url( 'admin/assets/css/lmat-custom-data-table.min.css', LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION );
-			wp_enqueue_script( 'lmat-custom-data-table', plugins_url( 'admin/assets/js/lmat-custom-data-table.min.js', LINGUATOR_ROOT_FILE ), array('lmat-datatable-script'), LINGUATOR_VERSION, true );
+			wp_enqueue_script( 'ewt-datatable-script', plugins_url( 'admin/assets/js/dataTables.min.js', EASY_WP_TRANSLATOR_ROOT_FILE ), array(), EASY_WP_TRANSLATOR_VERSION, true );
+			wp_enqueue_script( 'ewt-datatable-style', plugins_url( 'admin/assets/js/dataTables.min.js', EASY_WP_TRANSLATOR_ROOT_FILE ), array(), EASY_WP_TRANSLATOR_VERSION, true );
+			wp_enqueue_style( 'ewt-custom-data-table', plugins_url( 'admin/assets/css/ewt-custom-data-table.min.css', EASY_WP_TRANSLATOR_ROOT_FILE ), array(), EASY_WP_TRANSLATOR_VERSION );
+			wp_enqueue_script( 'ewt-custom-data-table', plugins_url( 'admin/assets/js/ewt-custom-data-table.min.js', EASY_WP_TRANSLATOR_ROOT_FILE ), array('ewt-datatable-script'), EASY_WP_TRANSLATOR_VERSION, true );
 		}
 
 		/**
 		 * Render the support blocks page.
 		 */
-		public function lmat_render_support_blocks_page() {
+		public function ewt_render_support_blocks_page() {
 			?>
-		<div class="lmat-custom-data-table-wrapper">
-			<h3><?php echo __('Supported Blocks Translation Settings', 'easy-web-translator'); ?>
+		<div class="ewt-custom-data-table-wrapper">
+			<h3><?php echo __('Supported Blocks Translation Settings', 'easy-wp-translator'); ?>
 			<br>
-			<p><?php echo sprintf(esc_html__('Manage Gutenberg blocks to make them translation-ready with %s.', 'easy-web-translator'), 'Linguator'); ?></p>
+			<p><?php echo sprintf(esc_html__('Manage Gutenberg blocks to make them translation-ready with %s.', 'easy-wp-translator'), 'EasyWPTranslator'); ?></p>
 			</h3>
-			<div class="lmat-custom-data-table-filters">
-				<div class="lmat-filter-tab" data-column="1" data-default="all">
-					<label for="lmat-blocks-category"><?php esc_html_e( 'Block Type Category:', 'easy-web-translator' ); ?></label>
-					<select id="lmat-blocks-category" name="lmat_blocks_category">
-						<option value="all"><?php esc_html_e( 'All', 'easy-web-translator' ); ?></option>
+			<div class="ewt-custom-data-table-filters">
+				<div class="ewt-filter-tab" data-column="1" data-default="all">
+					<label for="ewt-blocks-category"><?php esc_html_e( 'Block Type Category:', 'easy-wp-translator' ); ?></label>
+					<select id="ewt-blocks-category" name="ewt_blocks_category">
+						<option value="all"><?php esc_html_e( 'All', 'easy-wp-translator' ); ?></option>
 						<option value="core">Core</option>
-						<?php $this->lmat_get_blocks_category(); ?>
+						<?php $this->ewt_get_blocks_category(); ?>
 					</select>
 				</div>
-				<div class="lmat-filter-tab" data-column="3" data-default="all">
-					<label for="lmat-blocks-filter"><?php esc_html_e( 'Show Blocks:', 'easy-web-translator' ); ?></label>
-					<select id="lmat-blocks-filter" name="lmat_blocks_filter">
-						<option value="all"><?php esc_html_e( 'All', 'easy-web-translator' ); ?></option>
-						<option value="supported"><?php esc_html_e( 'Supported Blocks', 'easy-web-translator' ); ?></option>
-						<option value="unsupported"><?php esc_html_e( 'Unsupported Blocks', 'easy-web-translator' ); ?></option>
+				<div class="ewt-filter-tab" data-column="3" data-default="all">
+					<label for="ewt-blocks-filter"><?php esc_html_e( 'Show Blocks:', 'easy-wp-translator' ); ?></label>
+					<select id="ewt-blocks-filter" name="ewt_blocks_filter">
+						<option value="all"><?php esc_html_e( 'All', 'easy-wp-translator' ); ?></option>
+						<option value="supported"><?php esc_html_e( 'Supported Blocks', 'easy-wp-translator' ); ?></option>
+						<option value="unsupported"><?php esc_html_e( 'Unsupported Blocks', 'easy-wp-translator' ); ?></option>
 					</select>
 				</div>
 			</div>
-			<div class="lmat-custom-table-section">
-				<div class="lmat-custom-table-lists">
-					<table class="lmat-custom-data-table-table" id="lmat-custom-datatable">
+			<div class="ewt-custom-table-section">
+				<div class="ewt-custom-table-lists">
+					<table class="ewt-custom-data-table-table" id="ewt-custom-datatable">
 						<thead>
 							<tr>
-								<th><?php esc_html_e( 'Sr.No', 'easy-web-translator' ); ?></th>
-								<th><?php esc_html_e( 'Block Name', 'easy-web-translator' ); ?></th>
-								<th><?php esc_html_e( 'Block Title', 'easy-web-translator' ); ?></th>
-								<th><?php esc_html_e( 'Status', 'easy-web-translator' ); ?></th>
-								<th><?php esc_html_e( 'Modify', 'easy-web-translator' ); ?></th>
+								<th><?php esc_html_e( 'Sr.No', 'easy-wp-translator' ); ?></th>
+								<th><?php esc_html_e( 'Block Name', 'easy-wp-translator' ); ?></th>
+								<th><?php esc_html_e( 'Block Title', 'easy-wp-translator' ); ?></th>
+								<th><?php esc_html_e( 'Status', 'easy-wp-translator' ); ?></th>
+								<th><?php esc_html_e( 'Modify', 'easy-wp-translator' ); ?></th>
 							</tr>
 						</thead>
 						<tbody>
 							<?php 
-								$this->lmat_get_supported_blocks_table()
+								$this->ewt_get_supported_blocks_table()
 							?>
 						</tbody>
 					</table>
@@ -117,7 +117,7 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 		/**
 		 * Get the blocks category.
 		 */
-		public function lmat_get_blocks_category() {
+		public function ewt_get_blocks_category() {
 			$blocks_data                 = WP_Block_Type_Registry::get_instance()->get_all_registered();
 
 			$filter_blocks_data = array_filter( $blocks_data, function( $block ) {
@@ -128,15 +128,15 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 				$plugin_name = isset($plugin_name[0]) ? $plugin_name[0] : '';
 
 				if(!empty($plugin_name)){
-					$filter_plugin_name = $this->lmat_supported_block_name($plugin_name);
+					$filter_plugin_name = $this->ewt_supported_block_name($plugin_name);
 					$filter_plugin_name=str_replace('-',' ',$filter_plugin_name);
 					$filter_plugin_name=ucwords($filter_plugin_name);
 
-					if(in_array($plugin_name, $this->lmat_plugin_category) || $plugin_name === 'core'){
+					if(in_array($plugin_name, $this->ewt_plugin_category) || $plugin_name === 'core'){
 						continue;
 					}
 
-					$this->lmat_plugin_category[] = $plugin_name;
+					$this->ewt_plugin_category[] = $plugin_name;
 					echo '<option value="' . esc_attr( $plugin_name ) . '">' . esc_html( $filter_plugin_name ) . '</option>';
 				}
 			}
@@ -145,16 +145,16 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 		/**
 		 * Get the supported blocks.
 		 */
-		public function lmat_get_supported_blocks_table() {
+		public function ewt_get_supported_blocks_table() {
 			if ( class_exists( WP_Block_Type_Registry::class ) && method_exists( WP_Block_Type_Registry::class, 'get_all_registered' ) ) {
-				$lmat_block_parse_rules       = $this->block_parsing_rules();
+				$ewt_block_parse_rules       = $this->block_parsing_rules();
 
 				$blocks_data                 = WP_Block_Type_Registry::get_instance()->get_all_registered();
 
-				$lmat_supported_blocks       = isset($lmat_block_parse_rules['LmatBlockParseRules']) ? $lmat_block_parse_rules['LmatBlockParseRules'] : array();
-				$lmat_supported_blocks_names = array_keys( $lmat_supported_blocks );
+				$ewt_supported_blocks       = isset($ewt_block_parse_rules['EWTBlockParseRules']) ? $ewt_block_parse_rules['EWTBlockParseRules'] : array();
+				$ewt_supported_blocks_names = array_keys( $ewt_supported_blocks );
 				$s_no                        = 1;
-				$lmat_post_id                = self::get_custom_block_post_id();
+				$ewt_post_id                = self::get_custom_block_post_id();
 
 				$filter_blocks_data=$blocks_data;
 
@@ -163,10 +163,10 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 					$block_name  = esc_html( $block->name );
 					$block_title = esc_html( $block->title );
 
-					$status      = ! in_array( $block_name, $lmat_supported_blocks_names ) ? 'Unsupported' : 'Supported'; // You can modify this logic based on your requirements
-					$modify_text = ! in_array( $block_name, $lmat_supported_blocks_names ) ? esc_html__( 'Add', 'easy-web-translator' ) : esc_html__( 'Edit', 'easy-web-translator' );
-					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $lmat_post_id ) . '&action=edit&lmat_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
-					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $lmat_post_id ) . '&action=edit&lmat_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
+					$status      = ! in_array( $block_name, $ewt_supported_blocks_names ) ? 'Unsupported' : 'Supported'; // You can modify this logic based on your requirements
+					$modify_text = ! in_array( $block_name, $ewt_supported_blocks_names ) ? esc_html__( 'Add', 'easy-wp-translator' ) : esc_html__( 'Edit', 'easy-wp-translator' );
+					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $ewt_post_id ) . '&action=edit&ewt_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
+					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $ewt_post_id ) . '&action=edit&ewt_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
 
 					echo '<tr data-block-name="' . esc_attr( strtolower( $block_name ) ) . '" data-block-status="' . esc_attr( strtolower( $status ) ) . '" >';
 					echo '<td>' . esc_html($s_no++) . '</td>';
@@ -180,7 +180,7 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 
 		}
 
-		private function lmat_supported_block_name($block_name){
+		private function ewt_supported_block_name($block_name){
 			$predfined_blocks = array(
 				'ub' => 'Ultimate Blocks',
 				'uagb' => 'Spectra',
@@ -200,7 +200,7 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 
 			$query = new \WP_Query(
 				array(
-					'post_type'      => 'lmat_add_blocks',
+					'post_type'      => 'ewt_add_blocks',
 					'posts_per_page' => 1,
 					'orderby'        => 'date',
 					'order'          => 'ASC',
@@ -210,13 +210,13 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 			$existing_post = $query->posts ? $query->posts[0] : null;
 
 			if (! $existing_post) {
-				$post_title    = esc_html__('Add More Gutenberg Blocks', 'easy-web-translator');
+				$post_title    = esc_html__('Add More Gutenberg Blocks', 'easy-wp-translator');
 				$first_post_id = wp_insert_post(
 					array(
 						'post_title'   => $post_title,
 						'post_content' => '',
 						'post_status'  => 'publish',
-						'post_type'    => 'lmat_add_blocks',
+						'post_type'    => 'ewt_add_blocks',
 					)
 				);
 			} elseif ($query->have_posts()) {
@@ -240,7 +240,7 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 		}
 
 		public function get_block_parse_rules() {
-			$path_url = plugins_url( '/modules/page-translation/block-translation-rules/block-rules.json', LINGUATOR_ROOT_FILE );
+			$path_url = plugins_url( '/modules/page-translation/block-translation-rules/block-rules.json', EASY_WP_TRANSLATOR_ROOT_FILE );
 			$response = wp_remote_get(
 				esc_url_raw( $path_url ),
 				array(
@@ -274,18 +274,18 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 
 			$block_translation_rules = json_decode( $block_rules, true );
 
-			$this->custom_block_data_array = isset( $block_translation_rules['LmatBlockParseRules'] ) ? $block_translation_rules['LmatBlockParseRules'] : null;
+			$this->custom_block_data_array = isset( $block_translation_rules['EWTBlockParseRules'] ) ? $block_translation_rules['EWTBlockParseRules'] : null;
 
-			$custom_block_translation = get_option( 'lmat_custom_block_translation', false );
+			$custom_block_translation = get_option( 'ewt_custom_block_translation', false );
 
 			if ( ! empty( $custom_block_translation ) && is_array( $custom_block_translation ) ) {
 				foreach ( $custom_block_translation as $key => $block_data ) {
-					$block_rules = isset( $block_translation_rules['LmatBlockParseRules'][ $key ] ) ? $block_translation_rules['LmatBlockParseRules'][ $key ] : null;
+					$block_rules = isset( $block_translation_rules['EWTBlockParseRules'][ $key ] ) ? $block_translation_rules['EWTBlockParseRules'][ $key ] : null;
 					$this->filter_custom_block_rules( array( $key ), $block_data, $block_rules );
 				}
 			}
 
-			$block_translation_rules['LmatBlockParseRules'] = $this->custom_block_data_array ? $this->custom_block_data_array : array();
+			$block_translation_rules['EWTBlockParseRules'] = $this->custom_block_data_array ? $this->custom_block_data_array : array();
 
 			return $block_translation_rules;
 		}
@@ -339,21 +339,21 @@ if ( ! class_exists( 'Supported_Blocks' ) ) {
 			if ( $updated_blocks_data ) {
 				$block_parse_rules = $this->block_parsing_rules();
 
-				if ( isset( $block_parse_rules['LmatBlockParseRules'] ) ) {
-					$previous_translate_data = get_option( 'lmat_custom_block_translation', false );
+				if ( isset( $block_parse_rules['EWTBlockParseRules'] ) ) {
+					$previous_translate_data = get_option( 'ewt_custom_block_translation', false );
 					if ( $previous_translate_data && ! empty( $previous_translate_data ) ) {
 						$this->custom_block_data_array = $previous_translate_data;
 					}
 
 					foreach ( $updated_blocks_data as $key => $block_data ) {
-						$this->filter_custom_block_rules( array( $key ), $block_data, $block_parse_rules['LmatBlockParseRules'][ $key ] );
+						$this->filter_custom_block_rules( array( $key ), $block_data, $block_parse_rules['EWTBlockParseRules'][ $key ] );
 					}
 
 					if ( count( $this->custom_block_data_array ) > 0 ) {
-						update_option( 'lmat_custom_block_translation', $this->custom_block_data_array );
+						update_option( 'ewt_custom_block_translation', $this->custom_block_data_array );
 					}
 
-					delete_option( 'lmat_custom_block_data' );
+					delete_option( 'ewt_custom_block_data' );
 				}
 			}
 		}

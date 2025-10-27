@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-use Linguator\Includes\Options\Primitive\Abstract_Boolean;
-use Linguator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Options\Primitive\Abstract_Boolean;
+use EasyWPTranslator\Includes\Options\Options;
 
 
 
@@ -47,9 +47,9 @@ class Hide_Default extends Abstract_Boolean {
 	 */
 	public function add_to_site_health_info( array $info, Options $options ): array { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		if ( $this->get() ) {
-			$value = '1: ' . __( 'Hide URL language information for default language', 'easy-web-translator' );
+			$value = '1: ' . __( 'Hide URL language information for default language', 'easy-wp-translator' );
 		} else {
-			$value = '0: ' . __( 'Display URL language information for default language', 'easy-web-translator' );
+			$value = '0: ' . __( 'Display URL language information for default language', 'easy-wp-translator' );
 		}
 
 		return $this->get_site_health_info( $info, $value, self::key() );
@@ -96,7 +96,7 @@ class Hide_Default extends Abstract_Boolean {
 	protected function get_description(): string {
 		return sprintf(
 			/* translators: %1$s and %2$s are "true/false" values. */
-			__( 'Remove the language code in URL for the default language: %1$s to hide, %2$s to display.', 'easy-web-translator' ),
+			__( 'Remove the language code in URL for the default language: %1$s to hide, %2$s to display.', 'easy-wp-translator' ),
 			'`true`',
 			'`false`'
 		);

@@ -1,15 +1,15 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Modules\sync;
+namespace EasyWPTranslator\Modules\sync;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Settings\Controllers\LMAT_Settings_Module;
+use EasyWPTranslator\Settings\Controllers\EWT_Settings_Module;
 
 
 
@@ -18,7 +18,7 @@ use Linguator\Settings\Controllers\LMAT_Settings_Module;
  *
  *  
  */
-class LMAT_Settings_Sync extends LMAT_Settings_Module {
+class EWT_Settings_Sync extends EWT_Settings_Module {
 	/**
 	 * Stores the display order priority.
 	 *
@@ -31,15 +31,15 @@ class LMAT_Settings_Sync extends LMAT_Settings_Module {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The linguator object.
+	 * @param object $easywptranslator The easywptranslator object.
 	 */
-	public function __construct( &$linguator ) {
+	public function __construct( &$easywptranslator ) {
 		parent::__construct(
-			$linguator,
+			$easywptranslator,
 			array(
 				'module'      => 'sync',
-				'title'       => __( 'Synchronization', 'easy-web-translator' ),
-				'description' => __( 'The synchronization options allow to maintain exact same values (or translations in the case of taxonomies and page parent) of meta content between the translations of a post or page.', 'easy-web-translator' ),
+				'title'       => __( 'Synchronization', 'easy-wp-translator' ),
+				'description' => __( 'The synchronization options allow to maintain exact same values (or translations in the case of taxonomies and page parent) of meta content between the translations of a post or page.', 'easy-wp-translator' ),
 			)
 		);
 	}
@@ -89,17 +89,17 @@ class LMAT_Settings_Sync extends LMAT_Settings_Module {
 	 */
 	public static function list_metas_to_sync() {
 		return array(
-			'taxonomies'        => __( 'Taxonomies', 'easy-web-translator' ),
-			'post_meta'         => __( 'Custom fields', 'easy-web-translator' ),
-			'comment_status'    => __( 'Comment status', 'easy-web-translator' ),
-			'ping_status'       => __( 'Ping status', 'easy-web-translator' ),
-			'sticky_posts'      => __( 'Sticky posts', 'easy-web-translator' ),
-			'post_date'         => __( 'Published date', 'easy-web-translator' ),
-			'post_format'       => __( 'Post format', 'easy-web-translator' ),
-			'post_parent'       => __( 'Page parent', 'easy-web-translator' ),
-			'_wp_page_template' => __( 'Page template', 'easy-web-translator' ),
-			'menu_order'        => __( 'Page order', 'easy-web-translator' ),
-			'_thumbnail_id'     => __( 'Featured image', 'easy-web-translator' ),
+			'taxonomies'        => __( 'Taxonomies', 'easy-wp-translator' ),
+			'post_meta'         => __( 'Custom fields', 'easy-wp-translator' ),
+			'comment_status'    => __( 'Comment status', 'easy-wp-translator' ),
+			'ping_status'       => __( 'Ping status', 'easy-wp-translator' ),
+			'sticky_posts'      => __( 'Sticky posts', 'easy-wp-translator' ),
+			'post_date'         => __( 'Published date', 'easy-wp-translator' ),
+			'post_format'       => __( 'Post format', 'easy-wp-translator' ),
+			'post_parent'       => __( 'Page parent', 'easy-wp-translator' ),
+			'_wp_page_template' => __( 'Page template', 'easy-wp-translator' ),
+			'menu_order'        => __( 'Page order', 'easy-wp-translator' ),
+			'_thumbnail_id'     => __( 'Featured image', 'easy-wp-translator' ),
 		);
 	}
 }

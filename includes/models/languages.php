@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Models;
+namespace EasyWPTranslator\Includes\Models;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-use Linguator\Includes\Helpers\LMAT_Cache;
-use Linguator\Includes\Other\LMAT_Language;
-use Linguator\Includes\Other\LMAT_Language_Factory;
-use Linguator\Includes\Models\Translatable\LMAT_Translatable_Objects;
-use Linguator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Helpers\EWT_Cache;
+use EasyWPTranslator\Includes\Other\EWT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Language_Factory;
+use EasyWPTranslator\Includes\Models\Translatable\EWT_Translatable_Objects;
+use EasyWPTranslator\Includes\Options\Options;
 use WP_Term;
 use WP_Error;
 
@@ -33,11 +33,11 @@ class Languages {
 	public const LOCALE_PATTERN = '^' . self::INNER_LOCALE_PATTERN . '$';
 	public const SLUG_PATTERN   = '^' . self::INNER_SLUG_PATTERN . '$';
 
-	public const TRANSIENT_NAME = 'lmat_languages_list';
+	public const TRANSIENT_NAME = 'ewt_languages_list';
 	private const CACHE_KEY     = 'languages';
 
 	/**
-	 * Linguator's options.
+	 * EasyWPTranslator's options.
 	 *
 	 * @var Options
 	 */
@@ -46,14 +46,14 @@ class Languages {
 	/**
 	 * Translatable objects registry.
 	 *
-	 * @var LMAT_Translatable_Objects
+	 * @var EWT_Translatable_Objects
 	 */
 	private $translatable_objects;
 
 	/**
 	 * Internal non persistent cache object.
 	 *
-	 * @var LMAT_Cache<mixed>
+	 * @var EWT_Cache<mixed>
 	 */
 	private $cache;
 
@@ -65,7 +65,7 @@ class Languages {
 	private $is_creating_list = false;
 
 	/**
-	 * Tells if {@see Linguator\Includes\Models\Languages::get_list()} can be used.
+	 * Tells if {@see EasyWPTranslator\Includes\Models\Languages::get_list()} can be used.
 	 *
 	 * @var bool
 	 */
@@ -76,13 +76,13 @@ class Languages {
 	 *
 	 *  	
 	 *
-	 * @param Options                  $options              Linguator's options.
-	 * @param LMAT_Translatable_Objects $translatable_objects Translatable objects registry.
-	 * @param LMAT_Cache                $cache                Internal non persistent cache object.
+	 * @param Options                  $options              EasyWPTranslator's options.
+	 * @param EWT_Translatable_Objects $translatable_objects Translatable objects registry.
+	 * @param EWT_Cache                $cache                Internal non persistent cache object.
 	 *
-	 * @phpstan-param LMAT_Cache<mixed> $cache
+	 * @phpstan-param EWT_Cache<mixed> $cache
 	 */
-	public function __construct( Options $options, LMAT_Translatable_Objects $translatable_objects, LMAT_Cache $cache ) {
+	public function __construct( Options $options, EWT_Translatable_Objects $translatable_objects, EWT_Cache $cache ) {
 		$this->options              = $options;
 		$this->translatable_objects = $translatable_objects;
 		$this->cache                = $cache;
@@ -98,23 +98,23 @@ class Languages {
 	 *                     `term_id` and `term_taxonomy_id` can be fetched for any language taxonomy.
 	 *                     /!\ For the `term_taxonomy_id`, prefix the ID by `tt:` (ex: `"tt:{$tt_id}"`),
 	 *                     this is to prevent confusion between `term_id` and `term_taxonomy_id`.
-	 * @return LMAT_Language|false Language object, false if no language found.
+	 * @return EWT_Language|false Language object, false if no language found.
 	 *
-	 * @phpstan-param LMAT_Language|WP_Term|int|string $value
+	 * @phpstan-param EWT_Language|WP_Term|int|string $value
 	 */
 	public function get( $value ) {
-		if ( $value instanceof LMAT_Language ) {
+		if ( $value instanceof EWT_Language ) {
 			return $value;
 		}
 
-		// Cast WP_Term to LMAT_Language.
+		// Cast WP_Term to EWT_Language.
 		if ( $value instanceof WP_Term ) {
 			return $this->get( $value->term_id );
 		}
 
 		$return = $this->cache->get( 'language:' . $value );
 
-		if ( $return instanceof LMAT_Language ) {
+		if ( $return instanceof EWT_Language ) {
 			return $return;
 		}
 
@@ -128,7 +128,7 @@ class Languages {
 			$this->cache->set( 'language:' . $lang->w3c, $lang );
 		}
 
-		/** @var LMAT_Language|false */
+		/** @var EWT_Language|false */
 		return $this->cache->get( 'language:' . $value );
 	}
 
@@ -171,7 +171,7 @@ class Languages {
 		$args['term_group'] = $args['term_group'] ?? 0;
 
 		if ( ! empty( $args['locale'] ) && ( ! isset( $args['name'] ) || ! isset( $args['slug'] ) ) ) {
-			$languages = include LINGUATOR_DIR . 'admin/settings/controllers/languages.php';
+			$languages = include EASY_WP_TRANSLATOR_DIR . 'admin/settings/controllers/languages.php';
 			if ( ! empty( $languages[ $args['locale'] ] ) ) {
 				$found        = $languages[ $args['locale'] ];
 				$args['name'] = $args['name'] ?? $found['name'];
@@ -206,7 +206,7 @@ class Languages {
 
 		$r = wp_insert_term(
 			$args['name'],
-			'lmat_language',
+			'ewt_language',
 			array(
 				'slug'        => $final_slug,
 				'description' => $description,
@@ -214,10 +214,10 @@ class Languages {
 		);
 
 		if ( is_wp_error( $r ) ) {
-			return new WP_Error( 'lmat_add_language', __( 'Impossible to add the language. Please check if the language code or locale is unique.', 'easy-web-translator' ) );
+			return new WP_Error( 'ewt_add_language', __( 'Impossible to add the language. Please check if the language code or locale is unique.', 'easy-wp-translator' ) );
 		}
 
-		wp_update_term( (int) $r['term_id'], 'lmat_language', array( 'term_group' => (int) $args['term_group'] ) );
+		wp_update_term( (int) $r['term_id'], 'ewt_language', array( 'term_group' => (int) $args['term_group'] ) );
 
 		// The other language taxonomies
 		$this->update_secondary_language_terms( $final_slug, $args['name'] );
@@ -233,7 +233,7 @@ class Languages {
 
 		flush_rewrite_rules();
 
-		do_action( 'lmat_add_language', $args );
+		do_action( 'ewt_add_language', $args );
 
 		return true;
 	}
@@ -275,7 +275,7 @@ class Languages {
 		$lang = $this->get( (int) $args['lang_id'] );
 
 		if ( empty( $lang ) ) {
-			return new WP_Error( 'lmat_invalid_language_id', __( 'The language does not seem to exist.', 'easy-web-translator' ) );
+			return new WP_Error( 'ewt_invalid_language_id', __( 'The language does not seem to exist.', 'easy-wp-translator' ) );
 		}
 
 		$args['locale']     = $args['locale'] ?? $lang->locale;
@@ -309,8 +309,8 @@ class Languages {
 		$this->update_secondary_language_terms( $args['slug'], $args['name'], $lang );
 
 		wp_update_term(
-			$lang->get_tax_prop( 'lmat_language', 'term_id' ),
-			'lmat_language',
+			$lang->get_tax_prop( 'ewt_language', 'term_id' ),
+			'ewt_language',
 			array(
 				'slug'        => $slug,
 				'name'        => $args['name'],
@@ -330,8 +330,8 @@ class Languages {
 					$number = $widget['params'][0]['number'];
 					if ( is_object( $obj ) && method_exists( $obj, 'get_settings' ) && method_exists( $obj, 'save_settings' ) ) {
 						$settings = $obj->get_settings();
-						if ( isset( $settings[ $number ]['lmat_lang'] ) && $settings[ $number ]['lmat_lang'] == $old_slug ) {
-							$settings[ $number ]['lmat_lang'] = $slug;
+						if ( isset( $settings[ $number ]['ewt_lang'] ) && $settings[ $number ]['ewt_lang'] == $old_slug ) {
+							$settings[ $number ]['ewt_lang'] = $slug;
 							$obj->save_settings( $settings );
 						}
 					}
@@ -389,7 +389,7 @@ class Languages {
 		 *   Added $lang parameter.
 		 *
 		 * @param array $args {
-		 *   Arguments used to modify the language. @see Linguator\Includes\Models\Languages::update().
+		 *   Arguments used to modify the language. @see EasyWPTranslator\Includes\Models\Languages::update().
 		 *
 		 *   @type string $name           Language name (used only for display).
 		 *   @type string $slug           Language code (ideally 2-letters ISO 639-1 language code).
@@ -399,9 +399,9 @@ class Languages {
 		 *   @type string $no_default_cat Optional, if set, no default category has been created for this language.
 		 *   @type string $flag           Optional, country code, @see flags.php.
 		 * }
-		 * @param LMAT_Language $lang Previous value of the language being edited.
+		 * @param EWT_Language $lang Previous value of the language being edited.
 		 */
-		do_action( 'lmat_update_language', $args, $lang );
+		do_action( 'ewt_update_language', $args, $lang );
 
 		return true;
 	}
@@ -444,8 +444,8 @@ class Languages {
 				$number = $widget['params'][0]['number'];
 				if ( is_object( $obj ) && method_exists( $obj, 'get_settings' ) && method_exists( $obj, 'save_settings' ) ) {
 					$settings = $obj->get_settings();
-					if ( isset( $settings[ $number ]['lmat_lang'] ) && $settings[ $number ]['lmat_lang'] == $lang->slug ) {
-						unset( $settings[ $number ]['lmat_lang'] );
+					if ( isset( $settings[ $number ]['ewt_lang'] ) && $settings[ $number ]['ewt_lang'] == $lang->slug ) {
+						unset( $settings[ $number ]['ewt_lang'] );
 						$obj->save_settings( $settings );
 					}
 				}
@@ -466,7 +466,7 @@ class Languages {
 		}
 
 		// Delete users options.
-		delete_metadata( 'user', 0, 'lmat_filter_content', '', true );
+		delete_metadata( 'user', 0, 'ewt_filter_content', '', true );
 		delete_metadata( 'user', 0, "description_{$lang->slug}", '', true );
 
 		// Delete domain.
@@ -477,10 +477,10 @@ class Languages {
 		/*
 		 * Delete the language itself.
 		 *
-		 * Reverses the language taxonomies order is required to make sure 'lmat_language' is deleted in last.
+		 * Reverses the language taxonomies order is required to make sure 'ewt_language' is deleted in last.
 		 *
-		 * The initial order with the 'lmat_language' taxonomy at the beginning of 'LMAT_Language::term_props' property
-		 * is done by {@see LMAT_Model::filter_terms_orderby()}
+		 * The initial order with the 'ewt_language' taxonomy at the beginning of 'EWT_Language::term_props' property
+		 * is done by {@see EWT_Model::filter_terms_orderby()}
 		 */
 		foreach ( array_reverse( $lang->get_tax_props( 'term_id' ) ) as $taxonomy_name => $term_id ) {
 			wp_delete_term( $term_id, $taxonomy_name );
@@ -515,17 +515,17 @@ class Languages {
 
 	/**
 	 * Returns the list of available languages.
-	 * - Stores the list in a db transient (except flags), unless `LMAT_CACHE_LANGUAGES` is set to false.
-	 * - Caches the list (with flags) in a `LMAT_Cache` object.
+	 * - Stores the list in a db transient (except flags), unless `EWT_CACHE_LANGUAGES` is set to false.
+	 * - Caches the list (with flags) in a `EWT_Cache` object.
 	 *
 	 *  
 	 *
 	 * @param array $args {
 	 *   @type bool   $hide_empty   Hides languages with no posts if set to `true` (defaults to `false`).
 	 *   @type bool   $hide_default Hides default language from the list (default to `false`).
-	 *   @type string $fields       Returns only that field if set; {@see LMAT_Language} for a list of fields.
+	 *   @type string $fields       Returns only that field if set; {@see EWT_Language} for a list of fields.
 	 * }
-	 * @return array List of LMAT_Language objects or LMAT_Language object properties.
+	 * @return array List of EWT_Language objects or EWT_Language object properties.
 	 */
 	public function get_list( $args = array() ): array {
 		
@@ -545,7 +545,7 @@ class Languages {
 
 			$this->is_creating_list = true;
 
-			if ( ! lmat_get_constant( 'LMAT_CACHE_LANGUAGES', true ) ) {
+			if ( ! ewt_get_constant( 'EWT_CACHE_LANGUAGES', true ) ) {
 				// Create the languages from taxonomies.
 				$languages = $this->get_from_taxonomies();
 			} else {
@@ -557,7 +557,7 @@ class Languages {
 				} else {
 					// Create the languages directly from arrays stored in the transient.
 					$languages = array_map(
-						array( new LMAT_Language_Factory( $this->options ), 'get' ),
+						array( new EWT_Language_Factory( $this->options ), 'get' ),
 						$languages
 					);
 
@@ -581,7 +581,7 @@ class Languages {
 		$languages = array_filter(
 			$languages,
 			function ( $lang ) use ( $args ) {
-				$keep_empty   = empty( $args['hide_empty'] ) || $lang->get_tax_prop( 'lmat_language', 'count' );
+				$keep_empty   = empty( $args['hide_empty'] ) || $lang->get_tax_prop( 'ewt_language', 'count' );
 				$keep_default = empty( $args['hide_default'] ) || ! $lang->is_default;
 				return $keep_empty && $keep_default;
 			}
@@ -593,7 +593,7 @@ class Languages {
 	}
 
 	/**
-	 * Tells if {@see Linguator\Includes\Models\Languages::get_list()} can be used.
+	 * Tells if {@see EasyWPTranslator\Includes\Models\Languages::get_list()} can be used.
 	 *
 	 *  
 	 *
@@ -604,7 +604,7 @@ class Languages {
 	}
 
 	/**
-	 * Sets the internal property `$languages_ready` to `true`, telling that {@see Linguator\Includes\Models\Languages::get_list()} can be used.
+	 * Sets the internal property `$languages_ready` to `true`, telling that {@see EasyWPTranslator\Includes\Models\Languages::get_list()} can be used.
 	 *
 	 *  
 	 *
@@ -619,7 +619,7 @@ class Languages {
 	 *
 	 *  
 	 *
-	 * @return LMAT_Language|false Default language object, `false` if no language found.
+	 * @return EWT_Language|false Default language object, `false` if no language found.
 	 */
 	public function get_default() {
 		if ( empty( $this->options['default_lang'] ) ) {
@@ -672,7 +672,7 @@ class Languages {
 		 * @param string $slug              New default language's slug.
 		 * @param string $prev_default_lang Previous default language's slug.
 		 */
-		do_action( 'lmat_update_default_lang', $slug, $prev_default_lang );
+		do_action( 'ewt_update_default_lang', $slug, $prev_default_lang );
 
 		// Update options.
 
@@ -705,7 +705,7 @@ class Languages {
 		}
 
 		// We have at least one 3rd party language taxonomy.
-		$known_taxonomies = get_option( 'lmat_language_taxonomies', array() );
+		$known_taxonomies = get_option( 'ewt_language_taxonomies', array() );
 		$known_taxonomies = is_array( $known_taxonomies ) ? $known_taxonomies : array();
 		$new_taxonomies   = array_diff( $registered_taxonomies, $known_taxonomies );
 
@@ -723,7 +723,7 @@ class Languages {
 		$this->clean_cache();
 
 		// Keep the previous values, so this is triggered only once per taxonomy.
-		update_option( 'lmat_language_taxonomies', array_merge( $known_taxonomies, $new_taxonomies ) );
+		update_option( 'ewt_language_taxonomies', array_merge( $known_taxonomies, $new_taxonomies ) );
 	}
 
 	/**
@@ -849,7 +849,7 @@ class Languages {
 		 *     @type string $flag_code Country code.
 		 * }
 		 */
-		$add_data = apply_filters( 'lmat_language_metas', array(), $args, $new_data, $old_data );
+		$add_data = apply_filters( 'ewt_language_metas', array(), $args, $new_data, $old_data );
 		// Don't allow to overwrite `$locale`, `$rtl`, and `$flag_code`.
 		$new_data = array_merge( $old_data, $add_data, $new_data );
 
@@ -863,8 +863,8 @@ class Languages {
 	 *
 	 *  
 	 *
-	 * @param array             $args Parameters of {@see Linguator\Includes\Models\Languages::add() or @see Linguator\Includes\Models\Languages::update()}.
-	 * @param LMAT_Language|null $lang Optional the language currently updated, the language is created if not set.
+	 * @param array             $args Parameters of {@see EasyWPTranslator\Includes\Models\Languages::add() or @see EasyWPTranslator\Includes\Models\Languages::update()}.
+	 * @param EWT_Language|null $lang Optional the language currently updated, the language is created if not set.
 	 * @return WP_Error
 	 *
 	 * @phpstan-param array{
@@ -874,43 +874,43 @@ class Languages {
 	 *     flag?: string
 	 * } $args
 	 */
-	protected function validate_lang( $args, ?LMAT_Language $lang = null ): WP_Error {
+	protected function validate_lang( $args, ?EWT_Language $lang = null ): WP_Error {
 		$errors = new WP_Error();
 
 		// Validate locale with the same pattern as WP 4.3. 
 		if ( empty( $args['locale'] ) || ! preg_match( '#' . self::LOCALE_PATTERN . '#', $args['locale'], $matches ) ) {
-			$errors->add( 'lmat_invalid_locale', __( 'Enter a valid WordPress locale', 'easy-web-translator' ) );
+			$errors->add( 'ewt_invalid_locale', __( 'Enter a valid WordPress locale', 'easy-wp-translator' ) );
 		}
 
 		// Validate slug characters.
 		if ( empty( $args['slug'] ) || ! preg_match( '#' . self::SLUG_PATTERN . '#', $args['slug'] ) ) {
-			$errors->add( 'lmat_invalid_slug', __( 'The language code contains invalid characters', 'easy-web-translator' ) );
+			$errors->add( 'ewt_invalid_slug', __( 'The language code contains invalid characters', 'easy-wp-translator' ) );
 		}
 
 		// Validate slug is unique.
 		foreach ( $this->get_list() as $language ) {
 			// Check if both slug and locale are the same (exact duplicate)
 			if ( ! empty( $args['slug'] ) && $language->slug === $args['slug'] && $language->locale === $args['locale'] && ( null === $lang || $lang->term_id !== $language->term_id ) ) {
-				$errors->add( 'lmat_non_unique_slug', __( 'This language with the same code and locale already exists', 'easy-web-translator' ) );
+				$errors->add( 'ewt_non_unique_slug', __( 'This language with the same code and locale already exists', 'easy-wp-translator' ) );
 			}
 		}
 
 		// Validate name.
 		// No need to sanitize it as `wp_insert_term()` will do it for us.
 		if ( empty( $args['name'] ) ) {
-			$errors->add( 'lmat_invalid_name', __( 'The language must have a name', 'easy-web-translator' ) );
+			$errors->add( 'ewt_invalid_name', __( 'The language must have a name', 'easy-wp-translator' ) );
 		}
 
 		// Validate flag.
-		if ( ! empty( $args['flag'] ) && ! is_readable( LINGUATOR_DIR . '/assets/flags/' . $args['flag'] . '.svg' ) ) {
-			$flag = LMAT_Language::get_flag_information( $args['flag'] );
+		if ( ! empty( $args['flag'] ) && ! is_readable( EASY_WP_TRANSLATOR_DIR . '/assets/flags/' . $args['flag'] . '.svg' ) ) {
+			$flag = EWT_Language::get_flag_information( $args['flag'] );
 
 			if ( ! empty( $flag['url'] ) ) {
 				$response = function_exists( 'vip_safe_wp_remote_get' ) ? vip_safe_wp_remote_get( sanitize_url( $flag['url'] ) ) : wp_remote_get( sanitize_url( $flag['url'] ) );
 			}
 
 			if ( empty( $response ) || is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-				$errors->add( 'lmat_invalid_flag', __( 'The flag does not exist', 'easy-web-translator' ) );
+				$errors->add( 'ewt_invalid_flag', __( 'The flag does not exist', 'easy-wp-translator' ) );
 			}
 		}
 
@@ -961,7 +961,7 @@ class Languages {
 				 * @param string           $new_slug The new language slug.
 				 * @param WP_Term          $term     The term containing the post or term translation group.
 				 */
-				$tr = apply_filters( 'lmat_update_translation_group', $tr, $old_slug, $new_slug, $term );
+				$tr = apply_filters( 'ewt_update_translation_group', $tr, $old_slug, $new_slug, $term );
 
 				if ( ! empty( $tr[ $old_slug ] ) ) {
 					if ( $new_slug ) {
@@ -1029,9 +1029,9 @@ class Languages {
 	 *
 	 *  
 	 *
-	 * @param string            $slug       Language term slug (with or without the `lmat_` prefix).
+	 * @param string            $slug       Language term slug (with or without the `ewt_` prefix).
 	 * @param string            $name       Language name (label).
-	 * @param LMAT_Language|null $language   Optional. A language object. Required to update the existing terms.
+	 * @param EWT_Language|null $language   Optional. A language object. Required to update the existing terms.
 	 * @param string[]          $taxonomies Optional. List of language taxonomies to deal with. An empty value means
 	 *                                      all of them. Defaults to all taxonomies.
 	 * @return void
@@ -1040,8 +1040,8 @@ class Languages {
 	 * @phpstan-param non-empty-string $name
 	 * @phpstan-param array<non-empty-string> $taxonomies
 	 */
-	protected function update_secondary_language_terms( $slug, $name, ?LMAT_Language $language = null, array $taxonomies = array() ): void {
-		$slug = 0 === strpos( $slug, 'lmat_' ) ? $slug : "lmat_$slug";
+	protected function update_secondary_language_terms( $slug, $name, ?EWT_Language $language = null, array $taxonomies = array() ): void {
+		$slug = 0 === strpos( $slug, 'ewt_' ) ? $slug : "ewt_$slug";
 
 		foreach ( $this->translatable_objects->get_secondary_translatable_objects() as $object ) {
 			if ( ! empty( $taxonomies ) && ! in_array( $object->get_tax_language(), $taxonomies, true ) ) {
@@ -1061,8 +1061,8 @@ class Languages {
 				continue;
 			}
 
-			/** @var LMAT_Language $language */
-			if ( "lmat_{$language->slug}" !== $slug || $language->name !== $name ) {
+			/** @var EWT_Language $language */
+			if ( "ewt_{$language->slug}" !== $slug || $language->name !== $name ) {
 				// Something has changed.
 				wp_update_term( $term_id, $object->get_tax_language(), array( 'slug' => $slug, 'name' => $name ) );
 			}
@@ -1071,20 +1071,20 @@ class Languages {
 
 	/**
 	 * Returns the list of available languages, based on the language taxonomy terms.
-	 * Stores the list in a db transient and in a `LMAT_Cache` object.
+	 * Stores the list in a db transient and in a `EWT_Cache` object.
 	 *
 	 *  
 	 *
-	 * @return LMAT_Language[] An array of `LMAT_Language` objects, array keys are the type.
+	 * @return EWT_Language[] An array of `EWT_Language` objects, array keys are the type.
 	 *
-	 * @phpstan-return list<LMAT_Language>
+	 * @phpstan-return list<EWT_Language>
 	 */
 	protected function get_from_taxonomies(): array {
 		$terms_by_slug = array();
 
 		foreach ( $this->get_terms() as $term ) {
-			// Except for main language taxonomy term slugs, remove 'lmat_' prefix from the other language taxonomy term slugs.
-			$key = 'lmat_language' === $term->taxonomy ? $term->slug : substr( $term->slug, 5 );
+			// Except for main language taxonomy term slugs, remove 'ewt_' prefix from the other language taxonomy term slugs.
+			$key = 'ewt_language' === $term->taxonomy ? $term->slug : substr( $term->slug, 4 );
 			$terms_by_slug[ $key ][ $term->taxonomy ] = $term;
 		}
 
@@ -1092,14 +1092,14 @@ class Languages {
 		 * @var (
 		 *     array{
 		 *         string: array{
-		 *             lmat_language: WP_Term,
+		 *             ewt_language: WP_Term,
 		 *         }&array<non-empty-string, WP_Term>
 		 *     }
 		 * ) $terms_by_slug
 		 */
 		$languages = array_filter(
 			array_map(
-				array( new LMAT_Language_Factory( $this->options ), 'get_from_terms' ),
+				array( new EWT_Language_Factory( $this->options ), 'get_from_terms' ),
 				array_values( $terms_by_slug )
 			)
 		);
@@ -1108,7 +1108,7 @@ class Languages {
 
 		if ( ! $this->are_ready() ) {
 			// Do not cache an incomplete list.
-			/** @var list<LMAT_Language> $languages */
+			/** @var list<EWT_Language> $languages */
 			return $languages;
 		}
 
@@ -1124,14 +1124,14 @@ class Languages {
 
 		set_transient( self::TRANSIENT_NAME, $languages_data );
 
-		/** @var list<LMAT_Language> $languages */
+		/** @var list<EWT_Language> $languages */
 		return $languages;
 	}
 
 	/**
 	 * Returns the list of existing language terms.
 	 * - Returns all terms, that are or not assigned to posts.
-	 * - Terms are ordered by `term_group` and `term_id` (see `Linguator\Includes\Models\Languages::filter_terms_orderby()`).
+	 * - Terms are ordered by `term_group` and `term_id` (see `EasyWPTranslator\Includes\Models\Languages::filter_terms_orderby()`).
 	 *
 	 *  
 	 *
@@ -1157,7 +1157,7 @@ class Languages {
 	 *
 	 * This allows to order languages terms by `taxonomy` first then by `term_group` and `term_id`.
 	 * Ordering terms by taxonomy allows not to mix terms between all language taxomonomies.
-	 * Having the "lmat_language' taxonomy first is important for {@see LMAT_Admin_Model:delete_language()}.
+	 * Having the "ewt_language' taxonomy first is important for {@see EWT_Admin_Model:delete_language()}.
 	 *
 	 *  
 	 *
@@ -1181,6 +1181,6 @@ class Languages {
 			return $orderby;
 		}
 
-		return sprintf( "tt.taxonomy = 'lmat_language' DESC, %1\$s.term_group, %1\$s.term_id", $matches['alias'] );
+		return sprintf( "tt.taxonomy = 'ewt_language' DESC, %1\$s.term_group, %1\$s.term_id", $matches['alias'] );
 	}
 }

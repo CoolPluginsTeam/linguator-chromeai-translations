@@ -1,5 +1,5 @@
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 /**

@@ -7,7 +7,7 @@
 	margin: 0.35em 0 0.5em;
 }
 
-.lmat-legend {
+.ewt-legend {
 	display: block;
 	padding: 2px 0;
 	color: #1d2327;
@@ -30,9 +30,9 @@
 	width : 10%;
 }
 
-.lmat_subsubsub .lmat_subsubsub_list li a .icon-default-lang:before,
+.ewt_subsubsub .ewt_subsubsub_list li a .icon-default-lang:before,
 td.column-default_lang .icon-default-lang:before,
-.lmat-wizard-content .icon-default-lang:before {
+.ewt-wizard-content .icon-default-lang:before {
 	font-family: 'dashicons';
 	content: "\f155";
 }
@@ -42,17 +42,17 @@ td.column-default_lang .icon-default-lang:before,
 	text-align: left;
 	width: 15px;
 }
-.lmat-circle:before{
+.ewt-circle:before{
 	content: "\25cf";
 }
 
-/* about Linguator metabox */
-#lmat-about-box p,
-#lmat-recommended p {
+/* about EasyWPTranslator metabox */
+#ewt-about-box p,
+#ewt-recommended p {
 	text-align: justify;
 }
 
-#lmat-about-box input {
+#ewt-about-box input {
 	margin: 0;
 	padding: 0;
 	float: right;
@@ -93,84 +93,84 @@ td.column-default_lang .icon-default-lang:before,
 }
 
 /* settings */
-.lmat-settings {
+.ewt-settings {
 	margin-top: 20px;
 }
 
-.lmat-settings .plugin-title {
+.ewt-settings .plugin-title {
 	width: 25%;
 }
 
-#wpbody-content .lmat-settings .lmat-configure tr {
+#wpbody-content .ewt-settings .ewt-configure tr {
 	display: table-row;
 }
 
-#wpbody-content .lmat-settings .lmat-configure td {
+#wpbody-content .ewt-settings .ewt-configure td {
 	display: table-cell;
 }
 
-#wpbody-content .lmat-settings .lmat-configure > td {
+#wpbody-content .ewt-settings .ewt-configure > td {
 	padding: 20px 20px 20px 40px;
 }
 
-.lmat-configure legend {
+.ewt-configure legend {
 	font-size: 14px;
 	font-weight: 600;
 	margin-bottom: 0.5em;
 }
 
-.lmat-configure td .description {
+.ewt-configure td .description {
 	margin-top: 2px;
 	margin-bottom: 0.5em;
 }
 
-.lmat-configure p.submit {
+.ewt-configure p.submit {
 	margin-top: 20px;
 }
 
-.lmat-configure .button {
+.ewt-configure .button {
 	margin-right: 20px;
 }
 
-.lmat-configure fieldset {
+.ewt-configure fieldset {
 	margin-bottom: 1.5em;
 }
 
-.lmat-inline-block-list {
+.ewt-inline-block-list {
 	margin: 0;
 }
 
-.lmat-inline-block-list li {
+.ewt-inline-block-list li {
 	display: inline-block;
 	margin: 0;
 	width: 250px;
 }
 
 /* settings URL modifications */
-#lmat-domains-table td {
+#ewt-domains-table td {
 	padding: 2px 2px 2px 1.5em;
 	-webkit-box-shadow: none;
 	box-shadow: none;
 	border: none;
 }
 
-.lmat-settings-url-col {
+.ewt-settings-url-col {
 	display: inline-block;
 	width: 49%;
 	vertical-align: top;
 }
 
 /* settings Activation keys */
-.lmat-table-top td {
+.ewt-table-top td {
 	vertical-align: top;
 }
 
-#lmat-licenses-table label {
+#ewt-licenses-table label {
 	font-size: 1em;
 	font-weight: 600;
 }
 
-.lmat-configure .lmat-deactivate-license {
+.ewt-configure .ewt-deactivate-license {
 	margin: 0 0 0 20px;
 }
 
@@ -182,18 +182,18 @@ td.column-default_lang .icon-default-lang:before,
 }
 
 /* Text direction in post.php and edit-tags.php */
-.lmat-dir-rtl textarea,
-.lmat-dir-rtl input[type="text"] {
+.ewt-dir-rtl textarea,
+.ewt-dir-rtl input[type="text"] {
 	direction: rtl;
 }
 
-.lmat-dir-ltr textarea,
-.lmat-dir-ltr input[type="text"] {
+.ewt-dir-ltr textarea,
+.ewt-dir-ltr input[type="text"] {
 	direction: ltr;
 }
 
-.lmat-dir-ltr .tr_lang,
-.lmat-dir-rtl .tr_lang {
+.ewt-dir-ltr .tr_lang,
+.ewt-dir-rtl .tr_lang {
 	direction: inherit;
 }
 
@@ -221,8 +221,8 @@ td.column-default_lang .icon-default-lang:before,
 	text-decoration: none;
 }
 
-#post-translations .lmat-language-column,
-#post-translations .lmat-column-icon {
+#post-translations .ewt-language-column,
+#post-translations .ewt-column-icon {
 	width: 20px;
 }
 
@@ -242,38 +242,38 @@ td.column-default_lang .icon-default-lang:before,
 	width: auto;
 }
 
-#select-post-language .lmat-select-flag {
+#select-post-language .ewt-select-flag {
 	padding: 4px;
 	margin-right: 10px;
 }
 
-.rtl #select-post-language .lmat-select-flag {
+.rtl #select-post-language .ewt-select-flag {
     padding: 4px;
     margin-right: 0px;
     margin-left: 10px;
 }
 
 /* specific cases for media */
-#select-media-language .lmat-select-flag {
+#select-media-language .ewt-select-flag {
 	padding: 4px;
 	margin-right: 10px;
 }
 
-.lmat-media-edit-column {
+.ewt-media-edit-column {
 	float: right;
 }
 
 /* language and translations in edit-tags.php */
-.lmat-translation-flag { /* also for media */
+.ewt-translation-flag { /* also for media */
 	margin-right: 14px;
 }
 
-#select-add-term-language .lmat-select-flag {
+#select-add-term-language .ewt-select-flag {
 	padding: 11px;
 	margin-right: 13px;
 }
 
-#select-edit-term-language .lmat-select-flag {
+#select-edit-term-language .ewt-select-flag {
 	padding: 11px;
 	margin-right: 4px;
 }
@@ -291,31 +291,31 @@ td.column-default_lang .icon-default-lang:before,
 	width: 95%;
 }
 
-#term-translations .lmat-language-column {
+#term-translations .ewt-language-column {
 	line-height: 28px;
 	width: 20%;
 }
 
-#term-translations .lmat-edit-column,
-#add-term-translations .lmat-language-column {
+#term-translations .ewt-edit-column,
+#add-term-translations .ewt-language-column {
 	width: 20px;
 }
 
-#edit-term-translations .lmat-language-column {
+#edit-term-translations .ewt-language-column {
 	padding: 15px 10px;
 	font-weight: normal;
 }
 
 /* icon fonts */
-.lmat_icon_add:before {
+.ewt_icon_add:before {
 	content: "\f132";
 }
 
-.lmat_icon_edit:before {
+.ewt_icon_edit:before {
 	content: "\f464";
 }
 
-[class^="lmat_icon_"] {
+[class^="ewt_icon_"] {
 	font: 20px/1 'dashicons';
 	vertical-align: middle;
 }
@@ -335,16 +335,16 @@ td.column-default_lang .icon-default-lang:before,
 	top: 1px;
 }
 
-#wp-admin-bar-languages.lmat-filtered-languages {
+#wp-admin-bar-languages.ewt-filtered-languages {
 	background: #a03f3f;
 }
 
-#wpadminbar #wp-admin-bar-languages.lmat-filtered-languages span.ab-label{ /* Enforce white color for WordPress admin light theme. */
+#wpadminbar #wp-admin-bar-languages.ewt-filtered-languages span.ab-label{ /* Enforce white color for WordPress admin light theme. */
 		color: #fff;
 }
 
 /* Notices */
-.lmat-notice.notice {
+.ewt-notice.notice {
     width: auto;
 	max-width: 100%;
     clear: both;
@@ -352,40 +352,40 @@ td.column-default_lang .icon-default-lang:before,
     box-sizing: border-box;
 }
 
-.lmat-notice a.notice-dismiss {
+.ewt-notice a.notice-dismiss {
 	text-decoration: none;
 }
 
-.lmat-notice .button {
+.ewt-notice .button {
 	margin-right: 10px;
 }
 
 @media screen and ( max-width: 782px ) {
 	/* settings */
-	#wpbody-content .lmat-settings .lmat-configure > td {
+	#wpbody-content .ewt-settings .ewt-configure > td {
 		padding: 20px;
 	}
 
-	#wpbody-content .lmat-settings #cb {
+	#wpbody-content .ewt-settings #cb {
 		padding: 20px 9px;
 	}
 
 	/* settings URL modifications */
-	.lmat-inline-block {
+	.ewt-inline-block {
 		width: auto;
 	}
 
-	.lmat-settings-url-col {
+	.ewt-settings-url-col {
 		display: block;
 		width: 100%;
 	}
 
 	/* settings licenses */
-	#wpbody-content .lmat-settings #lmat-licenses-table td {
+	#wpbody-content .ewt-settings #ewt-licenses-table td {
 		display: block;
 	}
 
-	.lmat-configure .lmat-deactivate-license {
+	.ewt-configure .ewt-deactivate-license {
 		margin: 10px 0 5px;
 	}
 
@@ -402,9 +402,9 @@ td.column-default_lang .icon-default-lang:before,
 	}
 
 	/* hide selected language flag and translations language name */
-	#select-add-term-language .lmat-select-flag,
-	#select-edit-term-language .lmat-select-flag,
-	#edit-term-translations .lmat-language-name {
+	#select-add-term-language .ewt-select-flag,
+	#select-edit-term-language .ewt-select-flag,
+	#edit-term-translations .ewt-language-name {
 		display: none;
 	}
 
@@ -412,7 +412,7 @@ td.column-default_lang .icon-default-lang:before,
 		width: 100%;
 	}
 
-	#add-term-translations .lmat-language-column {
+	#add-term-translations .ewt-language-column {
 		line-height: 38px;
 	}
 
@@ -420,15 +420,15 @@ td.column-default_lang .icon-default-lang:before,
 		padding: 8px 10px;
 	}
 
-	#edit-term-translations .lmat-language-column,
-	#edit-term-translations .lmat-edit-column {
+	#edit-term-translations .ewt-language-column,
+	#edit-term-translations .ewt-edit-column {
 		width: 20px;
 	}
 
 	/* translations tables should be kept as table */
-	.term-translations .lmat-language-column,
-	.term-translations .lmat-edit-column,
-	.term-translations .lmat-translation-column {
+	.term-translations .ewt-language-column,
+	.term-translations .ewt-edit-column,
+	.term-translations .ewt-translation-column {
 		display: table-cell;
 	}
 

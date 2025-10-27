@@ -18,16 +18,16 @@ import MetaFieldsFetch from './fetch-post/meta-fields/index.js';
 
 import './index.scss';
 
-const editorType = window.lmatPageTranslationGlobal.editor_type;
+const editorType = window.ewtPageTranslationGlobal.editor_type;
 
 const init = () => {
-  let lmatModals = new Array();
-  const lmatSettingModalWrp = '<!-- The Modal --><div id="lmat-page-translation-setting-modal"></div>';
-  const lmatStringModalWrp = '<div id="lmat_page_translation_strings_model" class="modal lmat_page_translation_custom_model"></div>';
+  let ewtModals = new Array();
+  const ewtSettingModalWrp = '<!-- The Modal --><div id="ewt-page-translation-setting-modal"></div>';
+  const ewtStringModalWrp = '<div id="ewt_page_translation_strings_model" class="modal ewt_page_translation_custom_model"></div>';
 
-  lmatModals.push(lmatSettingModalWrp, lmatStringModalWrp);
+  ewtModals.push(ewtSettingModalWrp, ewtStringModalWrp);
 
-  lmatModals.forEach(modal => {
+  ewtModals.forEach(modal => {
     document.body.insertAdjacentHTML('beforeend', modal);
   });
 }
@@ -36,38 +36,38 @@ const StringModalBodyNotice = () => {
 
   const notices = [];
 
-  const postMetaSync = lmatPageTranslationGlobal.postMetaSync === 'true';
+  const postMetaSync = ewtPageTranslationGlobal.postMetaSync === 'true';
 
   if (postMetaSync) {
     notices.push({
-      className: 'lmat-page-translation-notice lmat-page-translation-notice-error', message: <p>
-        {__('For accurate custom field translations, please disable the Custom Fields synchronization in ', 'easy-web-translator')}
+      className: 'ewt-page-translation-notice ewt-page-translation-notice-error', message: <p>
+        {__('For accurate custom field translations, please disable the Custom Fields synchronization in ', 'easy-wp-translator')}
         <a
-          href={`${lmatPageTranslationGlobal.admin_url}admin.php?page=lmat_settings`}
+          href={`${ewtPageTranslationGlobal.admin_url}admin.php?page=ewt_settings`}
           target="_blank"
           rel="noopener noreferrer"
         >
-          {__('Linguator settings', 'easy-web-translator')}
+          {__('EasyWPTranslator settings', 'easy-wp-translator')}
         </a>
-        {__('. This may affect linked posts or pages.', 'easy-web-translator')}
+        {__('. This may affect linked posts or pages.', 'easy-wp-translator')}
       </p>
     });
   }
 
   if (editorType === 'gutenberg') {
 
-    const blockRules = select('block-lmatPageTranslation/translate').getBlockRules();
+    const blockRules = select('block-ewtPageTranslation/translate').getBlockRules();
 
-    if (!blockRules.LmatBlockParseRules || Object.keys(blockRules.LmatBlockParseRules).length === 0) {
-      notices.push({ className: 'lmat-page-translation-notice lmat-page-translation-notice-error', message: <p>{__('No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.', 'easy-web-translator')}</p> });
+    if (!blockRules.EWTBlockParseRules || Object.keys(blockRules.EWTBlockParseRules).length === 0) {
+      notices.push({ className: 'ewt-page-translation-notice ewt-page-translation-notice-error', message: <p>{__('No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.', 'easy-wp-translator')}</p> });
     }
   }
 
   if (editorType === 'classic') {
-    const blockCommentTag = lmatPageTranslationGlobal.blockCommentTag === 'true';
+    const blockCommentTag = ewtPageTranslationGlobal.blockCommentTag === 'true';
 
     if (blockCommentTag) {
-      notices.push({ className: 'lmat-page-translation-notice lmat-page-translation-notice-error', message: <p>{__('This page may contain Gutenberg block content. After the translation, please review the updated content before finalizing the page update.', 'easy-web-translator')}</p> });
+      notices.push({ className: 'ewt-page-translation-notice ewt-page-translation-notice-error', message: <p>{__('This page may contain Gutenberg block content. After the translation, please review the updated content before finalizing the page update.', 'easy-wp-translator')}</p> });
     }
   }
 
@@ -83,24 +83,24 @@ const StringModalBodyNotice = () => {
 
 const App = () => {
   const [pageTranslate, setPageTranslate] = useState(false);
-  const targetLang = window.lmatPageTranslationGlobal.target_lang;
-  const postId = window.lmatPageTranslationGlobal.parent_post_id;
-  const currentPostId = window.lmatPageTranslationGlobal.current_post_id;
-  const postType = window.lmatPageTranslationGlobal.post_type;
+  const targetLang = window.ewtPageTranslationGlobal.target_lang;
+  const postId = window.ewtPageTranslationGlobal.parent_post_id;
+  const currentPostId = window.ewtPageTranslationGlobal.current_post_id;
+  const postType = window.ewtPageTranslationGlobal.post_type;
   let translatePost, fetchPost, translateWrpSelector;
-  const sourceLang = window.lmatPageTranslationGlobal.source_lang;
+  const sourceLang = window.ewtPageTranslationGlobal.source_lang;
 
   // Elementor post fetch and update page
   if (editorType === 'elementor') {
-    translateWrpSelector = 'button.lmat-page-translation-button[name="lmat_page_translation_meta_box_translate"]';
+    translateWrpSelector = 'button.ewt-page-translation-button[name="ewt_page_translation_meta_box_translate"]';
     translatePost = ElementorUpdatePage;
     fetchPost = ElementorPostFetch;
   } else if (editorType === 'gutenberg') {
-    translateWrpSelector = 'input#lmat-page-translation-button[name="lmat_page_translation_meta_box_translate"]';
+    translateWrpSelector = 'input#ewt-page-translation-button[name="ewt_page_translation_meta_box_translate"]';
     translatePost = UpdateGutenbergPage;
     fetchPost = GutenbergPostFetch;
   } else if (editorType === 'classic') {
-    translateWrpSelector = 'button#lmat-page-translation-button[name="lmat_page_translation_meta_box_translate"]';
+    translateWrpSelector = 'button#ewt-page-translation-button[name="ewt_page_translation_meta_box_translate"]';
     translatePost = UpdateClassicPage;
     fetchPost = ClassicPostFetch;
   }
@@ -113,7 +113,7 @@ const App = () => {
     await MetaFieldsFetch(data);
     await fetchPost(data);
 
-    const allEntries = wp.data.select('block-lmatPageTranslation/translate').getTranslationEntry();
+    const allEntries = wp.data.select('block-ewtPageTranslation/translate').getTranslationEntry();
 
     let totalStringCount = 0;
     let totalCharacterCount = 0;
@@ -130,7 +130,7 @@ const App = () => {
       totalWordCount += wordCount;
     });
 
-    wp.data.dispatch('block-lmatPageTranslation/translate').translationInfo({ sourceStringCount: totalStringCount, sourceWordCount: totalWordCount, sourceCharacterCount: totalCharacterCount });
+    wp.data.dispatch('block-ewtPageTranslation/translate').translationInfo({ sourceStringCount: totalStringCount, sourceWordCount: totalWordCount, sourceCharacterCount: totalCharacterCount });
   }
 
   const updatePostDataFetch = (status) => {
@@ -147,7 +147,7 @@ const App = () => {
       const metaFieldBtn = document.querySelector(translateWrpSelector);
       if (metaFieldBtn) {
         metaFieldBtn.disabled = true;
-        metaFieldBtn.value = __("Already Translated", 'easy-web-translator');
+        metaFieldBtn.value = __("Already Translated", 'easy-wp-translator');
       }
     }
   }, [pageTranslate]);
@@ -155,7 +155,7 @@ const App = () => {
   if (!sourceLang || '' === sourceLang) {
     const metaFieldBtn = document.querySelector(translateWrpSelector);
     if (metaFieldBtn) {
-      metaFieldBtn.title = `Parent ${window.lmatPageTranslationGlobal.post_type} may be deleted.`;
+      metaFieldBtn.title = `Parent ${window.ewtPageTranslationGlobal.post_type} may be deleted.`;
       metaFieldBtn.disabled = true;
     }
     return;
@@ -173,19 +173,19 @@ const App = () => {
  * @returns {HTMLElement} The created message popup element.
  */
 const createMessagePopup = () => {
-  const postType = window.lmatPageTranslationGlobal.post_type;
-  const targetLang = window.lmatPageTranslationGlobal.target_lang;
-  const targetLangName = lmatPageTranslationGlobal.languageObject[targetLang]['name'];
+  const postType = window.ewtPageTranslationGlobal.post_type;
+  const targetLang = window.ewtPageTranslationGlobal.target_lang;
+  const targetLangName = ewtPageTranslationGlobal.languageObject[targetLang]['name'];
 
   const messagePopup = document.createElement('div');
-  messagePopup.id = 'lmat-page-translation-modal-open-warning-wrapper';
+  messagePopup.id = 'ewt-page-translation-modal-open-warning-wrapper';
   messagePopup.innerHTML = `
     <div class="modal-container" style="display: flex">
       <div class="modal-content">
-        <p>${sprintf(__("Would you like to duplicate your original %s content and have it automatically translated into %s?", 'easy-web-translator'), postType, targetLangName)}</p>
+        <p>${sprintf(__("Would you like to duplicate your original %s content and have it automatically translated into %s?", 'easy-wp-translator'), postType, targetLangName)}</p>
         <div>
-          <div data-value="yes">${__("Yes", 'easy-web-translator')}</div>
-          <div data-value="no">${__("No", 'easy-web-translator')}</div>
+          <div data-value="yes">${__("Yes", 'easy-wp-translator')}</div>
+          <div data-value="no">${__("No", 'easy-wp-translator')}</div>
         </div>
       </div>
     </div>`;
@@ -196,7 +196,7 @@ const createMessagePopup = () => {
  * Inserts the message popup into the DOM.
  */
 const insertMessagePopup = () => {
-  const targetElement = document.getElementById('lmat-page-translation-setting-modal');
+  const targetElement = document.getElementById('ewt-page-translation-setting-modal');
   const messagePopup = createMessagePopup();
   document.body.insertBefore(messagePopup, targetElement);
 };
@@ -206,14 +206,14 @@ const insertMessagePopup = () => {
  */
 const appendElementorTranslateBtn = () => {
   const translateButtonGroup = jQuery('.MuiButtonGroup-root.MuiButtonGroup-contained').parent();
-  const buttonElement = jQuery(translateButtonGroup).find('.elementor-button.lmat-page-translation-button');
+  const buttonElement = jQuery(translateButtonGroup).find('.elementor-button.ewt-page-translation-button');
   if (translateButtonGroup.length > 0 && buttonElement.length === 0) {
-    const buttonHtml = '<button class="elementor-button lmat-page-translation-button" name="lmat_page_translation_meta_box_translate">Translate</button>';
+    const buttonHtml = '<button class="elementor-button ewt-page-translation-button" name="ewt_page_translation_meta_box_translate">Translate</button>';
     const buttonElement = jQuery(buttonHtml);
     let confirmBox=false;
-    const postId=window.lmatPageTranslationGlobal.current_post_id;
-    const targetLang=window.lmatPageTranslationGlobal.target_lang;
-    const oldData=localStorage.getItem('lmatElementorConfirmBox');
+    const postId=window.ewtPageTranslationGlobal.current_post_id;
+    const targetLang=window.ewtPageTranslationGlobal.target_lang;
+    const oldData=localStorage.getItem('ewtElementorConfirmBox');
     if(oldData && 'string' === typeof oldData && '' !== oldData) {
       confirmBox=JSON.parse(oldData);
     }
@@ -221,15 +221,15 @@ const appendElementorTranslateBtn = () => {
     translateButtonGroup.prepend(buttonElement);
     $e.internal('document/save/set-is-modified', { status: true });
 
-    if (!window.lmatPageTranslationGlobal.elementorData || '' === window.lmatPageTranslationGlobal.elementorData || window.lmatPageTranslationGlobal.elementorData.length < 1 || elementor.elements.length < 1) {
+    if (!window.ewtPageTranslationGlobal.elementorData || '' === window.ewtPageTranslationGlobal.elementorData || window.ewtPageTranslationGlobal.elementorData.length < 1 || elementor.elements.length < 1) {
 
       if(confirmBox && confirmBox[postId+'_'+targetLang]) {
         delete confirmBox[postId+'_'+targetLang];
         if(Object.keys(confirmBox).length === 0) {
-          localStorage.removeItem('lmatElementorConfirmBox');
+          localStorage.removeItem('ewtElementorConfirmBox');
         }
         else {
-          localStorage.setItem('lmatElementorConfirmBox', JSON.stringify(confirmBox));
+          localStorage.setItem('ewtElementorConfirmBox', JSON.stringify(confirmBox));
         }
       }
 
@@ -240,7 +240,7 @@ const appendElementorTranslateBtn = () => {
     // Append app root wrapper in body
     init();
 
-    const root = ReactDOM.createRoot(document.getElementById('lmat-page-translation-setting-modal'));
+    const root = ReactDOM.createRoot(document.getElementById('ewt-page-translation-setting-modal'));
     root.render(<App />);
 
     if(confirmBox && confirmBox[postId+'_'+targetLang]) {
@@ -250,10 +250,10 @@ const appendElementorTranslateBtn = () => {
         delete confirmBox[postId+'_'+targetLang];
 
         if(Object.keys(confirmBox).length === 0) {
-          localStorage.removeItem('lmatElementorConfirmBox');
+          localStorage.removeItem('ewtElementorConfirmBox');
         }
         else {
-          localStorage.setItem('lmatElementorConfirmBox', JSON.stringify(confirmBox));
+          localStorage.setItem('ewtElementorConfirmBox', JSON.stringify(confirmBox));
         }
       }, 100);
     }
@@ -268,15 +268,15 @@ if (editorType === 'gutenberg') {
     // Append app root wrapper in body
     init();
 
-    const sourceLang = window.lmatPageTranslationGlobal.source_lang
+    const sourceLang = window.ewtPageTranslationGlobal.source_lang
 
-    const providers = window.lmatPageTranslationGlobal.providers;
+    const providers = window.ewtPageTranslationGlobal.providers;
 
     if (sourceLang && '' !== sourceLang && providers.length > 0) {
       insertMessagePopup();
     }
 
-    const root = ReactDOM.createRoot(document.getElementById('lmat-page-translation-setting-modal'));
+    const root = ReactDOM.createRoot(document.getElementById('ewt-page-translation-setting-modal'));
     root.render(<App />);
   });
 }
@@ -289,15 +289,15 @@ if (editorType === 'classic') {
     // Append app root wrapper in body
     init();
 
-    const sourceLang = window.lmatPageTranslationGlobal.source_lang
+    const sourceLang = window.ewtPageTranslationGlobal.source_lang
 
-    const providers = window.lmatPageTranslationGlobal.providers;
+    const providers = window.ewtPageTranslationGlobal.providers;
 
     if (sourceLang && '' !== sourceLang && providers.length > 0) {
       insertMessagePopup();
     }
 
-    const root = ReactDOM.createRoot(document.getElementById('lmat-page-translation-setting-modal'));
+    const root = ReactDOM.createRoot(document.getElementById('ewt-page-translation-setting-modal'));
     root.render(<App />);
   });
 }

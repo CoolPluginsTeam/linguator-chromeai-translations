@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Includes\Other;
+namespace EasyWPTranslator\Includes\Other;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -18,9 +18,9 @@ use WP_Tax_Query;
  *
  *  
  */
-class LMAT_Query {
+class EWT_Query {
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
@@ -35,7 +35,7 @@ class LMAT_Query {
 	 *  
 	 *
 	 * @param WP_Query  $query Reference to the WP_Query object.
-	 * @param LMAT_Model $model Instance of LMAT_Model.
+	 * @param EWT_Model $model Instance of EWT_Model.
 	 */
 	public function __construct( &$query, &$model ) {
 		$this->query = &$query;
@@ -51,13 +51,13 @@ class LMAT_Query {
 	 * @return bool
 	 */
 	protected function is_already_filtered( $qvars ) {
-		if ( isset( $qvars['lmat_lang'] ) ) {
+		if ( isset( $qvars['ewt_lang'] ) ) {
 			return true;
 		}
 
 		if ( ! empty( $qvars['tax_query'] ) && is_array( $qvars['tax_query'] ) ) {
 			foreach ( $qvars['tax_query'] as $tax_query ) {
-				if ( isset( $tax_query['taxonomy'] ) && 'lmat_language' === $tax_query['taxonomy'] ) {
+				if ( isset( $tax_query['taxonomy'] ) && 'ewt_language' === $tax_query['taxonomy'] ) {
 					return true;
 				}
 			}
@@ -109,7 +109,7 @@ class LMAT_Query {
 	 *  
 	 *   Accepts now an array of languages.
 	 *
-	 * @param LMAT_Language|LMAT_Language[] $languages Language object(s).
+	 * @param EWT_Language|EWT_Language[] $languages Language object(s).
 	 * @return void
 	 */
 	public function set_language( $languages ) {
@@ -119,12 +119,12 @@ class LMAT_Query {
 
 		$tt_ids = array();
 		foreach ( $languages as $language ) {
-			$tt_ids[] = $language->get_tax_prop( 'lmat_language', 'term_taxonomy_id' );
+			$tt_ids[] = $language->get_tax_prop( 'ewt_language', 'term_taxonomy_id' );
 		}
 		
-		// Defining directly the tax_query (rather than setting 'lmat_lang' avoids transforming the query by WP).
+		// Defining directly the tax_query (rather than setting 'ewt_lang' avoids transforming the query by WP).
 		$lang_query = array(
-			'taxonomy' => 'lmat_language',
+			'taxonomy' => 'ewt_language',
 			'field'    => 'term_taxonomy_id', // Since WP 3.5
 			'terms'    => $tt_ids,
 			'operator' => 'IN',
@@ -152,7 +152,7 @@ class LMAT_Query {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language|false $lang Language.
+	 * @param EWT_Language|false $lang Language.
 	 * @return void
 	 */
 	public function filter_query( $lang ) {
@@ -193,12 +193,12 @@ class LMAT_Query {
 
 			// Do not filter untranslatable post types such as nav_menu_item
 			if ( isset( $qvars['post_type'] ) && ! $this->model->is_translated_post_type( $qvars['post_type'] ) && ( empty( $qvars['tax_query'] ) || ! $this->have_translated_taxonomy( $qvars['tax_query'] ) ) ) {
-				unset( $qvars['lmat_lang'] );
+				unset( $qvars['ewt_lang'] );
 			}
 
 			// Unset 'all' query var (mainly for admin language filter).
-			if ( isset( $qvars['lmat_lang'] ) && 'all' === $qvars['lmat_lang'] ) {
-				unset( $qvars['lmat_lang'] );
+			if ( isset( $qvars['ewt_lang'] ) && 'all' === $qvars['ewt_lang'] ) {
+				unset( $qvars['ewt_lang'] );
 			}
 		}
 	}
@@ -220,11 +220,11 @@ class LMAT_Query {
 			return;
 		}
 		
-		if ( ! isset( $this->query->tax_query->queried_terms['lmat_language'] ) ) {
+		if ( ! isset( $this->query->tax_query->queried_terms['ewt_language'] ) ) {
 			return;
 		}
 		
-		$langs = $this->query->tax_query->queried_terms['lmat_language']['terms'];
+		$langs = $this->query->tax_query->queried_terms['ewt_language']['terms'];
 		if ( is_string( $langs ) ) {
 			$langs = explode( ',', $langs );
 		}
@@ -233,7 +233,7 @@ class LMAT_Query {
 
 		if ( ! empty( $langs ) ) {
 			$this->set_language( $langs );
-			unset( $this->query->query_vars['lmat_lang'] ); // Unset the language query var otherwise WordPress would add the language query by slug in WP_Query::parse_tax_query().
+			unset( $this->query->query_vars['ewt_lang'] ); // Unset the language query var otherwise WordPress would add the language query by slug in WP_Query::parse_tax_query().
 		}
 	}
 }

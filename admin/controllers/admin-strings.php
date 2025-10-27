@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -19,7 +19,7 @@ use WP_Widget_Custom_HTML;
  *
  *  
  */
-class LMAT_Admin_Strings {
+class EWT_Admin_Strings {
 	/**
 	 * Stores the strings to translate.
 	 *
@@ -48,7 +48,7 @@ class LMAT_Admin_Strings {
 	 */
 	public static function init() {
 		// default strings translations sanitization
-		add_filter( 'lmat_sanitize_string_translation', array( self::class, 'sanitize_string_translation' ), 10, 2 );
+		add_filter( 'ewt_sanitize_string_translation', array( self::class, 'sanitize_string_translation' ), 10, 2 );
 	}
 
 	/**
@@ -58,11 +58,11 @@ class LMAT_Admin_Strings {
 	 *
 	 * @param string $name      A unique name for the string
 	 * @param string $string    The string to register
-	 * @param string $context   Optional, the group in which the string is registered, defaults to 'easy-web-translator'
+	 * @param string $context   Optional, the group in which the string is registered, defaults to 'easy-wp-translator'
 	 * @param bool   $multiline Optional, whether the string table should display a multiline textarea or a single line input, defaults to single line
 	 * @return void
 	 */
-	public static function register_string( $name, $string, $context = 'Linguator', $multiline = false ) {
+	public static function register_string( $name, $string, $context = 'EasyWPTranslator', $multiline = false ) {
 		if ( $string && is_scalar( $string ) ) {
 			self::$strings[ md5( $string ) ] = compact( 'name', 'string', 'context', 'multiline' );
 		}
@@ -77,8 +77,8 @@ class LMAT_Admin_Strings {
 	 */
 	public static function &get_strings() {
 		self::$default_strings = array(
-			'widget_title' => __( 'Widget title', 'easy-web-translator' ),
-			'widget_text'  => __( 'Widget text', 'easy-web-translator' ),
+			'widget_title' => __( 'Widget title', 'easy-wp-translator' ),
+			'widget_text'  => __( 'Widget text', 'easy-wp-translator' ),
 		);
 
 		global $wp_registered_widgets;
@@ -99,7 +99,7 @@ class LMAT_Admin_Strings {
 				$number          = $wp_registered_widgets[ $widget ]['params'][0]['number'];
 
 				// Don't enable widget translation if the widget is visible in only one language or if there is no title.
-				if ( ! empty( $widget_settings[ $number ]['lmat_lang'] ) ) {
+				if ( ! empty( $widget_settings[ $number ]['ewt_lang'] ) ) {
 					continue;
 				}
 
@@ -122,13 +122,13 @@ class LMAT_Admin_Strings {
 
 		/**
 		 * Filter the list of strings registered for translation
-		 * Mainly for use by our LMAT_WPML_Compat class
+		 * Mainly for use by our EWT_WPML_Compat class
 		 *
 		 *  
 		 *
 		 * @param array $strings list of strings
 		 */
-		self::$strings = apply_filters( 'lmat_get_strings', self::$strings );
+		self::$strings = apply_filters( 'ewt_get_strings', self::$strings );
 		return self::$strings;
 	}
 

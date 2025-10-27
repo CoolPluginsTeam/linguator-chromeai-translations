@@ -1,6 +1,6 @@
 <?php
-namespace Linguator\Supported_Blocks;
-use Linguator\Modules\Page_Translation\LMAT_Page_Translation_Helper;
+namespace EasyWPTranslator\Supported_Blocks;
+use EasyWPTranslator\Modules\Page_Translation\EWT_Page_Translation_Helper;
 
 /**
  * Do not access the page directly
@@ -13,11 +13,11 @@ if ( ! class_exists( 'Custom_Block_Post' ) ) {
 	/**
 	 * Class Custom_Block_Post
 	 *
-	 * This class handles the custom block post type for the Linguator - AI Translation For Polylang plugin.
+	 * This class handles the custom block post type for the EasyWPTranslator - AI Translation For Polylang plugin.
 	 * It manages the registration of the custom post type, adds submenu pages under the Polylang menu,
 	 * and handles post save actions.
 	 *
-	 * @package LMAT
+	 * @package EWT
 	 */
 	class Custom_Block_Post {
 		/**
@@ -45,8 +45,8 @@ if ( ! class_exists( 'Custom_Block_Post' ) ) {
 			add_action( 'init', array( $this, 'register_custom_post_type' ) );
 			add_action( 'save_post', array( $this, 'on_save_post' ), 10, 3 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			add_action( 'wp_ajax_lmat_get_custom_blocks_content', array( $this, 'get_custom_blocks_content' ) );
-			add_action( 'wp_ajax_lmat_update_custom_blocks_content', array( $this, 'update_custom_blocks_content' ) );
+			add_action( 'wp_ajax_ewt_get_custom_blocks_content', array( $this, 'get_custom_blocks_content' ) );
+			add_action( 'wp_ajax_ewt_update_custom_blocks_content', array( $this, 'update_custom_blocks_content' ) );
 		}
 
 		/**
@@ -54,26 +54,26 @@ if ( ! class_exists( 'Custom_Block_Post' ) ) {
 		 */
 		public function enqueue_scripts( $hook ) {
 			$current_screen = get_current_screen();
-			if ( 'lmat_add_blocks' === $current_screen->post_type && is_object( $current_screen ) && 'post.php' === $hook && $current_screen->is_block_editor ) {
-				wp_enqueue_script( 'lmat-add-new-block', plugins_url('admin/assets/js/lmat-add-new-custom-block.min.js', LINGUATOR_ROOT_FILE), array( 'jquery','wp-data', 'wp-element' ), LINGUATOR_VERSION, true );
-				wp_enqueue_style( 'lmat-supported-blocks', plugins_url('admin/assets/css/lmat-custom-data-table.min.css', LINGUATOR_ROOT_FILE), array(), LINGUATOR_VERSION, 'all' );
+			if ( 'ewt_add_blocks' === $current_screen->post_type && is_object( $current_screen ) && 'post.php' === $hook && $current_screen->is_block_editor ) {
+				wp_enqueue_script( 'ewt-add-new-block', plugins_url('admin/assets/js/ewt-add-new-custom-block.min.js', EASY_WP_TRANSLATOR_ROOT_FILE), array( 'jquery','wp-data', 'wp-element' ), EASY_WP_TRANSLATOR_VERSION, true );
+				wp_enqueue_style( 'ewt-supported-blocks', plugins_url('admin/assets/css/ewt-custom-data-table.min.css', EASY_WP_TRANSLATOR_ROOT_FILE), array(), EASY_WP_TRANSLATOR_VERSION, 'all' );
 
-				wp_localize_script( 'lmat-add-new-block', 'lmatAddBlockVars', array(
-					'lmat_demo_page_url' => esc_url('https://coolplugins.net/product/automatic-translations-for-polylang/'),
+				wp_localize_script( 'ewt-add-new-block', 'ewtAddBlockVars', array(
+					'ewt_demo_page_url' => esc_url('https://coolplugins.net/product/automatic-translations-for-polylang/'),
 				) );
 
-				wp_enqueue_style('lmat-update-custom-blocks', plugins_url('admin/assets/css/lmat-update-custom-blocks.min.css', LINGUATOR_ROOT_FILE), array(), LINGUATOR_VERSION);
-				wp_enqueue_script('lmat-update-custom-blocks', plugins_url('admin/assets/js/lmat-update-custom-blocks.min.js', LINGUATOR_ROOT_FILE), array('jquery'), LINGUATOR_VERSION, true);
+				wp_enqueue_style('ewt-update-custom-blocks', plugins_url('admin/assets/css/ewt-update-custom-blocks.min.css', EASY_WP_TRANSLATOR_ROOT_FILE), array(), EASY_WP_TRANSLATOR_VERSION);
+				wp_enqueue_script('ewt-update-custom-blocks', plugins_url('admin/assets/js/ewt-update-custom-blocks.min.js', EASY_WP_TRANSLATOR_ROOT_FILE), array('jquery'), EASY_WP_TRANSLATOR_VERSION, true);
 			
 				wp_localize_script(
-					'lmat-update-custom-blocks',
-					'lmat_block_update_object',
+					'ewt-update-custom-blocks',
+					'ewt_block_update_object',
 					array(
 						'ajax_url'       => admin_url('admin-ajax.php'),
-						'ajax_nonce'     => wp_create_nonce('lmat_block_update_nonce'),
-						'lmat_url'       => esc_url(plugins_url('admin/assets/css/lmat-update-custom-blocks.min.css', LINGUATOR_ROOT_FILE)),
-						'action_get_content' => 'lmat_get_custom_blocks_content',
-						'action_update_content' => 'lmat_update_custom_blocks_content',
+						'ajax_nonce'     => wp_create_nonce('ewt_block_update_nonce'),
+						'ewt_url'       => esc_url(plugins_url('admin/assets/css/ewt-update-custom-blocks.min.css', EASY_WP_TRANSLATOR_ROOT_FILE)),
+						'action_get_content' => 'ewt_get_custom_blocks_content',
+						'action_update_content' => 'ewt_update_custom_blocks_content',
 					)
 				);
 			}
@@ -91,11 +91,11 @@ if ( ! class_exists( 'Custom_Block_Post' ) ) {
 				return;
 			}
 
-			if ( isset( $post->post_type ) && 'lmat_add_blocks' === $post->post_type ) {
+			if ( isset( $post->post_type ) && 'ewt_add_blocks' === $post->post_type ) {
 				if (strpos($post->post_content, 'Make This Content Available for Translation') !== false) {
-					update_option( 'lmat_custom_block_data', $post->post_content );
+					update_option( 'ewt_custom_block_data', $post->post_content );
 				}else{
-					delete_option( 'lmat_custom_block_data' );
+					delete_option( 'ewt_custom_block_data' );
 				}
 			}
 		}
@@ -159,45 +159,45 @@ if ( ! class_exists( 'Custom_Block_Post' ) ) {
 				),
 			);
 
-			register_post_type( 'lmat_add_blocks', $args );
+			register_post_type( 'ewt_add_blocks', $args );
 		}
 
 		public function get_custom_blocks_content() {
-			if ( ! check_ajax_referer( 'lmat_block_update_nonce', 'lmat_nonce', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'easy-web-translator' ) );
+			if ( ! check_ajax_referer( 'ewt_block_update_nonce', 'ewt_nonce', false ) ) {
+				wp_send_json_error( __( 'Invalid security token sent.', 'easy-wp-translator' ) );
 				wp_die( '0', 400 );
 			}
 
 			if(!current_user_can('edit_posts')){
-				wp_send_json_error( __( 'Unauthorized', 'easy-web-translator' ), 403 );
+				wp_send_json_error( __( 'Unauthorized', 'easy-wp-translator' ), 403 );
 				wp_die( '0', 403 );
 			}
 
-			$custom_content = get_option( 'lmat_custom_block_data', false ) ? get_option( 'lmat_custom_block_data', false ) : false;
+			$custom_content = get_option( 'ewt_custom_block_data', false ) ? get_option( 'ewt_custom_block_data', false ) : false;
 
 			if ( $custom_content && is_string( $custom_content ) && ! empty( trim( $custom_content ) ) ) {
 				return wp_send_json_success( array( 'block_data' => $custom_content ) );
 			} else {
-				return wp_send_json_success( array( 'message' => __( 'No custom blocks found.', 'easy-web-translator' ) ) );
+				return wp_send_json_success( array( 'message' => __( 'No custom blocks found.', 'easy-wp-translator' ) ) );
 			}
 			exit();
 		}
 		
 		public function update_custom_blocks_content() {
-			if ( ! check_ajax_referer( 'lmat_block_update_nonce', 'lmat_nonce', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'easy-web-translator' ) );
+			if ( ! check_ajax_referer( 'ewt_block_update_nonce', 'ewt_nonce', false ) ) {
+				wp_send_json_error( __( 'Invalid security token sent.', 'easy-wp-translator' ) );
 				wp_die( '0', 400 );
 			}
 
 			if(!current_user_can('edit_posts')){
-				wp_send_json_error( __( 'Unauthorized', 'easy-web-translator' ), 403 );
+				wp_send_json_error( __( 'Unauthorized', 'easy-wp-translator' ), 403 );
 				wp_die( '0', 403 );
 			}
 
 			$json = isset($_POST['save_block_data']) ? wp_unslash($_POST['save_block_data']) : false;
 			$updated_blocks_data = json_decode($json, true);
 			if(json_last_error() !== JSON_ERROR_NONE){ 
-				wp_send_json_error( __( 'Invalid JSON', 'easy-web-translator' ) );
+				wp_send_json_error( __( 'Invalid JSON', 'easy-wp-translator' ) );
 				wp_die( '0', 400 );
 			}
 
@@ -205,7 +205,7 @@ if ( ! class_exists( 'Custom_Block_Post' ) ) {
 				Supported_Blocks::get_instance()->update_custom_blocks_content($updated_blocks_data);
 			}
 
-			return wp_send_json_success( array( 'message' => __( 'Linguator Multilingual AI Translation: Custom Blocks data updated successfully', 'easy-web-translator' ) ) );
+			return wp_send_json_success( array( 'message' => __( 'Easy WP Translator – On-Device Chrome AI Translation: Custom Blocks data updated successfully', 'easy-wp-translator' ) ) );
 			exit();
 		}
 	}

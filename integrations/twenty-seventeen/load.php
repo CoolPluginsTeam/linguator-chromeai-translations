@@ -2,7 +2,7 @@
 /**
  * Loads the integration with Twenty Seventeen.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/twenty-seven-teen.php';
 
-use Linguator\Integrations\twenty_seventeen\LMAT_Twenty_Seventeen;
-use Linguator\Integrations\LMAT_Integrations;
+use EasyWPTranslator\Integrations\twenty_seventeen\EWT_Twenty_Seventeen;
+use EasyWPTranslator\Integrations\EWT_Integrations;
 
-add_action( 'init', array( LMAT_Integrations::instance()->twenty_seventeen = new LMAT_Twenty_Seventeen(), 'init' ) );
+add_action( 'init', array( EWT_Integrations::instance()->twenty_seventeen = new EWT_Twenty_Seventeen(), 'init' ) );

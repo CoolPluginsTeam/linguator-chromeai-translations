@@ -13,15 +13,15 @@ const SettingModal = (props) => {
     const [activeService, setActiveService] = useState({});
     const [modalRender, setModalRender] = useState(0);
     const [settingVisibility, setSettingVisibility] = useState(false);
-    const sourceLang = lmatPageTranslationGlobal.source_lang;
+    const sourceLang = ewtPageTranslationGlobal.source_lang;
     const targetLang = props.targetLang;
-    const sourceLangName = lmatPageTranslationGlobal.languageObject[sourceLang]['name'];
-    const targetLangName = lmatPageTranslationGlobal.languageObject[targetLang]['name'];
-    const imgFolder = lmatPageTranslationGlobal.lmat_url + 'admin/assets/images/';
+    const sourceLangName = ewtPageTranslationGlobal.languageObject[sourceLang]['name'];
+    const targetLangName = ewtPageTranslationGlobal.languageObject[targetLang]['name'];
+    const imgFolder = ewtPageTranslationGlobal.ewt_url + 'admin/assets/images/';
     const [serviceModalErrors, setServiceModalErrors] = useState({});
     const [errorModalVisibility, setErrorModalVisibility] = useState(false);
     const [chromeAiBtnDisabled, setChromeAiBtnDisabled] = useState(false);
-    const providers = lmatPageTranslationGlobal.providers;
+    const providers = ewtPageTranslationGlobal.providers;
 
     const openModalOnLoadHandler = (e) => {
         e.preventDefault();
@@ -32,7 +32,7 @@ const SettingModal = (props) => {
             setSettingVisibility(true);
         }
 
-        btnElement.closest('#lmat-page-translation-modal-open-warning-wrapper').remove();
+        btnElement.closest('#ewt-page-translation-modal-open-warning-wrapper').remove();
     }
 
     const closeErrorModal = () => {
@@ -70,7 +70,7 @@ const SettingModal = (props) => {
      * Triggers the setSettingVisibility only when user click on meta field Button.
     */
     useEffect(() => {
-        const firstRenderBtns = document.querySelectorAll('#lmat-page-translation-modal-open-warning-wrapper .modal-content div[data-value]');
+        const firstRenderBtns = document.querySelectorAll('#ewt-page-translation-modal-open-warning-wrapper .modal-content div[data-value]');
         const metaFieldBtn = document.querySelector(props.translateWrpSelector);
 
         if (metaFieldBtn) {
@@ -101,7 +101,7 @@ const SettingModal = (props) => {
                 if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
                 setChromeAiBtnDisabled(true);
     
-                    errors.localAiTranslator = { message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'easy-web-translator') };
+                    errors.localAiTranslator = { message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'easy-wp-translator') };
 
                     setServiceModalErrors(prev => ({ ...prev, localAiTranslator: errors.localAiTranslator }));
             }
@@ -125,13 +125,13 @@ const SettingModal = (props) => {
         if (providers.length < 1) {
             let providerConfigMsg = sprintf(__(
                 '%sYou have not enabled any translation provider. Please enable at least one service provider to use automatic translation. Go to the %sTranslation Settings%s to configure a translation provider.%s',
-                'easy-web-translator'
+                'easy-wp-translator'
             ),
                 '<p>',
-                `<strong><a href='${lmatPageTranslationGlobal.admin_url}admin.php?page=lmat_settings&tab=translation' target='_blank' rel='noopener noreferrer'>`,
+                `<strong><a href='${ewtPageTranslationGlobal.admin_url}admin.php?page=ewt_settings&tab=translation' target='_blank' rel='noopener noreferrer'>`,
                 '</a></strong>',
                 '</p>');
-            setServiceModalErrors((prev) => ({ ...prev, providerNotConfigured: { message: providerConfigMsg, Title: __("Translation Provider Not Configured", 'easy-web-translator') } }));
+            setServiceModalErrors((prev) => ({ ...prev, providerNotConfigured: { message: providerConfigMsg, Title: __("Translation Provider Not Configured", 'easy-wp-translator') } }));
             return;
         }
         if (settingVisibility) {
@@ -150,7 +150,7 @@ const SettingModal = (props) => {
 
         const postId = props.postId;
 
-        const parentWrp = document.getElementById("lmat_page_translation_strings_model");
+        const parentWrp = document.getElementById("ewt_page_translation_strings_model");
 
         if (parentWrp) {
             // Store root instance in a ref to avoid recreating it
@@ -185,7 +185,7 @@ const SettingModal = (props) => {
      * @param {Event} e - The event object representing the button click.
      */
     const fetchContent = async (e) => {
-        let targetElement = !e.target.classList.contains('lmat-page-translation-service-btn') ? e.target.closest('.lmat-page-translation-service-btn') : e.target;
+        let targetElement = !e.target.classList.contains('ewt-page-translation-service-btn') ? e.target.closest('.ewt-page-translation-service-btn') : e.target;
 
         if (!targetElement) {
             return;
@@ -216,7 +216,7 @@ const SettingModal = (props) => {
             }
             {settingVisibility && providers.length > 1 &&
                 <div className="modal-container" style={{ display: settingVisibility ? 'flex' : 'none' }}>
-                    <div className="lmat-page-translation-settings modal-content">
+                    <div className="ewt-page-translation-settings modal-content">
                         <SettingModalHeader
                             setSettingVisibility={handleSettingVisibility}
                             postType={props.postType}

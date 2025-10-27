@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -11,11 +11,11 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) { // If uninstall not called from Word
 }
 
 /**
- * Manages Linguator uninstallation.
- * The goal is to remove **all** Linguator related data in db.
+ * Manages EasyWPTranslator uninstallation.
+ * The goal is to remove **all** EasyWPTranslator related data in db.
  *
  */
-class LMAT_Uninstall {
+class EWT_Uninstall {
 
 	/**
 	 * Constructor: manages uninstall for multisite.
@@ -24,8 +24,8 @@ class LMAT_Uninstall {
 	public function __construct() {
 		global $wpdb;
 
-		// Don't do anything except if the constant LMAT_REMOVE_ALL_DATA is explicitly defined and true.
-		if ( ! defined( 'LMAT_REMOVE_ALL_DATA' ) || ! LMAT_REMOVE_ALL_DATA ) {
+		// Don't do anything except if the constant EWT_REMOVE_ALL_DATA is explicitly defined and true.
+		if ( ! defined( 'EWT_REMOVE_ALL_DATA' ) || ! EWT_REMOVE_ALL_DATA ) {
 			return;
 		}
 
@@ -49,17 +49,17 @@ class LMAT_Uninstall {
 	public function uninstall() {
 		global $wpdb;
 
-		do_action( 'lmat_uninstall' );
+		do_action( 'ewt_uninstall' );
 
 		// We need to register the taxonomies.
-		$lmat_taxonomies = array(
-			'lmat_language',
-			'lmat_term_language',
-			'lmat_post_translations',
-			'lmat_term_translations',
+		$ewt_taxonomies = array(
+			'ewt_language',
+			'ewt_term_language',
+			'ewt_post_translations',
+			'ewt_term_translations',
 		);
 
-		foreach ( $lmat_taxonomies as $taxonomy ) {
+		foreach ( $ewt_taxonomies as $taxonomy ) {
 			register_taxonomy(
 				$taxonomy,
 				null,
@@ -74,14 +74,14 @@ class LMAT_Uninstall {
 
 		$languages = get_terms(
 			array(
-				'taxonomy'   => 'lmat_language',
+				'taxonomy'   => 'ewt_language',
 				'hide_empty' => false,
 			)
 		);
 
 		// Delete users options.
-		delete_metadata( 'user', 0, 'lmat_filter_content', '', true );
-		delete_metadata( 'user', 0, 'lmat_dismissed_notices', '', true ); // Legacy meta.
+		delete_metadata( 'user', 0, 'ewt_filter_content', '', true );
+		delete_metadata( 'user', 0, 'ewt_dismissed_notices', '', true ); // Legacy meta.
 		foreach ( $languages as $lang ) {
 			delete_metadata( 'user', 0, "description_{$lang->slug}", '', true );
 		}
@@ -93,7 +93,7 @@ class LMAT_Uninstall {
 				'numberposts' => -1,
 				'nopaging'    => true,
 				'fields'      => 'ids',
-				'meta_key'    => '_lmat_menu_item', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Using meta_key here is necessary to identify all nav_menu_item posts that are language switchers added by this plugin. This ensures complete cleanup of all plugin-inserted menu items during uninstall, and there is no performant alternative in core WP for this use-case.
+				'meta_key'    => '_ewt_menu_item', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Using meta_key here is necessary to identify all nav_menu_item posts that are language switchers added by this plugin. This ensures complete cleanup of all plugin-inserted menu items during uninstall, and there is no performant alternative in core WP for this use-case.
 			)
 		);
 
@@ -109,7 +109,7 @@ class LMAT_Uninstall {
 
 		$terms = get_terms(
 			array(
-				'taxonomy'   => $lmat_taxonomies,
+				'taxonomy'   => $ewt_taxonomies,
 				'hide_empty' => false,
 			)
 		);
@@ -145,7 +145,7 @@ class LMAT_Uninstall {
 			$wpdb->query(
 				$wpdb->prepare(
 					sprintf(
-						"DELETE FROM {$wpdb->termmeta} WHERE term_id IN (%s) AND meta_key='_lmat_strings_translations'",
+						"DELETE FROM {$wpdb->termmeta} WHERE term_id IN (%s) AND meta_key='_ewt_strings_translations'",
 						implode( ',', array_fill( 0, count( $term_ids ), '%d' ) )
 					),
 					$term_ids
@@ -160,16 +160,16 @@ class LMAT_Uninstall {
 		}
 
 		// Delete options.
-		delete_option( 'linguator' );
-		delete_option( 'widget_linguator_widget' ); // Automatically created by WP.
-		delete_option( 'linguator_licenses' );
-		delete_option( 'lmat_dismissed_notices' );
-		delete_option( 'lmat_language_from_content_available' );
-		wp_clear_scheduled_hook('lmat_extra_data_update');
+		delete_option( 'easywptranslator' );
+		delete_option( 'widget_easywptranslator_widget' ); // Automatically created by WP.
+		delete_option( 'easywptranslator_licenses' );
+		delete_option( 'ewt_dismissed_notices' );
+		delete_option( 'ewt_language_from_content_available' );
+		wp_clear_scheduled_hook('ewt_extra_data_update');
 		
 		// Delete transients.
-		delete_transient( 'lmat_languages_list' );
+		delete_transient( 'ewt_languages_list' );
 	}
 }
 
-new LMAT_Uninstall();
+new EWT_Uninstall();

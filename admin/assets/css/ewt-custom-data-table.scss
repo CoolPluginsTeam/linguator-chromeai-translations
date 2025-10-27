@@ -1,4 +1,4 @@
-.lmat-custom-data-table-wrapper {
+.ewt-custom-data-table-wrapper {
     width: calc(100% - 4rem);
     margin-top: 25px;
     background: white;
@@ -39,9 +39,9 @@
         }
     }
 
-    &.lmat-custom-fields {
+    &.ewt-custom-fields {
 
-        .lmat-save-custom-fields {
+        .ewt-save-custom-fields {
             float: right;
             height: 30px;
             display: inline-flex;
@@ -53,21 +53,21 @@
         }
     }
 
-    .lmat-custom-data-table-filters {
+    .ewt-custom-data-table-filters {
         display: flex;
         align-items: center;
         column-gap: 1rem;
 
-        .lmat-search-tab {
+        .ewt-search-tab {
             margin-left: auto;
 
-            #lmat-blocks-search {
+            #ewt-blocks-search {
                 min-width: 220px;
             }
         }
 
-        .lmat-filter-tab,
-        .lmat-search-tab {
+        .ewt-filter-tab,
+        .ewt-search-tab {
             display: flex;
             align-items: center;
             column-gap: 1rem;
@@ -81,11 +81,11 @@
         }
     }
 
-    .lmat-custom-table-lists {
+    .ewt-custom-table-lists {
         margin: 20px 0px;
         font-family: Arial, sans-serif;
 
-        .lmat-custom-data-table-table {
+        .ewt-custom-data-table-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
@@ -109,7 +109,7 @@
 
             tbody {
                 tr {
-                    .lmat-search-highlight {
+                    .ewt-search-highlight {
                         background-color: orange;
                         color: black;
                     }
@@ -145,7 +145,7 @@
         }
     }
 
-    .lmat-pagination {
+    .ewt-pagination {
         margin: 20px 0px;
         font-size: 14px;
         text-align: end;
@@ -218,7 +218,7 @@
 }
 
 // temp datatable css
-#lmat-custom-datatable_wrapper {
+#ewt-custom-datatable_wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -308,7 +308,7 @@
     }
 }
 
-#lmat-copy-btn {
+#ewt-copy-btn {
     z-index: 999999;
     background-color: #333;
     color: white;
@@ -329,7 +329,7 @@
     }
 }
 
-#lmat-copy-text {
+#ewt-copy-text {
     display: fixed;
     bottom: -50%;
     left: -50%;

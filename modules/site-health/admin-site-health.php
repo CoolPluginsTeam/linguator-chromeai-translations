@@ -1,39 +1,39 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 /**
- * Class LMAT_Admin_Site_Health to add debug info in WP Site Health.
+ * Class EWT_Admin_Site_Health to add debug info in WP Site Health.
  *
  * @since 2.8
  */
-class LMAT_Admin_Site_Health {
+class EWT_Admin_Site_Health {
 	/**
-	 * A reference to the LMAT_Model instance.
+	 * A reference to the EWT_Model instance.
 	 *
 	 *
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
 	/**
-	 * A reference to the LMAT_Admin_Static_Pages instance.
+	 * A reference to the EWT_Admin_Static_Pages instance.
 	 *
 	 *
-	 * @var LMAT_Admin_Static_Pages|null
+	 * @var EWT_Admin_Static_Pages|null
 	 */
 	protected $static_pages;
 
 	/**
-	 * LMAT_Admin_Site_Health constructor.
+	 * EWT_Admin_Site_Health constructor.
 	 *
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->model = &$linguator->model;
-		$this->static_pages = &$linguator->static_pages;
+	public function __construct( &$easywptranslator ) {
+		$this->model = &$easywptranslator->model;
+		$this->static_pages = &$easywptranslator->static_pages;
 
 		// Information tab.
 		add_filter( 'debug_information', array( $this, 'info_options' ), 15 );
@@ -76,7 +76,7 @@ class LMAT_Admin_Site_Health {
 	}
 
 	/**
-	 * Add Linguator Options to Site Health Information tab.
+	 * Add EasyWPTranslator Options to Site Health Information tab.
 	 *
 	 * @param array $debug_info The debug information to be added to the core information page.
 	 *
@@ -87,17 +87,17 @@ class LMAT_Admin_Site_Health {
 
 		// Get effective translated post types and taxonomies. The options doesn't show all translated ones.
 		if ( ! empty( $this->model->get_translated_post_types() ) ) {
-			$fields['cpt']['label'] = __( 'Post Types', 'easy-web-translator' );
+			$fields['cpt']['label'] = __( 'Post Types', 'easy-wp-translator' );
 			$fields['cpt']['value'] = implode( ', ', $this->model->get_translated_post_types() );
 		}
 		if ( ! empty( $this->model->get_translated_taxonomies() ) ) {
-			$fields['taxonomies']['label'] = __( 'Custom Taxonomies', 'easy-web-translator' );
+			$fields['taxonomies']['label'] = __( 'Custom Taxonomies', 'easy-wp-translator' );
 			$fields['taxonomies']['value'] = implode( ', ', $this->model->get_translated_taxonomies() );
 		}
 
-		$debug_info['lmat_options'] = array(
+		$debug_info['ewt_options'] = array(
 			/* translators: placeholder is the plugin name */
-			'label'  => sprintf( __( '%s options', 'easy-web-translator' ), LINGUATOR ),
+			'label'  => sprintf( __( '%s options', 'easy-wp-translator' ), EASY_WP_TRANSLATOR ),
 			'fields' => $fields,
 		);
 
@@ -105,7 +105,7 @@ class LMAT_Admin_Site_Health {
 	}
 
 	/**
-	 * Adds Linguator Languages settings to Site Health Information tab.
+	 * Adds EasyWPTranslator Languages settings to Site Health Information tab.
 	 *
 	 *
 	 * @param array $debug_info The debug information to be added to the core information page.
@@ -137,11 +137,11 @@ class LMAT_Admin_Site_Health {
 				}
 			}
 
-			$debug_info[ 'lmat_language_' . $language->slug ] = array(
+			$debug_info[ 'ewt_language_' . $language->slug ] = array(
 				/* translators: %1$s placeholder is the language name, %2$s is the language code */
-				'label'  => sprintf( __( 'Language: %1$s - %2$s', 'easy-web-translator' ), $language->name, $language->slug ),
+				'label'  => sprintf( __( 'Language: %1$s - %2$s', 'easy-wp-translator' ), $language->name, $language->slug ),
 				/* translators: placeholder is the flag image */
-				'description' => sprintf( esc_html__( 'Flag used in the language switcher: %s', 'easy-web-translator' ), $this->get_flag( $language ) ),
+				'description' => sprintf( esc_html__( 'Flag used in the language switcher: %s', 'easy-wp-translator' ), $this->get_flag( $language ) ),
 				'fields' => $fields,
 			);
 		}
@@ -181,12 +181,12 @@ class LMAT_Admin_Site_Health {
 	 * Returns the flag used in the language switcher.
 	 *
 	 *
-	 * @param LMAT_Language $language Language object.
+	 * @param EWT_Language $language Language object.
 	 * @return string
 	 */
 	protected function get_flag( $language ) {
 		$flag = $language->get_display_flag();
-		return empty( $flag ) ? '<span>' . esc_html__( 'Undefined', 'easy-web-translator' ) . '</span>' : $flag;
+		return empty( $flag ) ? '<span>' . esc_html__( 'Undefined', 'easy-wp-translator' ) . '</span>' : $flag;
 	}
 
 	/**
@@ -199,8 +199,8 @@ class LMAT_Admin_Site_Health {
 	public function status_tests( $tests ) {
 		// Add the test only if the homepage displays static page.
 		if ( 'page' === get_option( 'show_on_front' ) && get_option( 'page_on_front' ) ) {
-			$tests['direct']['lmat_homepage'] = array(
-				'label' => esc_html__( 'Homepage translated', 'easy-web-translator' ),
+			$tests['direct']['ewt_homepage'] = array(
+				'label' => esc_html__( 'Homepage translated', 'easy-wp-translator' ),
 				'test'  => array( $this, 'homepage_test' ),
 			);
 		}
@@ -215,32 +215,32 @@ class LMAT_Admin_Site_Health {
 	 */
 	public function homepage_test() {
 		$result = array(
-			'label'       => __( 'All languages have a translated homepage', 'easy-web-translator' ),
+			'label'       => __( 'All languages have a translated homepage', 'easy-wp-translator' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => LINGUATOR,
+				'label' => EASY_WP_TRANSLATOR,
 				'color' => 'blue',
 			),
 			'description' => sprintf(
 				'<p>%s</p>',
-				esc_html__( 'It is mandatory to translate the static front page in all languages.', 'easy-web-translator' )
+				esc_html__( 'It is mandatory to translate the static front page in all languages.', 'easy-wp-translator' )
 			),
 			'actions'     => '',
-			'test'        => 'lmat_homepage',
+			'test'        => 'ewt_homepage',
 		);
 
 		$message = $this->static_pages->get_must_translate_message();
 
 		if ( ! empty( $message ) ) {
 			$result['status']      = 'critical';
-			$result['label']       = __( 'The homepage is not translated in all languages', 'easy-web-translator' );
+			$result['label']       = __( 'The homepage is not translated in all languages', 'easy-wp-translator' );
 			$result['description'] = sprintf( '<p>%s</p>', $message );
 		}
 		return $result;
 	}
 
 	/**
-	 * Add Linguator Warnings to Site Health Information tab.
+	 * Add EasyWPTranslator Warnings to Site Health Information tab.
 	 *
 	 *
 	 * @param array $debug_info The debug information to be added to the core information page.
@@ -253,22 +253,22 @@ class LMAT_Admin_Site_Health {
 		$posts_no_lang = $this->get_post_ids_without_lang();
 
 		if ( ! empty( $posts_no_lang ) ) {
-			$fields['post-no-lang']['label'] = __( 'Posts without language', 'easy-web-translator' );
+			$fields['post-no-lang']['label'] = __( 'Posts without language', 'easy-wp-translator' );
 			$fields['post-no-lang']['value'] = $posts_no_lang;
 		}
 
 		$terms_no_lang = $this->get_term_ids_without_lang();
 
 		if ( ! empty( $terms_no_lang ) ) {
-			$fields['term-no-lang']['label'] = __( 'Terms without language', 'easy-web-translator' );
+			$fields['term-no-lang']['label'] = __( 'Terms without language', 'easy-wp-translator' );
 			$fields['term-no-lang']['value'] = $terms_no_lang;
 		}
 
 		// Create the section.
 		if ( ! empty( $fields ) ) {
-			$debug_info['lmat_warnings'] = array(
+			$debug_info['ewt_warnings'] = array(
 				/* translators: placeholder is the plugin name */
-				'label'  => sprintf( __( '%s information', 'easy-web-translator' ), LINGUATOR ),
+				'label'  => sprintf( __( '%s information', 'easy-wp-translator' ), EASY_WP_TRANSLATOR ),
 				'fields' => $fields,
 			);
 		}

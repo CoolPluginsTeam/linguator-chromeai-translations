@@ -2,11 +2,11 @@
 /**
  * Elementor Template Translation
  *
- * @package           Linguator
+ * @package           EasyWPTranslator
  * @wordpress-plugin
  */
 
-namespace Linguator\Integrations\elementor;
+namespace EasyWPTranslator\Integrations\elementor;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,11 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class LMAT_Template_Translation
+ * Class EWT_Template_Translation
  *
  * Handles the template translation for Elementor.
  */
-class LMAT_Template_Translation {
+class EWT_Template_Translation {
 	/**
 	 * Template ID for current template
 	 *
@@ -34,23 +34,23 @@ class LMAT_Template_Translation {
 	 *  
 	 */
 	public function __construct() {
-		add_filter('lmat_get_post_types', [$this, 'lmat_register_supported_post_types'], 10, 2);
-        add_filter('elementor/theme/get_location_templates/template_id', [$this, 'lmat_translate_template_id']);
-        add_filter('elementor/theme/get_location_templates/condition_sub_id', [$this, 'lmat_translate_condition_sub_id'], 10, 2);
-        add_filter('pre_do_shortcode_tag', [$this, 'lmat_handle_shortcode_translation'], 10, 3);
-        add_action('elementor/frontend/widget/before_render', [$this, 'lmat_translate_widget_template_id']);
-        add_action('elementor/documents/register_controls', [$this, 'lmat_add_language_panel_controls']);
+		add_filter('ewt_get_post_types', [$this, 'ewt_register_supported_post_types'], 10, 2);
+        add_filter('elementor/theme/get_location_templates/template_id', [$this, 'ewt_translate_template_id']);
+        add_filter('elementor/theme/get_location_templates/condition_sub_id', [$this, 'ewt_translate_condition_sub_id'], 10, 2);
+        add_filter('pre_do_shortcode_tag', [$this, 'ewt_handle_shortcode_translation'], 10, 3);
+        add_action('elementor/frontend/widget/before_render', [$this, 'ewt_translate_widget_template_id']);
+        add_action('elementor/documents/register_controls', [$this, 'ewt_add_language_panel_controls']);
 
-        if (lmat_is_plugin_active('elementor-pro/elementor-pro.php')) {
-            add_action('set_object_terms', [$this, 'lmat_update_conditions_on_translation_change'], 10, 4);
+        if (ewt_is_plugin_active('elementor-pro/elementor-pro.php')) {
+            add_action('set_object_terms', [$this, 'ewt_update_conditions_on_translation_change'], 10, 4);
         }
 
-        // Auto-assign existing Elementor templates to default language after Linguator is ready
-        add_action('lmat_init', [$this, 'lmat_assign_templates_to_default_language']);
+        // Auto-assign existing Elementor templates to default language after EasyWPTranslator is ready
+        add_action('ewt_init', [$this, 'ewt_assign_templates_to_default_language']);
 	}
 
     /**
-     * Registers supported post types for Linguator translation.
+     * Registers supported post types for EasyWPTranslator translation.
      *
      *  
      *
@@ -58,13 +58,13 @@ class LMAT_Template_Translation {
      * @param bool  $is_settings  Whether this is called from settings page.
      * @return array Modified array of post types.
      */
-    public function lmat_register_supported_post_types($types, $is_settings) {
+    public function ewt_register_supported_post_types($types, $is_settings) {
         $custom_post_types = ['elementor_library'];
         return array_merge($types, array_combine($custom_post_types, $custom_post_types));
     }
 
     /**
-     * Assigns existing Elementor templates to the default language using Linguator's mass assignment.
+     * Assigns existing Elementor templates to the default language using EasyWPTranslator's mass assignment.
      * Uses the built-in set_language_in_mass method for efficient bulk processing.
      * Runs only once to avoid duplicate assignments.
      *
@@ -72,29 +72,29 @@ class LMAT_Template_Translation {
      *
      * @return void
      */
-    public function lmat_assign_templates_to_default_language() {
+    public function ewt_assign_templates_to_default_language() {
         // Check if we've already run this process
-        if (get_option('lmat_elementor_templates_assigned', false)) {
+        if (get_option('ewt_elementor_templates_assigned', false)) {
             return;
         }
 
-        // Ensure Linguator is properly initialized
-        if (!function_exists('LMAT') || empty(LMAT()->model)) {
+        // Ensure EasyWPTranslator is properly initialized
+        if (!function_exists('EWT') || empty(EWT()->model)) {
             return;
         }
 
         // Get the default language
-        $default_lang = LMAT()->model->get_default_language();
+        $default_lang = EWT()->model->get_default_language();
         if (!$default_lang) {
             return;
         }
 
-        // Use Linguator's efficient mass assignment for post type
+        // Use EasyWPTranslator's efficient mass assignment for post type
         // This will find all elementor_library posts without language and assign the default language
-        LMAT()->model->set_language_in_mass($default_lang, ['post']);
+        EWT()->model->set_language_in_mass($default_lang, ['post']);
 
         // Mark the process as completed
-        update_option('lmat_elementor_templates_assigned', true);
+        update_option('ewt_elementor_templates_assigned', true);
     }
 
     /**
@@ -105,20 +105,20 @@ class LMAT_Template_Translation {
      * @param int $post_id The template post ID.
      * @return int Translated template ID.
      */
-    public function lmat_translate_template_id($post_id) {
+    public function ewt_translate_template_id($post_id) {
         // Get the language of the current page
-        $page_lang = lmat_get_post_language(get_the_ID());
+        $page_lang = ewt_get_post_language(get_the_ID());
         
         // Get the translated template in current page's language (if exists)
-        $translated_post_id = lmat_get_post($post_id, $page_lang);
+        $translated_post_id = ewt_get_post($post_id, $page_lang);
     
         // If translated template exists, use it. Otherwise, fallback to default language template
         if ($translated_post_id) {
             $post_id = $translated_post_id;
         } else {
             // Fallback: get the template in the default language
-            $default_lang = lmat_default_language();
-            $default_template_id = lmat_get_post($post_id, $default_lang);
+            $default_lang = ewt_default_language();
+            $default_template_id = ewt_get_post($post_id, $default_lang);
             
             if ($default_template_id) {
                 $post_id = $default_template_id;
@@ -140,21 +140,21 @@ class LMAT_Template_Translation {
      * @param array $condition  The condition data.
      * @return int Translated sub ID.
      */
-    public function lmat_translate_condition_sub_id($sub_id, $condition) {
+    public function ewt_translate_condition_sub_id($sub_id, $condition) {
         if (!$sub_id) {
             return $sub_id;
         }
 
-        $default_lang = lmat_default_language();
+        $default_lang = ewt_default_language();
         // Get current page/template ID from context
         $current_template_id = get_the_ID() ?: (is_singular() ? get_queried_object_id() : 0);
-        $current_lang = $current_template_id ? lmat_get_post_language($current_template_id) : null;
+        $current_lang = $current_template_id ? ewt_get_post_language($current_template_id) : null;
 
-        if ($current_lang && $current_lang !== $default_lang && $current_template_id && lmat_get_post($current_template_id, $default_lang)) {
+        if ($current_lang && $current_lang !== $default_lang && $current_template_id && ewt_get_post($current_template_id, $default_lang)) {
             if (in_array($condition['sub_name'], get_post_types(), true)) {
-                $sub_id = lmat_get_post($sub_id) ?: $sub_id;
+                $sub_id = ewt_get_post($sub_id) ?: $sub_id;
             } else {
-                $sub_id = lmat_get_term($sub_id) ?: $sub_id;
+                $sub_id = ewt_get_term($sub_id) ?: $sub_id;
             }
         }
 
@@ -171,12 +171,12 @@ class LMAT_Template_Translation {
      * @param array  $attrs  Shortcode attributes.
      * @return string|bool Processed shortcode or false.
      */
-    public function lmat_handle_shortcode_translation($false, $tag, $attrs) {
+    public function ewt_handle_shortcode_translation($false, $tag, $attrs) {
         if ('elementor-template' !== $tag || isset($attrs['skip'])) {
             return $false;
         }
 
-        $attrs['id'] = lmat_get_post(absint($attrs['id'])) ?: $attrs['id'];
+        $attrs['id'] = ewt_get_post(absint($attrs['id'])) ?: $attrs['id'];
         $attrs['skip'] = 1;
 
         $output = '';
@@ -197,7 +197,7 @@ class LMAT_Template_Translation {
      * @param array  $tt_ids   Term taxonomy IDs.
      * @param string $taxonomy Taxonomy name.
      */
-    public function lmat_update_conditions_on_translation_change($post_id, $terms, $tt_ids, $taxonomy) {
+    public function ewt_update_conditions_on_translation_change($post_id, $terms, $tt_ids, $taxonomy) {
         if ( 'post_translations' === $taxonomy && 'elementor_library' === get_post_type( $post_id ) ) {
 
 			$theme_builder = \ElementorPro\Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
@@ -213,12 +213,12 @@ class LMAT_Template_Translation {
      *
      * @param \Elementor\Element_Base $element Element instance.
      */
-    public function lmat_translate_widget_template_id($element) {
+    public function ewt_translate_widget_template_id($element) {
         if ('template' !== $element->get_name()) {
             return;
         }
 
-        $template_id = lmat_get_post($element->get_settings('template_id')) ?: $element->get_settings('template_id');
+        $template_id = ewt_get_post($element->get_settings('template_id')) ?: $element->get_settings('template_id');
         $element->set_settings('template_id', $template_id);
     }
 
@@ -229,23 +229,23 @@ class LMAT_Template_Translation {
      *
      * @param \Elementor\Core\Base\Document $document Document instance.
      */
-    public function lmat_add_language_panel_controls($document) {
+    public function ewt_add_language_panel_controls($document) {
         if (!method_exists($document, 'get_main_id')) {
             return;
         }
 
-        // require_once LINGUATOR_DIR . 'helpers/lmat-helpers.php';
+        // require_once EASY_WP_TRANSLATOR_DIR . 'helpers/ewt-helpers.php';
 
         $post_id = $document->get_main_id();
-        $languages = lmat_languages_list(['fields' => '']);
-        $translations = lmat_get_post_translations($post_id);
-        $current_lang_slug = lmat_get_post_language($post_id);
-        $current_lang_name = lmat_get_post_language($post_id, 'name');
+        $languages = ewt_languages_list(['fields' => '']);
+        $translations = ewt_get_post_translations($post_id);
+        $current_lang_slug = ewt_get_post_language($post_id);
+        $current_lang_name = ewt_get_post_language($post_id, 'name');
 
         $document->start_controls_section(
-            'lmat_language_panel_controls',
+            'ewt_language_panel_controls',
             [
-                'label' => esc_html__('Translations', 'easy-web-translator'),
+                'label' => esc_html__('Translations', 'easy-wp-translator'),
                 'tab'   => \Elementor\Controls_Manager::TAB_SETTINGS,
             ]
         );
@@ -271,7 +271,7 @@ class LMAT_Template_Translation {
                 $flag_html = method_exists($lang, 'get_display_flag') ? $lang->get_display_flag('no-alt') : '';
 
                 $document->add_control(
-                    "lmat_elementor_edit_lang_{$lang_slug}",
+                    "ewt_elementor_edit_lang_{$lang_slug}",
                     [
                         'type'            => \Elementor\Controls_Manager::RAW_HTML,
                         'raw'             => sprintf(
@@ -296,7 +296,7 @@ class LMAT_Template_Translation {
                 $flag_html = method_exists($lang, 'get_display_flag') ? $lang->get_display_flag('no-alt') : '';
 
                 $document->add_control(
-                    "lmat_elementor_add_lang_{$lang_slug}",
+                    "ewt_elementor_add_lang_{$lang_slug}",
                     [
                         'type'            => \Elementor\Controls_Manager::RAW_HTML,
                         'raw'             => sprintf(
@@ -305,7 +305,7 @@ class LMAT_Template_Translation {
                             $flag_html,
                             sprintf(
                                 /* translators: %s: Language name */
-                                __('Add translation — %s', 'easy-web-translator'),
+                                __('Add translation — %s', 'easy-wp-translator'),
                                 esc_html($lang->name)
                             )
                         ),

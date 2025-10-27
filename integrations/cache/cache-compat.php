@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\cache;
+namespace EasyWPTranslator\Integrations\cache;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,14 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Cache_Compat {
+class EWT_Cache_Compat {
 	/**
 	 * Setups actions
 	 *
 	 *  
 	 */
 	public function init() {
-		if ( LMAT_COOKIE ) {
+		if ( EWT_COOKIE ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'add_cookie_script' ) );
 		}
 
@@ -49,11 +49,11 @@ class LMAT_Cache_Compat {
 			return;
 		}
 
-		$domain   = ( 2 === LMAT()->options['force_lang'] ) ? wp_parse_url( LMAT()->links_model->home, PHP_URL_HOST ) : COOKIE_DOMAIN;
-		$samesite = ( 3 === LMAT()->options['force_lang'] ) ? 'None' : 'Lax';
+		$domain   = ( 2 === EWT()->options['force_lang'] ) ? wp_parse_url( EWT()->links_model->home, PHP_URL_HOST ) : COOKIE_DOMAIN;
+		$samesite = ( 3 === EWT()->options['force_lang'] ) ? 'None' : 'Lax';
 
 		/** This filter is documented in include/cookie.php */
-		$expiration = (int) apply_filters( 'lmat_cookie_expiration', YEAR_IN_SECONDS );
+		$expiration = (int) apply_filters( 'ewt_cookie_expiration', YEAR_IN_SECONDS );
 
 		if ( 0 !== $expiration ) {
 			$format = 'var expirationDate = new Date();
@@ -67,8 +67,8 @@ class LMAT_Cache_Compat {
 			"(function() {
 				{$format}
 			}());\n",
-			esc_js( LMAT_COOKIE ),
-			esc_js( lmat_current_language() ),
+			esc_js( EWT_COOKIE ),
+			esc_js( ewt_current_language() ),
 			esc_js( COOKIEPATH ),
 			$domain ? '; domain=' . esc_js( $domain ) : '',
 			is_ssl() ? '; secure' : '',
@@ -77,9 +77,9 @@ class LMAT_Cache_Compat {
 		);
 
 		// Need to register prior to enqueue empty script and add extra code to it.
-		wp_register_script( 'lmat_cookie_script', '', array(), LINGUATOR_VERSION, true );
-		wp_enqueue_script( 'lmat_cookie_script' );
-		wp_add_inline_script( 'lmat_cookie_script', $js );
+		wp_register_script( 'ewt_cookie_script', '', array(), EASY_WP_TRANSLATOR_VERSION, true );
+		wp_enqueue_script( 'ewt_cookie_script' );
+		wp_add_inline_script( 'ewt_cookie_script', $js );
 	}
 
 	/**
@@ -89,7 +89,7 @@ class LMAT_Cache_Compat {
 	 *  
 	 */
 	public function do_not_cache_site_home() {
-		if ( ! defined( 'DONOTCACHEPAGE' ) && LMAT()->options['browser'] && LMAT()->options['hide_default'] && is_front_page() && lmat_current_language() === lmat_default_language() ) {
+		if ( ! defined( 'DONOTCACHEPAGE' ) && EWT()->options['browser'] && EWT()->options['hide_default'] && is_front_page() && ewt_current_language() === ewt_default_language() ) {
 			define( 'DONOTCACHEPAGE', true );
 		}
 	}
@@ -102,11 +102,11 @@ class LMAT_Cache_Compat {
 	 * @param int $post_id Post id.
 	 */
 	public function clean_post_cache( $post_id ) {
-		$lang = LMAT()->model->post->get_language( $post_id );
+		$lang = EWT()->model->post->get_language( $post_id );
 
 		if ( $lang ) {
 			$filter_callback = function ( $link, $post_type ) use ( $lang ) {
-				return lmat_is_translated_post_type( $post_type ) && 'post' !== $post_type ? LMAT()->links_model->switch_language_in_link( $link, $lang ) : $link;
+				return ewt_is_translated_post_type( $post_type ) && 'post' !== $post_type ? EWT()->links_model->switch_language_in_link( $link, $lang ) : $link;
 			};
 			add_filter( 'post_type_archive_link', $filter_callback, 99, 2 );
 		}

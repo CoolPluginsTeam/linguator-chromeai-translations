@@ -14,7 +14,7 @@ const SettingsPage = () =>{
 
 
 domReady(() => {
-    const element = document.getElementById('lmat-settings');
+    const element = document.getElementById('ewt-settings');
         if (element) {
             const root = createRoot(element);
             root.render(<SettingsPage/>);

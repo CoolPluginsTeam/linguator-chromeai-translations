@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Frontend\Controllers;
+namespace EasyWPTranslator\Frontend\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Choose_Lang_Domain extends LMAT_Choose_Lang_Url {
+class EWT_Choose_Lang_Domain extends EWT_Choose_Lang_Url {
 
 	/**
 	 * Don't set any language cookie
@@ -29,7 +29,7 @@ class LMAT_Choose_Lang_Domain extends LMAT_Choose_Lang_Url {
 	 *
 	 *  
 	 *
-	 * @return LMAT_Language
+	 * @return EWT_Language
 	 */
 	public function get_preferred_language() {
 		return $this->model->get_language( $this->links_model->get_language_from_url() );
@@ -45,6 +45,6 @@ class LMAT_Choose_Lang_Domain extends LMAT_Choose_Lang_Url {
 	public function home_requested() {
 		$this->set_curlang_in_query( $GLOBALS['wp_query'] );
 		/** This action is documented in include/choose-lang.php */
-		do_action( 'lmat_home_requested' );
+		do_action( 'ewt_home_requested' );
 	}
 }

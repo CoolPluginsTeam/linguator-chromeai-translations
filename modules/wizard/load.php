@@ -2,9 +2,9 @@
 /**
  * Loads the setup wizard.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Modules\Wizard;
+namespace EasyWPTranslator\Modules\Wizard;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Don't access directly
@@ -12,9 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/wizard.php';
 
-use Linguator\Admin\Controllers\LMAT_Admin_Base;
-use Linguator\Modules\Wizard\LMAT_Wizard;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin_Base;
+use EasyWPTranslator\Modules\Wizard\EWT_Wizard;
 
-if ( $linguator instanceof LMAT_Admin_Base ) {
-	$linguator->wizard = new LMAT_Wizard( $linguator );
+if ( $easywptranslator instanceof EWT_Admin_Base ) {
+	$easywptranslator->wizard = new EWT_Wizard( $easywptranslator );
 }

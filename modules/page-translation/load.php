@@ -2,15 +2,15 @@
 /**
  * Loads the setup wizard.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Modules\Page_Translation;
-use Linguator\Admin\Controllers\LMAT_Admin;
+namespace EasyWPTranslator\Modules\Page_Translation;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Don't access directly
 }
 
-if ( $linguator->model->has_languages() ) {
-    class_exists(LMAT_Page_Translation::class) && new LMAT_Page_Translation($linguator);
+if ( $easywptranslator->model->has_languages() ) {
+    class_exists(EWT_Page_Translation::class) && new EWT_Page_Translation($easywptranslator);
 }

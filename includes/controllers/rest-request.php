@@ -1,75 +1,75 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Controllers;
+namespace EasyWPTranslator\Includes\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Base\LMAT_Base;
-use Linguator\Includes\Helpers\LMAT_Default_Term;
-use Linguator\Includes\Filters\LMAT_Filters;
-use Linguator\Includes\Filters\LMAT_Filters_Links;
-use Linguator\Includes\Filters\LMAT_Filters_Sanitization;
-use Linguator\Includes\Filters\LMAT_Filters_Widgets_Options;
-use Linguator\Admin\Controllers\LMAT_Admin_Links;
-use Linguator\Frontend\Controllers\LMAT_Frontend_Nav_Menu;
+use EasyWPTranslator\Includes\Base\EWT_Base;
+use EasyWPTranslator\Includes\Helpers\EWT_Default_Term;
+use EasyWPTranslator\Includes\Filters\EWT_Filters;
+use EasyWPTranslator\Includes\Filters\EWT_Filters_Links;
+use EasyWPTranslator\Includes\Filters\EWT_Filters_Sanitization;
+use EasyWPTranslator\Includes\Filters\EWT_Filters_Widgets_Options;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin_Links;
+use EasyWPTranslator\Frontend\Controllers\EWT_Frontend_Nav_Menu;
 
 
 
 /**
- * Main Linguator class for REST API requests, accessible from @see LMAT().
+ * Main EasyWPTranslator class for REST API requests, accessible from @see EWT().
  *
  *  
  */
 #[AllowDynamicProperties]
-class LMAT_REST_Request extends LMAT_Base {
+class EWT_REST_Request extends EWT_Base {
 	/**
-	 * @var LMAT_Language|false|null A `LMAT_Language` when defined, `false` otherwise. `null` until the language
+	 * @var EWT_Language|false|null A `EWT_Language` when defined, `false` otherwise. `null` until the language
 	 *                              definition process runs.
 	 */
 	public $curlang;
 
 	/**
-	 * @var LMAT_Default_Term|null
+	 * @var EWT_Default_Term|null
 	 */
 	public $default_term;
 
 	/**
-	 * @var LMAT_Filters|null
+	 * @var EWT_Filters|null
 	 */
 	public $filters;
 
 	/**
-	 * @var LMAT_Filters_Links|null
+	 * @var EWT_Filters_Links|null
 	 */
 	public $filters_links;
 
 	/**
-	 * @var LMAT_Admin_Links|null
+	 * @var EWT_Admin_Links|null
 	 */
 	public $links;
 
 	/**
-	 * @var LMAT_Nav_Menu|null
+	 * @var EWT_Nav_Menu|null
 	 */
 	public $nav_menu;
 
 	/**
-	 * @var LMAT_Static_Pages|null
+	 * @var EWT_Static_Pages|null
 	 */
 	public $static_pages;
 
 	/**
-	 * @var LMAT_Filters_Widgets_Options|null
+	 * @var EWT_Filters_Widgets_Options|null
 	 */
 	public $filters_widgets_options;
 
 	/**
-	 * @var LMAT_Filters_Sanitization|null
+	 * @var EWT_Filters_Sanitization|null
 	 */
 	public $filters_sanitization;
 
@@ -122,7 +122,7 @@ class LMAT_REST_Request extends LMAT_Base {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Links_Model $links_model Reference to the links model.
+	 * @param EWT_Links_Model $links_model Reference to the links model.
 	 */
 	public function __construct( &$links_model ) {
 		parent::__construct( $links_model );
@@ -130,7 +130,7 @@ class LMAT_REST_Request extends LMAT_Base {
 		// Static front page and page for posts.
 		// Early instantiated to be able to correctly initialize language properties.
 		if ( 'page' === get_option( 'show_on_front' ) ) {
-			$this->static_pages = new LMAT_Static_Pages( $this );
+			$this->static_pages = new EWT_Static_Pages( $this );
 		}
 
 		$this->model->set_languages_ready();
@@ -146,7 +146,7 @@ class LMAT_REST_Request extends LMAT_Base {
 	public function init() {
 		parent::init();
 
-		$this->default_term = new LMAT_Default_Term( $this );
+		$this->default_term = new EWT_Default_Term( $this );
 		$this->default_term->add_hooks();
 
 		if ( ! $this->model->has_languages() ) {
@@ -156,12 +156,12 @@ class LMAT_REST_Request extends LMAT_Base {
 		add_filter( 'rest_pre_dispatch', array( $this, 'set_language' ), 10, 3 );
 		add_filter( 'rest_request_before_callbacks', array( $this, 'set_filters_sanitization' ) );
 
-		$this->filters_links           = new LMAT_Filters_Links( $this );
-		$this->filters                 = new LMAT_Filters( $this );
-		$this->filters_widgets_options = new LMAT_Filters_Widgets_Options( $this );
+		$this->filters_links           = new EWT_Filters_Links( $this );
+		$this->filters                 = new EWT_Filters( $this );
+		$this->filters_widgets_options = new EWT_Filters_Widgets_Options( $this );
 
-		$this->links    = new LMAT_Admin_Links( $this );
-		$this->nav_menu = new LMAT_Frontend_Nav_Menu( $this ); // For auto added pages to menu.
+		$this->links    = new EWT_Admin_Links( $this );
+		$this->nav_menu = new EWT_Frontend_Nav_Menu( $this ); // For auto added pages to menu.
 	}
 
 	/**
@@ -190,10 +190,10 @@ class LMAT_REST_Request extends LMAT_Base {
 
 		if ( ! empty( $this->curlang ) ) {
 			/** This action is documented in frontend/choose-lang.php */
-			do_action( 'lmat_language_defined', $this->curlang->slug, $this->curlang );
+			do_action( 'ewt_language_defined', $this->curlang->slug, $this->curlang );
 		} else {
-			/** This action is documented in include/class-linguator.php */
-			do_action( 'lmat_no_language_defined' ); // To load overridden textdomains.
+			/** This action is documented in include/class-easywptranslator.php */
+			do_action( 'ewt_no_language_defined' ); // To load overridden textdomains.
 		}
 
 		return $result;
@@ -216,7 +216,7 @@ class LMAT_REST_Request extends LMAT_Base {
 		}
 
 		if ( ! empty( $language ) ) {
-			$this->filters_sanitization = new LMAT_Filters_Sanitization( $language->locale );
+			$this->filters_sanitization = new EWT_Filters_Sanitization( $language->locale );
 		}
 
 		return $response;

@@ -9,7 +9,7 @@ import { languageSwitcherOptions } from '../utils'
 
 const Switcher = ({ data, setData }) => {
 
-     const [selectedLanguageSwitchers, setSelectedLanguageSwitchers] = React.useState(data.lmat_language_switcher_options || ['default']);
+     const [selectedLanguageSwitchers, setSelectedLanguageSwitchers] = React.useState(data.ewt_language_switcher_options || ['default']);
      const [handleButtonDisabled, setHandleButtonDisabled] = React.useState(true);
 
      const arraysEqualIgnoreOrder = (arr1, arr2) => {
@@ -24,9 +24,9 @@ const Switcher = ({ data, setData }) => {
 
     // Check for changes and update button state
     useEffect(() => {
-        const hasChanges = !arraysEqualIgnoreOrder(selectedLanguageSwitchers, data.lmat_language_switcher_options || ['default']);
+        const hasChanges = !arraysEqualIgnoreOrder(selectedLanguageSwitchers, data.ewt_language_switcher_options || ['default']);
         setHandleButtonDisabled(!hasChanges);
-    }, [selectedLanguageSwitchers, data.lmat_language_switcher_options]);
+    }, [selectedLanguageSwitchers, data.ewt_language_switcher_options]);
 
     //Handle Checkboxes of Language Switcher
     const handleLanguageSwitcherChange = (switcher) => {
@@ -41,11 +41,11 @@ const Switcher = ({ data, setData }) => {
     function SaveSettings() {
         try {
             let apiBody = {
-                lmat_language_switcher_options : selectedLanguageSwitchers
+                ewt_language_switcher_options : selectedLanguageSwitchers
             }
 
             const response = apiFetch({
-                path: 'lmat/v1/settings',
+                path: 'ewt/v1/settings',
                 method: 'POST',
                 'headers': {
                     'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const Switcher = ({ data, setData }) => {
                 })
 
         } catch (error) {
-            toast.error(error.message || __("Something went wrong", "easy-web-translator"));
+            toast.error(error.message || __("Something went wrong", "easy-wp-translator"));
         }
     }
 
@@ -66,7 +66,7 @@ const Switcher = ({ data, setData }) => {
         <Container className='bg-white p-10 rounded-lg' cols="1" containerType='grid'>
             <Container className='flex items-center'>
                 <Container.Item className='flex w-full justify-between px-4 gap-6'>
-                    <h1 className='font-bold'>{__('Language Switcher Widget Configuration', 'easy-web-translator')}</h1>
+                    <h1 className='font-bold'>{__('Language Switcher Widget Configuration', 'easy-wp-translator')}</h1>
                     <Button
                         disabled={handleButtonDisabled}
                         className=""
@@ -77,7 +77,7 @@ const Switcher = ({ data, setData }) => {
                         onClick={SaveSettings}
                         variant="primary"
                     >
-                        {__('Save Settings', 'easy-web-translator')}
+                        {__('Save Settings', 'easy-wp-translator')}
                     </Button>
                 </Container.Item>
             </Container>
@@ -85,10 +85,10 @@ const Switcher = ({ data, setData }) => {
             <Container.Item className='p-6 rounded-lg' style={{ border: "1px solid #e5e7eb" }}>
                 <Label size='md' className='font-bold flex items-center gap-2'>
                     <Settings className="flex-shrink-0 size-5 text-icon-secondary" />
-                    {__('Widget Types', 'easy-web-translator')}
+                    {__('Widget Types', 'easy-wp-translator')}
                 </Label>
                 <Label variant='help'>
-                    {__('Enable or disable different types of language switcher . You can enable multiple  types to provide different options for displaying the language switcher.', 'easy-web-translator')}
+                    {__('Enable or disable different types of language switcher . You can enable multiple  types to provide different options for displaying the language switcher.', 'easy-wp-translator')}
                 </Label>
                 <div className='flex flex-col gap-2' style={{ marginTop: "20px" }}>
                     {
@@ -97,16 +97,16 @@ const Switcher = ({ data, setData }) => {
                                 <div className='switcher p-6 rounded-lg'>
                                     <Container.Item>
                                         <h3 className='flex items-center gap-2'>
-                                            {__(switcher.label, 'easy-web-translator')}
+                                            {__(switcher.label, 'easy-wp-translator')}
                                         </h3>
                                         <p>
-                                            {__(switcher.subheading, 'easy-web-translator')}
+                                            {__(switcher.subheading, 'easy-wp-translator')}
                                         </p>
                                     </Container.Item>
                                     <Container.Item className='flex items-center justify-end' style={{ paddingRight: '30%' }}>
                                         <Switch
                                             aria-label={`Switch for ${switcher.label}`}
-                                        id={`lmat_language_switcher_${switcher.value}`}
+                                        id={`ewt_language_switcher_${switcher.value}`}
                                         onChange={() => handleLanguageSwitcherChange(switcher.value)}
                                         size="sm"
                                         value={selectedLanguageSwitchers.includes(switcher.value)}
@@ -131,7 +131,7 @@ const Switcher = ({ data, setData }) => {
                         onClick={SaveSettings}
                         variant="primary"
                     >
-                        {__('Save Settings', 'easy-web-translator')}
+                        {__('Save Settings', 'easy-wp-translator')}
                     </Button>
 
                 </Container.Item>

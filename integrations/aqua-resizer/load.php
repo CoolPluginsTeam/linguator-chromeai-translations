@@ -2,7 +2,7 @@
 /**
  * Loads the integration with Aqua Resizer.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/aqua-resizer.php';
 
-use Linguator\Integrations\aqua_resizer\LMAT_Aqua_Resizer;
-use Linguator\Integrations\LMAT_Integrations;
+use EasyWPTranslator\Integrations\aqua_resizer\EWT_Aqua_Resizer;
+use EasyWPTranslator\Integrations\EWT_Integrations;
 
-LMAT_Integrations::instance()->aq_resizer = new LMAT_Aqua_Resizer();
-LMAT_Integrations::instance()->aq_resizer->init();
+EWT_Integrations::instance()->aq_resizer = new EWT_Aqua_Resizer();
+EWT_Integrations::instance()->aq_resizer->init();

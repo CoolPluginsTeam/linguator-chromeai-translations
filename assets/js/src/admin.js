@@ -1,7 +1,7 @@
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 import { ajaxFilter } from './lib/ajax-filter/index.js';
 
-ajaxFilter( lmat_admin?.ajax_filter );
+ajaxFilter( ewt_admin?.ajax_filter );

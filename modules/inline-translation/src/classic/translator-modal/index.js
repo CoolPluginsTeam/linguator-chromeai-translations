@@ -1,9 +1,9 @@
 const ClassicWidgetTranslator = (props) => {
   const value = props.getContent();
 
-  const activePageLanguage = window.lmatInlineTranslation?.pageLanguage || 'en';
+  const activePageLanguage = window.ewtInlineTranslation?.pageLanguage || 'en';
 
-  const TranslatorModal = window?.lmatInlineTranslation?.TranslatorModal;
+  const TranslatorModal = window?.ewtInlineTranslation?.TranslatorModal;
 
   if (!TranslatorModal) {
     return <div>TranslatorModal not found</div>;

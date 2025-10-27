@@ -1,21 +1,21 @@
-    button.elementor-button.lmat-page-translation-button:enabled {
+    button.elementor-button.ewt-page-translation-button:enabled {
         border-radius: 0px;
         color: rgb(12, 13, 14);
         background-color: #F0ABFC
     }
 
-    button.elementor-button.lmat-page-translation-button:enabled:hover {
+    button.elementor-button.ewt-page-translation-button:enabled:hover {
         background-color: rgb(235, 142, 251);
     }
 
-    button.elementor-button.lmat-page-translation-button:disabled {
+    button.elementor-button.ewt-page-translation-button:disabled {
         cursor: default;
         border-radius: 0px;
         color: rgb(12, 13, 14);
     }
 
     /* Footer Close Button */
-    button.lmat-page-translation-setting-close {
+    button.ewt-page-translation-setting-close {
         margin-top: .9rem;
         font-size: 1rem;
         padding: .1rem .4rem;
@@ -23,7 +23,7 @@
         opacity: .7;
     }
 
-    button.lmat-page-translation-setting-close:hover {
+    button.ewt-page-translation-setting-close:hover {
         opacity: 1;
     }
 
@@ -53,6 +53,6 @@
         cursor: pointer;
     }
 
-    #lmat_page_translationstrings_model .save_btn_cont button:not([disabled])::before {
+    #ewt_page_translationstrings_model .save_btn_cont button:not([disabled])::before {
         line-height: 14px !important;
     }

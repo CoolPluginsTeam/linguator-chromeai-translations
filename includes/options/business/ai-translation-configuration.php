@@ -1,16 +1,16 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Options\Abstract_Option;
-use Linguator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Options\Abstract_Option;
+use EasyWPTranslator\Includes\Options\Options;
 
 /**
  * Class defining post types list option.
@@ -116,6 +116,6 @@ class Ai_Translation_Configuration extends Abstract_Option {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'List of post types to translate.', 'easy-web-translator' );
+		return __( 'List of post types to translate.', 'easy-wp-translator' );
 	}
 }

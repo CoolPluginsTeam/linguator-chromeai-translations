@@ -64,11 +64,11 @@ const ScrollAnimation = (props) => {
  * Updates the translated content in the string container based on the provided translation object.
  */
 const updateTranslatedContent = ({provider, startTime, endTime}) => {
-    const container = document.getElementById("lmat_page_translation_strings_model");
-    const stringContainer = container.querySelector('.lmat_page_translation_string_container');
+    const container = document.getElementById("ewt_page_translation_strings_model");
+    const stringContainer = container.querySelector('.ewt_page_translation_string_container');
     const translatedData = stringContainer.querySelectorAll('td.translate[data-string-type]:not([data-translate-status="translated"])');
     const totalTranslatedData = translatedData.length;
-    const AllowedMetaFields = select('block-lmatPageTranslation/translate').getAllowedMetaFields();
+    const AllowedMetaFields = select('block-ewtPageTranslation/translate').getAllowedMetaFields();
 
     translatedData.forEach((ele, index) => {
         const translatedText = ele.innerText;
@@ -78,13 +78,13 @@ const updateTranslatedContent = ({provider, startTime, endTime}) => {
 
         SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText, provider: provider, AllowedMetaFields });
 
-        const translationEntry = select('block-lmatPageTranslation/translate').getTranslationInfo().translateData[provider];
+        const translationEntry = select('block-ewtPageTranslation/translate').getTranslationInfo().translateData[provider];
         const previousTargetStringCount = translationEntry && translationEntry.targetStringCount ? translationEntry.targetStringCount : 0;
         const previousTargetWordCount = translationEntry && translationEntry.targetWordCount ? translationEntry.targetWordCount : 0;
         const previousTargetCharacterCount = translationEntry && translationEntry.targetCharacterCount ? translationEntry.targetCharacterCount : 0;
 
         if (translatedText.trim() !== '' && translatedText.trim().length > 0) {
-            dispatch('block-lmatPageTranslation/translate').translationInfo({ targetStringCount: previousTargetStringCount + sourceText.trim().split(/(?<=[.!?]+)\s+/).length, targetWordCount: previousTargetWordCount + sourceText.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length, targetCharacterCount: previousTargetCharacterCount + sourceText.trim().length, provider: provider });
+            dispatch('block-ewtPageTranslation/translate').translationInfo({ targetStringCount: previousTargetStringCount + sourceText.trim().split(/(?<=[.!?]+)\s+/).length, targetWordCount: previousTargetWordCount + sourceText.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length, targetCharacterCount: previousTargetCharacterCount + sourceText.trim().length, provider: provider });
         }
 
         if(index === totalTranslatedData - 1){
@@ -106,15 +106,15 @@ const updateTranslatedContent = ({provider, startTime, endTime}) => {
  * @param {Function} translateStatus - The function to call when the translation is complete.
  */
 const onCompleteTranslation = ({container,provider, startTime, endTime, translateStatus, modalRenderId}) => {
-    const conainer=document.querySelector(`#lmat-page-translation-${provider}-strings-modal.modal-container[data-render-id="${modalRenderId}"]`);
+    const conainer=document.querySelector(`#ewt-page-translation-${provider}-strings-modal.modal-container[data-render-id="${modalRenderId}"]`);
 
 
     if(!conainer){
         return;
     }
 
-    container.querySelector(".lmat_page_translation_translate_progress").style.display = "none";
-    container.querySelector(".lmat_page_translation_string_container").style.animation = "none";
+    container.querySelector(".ewt_page_translation_translate_progress").style.display = "none";
+    container.querySelector(".ewt_page_translation_string_container").style.animation = "none";
     document.body.style.top = '0';
 
     const saveButton = container.querySelector('button.save_it');
@@ -140,14 +140,14 @@ const ModalStringScroll = (translateStatus,provider,modalRenderId) => {
     let translateComplete = false;
     AddProgressBar(provider);
 
-    const container = document.getElementById("lmat_page_translation_strings_model");
-    const stringContainer = container.querySelector('.lmat_page_translation_string_container');
+    const container = document.getElementById("ewt_page_translation_strings_model");
+    const stringContainer = container.querySelector('.ewt_page_translation_string_container');
 
     stringContainer.scrollTop = 0;
     const scrollHeight = stringContainer.scrollHeight;
 
     if (scrollHeight !== undefined && scrollHeight > 100) {
-        document.querySelector(".lmat_page_translation_translate_progress").style.display = "block";
+        document.querySelector(".ewt_page_translation_translate_progress").style.display = "block";
 
         setTimeout(() => {
             const scrollSpeed = Math.ceil((scrollHeight / stringContainer?.offsetHeight)) * 2000;

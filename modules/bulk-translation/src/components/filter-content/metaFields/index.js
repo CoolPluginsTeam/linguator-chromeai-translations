@@ -34,7 +34,7 @@ const filterMetaFields = async ({ metaFields, service, postId, storeDispatch, al
 
     const metaFieldsLoop = async (key, index) => {
         if (allowedMetaFields &&allowedMetaFields[key] && allowedMetaFields[key].status) {
-            const undefinedKey = 'metaFields_lmat_' + key;
+            const undefinedKey = 'metaFields_ewt_' + key;
             if (allowedMetaFields[key].type === 'string') {
                 const originalValue = metaFields[key];
                 let value = originalValue;
@@ -56,7 +56,7 @@ const filterMetaFields = async ({ metaFields, service, postId, storeDispatch, al
     const storeObjectMetaFields = async (keys, value, allowedMetaFields) => {
         const runLoopAsyncInner = async (key) => {
             if(typeof value[key] === 'string'){
-                const uniqueKey = 'metaFields_lmat_' + keys.join('_lmat_bulk_content_temp_')+'_lmat_bulk_content_temp_'+key;
+                const uniqueKey = 'metaFields_ewt_' + keys.join('_ewt_bulk_content_temp_')+'_ewt_bulk_content_temp_'+key;
                 const originalValue=value[key];
                 let filterdValue = originalValue;
 

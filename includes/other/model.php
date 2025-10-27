@@ -1,31 +1,31 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Includes\Other;
+namespace EasyWPTranslator\Includes\Other;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 
-use Linguator\Includes\Models\Languages;
-use Linguator\Includes\Models\Post_Types;
-use Linguator\Includes\Models\Taxonomies;
-use Linguator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Models\Languages;
+use EasyWPTranslator\Includes\Models\Post_Types;
+use EasyWPTranslator\Includes\Models\Taxonomies;
+use EasyWPTranslator\Includes\Options\Options;
 
 // Link model classes
-use Linguator\Includes\Services\Links\LMAT_Links_Model;
-use Linguator\Includes\Services\Links\LMAT_Links_Default;
-use Linguator\Includes\Services\Links\LMAT_Links_Directory;
-use Linguator\Includes\Services\Links\LMAT_Links_Subdomain;
-use Linguator\Includes\Services\Links\LMAT_Links_Domain;
-use Linguator\Includes\Helpers\LMAT_Format_Util;
-use Linguator\Includes\Helpers\LMAT_Cache;
-use Linguator\Includes\Models\Translatable\LMAT_Translatable_Object;
-use Linguator\Includes\Models\Translatable\LMAT_Translatable_Objects;
-use Linguator\Includes\Models\Translated\LMAT_Translated_Post;
-use Linguator\Includes\Models\Translated\LMAT_Translated_Term;
+use EasyWPTranslator\Includes\Services\Links\EWT_Links_Model;
+use EasyWPTranslator\Includes\Services\Links\EWT_Links_Default;
+use EasyWPTranslator\Includes\Services\Links\EWT_Links_Directory;
+use EasyWPTranslator\Includes\Services\Links\EWT_Links_Subdomain;
+use EasyWPTranslator\Includes\Services\Links\EWT_Links_Domain;
+use EasyWPTranslator\Includes\Helpers\EWT_Format_Util;
+use EasyWPTranslator\Includes\Helpers\EWT_Cache;
+use EasyWPTranslator\Includes\Models\Translatable\EWT_Translatable_Object;
+use EasyWPTranslator\Includes\Models\Translatable\EWT_Translatable_Objects;
+use EasyWPTranslator\Includes\Models\Translated\EWT_Translated_Post;
+use EasyWPTranslator\Includes\Models\Translated\EWT_Translated_Term;
 
 
 
@@ -38,26 +38,26 @@ use Linguator\Includes\Models\Translated\LMAT_Translated_Term;
  * @method array              get_languages_list(array $args = array())           Returns the list of available languages. See `Model\Languages::get_list()`.
  * @method bool               are_languages_ready()                               Tells if get_languages_list() can be used. See `Model\Languages::are_ready()`.
  * @method void               set_languages_ready()                               Sets the internal property `$languages_ready` to `true`, telling that get_languages_list() can be used. See `Model\Languages::set_ready()`.
- * @method LMAT_Language|false get_language(mixed $value)                          Returns the language by its term_id, tl_term_id, slug or locale. See `Model\Languages::get()`.
+ * @method EWT_Language|false get_language(mixed $value)                          Returns the language by its term_id, tl_term_id, slug or locale. See `Model\Languages::get()`.
  * @method true|WP_Error      add_language(array $args)                           Adds a new language and creates a default category for this language. See `Model\Languages::add()`.
  * @method bool               delete_language(int $lang_id)                       Deletes a language. See `Model\Languages::delete()`.
  * @method true|WP_Error      update_language(array $args)                        Updates language properties. See `Model\Languages::update()`.
- * @method LMAT_Language|false get_default_language()                              Returns the default language. See `Model\Languages::get_default()`.
+ * @method EWT_Language|false get_default_language()                              Returns the default language. See `Model\Languages::get_default()`.
  * @method void               update_default_lang(string $slug)                   Updates the default language. See `Model\Languages::update_default()`.
  * @method void               maybe_create_language_terms()                       Maybe adds the missing language terms for 3rd party language taxonomies. See `Model\Languages::maybe_create_terms()`.
  * @method string[]           get_translated_post_types(bool $filter = true)      Returns post types that need to be translated. See `Model\Post_Types::get_translated()`.
- * @method bool               is_translated_post_type(string|string[] $post_type) Returns true if Linguator manages languages and translations for this post type. See `Model\Post_Types::is_translated()`.
+ * @method bool               is_translated_post_type(string|string[] $post_type) Returns true if EasyWPTranslator manages languages and translations for this post type. See `Model\Post_Types::is_translated()`.
  * @method string[]           get_translated_taxonomies(bool $filter = true)      Returns taxonomies that need to be translated. See `Model\Taxonomies::get_translated()`.
- * @method bool               is_translated_taxonomy(string|string[] $tax)        Returns true if Linguator manages languages and translations for this taxonomy. See `Model\Taxonomies::is_translated()`.
+ * @method bool               is_translated_taxonomy(string|string[] $tax)        Returns true if EasyWPTranslator manages languages and translations for this taxonomy. See `Model\Taxonomies::is_translated()`.
  * @method string[]           get_filtered_taxonomies(bool $filter = true)        Return taxonomies that need to be filtered (post_format like). See `Model\Taxonomies::get_filtered()`.
- * @method bool               is_filtered_taxonomy(string|string[] $tax)          Returns true if Linguator filters this taxonomy per language. See `Model\Taxonomies::is_filtered()`.
+ * @method bool               is_filtered_taxonomy(string|string[] $tax)          Returns true if EasyWPTranslator filters this taxonomy per language. See `Model\Taxonomies::is_filtered()`.
  * @method string[]           get_filtered_taxonomies_query_vars()                Returns the query vars of all filtered taxonomies. See `Model\Taxonomies::get_filtered_query_vars()`.
  */
-class LMAT_Model {
+class EWT_Model {
 	/**
 	 * Internal non persistent cache object.
 	 *
-	 * @var LMAT_Cache<mixed>
+	 * @var EWT_Cache<mixed>
 	 */
 	public $cache;
 
@@ -73,21 +73,21 @@ class LMAT_Model {
 	 *
 	 *  
 	 *
-	 * @var LMAT_Translatable_Objects
+	 * @var EWT_Translatable_Objects
 	 */
 	public $translatable_objects;
 
 	/**
 	 * Translated post model.
 	 *
-	 * @var LMAT_Translated_Post
+	 * @var EWT_Translated_Post
 	 */
 	public $post;
 
 	/**
 	 * Translated term model.
 	 *
-	 * @var LMAT_Translated_Term
+	 * @var EWT_Translated_Term
 	 */
 	public $term;
 
@@ -99,14 +99,14 @@ class LMAT_Model {
 	public $languages;
 
 	/**
-	 * Model for taxonomies translated by Linguator.
+	 * Model for taxonomies translated by EasyWPTranslator.
 	 *
 	 * @var Post_Types
 	 */
 	public $post_types;
 
 	/**
-	 * Model for taxonomies filtered/translated by Linguator.
+	 * Model for taxonomies filtered/translated by EasyWPTranslator.
 	 *
 	 * @var Taxonomies
 	 */
@@ -120,16 +120,16 @@ class LMAT_Model {
 	 *  
 	 *   Type of parameter `$options` changed from `array` to `Options`.
 	 *
-	 * @param Options $options Linguator options.
+	 * @param Options $options EasyWPTranslator options.
 	 */
 	public function __construct( Options &$options ) {
 		$this->options              = &$options;
-		$this->cache                = new LMAT_Cache();
-		$this->translatable_objects = new LMAT_Translatable_Objects();
+		$this->cache                = new EWT_Cache();
+		$this->translatable_objects = new EWT_Translatable_Objects();
 		$this->languages            = new Languages( $this->options, $this->translatable_objects, $this->cache );
 
-		$this->post = $this->translatable_objects->register( new LMAT_Translated_Post( $this ) ); // Translated post sub model.
-		$this->term = $this->translatable_objects->register( new LMAT_Translated_Term( $this ) ); // Translated term sub model.
+		$this->post = $this->translatable_objects->register( new EWT_Translated_Post( $this ) ); // Translated post sub model.
+		$this->term = $this->translatable_objects->register( new EWT_Translated_Term( $this ) ); // Translated term sub model.
 
 		$this->post_types = new Post_Types( $this->post );
 		$this->taxonomies = new Taxonomies( $this->term );
@@ -186,7 +186,7 @@ class LMAT_Model {
 		$debug = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions
 		trigger_error( // phpcs:ignore WordPress.PHP.DevelopmentFunctions
 			sprintf(
-				'Call to undefined function LMAT()->model->%1$s() in %2$s on line %3$s' . "\nError handler",
+				'Call to undefined function EWT()->model->%1$s() in %2$s on line %3$s' . "\nError handler",
 				esc_html( $name ),
 				esc_html( $debug[0]['file'] ?? '' ),
 				absint( $debug[0]['line'] ?? 0 )
@@ -207,7 +207,7 @@ class LMAT_Model {
 	 * @return void
 	 */
 	public function clean_languages_cache( $term = 0, $taxonomy = null ): void {
-		if ( empty( $taxonomy ) || 'lmat_language' === $taxonomy ) {
+		if ( empty( $taxonomy ) || 'ewt_language' === $taxonomy ) {
 			$this->languages->clean_cache();
 		}
 	}
@@ -235,11 +235,11 @@ class LMAT_Model {
 	 *  
 	 *
 	 * @param string[]           $clauses The list of sql clauses in terms query.
-	 * @param LMAT_Language|false $lang    LMAT_Language object.
+	 * @param EWT_Language|false $lang    EWT_Language object.
 	 * @return string[]                   Modified list of clauses.
 	 */
 	public function terms_clauses( $clauses, $lang ) {
-		if ( ! empty( $lang ) && false === strpos( $clauses['join'], 'lmat_tr' ) ) {
+		if ( ! empty( $lang ) && false === strpos( $clauses['join'], 'ewt_tr' ) ) {
 			$clauses['join'] .= $this->term->join_clause();
 			$clauses['where'] .= $this->term->where_clause( $lang );
 		}
@@ -256,7 +256,7 @@ class LMAT_Model {
 	 * @param string              $term_name The term name.
 	 * @param string              $taxonomy  Taxonomy name.
 	 * @param int                 $parent    Parent term id.
-	 * @param string|LMAT_Language $language  The language slug or object.
+	 * @param string|EWT_Language $language  The language slug or object.
 	 * @return int The `term_id` of the found term. 0 otherwise.
 	 *
 	 * @phpstan-return int<0, max>
@@ -292,7 +292,7 @@ class LMAT_Model {
 
 		// Filter terms by language using WordPress functions
 		foreach ( $terms as $term_id ) {
-			$term_languages = wp_get_object_terms( $term_id, 'lmat_language', array( 'fields' => 'slugs' ) );
+			$term_languages = wp_get_object_terms( $term_id, 'ewt_language', array( 'fields' => 'slugs' ) );
 			
 			if ( ! is_wp_error( $term_languages ) && in_array( $language->slug, $term_languages, true ) ) {
 				return (int) $term_id;
@@ -308,7 +308,7 @@ class LMAT_Model {
 	 *  
 	 *
 	 * @param string              $slug     The term slug to test.
-	 * @param string|LMAT_Language $language The language slug or object.
+	 * @param string|EWT_Language $language The language slug or object.
 	 * @param string              $taxonomy Optional taxonomy name.
 	 * @param int                 $parent   Optional parent term id.
 	 * @return int The `term_id` of the found term. 0 otherwise.
@@ -344,7 +344,7 @@ class LMAT_Model {
 
 		// Filter terms by language using WordPress functions
 		foreach ( $terms as $term_id ) {
-			$term_languages = wp_get_object_terms( $term_id, 'lmat_language', array( 'fields' => 'slugs' ) );
+			$term_languages = wp_get_object_terms( $term_id, 'ewt_language', array( 'fields' => 'slugs' ) );
 			
 			if ( ! is_wp_error( $term_languages ) && in_array( $language->slug, $term_languages, true ) ) {
 				return (int) $term_id;
@@ -359,7 +359,7 @@ class LMAT_Model {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language $lang LMAT_Language instance.
+	 * @param EWT_Language $lang EWT_Language instance.
 	 * @param array        $q    {
 	 *   WP_Query arguments:
 	 *
@@ -409,7 +409,7 @@ class LMAT_Model {
 			$q['post_type'] = array( 'post' ); // We *need* a post type.
 		}
 
-		$cache_key = $this->cache->get_unique_key( 'lmat_count_posts_', $q );
+		$cache_key = $this->cache->get_unique_key( 'ewt_count_posts_', $q );
 		$counts    = wp_cache_get( $cache_key, 'counts' );
 
 		if ( ! is_array( $counts ) ) {
@@ -509,19 +509,19 @@ class LMAT_Model {
 				$args = $base_args;
 				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Required for language-specific post counting in multilingual plugin
 				$args['tax_query'][] = array(
-					'taxonomy' => 'lmat_language',
+					'taxonomy' => 'ewt_language',
 					'field'    => 'term_id',
-					'terms'    => $language->get_tax_prop( 'lmat_language', 'term_id' ),
+					'terms'    => $language->get_tax_prop( 'ewt_language', 'term_id' ),
 				);
 
 				$query = new \WP_Query( $args );
-				$counts[ $language->get_tax_prop( 'lmat_language', 'term_taxonomy_id' ) ] = $query->found_posts;
+				$counts[ $language->get_tax_prop( 'ewt_language', 'term_taxonomy_id' ) ] = $query->found_posts;
 			}
 
 			wp_cache_set( $cache_key, $counts, 'counts' );
 		}
 		
-		$term_taxonomy_id = $lang->get_tax_prop( 'lmat_language', 'term_taxonomy_id' );
+		$term_taxonomy_id = $lang->get_tax_prop( 'ewt_language', 'term_taxonomy_id' );
 		return empty( $counts[ $term_taxonomy_id ] ) ? 0 : $counts[ $term_taxonomy_id ];
 	}
 
@@ -530,35 +530,35 @@ class LMAT_Model {
 	 *
 	 *  
 	 *
-	 * @return LMAT_Links_Model
+	 * @return EWT_Links_Model
 	 */
-	public function get_links_model(): LMAT_Links_Model {
+	public function get_links_model(): EWT_Links_Model {
 		$c = array( 'Directory', 'Directory', 'Subdomain', 'Domain' );
-		$class = get_option( 'permalink_structure' ) ? 'LMAT_Links_' . $c[ $this->options['force_lang'] ] : 'LMAT_Links_Default';
+		$class = get_option( 'permalink_structure' ) ? 'EWT_Links_' . $c[ $this->options['force_lang'] ] : 'EWT_Links_Default';
 
 		/**
 		 * Filters the links model class to use.
-		 * /!\ this filter is fired *before* the $linguator object is available.
+		 * /!\ this filter is fired *before* the $easywptranslator object is available.
 		 *
 		 *  
 		 *
-		 * @param string $class A class name: LMAT_Links_Default, LMAT_Links_Directory, LMAT_Links_Subdomain, LMAT_Links_Domain.
+		 * @param string $class A class name: EWT_Links_Default, EWT_Links_Directory, EWT_Links_Subdomain, EWT_Links_Domain.
 		 */
-		$class = apply_filters( 'lmat_links_model', $class );
+		$class = apply_filters( 'ewt_links_model', $class );
 
 		// Handle namespace resolution for dynamic class instantiation
 		switch ( $class ) {
-			case 'LMAT_Links_Default':
-				$class = LMAT_Links_Default::class;
+			case 'EWT_Links_Default':
+				$class = EWT_Links_Default::class;
 				break;
-			case 'LMAT_Links_Directory':
-				$class = LMAT_Links_Directory::class;
+			case 'EWT_Links_Directory':
+				$class = EWT_Links_Directory::class;
 				break;
-			case 'LMAT_Links_Subdomain':
-				$class = LMAT_Links_Subdomain::class;
+			case 'EWT_Links_Subdomain':
+				$class = EWT_Links_Subdomain::class;
 				break;
-			case 'LMAT_Links_Domain':
-				$class = LMAT_Links_Domain::class;
+			case 'EWT_Links_Domain':
+				$class = EWT_Links_Domain::class;
 				break;
 		}
 
@@ -573,7 +573,7 @@ class LMAT_Model {
 	 *   Added the `$types` parameter.
 	 *
 	 * @param int      $limit Optional. Max number of IDs to return. Defaults to -1 (no limit).
-	 * @param string[] $types Optional. Types to handle (@see LMAT_Translatable_Object::get_type()). Defaults to
+	 * @param string[] $types Optional. Types to handle (@see EWT_Translatable_Object::get_type()). Defaults to
 	 *                        an empty array (all types).
 	 * @return int[][]|false {
 	 *     IDs of objects without language.
@@ -594,10 +594,10 @@ class LMAT_Model {
 		 *   Added the `$types` parameter.
 		 *
 		 * @param int      $limit Max number of IDs to retrieve from the database.
-		 * @param string[] $types Types to handle (@see LMAT_Translatable_Object::get_type()). An empty array means all
+		 * @param string[] $types Types to handle (@see EWT_Translatable_Object::get_type()). An empty array means all
 		 *                        types.
 		 */
-		$limit   = apply_filters( 'lmat_get_objects_with_no_lang_limit', $limit, $types );
+		$limit   = apply_filters( 'ewt_get_objects_with_no_lang_limit', $limit, $types );
 		$limit   = $limit < 1 ? -1 : max( (int) $limit, 1 );
 		$objects = array();
 
@@ -625,10 +625,10 @@ class LMAT_Model {
 		 *
 		 * @param int[][]|false $objects List of lists of object IDs, `false` if no IDs found.
 		 * @param int           $limit   Max number of IDs to retrieve from the database.
-		 * @param string[]      $types   Types to handle (@see LMAT_Translatable_Object::get_type()). An empty array
+		 * @param string[]      $types   Types to handle (@see EWT_Translatable_Object::get_type()). An empty array
 		 *                               means all types.
 		 */
-		return apply_filters( 'lmat_get_objects_with_no_lang', $objects, $limit, $types );
+		return apply_filters( 'ewt_get_objects_with_no_lang', $objects, $limit, $types );
 	}
 
 	/**
@@ -668,13 +668,13 @@ class LMAT_Model {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language|null $lang  Optional. The language to assign to objects. Defaults to `null` (default language).
-	 * @param string[]          $types Optional. Types to handle (@see LMAT_Translatable_Object::get_type()). Defaults
+	 * @param EWT_Language|null $lang  Optional. The language to assign to objects. Defaults to `null` (default language).
+	 * @param string[]          $types Optional. Types to handle (@see EWT_Translatable_Object::get_type()). Defaults
 	 *                                 to an empty array (all types).
 	 * @return void
 	 */
 	public function set_language_in_mass( $lang = null, array $types = array() ): void {
-		if ( ! $lang instanceof LMAT_Language ) {
+		if ( ! $lang instanceof EWT_Language ) {
 			$lang = $this->languages->get_default();
 
 			if ( empty( $lang ) ) {
@@ -682,7 +682,7 @@ class LMAT_Model {
 			}
 		}
 
-		// 1000 is an arbitrary value that will be filtered by `lmat_get_objects_with_no_lang_limit`.
+		// 1000 is an arbitrary value that will be filtered by `ewt_get_objects_with_no_lang_limit`.
 		$nolang = $this->get_objects_with_no_lang( 1000, $types );
 
 		if ( empty( $nolang ) ) {
@@ -717,13 +717,13 @@ class LMAT_Model {
 		$this->set_language_in_mass( $lang, $types_with_objects );
 	}
 
-	public function is_lmat_translatable_current_page($current_screen) :bool{
-		global $linguator;
-		if(!$linguator || !property_exists($linguator, 'model')){
+	public function is_ewt_translatable_current_page($current_screen) :bool{
+		global $easywptranslator;
+		if(!$easywptranslator || !property_exists($easywptranslator, 'model')){
 			return false;
 		}
-		$translated_post_types = $linguator->model->get_translated_post_types();
-		$translated_taxonomies = $linguator->model->get_translated_taxonomies();
+		$translated_post_types = $easywptranslator->model->get_translated_post_types();
+		$translated_taxonomies = $easywptranslator->model->get_translated_taxonomies();
 		$translated_post_types = array_values($translated_post_types);
 		$translated_taxonomies = array_values($translated_taxonomies);
 		$translated_post_types=array_filter($translated_post_types, function($post_type){

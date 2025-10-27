@@ -6,13 +6,13 @@ const SettingModalFooter = (props) => {
 
     return (
         <div className="modal-footer">
-            <p className="lmat-page-translation-error-message" style={{ marginBottom: '.5rem' }}>
+            <p className="ewt-page-translation-error-message" style={{ marginBottom: '.5rem' }}>
                 {sprintf(
-                    __("This will replace your current %(postType)s with a %(target)s translation of the original %(source)s content.", 'easy-web-translator'),
+                    __("This will replace your current %(postType)s with a %(target)s translation of the original %(source)s content.", 'easy-wp-translator'),
                     { postType: postType, source: sourceLangName, target: targetLangName }
                 )}
             </p>
-            <button className="lmat-page-translation-setting-close button button-primary" onClick={() => setSettingVisibility(false)}>{__("Close", 'easy-web-translator')}</button>
+            <button className="ewt-page-translation-setting-close button button-primary" onClick={() => setSettingVisibility(false)}>{__("Close", 'easy-wp-translator')}</button>
         </div>
     );
 }

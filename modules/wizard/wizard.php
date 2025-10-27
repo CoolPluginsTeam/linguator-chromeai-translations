@@ -1,41 +1,41 @@
 <?php
 
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Modules\Wizard;
+namespace EasyWPTranslator\Modules\Wizard;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Admin\Controllers\LMAT_Admin_Notices;
-use Linguator\Includes\Other\LMAT_Language;
-use Linguator\Admin\Controllers\LMAT_Admin_Model;
-use Linguator\Includes\Core\Linguator;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin_Notices;
+use EasyWPTranslator\Includes\Other\EWT_Language;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin_Model;
+use EasyWPTranslator\Includes\Core\EasyWPTranslator;
 use WP_Error;
 
 
 
-use Linguator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Options\Options;
 
 /**
- * Main class for Linguator wizard.
+ * Main class for EasyWPTranslator wizard.
  *
  *  
  */
-class LMAT_Wizard
+class EWT_Wizard
 {
 	/**
 	 * Reference to the model object
 	 *
-	 * @var LMAT_Admin_Model
+	 * @var EWT_Admin_Model
 	 */
 	protected $model;
 
 	/**
-	 * Reference to the Linguator options array.
+	 * Reference to the EasyWPTranslator options array.
 	 *
 	 * @var array
 	 */
@@ -66,13 +66,13 @@ class LMAT_Wizard
 	/**
 	 * Constructor
 	 *
-	 * @param object $linguator Reference to Linguator global object.
+	 * @param object $easywptranslator Reference to EasyWPTranslator global object.
 	 *  
 	 */
-	public function __construct(&$linguator)
+	public function __construct(&$easywptranslator)
 	{
-		$this->options = &$linguator->options;
-		$this->model   = &$linguator->model;
+		$this->options = &$easywptranslator->options;
+		$this->model   = &$easywptranslator->model;
 
 		// Add admin menu for wizard page
 		add_action('admin_menu', array($this, 'add_admin_menu'));
@@ -81,9 +81,9 @@ class LMAT_Wizard
 		add_action('admin_init', array($this, 'setup_wizard_page'), 40);
 
 		// Add Wizard submenu.
-		add_filter('lmat_settings_tabs', array($this, 'settings_tabs'), 10, 1);
+		add_filter('ewt_settings_tabs', array($this, 'settings_tabs'), 10, 1);
 		// Add filter to select screens where to display the notice.
-		add_filter('lmat_can_display_notice', array($this, 'can_display_notice'), 10, 2);
+		add_filter('ewt_can_display_notice', array($this, 'can_display_notice'), 10, 2);
 	}
 
 	/**
@@ -96,21 +96,21 @@ class LMAT_Wizard
 	{
 		// Add the wizard page as a top-level admin menu item (hidden from menu)
 		add_menu_page(
-			esc_html__('Linguator Setup Wizard', 'easy-web-translator'),
-			esc_html__('Linguator Setup', 'easy-web-translator'),
+			esc_html__('EasyWPTranslator Setup Wizard', 'easy-wp-translator'),
+			esc_html__('EasyWPTranslator Setup', 'easy-wp-translator'),
 			'manage_options',
-			'lmat_wizard',
+			'ewt_wizard',
 			array($this, 'display_wizard_page'),
 			'dashicons-translation',
 			null
 		);
 		
 		// Remove from admin menu to hide it (we only want it accessible via direct URL)
-		remove_menu_page('lmat_wizard');
+		remove_menu_page('ewt_wizard');
 	}
 
 	/**
-	 * Save an activation transient when Linguator is activating to redirect to the wizard
+	 * Save an activation transient when EasyWPTranslator is activating to redirect to the wizard
 	 *
 	 *  
 	 *
@@ -124,7 +124,7 @@ class LMAT_Wizard
 		if (wp_doing_ajax() || $network_wide || ! empty($options['version'])) {
 			return;
 		}
-		set_transient('lmat_activation_redirect', 1, 30);
+		set_transient('ewt_activation_redirect', 1, 30);
 	}
 
 	/**
@@ -142,21 +142,21 @@ class LMAT_Wizard
 			return;
 		}
 		
-		if (get_transient('lmat_activation_redirect')) {
+		if (get_transient('ewt_activation_redirect')) {
 			$do_redirect = true;
-			if ((isset($_GET['page']) && 'lmat_wizard' === sanitize_key($_GET['page'])) || isset($_GET['activate-multi'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				delete_transient('lmat_activation_redirect');
+			if ((isset($_GET['page']) && 'ewt_wizard' === sanitize_key($_GET['page'])) || isset($_GET['activate-multi'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				delete_transient('ewt_activation_redirect');
 				$do_redirect = false;
 			}
 
 			if ($do_redirect) {
 				// Delete transient before redirecting to prevent repeated checks
-				delete_transient('lmat_activation_redirect');
+				delete_transient('ewt_activation_redirect');
 				wp_safe_redirect(
 					sanitize_url(
 						add_query_arg(
 							array(
-								'page' => 'lmat_wizard',
+								'page' => 'ewt_wizard',
 							),
 							admin_url('admin.php')
 						)
@@ -168,7 +168,7 @@ class LMAT_Wizard
 	}
 
 	/**
-	 * Add an admin Linguator submenu to access the wizard
+	 * Add an admin EasyWPTranslator submenu to access the wizard
 	 *
 	 *  
 	 *
@@ -178,8 +178,8 @@ class LMAT_Wizard
 	public function settings_tabs($tabs)
 	{
 		// Only show the wizard tab if setup is not complete
-		if (!get_option('lmat_setup_complete')) {
-			$tabs['wizard'] = esc_html__('Setup Guide', 'easy-web-translator');
+		if (!get_option('ewt_setup_complete')) {
+			$tabs['wizard'] = esc_html__('Setup Guide', 'easy-wp-translator');
 		}
 		return $tabs;
 	}
@@ -189,7 +189,7 @@ class LMAT_Wizard
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language[] $languages List of language objects.
+	 * @param EWT_Language[] $languages List of language objects.
 	 * @return bool
 	 */
 	public function is_media_step_displayable($languages)
@@ -222,12 +222,12 @@ class LMAT_Wizard
 	public function setup_wizard_page()
 	{
 
-		if (!get_option('lmat_setup_complete')) {
-			LMAT_Admin_Notices::add_notice('wizard', $this->wizard_notice());
+		if (!get_option('ewt_setup_complete')) {
+			EWT_Admin_Notices::add_notice('wizard', $this->wizard_notice());
 		}
 
 		$this->redirect_to_wizard();
-		if (! Linguator::is_wizard()) {
+		if (! EasyWPTranslator::is_wizard()) {
 			return;
 		}
 
@@ -285,19 +285,19 @@ class LMAT_Wizard
 	private function get_language_switcher_options() {
 		$language_switcher_options = array(
             array(
-                'label' => __( 'Classic (Menu, Widgets) Based', 'easy-web-translator' ),
+                'label' => __( 'Classic (Menu, Widgets) Based', 'easy-wp-translator' ),
                 'value' => 'default',
 				'subheading' => 'Standard language switcher widget that can be added to widget areas and sidebars.'
             ),
             array(
-                'label' => __( 'Block Based', 'easy-web-translator' ),
+                'label' => __( 'Block Based', 'easy-wp-translator' ),
                 'value' => 'block',
 				'subheading' => 'Gutenberg block widget for the block editor, compatible with modern WordPress themes.'
             )
         );
-        if(lmat_is_plugin_active('elementor/elementor.php')){
+        if(ewt_is_plugin_active('elementor/elementor.php')){
             $language_switcher_options[] = array(
-                'label' => __( 'Elementor Widget Based', 'easy-web-translator' ),
+                'label' => __( 'Elementor Widget Based', 'easy-wp-translator' ),
                 'value' => 'elementor',
 				'subheading' => 'Specialized widget for Elementor page builder with enhanced styling and customization options.'
             );
@@ -316,7 +316,7 @@ class LMAT_Wizard
 	{
 		// Check permissions
 		if (! current_user_can('manage_options')) {
-			wp_die(esc_html__('Sorry, you are not allowed to manage options for this site.', 'easy-web-translator'));
+			wp_die(esc_html__('Sorry, you are not allowed to manage options for this site.', 'easy-wp-translator'));
 		}
 
 		$steps          = $this->steps;
@@ -334,9 +334,9 @@ class LMAT_Wizard
 	 */
 	public function enqueue_scripts()
 	{
-		if (Linguator::is_wizard()) {
+		if (EasyWPTranslator::is_wizard()) {
 			// Enqueue React-based settings for settings tabs
-			$asset_file = plugin_dir_path(LINGUATOR_ROOT_FILE) . 'admin/assets/frontend/setup/setup.asset.php';
+			$asset_file = plugin_dir_path(EASY_WP_TRANSLATOR_ROOT_FILE) . 'admin/assets/frontend/setup/setup.asset.php';
 			$asset = require $asset_file;
 			$languages = $this->model->get_languages_list();
 			$home_page_id = get_option('page_on_front');
@@ -362,8 +362,8 @@ class LMAT_Wizard
 			];
 			// Enqueue React-based settings script
 			wp_enqueue_script(
-				'lmat_setup',
-				plugins_url('admin/assets/frontend/setup/setup.js', LINGUATOR_ROOT_FILE),
+				'ewt_setup',
+				plugins_url('admin/assets/frontend/setup/setup.js', EASY_WP_TRANSLATOR_ROOT_FILE),
 				$asset['dependencies'],
 				$asset['version'],
 				true
@@ -371,21 +371,21 @@ class LMAT_Wizard
 
 			// Provide ajaxurl previously added inline in the view
 			wp_add_inline_script(
-				'lmat_setup',
+				'ewt_setup',
 				'var ajaxurl = ' . wp_json_encode( esc_url( admin_url( 'admin-ajax.php', 'relative' ) ) ) . ';',
 				'before' // Add the script before the main script
 			);
 
 			// Localize script with settings data
 			wp_localize_script(
-				'lmat_setup',
-				'lmat_setup',
+				'ewt_setup',
+				'ewt_setup',
 				array(
-					'dismiss_notice' => esc_html__('Dismiss this notice.', 'easy-web-translator'),
-					'api_url'        => rest_url('lmat/v1/'),
+					'dismiss_notice' => esc_html__('Dismiss this notice.', 'easy-wp-translator'),
+					'api_url'        => rest_url('ewt/v1/'),
 					'nonce'          => wp_create_nonce('wp_rest'),
 					'languages'      => $this->model->get_languages_list(),
-					'all_languages'  => \Linguator\Settings\Controllers\LMAT_Settings::get_predefined_languages(),
+					'all_languages'  => \EasyWPTranslator\Settings\Controllers\EWT_Settings::get_predefined_languages(),
 					'media'          => $is_media_step_displayable,
 					'untranslated_contents' => $is_untranslated_contents_displayable,
 					'home_page' => $is_home_page_displayable,
@@ -397,26 +397,26 @@ class LMAT_Wizard
 			);
 
 			wp_localize_script(
-				'lmat_setup',
-				'lmat_setup_flag_data',
+				'ewt_setup',
+				'ewt_setup_flag_data',
 				[
-					'flagsUrl' => plugin_dir_url(LINGUATOR_ROOT_FILE) . '/assets/flags/',
+					'flagsUrl' => plugin_dir_url(EASY_WP_TRANSLATOR_ROOT_FILE) . '/assets/flags/',
 					'nonce' => wp_create_nonce('wp_rest'),
-					'restUrl' => rest_url('lmat/v1/'),
+					'restUrl' => rest_url('ewt/v1/'),
 				]
 			);
 			// Enqueue styles
 			wp_enqueue_style(
-				'lmat_setup',
-				plugins_url('admin/assets/css/build/main.css', LINGUATOR_ROOT_FILE),
+				'ewt_setup',
+				plugins_url('admin/assets/css/build/main.css', EASY_WP_TRANSLATOR_ROOT_FILE),
 				array(),
-				LINGUATOR_VERSION
+				EASY_WP_TRANSLATOR_VERSION
 			);
 			
 			// Enqueue custom font for icons using centralized method
-			global $linguator;
-			if ( $linguator && method_exists( $linguator, 'enqueue_linguator_font' ) ) {
-				$linguator->enqueue_linguator_font();
+			global $easywptranslator;
+			if ( $easywptranslator && method_exists( $easywptranslator, 'enqueue_easywptranslator_font' ) ) {
+				$easywptranslator->enqueue_easywptranslator_font();
 			}
 		}
 	}
@@ -472,8 +472,8 @@ class LMAT_Wizard
 				)
 			);
 			$translations[$language] = $id;
-			lmat_set_post_language($id, $language);
+			ewt_set_post_language($id, $language);
 		}
-		lmat_save_post_translations($translations);
+		ewt_save_post_translations($translations);
 	}
 }

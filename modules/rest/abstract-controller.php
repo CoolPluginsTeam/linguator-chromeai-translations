@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Modules\REST;
+namespace EasyWPTranslator\Modules\REST;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -64,7 +64,7 @@ abstract class Abstract_Controller extends WP_REST_Controller {
 		if ( ! $nonce || ! wp_verify_nonce( $nonce, 'wp_rest' ) ) {
 			return new WP_Error(
 				'rest_invalid_nonce',
-				__( 'Security check failed. Please refresh the page and try again.', 'easy-web-translator' ),
+				__( 'Security check failed. Please refresh the page and try again.', 'easy-wp-translator' ),
 				array( 'status' => 403 )
 			);
 		}

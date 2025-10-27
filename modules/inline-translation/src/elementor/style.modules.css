@@ -1,4 +1,4 @@
-.lmatEtTranslatorWrapper {
+.ewtEtTranslatorWrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -10,7 +10,7 @@
           align-items: center;
 }
 
-.lmatEtTranslatorWrapper .lmatEtTranslatorContainer {
+.ewtEtTranslatorWrapper .ewtEtTranslatorContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -28,7 +28,7 @@
   margin-right: .3rem;
 }
 
-.lmatEtTranslatorWrapper .lmatEtTranslatorContainer .lmatEtTranslatorIcon {
+.ewtEtTranslatorWrapper .ewtEtTranslatorContainer .ewtEtTranslatorIcon {
   fill: #f0abfc;
 }
 /*# sourceMappingURL=style.modules.css.map */

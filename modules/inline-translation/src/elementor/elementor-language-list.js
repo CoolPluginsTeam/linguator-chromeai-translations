@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
  */
 const addLanguageListButton = () => {
   // Check if button already exists
-  if (jQuery('.lmat-language-list-button').length > 0) {
+  if (jQuery('.ewt-language-list-button').length > 0) {
     return;
   }
 
@@ -14,16 +14,16 @@ const addLanguageListButton = () => {
   let targetLang = '';
   
   // Try to get from global object first
-  if (window.lmatPageTranslationGlobal?.target_lang && window.lmatPageTranslationGlobal?.languageObject) {
-    targetLang = window.lmatPageTranslationGlobal.target_lang;
-    const languageObject = window.lmatPageTranslationGlobal.languageObject;
+  if (window.ewtPageTranslationGlobal?.target_lang && window.ewtPageTranslationGlobal?.languageObject) {
+    targetLang = window.ewtPageTranslationGlobal.target_lang;
+    const languageObject = window.ewtPageTranslationGlobal.languageObject;
     targetFlagUrl = languageObject[targetLang] ? languageObject[targetLang].flag : '';
   } else {
     // Get from post data via REST API
     const postId = elementor.config?.document?.id || elementor.config?.post?.id;
     if (postId) {
       // Fetch language information from REST API
-      fetch(`/wp-json/lmat/v1/post-language/${postId}`)
+      fetch(`/wp-json/ewt/v1/post-language/${postId}`)
         .then(response => {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -35,7 +35,7 @@ const addLanguageListButton = () => {
           targetFlagUrl = data.flag_url;
           
           // Update the button with the flag
-          const button = jQuery('.lmat-language-list-button');
+          const button = jQuery('.ewt-language-list-button');
           if (button.length > 0 && targetFlagUrl) {
             button.html(`<img src="${targetFlagUrl}" alt="${targetLang}"/>`);
           }
@@ -49,10 +49,10 @@ const addLanguageListButton = () => {
   
   // Create button HTML
   const buttonHtml = targetFlagUrl 
-    ? `<button class="lmat-language-list-button elementor-button" title="Open Language List">
+    ? `<button class="ewt-language-list-button elementor-button" title="Open Language List">
          <img src="${targetFlagUrl}" alt="${targetLang}"/>
        </button>`
-    : `<button class="lmat-language-list-button elementor-button" title="Open Language List">
+    : `<button class="ewt-language-list-button elementor-button" title="Open Language List">
          Languages
        </button>`;
 
@@ -70,7 +70,7 @@ const addLanguageListButton = () => {
         $e.run('panel/page-settings');
         // Then trigger click on the language panel section
         setTimeout(() => {
-          const languageSection = jQuery('.elementor-control-lmat_language_panel_controls');
+          const languageSection = jQuery('.elementor-control-ewt_language_panel_controls');
           if (languageSection.length > 0) {
             buttonElement.toggleClass('panel-active');
             languageSection.trigger('click');

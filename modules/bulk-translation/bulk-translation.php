@@ -1,14 +1,14 @@
 <?php
-namespace Linguator\Modules\Bulk_Translation;
+namespace EasyWPTranslator\Modules\Bulk_Translation;
 
-use Linguator\Admin\Controllers\LMAT_Admin;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'LMAT_Bulk_Translation' ) ) :
-	class LMAT_Bulk_Translation {
+if ( ! class_exists( 'EWT_Bulk_Translation' ) ) :
+	class EWT_Bulk_Translation {
 
 		private static $instance;
 
@@ -20,9 +20,9 @@ if ( ! class_exists( 'LMAT_Bulk_Translation' ) ) :
 		}
 		
 		public function __construct() {
-			global $linguator;
+			global $easywptranslator;
 			
-			if ( $linguator instanceof LMAT_Admin ) {
+			if ( $easywptranslator instanceof EWT_Admin ) {
 				add_action( 'current_screen', array( $this, 'bulk_translate_btn' ) );
 				add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_bulk_translate_assets' ) );
 			}
@@ -30,14 +30,14 @@ if ( ! class_exists( 'LMAT_Bulk_Translation' ) ) :
 		}
 
 		public function bulk_translate_btn( $current_screen ) {
-			global $linguator;
+			global $easywptranslator;
 
-			if ( ! $linguator || ! property_exists( $linguator, 'model' ) ) {
+			if ( ! $easywptranslator || ! property_exists( $easywptranslator, 'model' ) ) {
 				return;
 			}
 
-			$translated_post_types = $linguator->model->get_translated_post_types();
-			$translated_taxonomies = $linguator->model->get_translated_taxonomies();
+			$translated_post_types = $easywptranslator->model->get_translated_post_types();
+			$translated_taxonomies = $easywptranslator->model->get_translated_taxonomies();
 
 			$translated_post_types = array_keys($translated_post_types);
 			$translated_taxonomies = array_keys($translated_taxonomies);
@@ -63,16 +63,16 @@ if ( ! class_exists( 'LMAT_Bulk_Translation' ) ) :
                 return;
             }
 
-			add_filter( "views_{$current_screen->id}", array( $this, 'lmat_bulk_translate_button' ) );
+			add_filter( "views_{$current_screen->id}", array( $this, 'ewt_bulk_translate_button' ) );
 
 			add_action( 'admin_footer', array( $this, 'bulk_translate_container' ) );
 		}
 
-		public function lmat_bulk_translate_button( $views ) {
+		public function ewt_bulk_translate_button( $views ) {
 			$providers_config_class=' providers-config-no-active';
 
-			if(property_exists(LMAT(), 'options') && isset(LMAT()->options['ai_translation_configuration']['provider'])){
-				$providers = LMAT()->options['ai_translation_configuration']['provider'];
+			if(property_exists(EWT(), 'options') && isset(EWT()->options['ai_translation_configuration']['provider'])){
+				$providers = EWT()->options['ai_translation_configuration']['provider'];
 
 				foreach($providers as $provider => $value){
 					if($value){
@@ -82,19 +82,19 @@ if ( ! class_exists( 'LMAT_Bulk_Translation' ) ) :
 				}
 			}
 
-			echo "<button class='button lmat-bulk-translate-btn".esc_attr($providers_config_class)."' style='display:none;'>Bulk Translate</button>";
+			echo "<button class='button ewt-bulk-translate-btn".esc_attr($providers_config_class)."' style='display:none;'>Bulk Translate</button>";
 
 			return $views;
 		}
 
 		public function bulk_translate_container() {
-			echo "<div id='lmat-bulk-translate-wrapper'></div>";
+			echo "<div id='ewt-bulk-translate-wrapper'></div>";
 		}
 
 		public function enqueue_bulk_translate_assets() {
-			global $linguator;
+			global $easywptranslator;
         
-        if(!$linguator || !property_exists($linguator, 'model')){
+        if(!$easywptranslator || !property_exists($easywptranslator, 'model')){
             return;
         }
         
@@ -104,8 +104,8 @@ if ( ! class_exists( 'LMAT_Bulk_Translation' ) ) :
 			return;
 		}
 
-		$translated_post_types = $linguator->model->get_translated_post_types();
-		$translated_taxonomies = $linguator->model->get_translated_taxonomies();
+		$translated_post_types = $easywptranslator->model->get_translated_post_types();
+		$translated_taxonomies = $easywptranslator->model->get_translated_taxonomies();
 
 		$translated_post_types = array_keys($translated_post_types);
 		$translated_taxonomies = array_keys($translated_taxonomies);
@@ -131,7 +131,7 @@ if ( ! class_exists( 'LMAT_Bulk_Translation' ) ) :
             return;
         }
 
-        $post_label=__("Pages", "autopoly-ai-translation-for-linguator-pro");
+        $post_label=__("Pages", "autopoly-ai-translation-for-easywptranslator-pro");
         $taxonomy_page=false;
 
         if(isset($current_screen->post_type)){
@@ -155,23 +155,23 @@ if ( ! class_exists( 'LMAT_Bulk_Translation' ) ) :
             }
         }
 
-        $editor_script_asset = include LINGUATOR_DIR . '/admin/assets/bulk-translate/index.asset.php';
+        $editor_script_asset = include EASY_WP_TRANSLATOR_DIR . '/admin/assets/bulk-translate/index.asset.php';
 
 		if ( ! is_array( $editor_script_asset ) ) {
 			$editor_script_asset = array(
 				'dependencies' => array(),
-				'version'      => LINGUATOR_VERSION,
+				'version'      => EASY_WP_TRANSLATOR_VERSION,
 			);
 		}
                 
         $rtl=function_exists('is_rtl') ? is_rtl() : false;
         $css_file=$rtl ? 'index-rtl.css' : 'index.css';
       
-		wp_enqueue_script( 'lmat-bulk-translate', plugins_url( 'admin/assets/bulk-translate/index.js', LINGUATOR_ROOT_FILE ), array_merge( $editor_script_asset['dependencies'] ), $editor_script_asset['version'], true );
+		wp_enqueue_script( 'ewt-bulk-translate', plugins_url( 'admin/assets/bulk-translate/index.js', EASY_WP_TRANSLATOR_ROOT_FILE ), array_merge( $editor_script_asset['dependencies'] ), $editor_script_asset['version'], true );
    
-		wp_enqueue_style( 'lmat-bulk-translate', plugins_url( 'admin/assets/bulk-translate/index.css', LINGUATOR_ROOT_FILE ), array(), $editor_script_asset['version'] );
+		wp_enqueue_style( 'ewt-bulk-translate', plugins_url( 'admin/assets/bulk-translate/index.css', EASY_WP_TRANSLATOR_ROOT_FILE ), array(), $editor_script_asset['version'] );
 
-        $languages = LMAT()->model->get_languages_list();
+        $languages = EWT()->model->get_languages_list();
 
         $lang_object = array();
         foreach ($languages as $lang) {
@@ -180,8 +180,8 @@ if ( ! class_exists( 'LMAT_Bulk_Translation' ) ) :
 
 		$providers=array();
 
-		if(property_exists(LMAT(), 'options') && isset(LMAT()->options['ai_translation_configuration']['provider'])){
-			$providers = LMAT()->options['ai_translation_configuration']['provider'];
+		if(property_exists(EWT(), 'options') && isset(EWT()->options['ai_translation_configuration']['provider'])){
+			$providers = EWT()->options['ai_translation_configuration']['provider'];
 		}
 
 		$active_providers=array();
@@ -195,14 +195,14 @@ if ( ! class_exists( 'LMAT_Bulk_Translation' ) ) :
 
 		$slug_translation_option = 'title_translate';
 
-		if(property_exists(LMAT(), 'options') && isset(LMAT()->options['ai_translation_configuration']['slug_translation_option'])){
-			$slug_translation_option = LMAT()->options['ai_translation_configuration']['slug_translation_option'];
+		if(property_exists(EWT(), 'options') && isset(EWT()->options['ai_translation_configuration']['slug_translation_option'])){
+			$slug_translation_option = EWT()->options['ai_translation_configuration']['slug_translation_option'];
 		}
 
 		$extra_data = array();
 
         if(!$taxonomy_page || empty($taxonomy_page)){
-            if (!isset(LMAT()->options['sync']) || (isset(LMAT()->options['sync']) && !in_array('post_meta', LMAT()->options['sync']))) {
+            if (!isset(EWT()->options['sync']) || (isset(EWT()->options['sync']) && !in_array('post_meta', EWT()->options['sync']))) {
                 $extra_data['postMetaSync'] = 'false';
             } else {
                 $extra_data['postMetaSync'] = 'true';
@@ -210,18 +210,18 @@ if ( ! class_exists( 'LMAT_Bulk_Translation' ) ) :
         }
 
         wp_localize_script(
-            'lmat-bulk-translate',
-            'lmatBulkTranslationGlobal',
+            'ewt-bulk-translate',
+            'ewtBulkTranslationGlobal',
             array_merge(array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'languageObject' => $lang_object,
                 'nonce' => wp_create_nonce('wp_rest'),
-                'bulkTranslateRouteUrl' =>  get_rest_url( null, 'lmat/v1/bulk-translate' ),
-                'bulkTranslatePrivateKey' => wp_create_nonce('lmat_bulk_translate_entries_nonce'),
-                'lmat_url'                => plugins_url( '', LINGUATOR_ROOT_FILE ) . '/',
+                'bulkTranslateRouteUrl' =>  get_rest_url( null, 'ewt/v1/bulk-translate' ),
+                'bulkTranslatePrivateKey' => wp_create_nonce('ewt_bulk_translate_entries_nonce'),
+                'ewt_url'                => plugins_url( '', EASY_WP_TRANSLATOR_ROOT_FILE ) . '/',
                 'admin_url' => admin_url(),
                 'post_label' => $post_label,
-                'update_translate_data' => 'lmat_update_translate_data',
+                'update_translate_data' => 'ewt_update_translate_data',
                 'slug_translation_option' => $slug_translation_option,
                 'taxonomy_page' => $taxonomy_page,
 				'providers'                => $active_providers,

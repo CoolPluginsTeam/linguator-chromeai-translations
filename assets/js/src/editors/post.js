@@ -21,7 +21,7 @@ import { useMemo, useState, useRef, useCallback } from '@wordpress/element';
 import { select } from '@wordpress/data';
 import { CirclePlus, SquarePen } from 'lucide-react';
 
-const SIDEBAR_NAME = 'lmat-post-sidebar';
+const SIDEBAR_NAME = 'ewt-post-sidebar';
 
 /**
  * Simple debounce hook
@@ -55,13 +55,13 @@ const getSettings = () => {
     // Provided by PHP in Abstract_Screen::enqueue via wp_add_inline_script
     try {
         // eslint-disable-next-line no-undef
-        if ( typeof lmat_block_editor_plugin_settings !== 'undefined' ) {
+        if ( typeof ewt_block_editor_plugin_settings !== 'undefined' ) {
             // eslint-disable-next-line no-undef
-            return lmat_block_editor_plugin_settings;
+            return ewt_block_editor_plugin_settings;
         }
     } catch (e) {}
-    if ( typeof window !== 'undefined' && window.lmat_block_editor_plugin_settings ) {
-        return window.lmat_block_editor_plugin_settings;
+    if ( typeof window !== 'undefined' && window.ewt_block_editor_plugin_settings ) {
+        return window.ewt_block_editor_plugin_settings;
     }
     return { lang: null, translations_table: {} };
 };
@@ -79,7 +79,7 @@ const LanguageSection = ( { lang, allLanguages } ) => {
     }, [ lang, allLanguages ] );
 
     return (
-        <PanelBody title={ __( 'Language', 'easy-web-translator' ) } initialOpen >
+        <PanelBody title={ __( 'Language', 'easy-wp-translator' ) } initialOpen >
             <Flex align="center">
                 <FlexItem>
                     { lang?.flag_url ? (
@@ -141,7 +141,7 @@ const TranslationRow = ( { row } ) => {
             // Example payload — adjust to match your PHP route/handler.
             // Expect your server to create/update a placeholder translation record’s title.
             await apiFetch({
-                path: '/lmat/v1/translation-title',
+                path: '/ewt/v1/translation-title',
                 method: 'POST',
                 data: {
                     postId: translated_post?.id || null, // if you have it
@@ -153,7 +153,7 @@ const TranslationRow = ( { row } ) => {
             setSaving(false);
         } catch (e) {
             setSaving(false);
-            setError( __( 'Failed to save title. Please try again.', 'easy-web-translator' ) );
+            setError( __( 'Failed to save title. Please try again.', 'easy-wp-translator' ) );
             // Optional: console.error(e);
         }
     }, 2000);
@@ -165,7 +165,7 @@ const TranslationRow = ( { row } ) => {
         if (loadingPages || allPages.length > 0) return;
         try {
             setLoadingPages(true);
-            const pages = await apiFetch({ path: '/lmat/v1/languages/utils/get_all_pages_data' });
+            const pages = await apiFetch({ path: '/ewt/v1/languages/utils/get_all_pages_data' });
             setAllPages(Array.isArray(pages) ? pages : []);
         } catch (e) {
             // ignore
@@ -211,7 +211,7 @@ const TranslationRow = ( { row } ) => {
             setError('');
             const postId = select('core/editor')?.getCurrentPostId?.();
             await apiFetch({
-                path: '/lmat/v1/languages/link-translation',
+                path: '/ewt/v1/languages/link-translation',
                 method: 'POST',
                 data: {
                     source_id: postId,
@@ -221,7 +221,7 @@ const TranslationRow = ( { row } ) => {
             });
             window.location.reload();
         } catch (e) {
-            setError( __( 'Failed to link page. Please try again.', 'easy-web-translator' ) );
+            setError( __( 'Failed to link page. Please try again.', 'easy-wp-translator' ) );
         } finally {
             setLinking(false);
         }
@@ -243,7 +243,7 @@ const TranslationRow = ( { row } ) => {
             const postId = select('core/editor')?.getCurrentPostId?.();
             const postType = select('core/editor')?.getCurrentPostType?.();
             await apiFetch({
-                path: '/lmat/v1/languages/create-translation',
+                path: '/ewt/v1/languages/create-translation',
                 method: 'POST',
                 data: {
                     source_id: postId,
@@ -255,7 +255,7 @@ const TranslationRow = ( { row } ) => {
             // Refresh to reflect new translation and show Edit icon
             window.location.reload();
         } catch (e) {
-            setError( __( 'Failed to create page. Please try again.', 'easy-web-translator' ) );
+            setError( __( 'Failed to create page. Please try again.', 'easy-wp-translator' ) );
         } finally {
             setLinking(false);
         }
@@ -273,38 +273,38 @@ const TranslationRow = ( { row } ) => {
                     <TextControl
                         value={ title }
                         onChange={ handleTitleChange }
-                        placeholder={ __( 'title', 'easy-web-translator' ) }
+                        placeholder={ __( 'title', 'easy-wp-translator' ) }
                         readOnly={ !editable }
                         disabled={ !editable }
                         help={
                             editable
                                 ? ( saving
-                                    ? __( 'Saving…', 'easy-web-translator' )
-                                    : __( 'Type title to save translation.', 'easy-web-translator' )
+                                    ? __( 'Saving…', 'easy-wp-translator' )
+                                    : __( 'Type title to save translation.', 'easy-wp-translator' )
                                   )
-                                : __( 'Modify title via Edit.', 'easy-web-translator' )
+                                : __( 'Modify title via Edit.', 'easy-wp-translator' )
                         }
                     />
                 </FlexItem>
                 <FlexItem style={{paddingTop:'14px'}}>
                     { hasEdit ? (
-                        <a href={ links.edit_link } aria-label={ __( 'Edit translation', 'easy-web-translator' ) } style={ { marginLeft: 8,height: "100%",width: "100%",display: "flex",alignItems: "center",justifyContent: "center" } }>
+                        <a href={ links.edit_link } aria-label={ __( 'Edit translation', 'easy-wp-translator' ) } style={ { marginLeft: 8,height: "100%",width: "100%",display: "flex",alignItems: "center",justifyContent: "center" } }>
                             <SquarePen size={20} />
                         </a>
                     ) : null }
                     { ! hasEdit && (
                         selectedSuggestion ? (
-                            <button onClick={ linkSelected } aria-label={ __( 'Link existing page', 'easy-web-translator' ) } style={ { marginLeft: 8, background: 'transparent', border: 0, padding: 0, cursor: 'pointer' } }>
+                            <button onClick={ linkSelected } aria-label={ __( 'Link existing page', 'easy-wp-translator' ) } style={ { marginLeft: 8, background: 'transparent', border: 0, padding: 0, cursor: 'pointer' } }>
                                 <CirclePlus size={20} />
                             </button>
                         ) : (
                             hasAdd ? (
                                 (title || '').trim().length > 0 ? (
-                                    <button onClick={ createFromTyped } aria-label={ __( 'Create translation from typed title', 'easy-web-translator' ) } style={ { marginLeft: 8, background: 'transparent', border: 0, padding: 0, cursor: 'pointer' } }>
+                                    <button onClick={ createFromTyped } aria-label={ __( 'Create translation from typed title', 'easy-wp-translator' ) } style={ { marginLeft: 8, background: 'transparent', border: 0, padding: 0, cursor: 'pointer' } }>
                                         <CirclePlus size={20} />
                                     </button>
                                 ) : (
-                                    <a href={ links.add_link } aria-label={ __( 'Add translation', 'easy-web-translator' ) } style={ { marginLeft: 8,height: "100%",width: "100%",display: "flex",alignItems: "center",justifyContent: "center" } }>
+                                    <a href={ links.add_link } aria-label={ __( 'Add translation', 'easy-wp-translator' ) } style={ { marginLeft: 8,height: "100%",width: "100%",display: "flex",alignItems: "center",justifyContent: "center" } }>
                                         <CirclePlus size={20} />
                                     </a>
                                 )
@@ -338,7 +338,7 @@ const TranslationRow = ( { row } ) => {
 const TranslationsSection = ( { translations } ) => {
     const rows = Object.values( translations );
     return (
-        <PanelBody title={ __( 'Translations', 'easy-web-translator' ) } initialOpen >
+        <PanelBody title={ __( 'Translations', 'easy-wp-translator' ) } initialOpen >
             { rows.map( ( row ) => (
                 <TranslationRow key={ row.lang.slug } row={ row } />
             ) ) }
@@ -354,9 +354,9 @@ const Sidebar = () => {
     return (
         <>
             <PluginSidebarMoreMenuItem target={ SIDEBAR_NAME }>
-                { __( 'Linguator', 'easy-web-translator' ) }
+                { __( 'EasyWPTranslator', 'easy-wp-translator' ) }
             </PluginSidebarMoreMenuItem>
-            <PluginSidebar name={ SIDEBAR_NAME } title={ __( 'Linguator', 'easy-web-translator' ) }>
+            <PluginSidebar name={ SIDEBAR_NAME } title={ __( 'EasyWPTranslator', 'easy-wp-translator' ) }>
                 <LanguageSection lang={ lang } allLanguages={ translations } />
                 <TranslationsSection translations={ translations } />
             </PluginSidebar>
@@ -529,9 +529,9 @@ if (hasLangParam) {
                                     
                                     // Then try to click our specific sidebar tab
                                     setTimeout(() => {
-                                        const linguatorTab = document.querySelector('button[aria-label*="Linguator"], .components-button[aria-label*="Linguator"]');
-                                        if (linguatorTab) {
-                                            linguatorTab.click();
+                                        const easywptranslatorTab = document.querySelector('button[aria-label*="EasyWPTranslator"], .components-button[aria-label*="EasyWPTranslator"]');
+                                        if (easywptranslatorTab) {
+                                            easywptranslatorTab.click();
                                         }
                                     }, 300);
                                 }
@@ -560,7 +560,7 @@ if (hasLangParam) {
             } else {
                 // As a last resort, try to find and click the sidebar button in DOM
                 setTimeout(() => {
-                    const sidebarButton = document.querySelector(`button[aria-label*="Linguator"], button[data-label*="Linguator"], [data-sidebar="${SIDEBAR_NAME}"]`);
+                    const sidebarButton = document.querySelector(`button[aria-label*="EasyWPTranslator"], button[data-label*="EasyWPTranslator"], [data-sidebar="${SIDEBAR_NAME}"]`);
                     if (sidebarButton) {
                         sidebarButton.click();
                         

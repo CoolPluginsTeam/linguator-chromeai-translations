@@ -41,7 +41,7 @@ const updateClassicContent=async ({source, lang, translatedContent, serviceProvi
             // Escape line break and wrap with marker
             const escapedBreak = match[0];
 
-            result.push(`lmat_bulk_content_temp_${escapedBreak}_lmat_bulk_content_temp`);
+            result.push(`ewt_bulk_content_temp_${escapedBreak}_ewt_bulk_content_temp`);
 
             lastIndex = regex.lastIndex;
         }
@@ -95,13 +95,13 @@ const updateClassicContent=async ({source, lang, translatedContent, serviceProvi
 
             const plainText=!entity && !htmlTag && !isEmptyHtmlTag && !blockCommentTag; 
 
-            if(text !== '' && !text.includes('lmat_bulk_content_temp_') && plainText){
+            if(text !== '' && !text.includes('ewt_bulk_content_temp_') && plainText){
                 const uniqueKey = 'content_classic_index_' + index;
                 const stateValue=selectTranslatedContent(store.getState(), postId, uniqueKey, lang, serviceProvider);
 
                 strings.push(stateValue);
-            } else if (text.includes('lmat_bulk_content_temp_')) {
-                const escapedBreak = text.replace('lmat_bulk_content_temp_', '').replace('_lmat_bulk_content_temp', '');
+            } else if (text.includes('ewt_bulk_content_temp_')) {
+                const escapedBreak = text.replace('ewt_bulk_content_temp_', '').replace('_ewt_bulk_content_temp', '');
                 strings.push(escapedBreak);
             } else {
                 strings.push(text);
@@ -120,7 +120,7 @@ const updateClassicContent=async ({source, lang, translatedContent, serviceProvi
     await updateExcerpt(source, source.excerpt);
     await updatePostContent({content: source.content});
 
-    if("false" === lmatBulkTranslationGlobal.postMetaSync && source.metaFields && Object.keys(source.metaFields).length > 0){
+    if("false" === ewtBulkTranslationGlobal.postMetaSync && source.metaFields && Object.keys(source.metaFields).length > 0){
         source.metaFields=updateMetaFields(source.metaFields, lang, serviceProvider, postId);
       }
 

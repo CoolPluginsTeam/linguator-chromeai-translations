@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Frontend\Filters;
+namespace EasyWPTranslator\Frontend\Filters;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -13,18 +13,18 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Frontend_Filters_Search {
+class EWT_Frontend_Filters_Search {
 	/**
-	 * Instance of a child class of LMAT_Links_Model.
+	 * Instance of a child class of EWT_Links_Model.
 	 *
-	 * @var LMAT_Links_Model
+	 * @var EWT_Links_Model
 	 */
 	public $links_model;
 
 	/**
 	 * Current language.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $curlang;
 
@@ -33,11 +33,11 @@ class LMAT_Frontend_Filters_Search {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->links_model = &$linguator->links_model;
-		$this->curlang = &$linguator->curlang;
+	public function __construct( &$easywptranslator ) {
+		$this->links_model = &$easywptranslator->links_model;
+		$this->curlang = &$easywptranslator->curlang;
 
 		// Adds the language information in the search form
 		add_filter( 'get_search_form', array( $this, 'get_search_form' ), 99 );
@@ -111,9 +111,9 @@ class LMAT_Frontend_Filters_Search {
 		$form .= '<input class="adminbar-input" name="s" id="adminbar-search" type="text" value="" maxlength="150" />';
 		$form .= '<label for="adminbar-search" class="screen-reader-text">' .
 					/* translators: Hidden accessibility text. */
-					esc_html__( 'Search', 'easy-web-translator' ) .
+					esc_html__( 'Search', 'easy-wp-translator' ) .
 				'</label>';
-		$form .= '<input type="submit" class="adminbar-button" value="' . esc_attr__( 'Search', 'easy-web-translator' ) . '" />';
+		$form .= '<input type="submit" class="adminbar-button" value="' . esc_attr__( 'Search', 'easy-wp-translator' ) . '" />';
 		$form .= '</form>';
 
 		$wp_admin_bar->add_node(

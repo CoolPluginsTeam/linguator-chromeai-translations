@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Base;
+namespace EasyWPTranslator\Includes\Base;
 
 
 
@@ -16,22 +16,22 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-use Linguator\Modules\REST\Request;
-use Linguator\Includes\Core\Linguator;
-use Linguator\Includes\Services\Crud\LMAT_CRUD_Posts;
-use Linguator\Includes\Services\Crud\LMAT_CRUD_Terms;
-use Linguator\Includes\Options\LMAT_Translate_Option;
-use Linguator\Includes\Helpers\LMAT_MO;
-use Linguator\Includes\Widgets\LMAT_Widget_Languages;
-use Linguator\Includes\Widgets\LMAT_Widget_Calendar;
-use Linguator\Includes\Other\LMAT_Model;
-use Linguator\Includes\Other\LMAT_Switch_Language;
+use EasyWPTranslator\Modules\REST\Request;
+use EasyWPTranslator\Includes\Core\EasyWPTranslator;
+use EasyWPTranslator\Includes\Services\Crud\EWT_CRUD_Posts;
+use EasyWPTranslator\Includes\Services\Crud\EWT_CRUD_Terms;
+use EasyWPTranslator\Includes\Options\EWT_Translate_Option;
+use EasyWPTranslator\Includes\Helpers\EWT_MO;
+use EasyWPTranslator\Includes\Widgets\EWT_Widget_Languages;
+use EasyWPTranslator\Includes\Widgets\EWT_Widget_Calendar;
+use EasyWPTranslator\Includes\Other\EWT_Model;
+use EasyWPTranslator\Includes\Other\EWT_Switch_Language;
 use WP_Hook;
 
 
 
 #[AllowDynamicProperties]
-abstract class LMAT_Base {
+abstract class EWT_Base {
 	/**
 	 * Stores the plugin options.
 	 *
@@ -40,28 +40,28 @@ abstract class LMAT_Base {
 	public $options;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
 	/**
-	 * Instance of a child class of LMAT_Links_Model.
+	 * Instance of a child class of EWT_Links_Model.
 	 *
-	 * @var LMAT_Links_Model
+	 * @var EWT_Links_Model
 	 */
 	public $links_model;
 
 	/**
 	 * Registers hooks on insert / update post related actions and filters.
 	 *
-	 * @var LMAT_CRUD_Posts|null
+	 * @var EWT_CRUD_Posts|null
 	 */
 	public $posts;
 
 	/**
 	 * Registers hooks on insert / update term related action and filters.
 	 *
-	 * @var LMAT_CRUD_Terms|null
+	 * @var EWT_CRUD_Terms|null
 	 */
 	public $terms;
 	/**
@@ -88,7 +88,7 @@ abstract class LMAT_Base {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Links_Model $links_model Links Model.
+	 * @param EWT_Links_Model $links_model Links Model.
 	 */
 	public function __construct( &$links_model ) {
 		$this->links_model = &$links_model;
@@ -96,14 +96,14 @@ abstract class LMAT_Base {
 		$this->options = &$this->model->options;
 		$this->request     = new Request( $this->model );
 
-		LMAT_Switch_Language::init( $this->model );
+		EWT_Switch_Language::init( $this->model );
 
-		$GLOBALS['l10n_unloaded']['lmat_string'] = true; // Short-circuit _load_textdomain_just_in_time() for 'lmat_string' domain in WP 4.6+
+		$GLOBALS['l10n_unloaded']['ewt_string'] = true; // Short-circuit _load_textdomain_just_in_time() for 'ewt_string' domain in WP 4.6+
 
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) );
 
 		// User defined strings translations
-		add_action( 'lmat_language_defined', array( $this, 'load_strings_translations' ), 5 );
+		add_action( 'ewt_language_defined', array( $this, 'load_strings_translations' ), 5 );
 		add_action( 'change_locale', array( $this, 'load_strings_translations' ) ); // Since WP 4.7
 		add_action( 'personal_options_update', array( $this, 'load_strings_translations' ), 1, 0 ); // Before WP, for confirmation request when changing the user email.
 		add_action( 'lostpassword_post', array( $this, 'load_strings_translations' ), 10, 0 ); // Password reset email.
@@ -121,14 +121,14 @@ abstract class LMAT_Base {
 	 */
 	public function init() {
 		if ( $this->model->has_languages() ) {
-			$this->posts = new LMAT_CRUD_Posts( $this );
-			$this->terms = new LMAT_CRUD_Terms( $this );
+			$this->posts = new EWT_CRUD_Posts( $this );
+			$this->terms = new EWT_CRUD_Terms( $this );
 
 			// WordPress options.
-			new LMAT_Translate_Option( 'blogname', array(), array( 'context' => 'WordPress' ) );
-			new LMAT_Translate_Option( 'blogdescription', array(), array( 'context' => 'WordPress' ) );
-			new LMAT_Translate_Option( 'date_format', array(), array( 'context' => 'WordPress' ) );
-			new LMAT_Translate_Option( 'time_format', array(), array( 'context' => 'WordPress' ) );
+			new EWT_Translate_Option( 'blogname', array(), array( 'context' => 'WordPress' ) );
+			new EWT_Translate_Option( 'blogdescription', array(), array( 'context' => 'WordPress' ) );
+			new EWT_Translate_Option( 'date_format', array(), array( 'context' => 'WordPress' ) );
+			new EWT_Translate_Option( 'time_format', array(), array( 'context' => 'WordPress' ) );
 		}
 	}
 
@@ -140,14 +140,14 @@ abstract class LMAT_Base {
 	 * @return void
 	 */
 	public function widgets_init() {
-		if ( lmat_is_switcher_type_enabled( 'default' ) ) {
-			register_widget( LMAT_Widget_Languages::class );
+		if ( ewt_is_switcher_type_enabled( 'default' ) ) {
+			register_widget( EWT_Widget_Languages::class );
 		}
 
 		// Overwrites the calendar widget to filter posts by language
-		if ( ! defined( 'LMAT_WIDGET_CALENDAR' ) || LMAT_WIDGET_CALENDAR ) {
+		if ( ! defined( 'EWT_WIDGET_CALENDAR' ) || EWT_WIDGET_CALENDAR ) {
 			unregister_widget( 'WP_Widget_Calendar' );
-			register_widget( LMAT_Widget_Calendar::class );
+			register_widget( EWT_Widget_Calendar::class );
 		}
 	}
 
@@ -162,23 +162,23 @@ abstract class LMAT_Base {
 	 */
 	public function load_strings_translations( $locale = '' ) {
 		if ( empty( $locale ) ) {
-			$locale = ( is_admin() && ! Linguator::is_ajax_on_front() ) ? get_user_locale() : get_locale();
+			$locale = ( is_admin() && ! EasyWPTranslator::is_ajax_on_front() ) ? get_user_locale() : get_locale();
 		}
 
 		$language = $this->model->get_language( $locale );
 
 		if ( ! empty( $language ) ) {
-			$mo = new LMAT_MO();
+			$mo = new EWT_MO();
 			$mo->import_from_db( $language );
-			$GLOBALS['l10n']['lmat_string'] = &$mo;
+			$GLOBALS['l10n']['ewt_string'] = &$mo;
 		} else {
-			unset( $GLOBALS['l10n']['lmat_string'] );
+			unset( $GLOBALS['l10n']['ewt_string'] );
 		}
 	}
 
 	/**
 	 * Resets some variables when the blog is switched.
-	 * Applied only if Linguator is active on the new blog.
+	 * Applied only if EasyWPTranslator is active on the new blog.
 	 *
 	 *  
 	 *
@@ -200,14 +200,14 @@ abstract class LMAT_Base {
 	}
 
 	/**
-	 * Checks if Linguator is active on the current blog (useful when the blog is switched).
+	 * Checks if EasyWPTranslator is active on the current blog (useful when the blog is switched).
 	 *
 	 *  
 	 *
 	 * @return bool
 	 */
 	protected function is_active_on_current_site(): bool {
-		return lmat_is_plugin_active( LINGUATOR_BASENAME ) && ! empty( $this->options['version'] );
+		return ewt_is_plugin_active( EASY_WP_TRANSLATOR_BASENAME ) && ! empty( $this->options['version'] );
 	}
 
 	/**
@@ -227,13 +227,13 @@ abstract class LMAT_Base {
 	}
 
 	/**
-	 * Tells whether or not Linguator or third party callbacks are hooked to `customize_register`.
+	 * Tells whether or not EasyWPTranslator or third party callbacks are hooked to `customize_register`.
 	 *
 	 *  
 	 *
 	 * @global $wp_filter
 	 *
-	 * @return bool True if Linguator's callbacks are hooked, false otherwise.
+	 * @return bool True if EasyWPTranslator's callbacks are hooked, false otherwise.
 	 */
 	protected function is_customize_register_hooked() {
 		global $wp_filter;
@@ -244,8 +244,8 @@ abstract class LMAT_Base {
 
 		/*
 		 * 'customize_register' is hooked by:
-		 * @see LMAT_Nav_Menu::create_nav_menu_locations()
-		 * @see LMAT_Frontend_Static_Pages::filter_customizer()
+		 * @see EWT_Nav_Menu::create_nav_menu_locations()
+		 * @see EWT_Frontend_Static_Pages::filter_customizer()
 		 */
 		$floor = 0;
 		if ( ! empty( $this->nav_menu ) && (bool) $wp_filter['customize_register']->has_filter( 'customize_register', array( $this->nav_menu, 'create_nav_menu_locations' ) ) ) {

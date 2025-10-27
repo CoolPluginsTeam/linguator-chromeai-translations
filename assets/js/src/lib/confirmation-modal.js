@@ -1,5 +1,5 @@
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 const languagesList = jQuery( '.post_lang_choice' );
@@ -14,10 +14,10 @@ export const initializeConfirmationModal = () => {
 	const dialogContainer = jQuery(
 		'<div/>',
 		{
-			id: 'lmat-dialog',
+			id: 'ewt-dialog',
 			style: 'display:none;'
 		}
-	).text( __( 'Are you sure you want to change the language of the current content?', 'easy-web-translator' ) );
+	).text( __( 'Are you sure you want to change the language of the current content?', 'easy-wp-translator' ) );
 
 	// Put it after languages list dropdown.
 	// PHPCS ignore dialogContainer is a new safe HTML code generated above.
@@ -47,7 +47,7 @@ export const initializeConfirmationModal = () => {
 				modal: true,
 				draggable: false,
 				resizable: false,
-				title: __( 'Change language', 'easy-web-translator' ),
+				title: __( 'Change language', 'easy-wp-translator' ),
 				minWidth: 600,
 				maxWidth: '100%',
 				open: function ( event, ui ) {
@@ -67,13 +67,13 @@ export const initializeConfirmationModal = () => {
 				},
 				buttons: [
 					{
-						text: __( 'OK', 'easy-web-translator' ),
+						text: __( 'OK', 'easy-wp-translator' ),
 						click: function ( event ) {
 							confirmDialog( 'yes' );
 						}
 					},
 					{
-						text: __( 'Cancel', 'easy-web-translator' ),
+						text: __( 'Cancel', 'easy-wp-translator' ),
 						click: function ( event ) {
 							confirmDialog( 'no' );
 						}
@@ -82,7 +82,7 @@ export const initializeConfirmationModal = () => {
 			};
 
 					// jQuery UI >= 1.12 is available in WP 6.2+ (our minimum version)
-		Object.assign( dialogOptions, { classes: { 'ui-dialog': 'lmat-confirmation-modal' } } );
+		Object.assign( dialogOptions, { classes: { 'ui-dialog': 'ewt-confirmation-modal' } } );
 
 			dialogContainer.dialog( dialogOptions );
 		}

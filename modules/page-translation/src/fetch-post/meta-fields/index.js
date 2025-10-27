@@ -1,10 +1,10 @@
 import { dispatch, select } from "@wordpress/data";
 
 const MetaFieldsFetch = async (props) => {
-    const apiUrl = window?.lmatPageTranslationGlobal?.ajax_url;
+    const apiUrl = window?.ewtPageTranslationGlobal?.ajax_url;
     const apiController = [];
 
-    const contentFetchStatus = select('block-lmatPageTranslation/translate').contentFetchStatus();
+    const contentFetchStatus = select('block-ewtPageTranslation/translate').contentFetchStatus();
     if (contentFetchStatus) {
         return;
     }
@@ -35,13 +35,13 @@ const MetaFieldsFetch = async (props) => {
             return;
         }
         
-        dispatch('block-lmatPageTranslation/translate').allowedMetaFields({ id: key, type, status});
-        dispatch('block-lmatPageTranslation/translate').metaFieldsSaveSource(key, value);
+        dispatch('block-ewtPageTranslation/translate').allowedMetaFields({ id: key, type, status});
+        dispatch('block-ewtPageTranslation/translate').metaFieldsSaveSource(key, value);
     }
     
     const getMetaFields = async () => {
-        const action=window?.lmatPageTranslationGlobal?.get_meta_fields;
-        const meta_fields_key=window?.lmatPageTranslationGlobal?.meta_fields_key;
+        const action=window?.ewtPageTranslationGlobal?.get_meta_fields;
+        const meta_fields_key=window?.ewtPageTranslationGlobal?.meta_fields_key;
         const postId=parseInt(props.postId);
 
         if(!action || !meta_fields_key || !postId){
@@ -94,7 +94,7 @@ const MetaFieldsFetch = async (props) => {
     const storeObjectMetaFields = (keys, value, allowedMetaFields) => {
         Object.keys(value).forEach(key => {
             const keyArr=[...keys, key];
-            const uniqueKey = keyArr.join('_lmat_page_translation_');
+            const uniqueKey = keyArr.join('_ewt_page_translation_');
             if(typeof value[key] === 'string'){
                 const metaValue=value[key];
                
@@ -107,7 +107,7 @@ const MetaFieldsFetch = async (props) => {
         });
     }
     
-    if("false" === window?.lmatPageTranslationGlobal?.postMetaSync){
+    if("false" === window?.ewtPageTranslationGlobal?.postMetaSync){
         await getMetaFields();
     }
 }

@@ -4,7 +4,7 @@ class ClassicTranslationTooltip {
     constructor(contentTinyMCE) {
         this.contentTinyMCE = contentTinyMCE;
         this.reactRoot = null;
-        this.prefix='lmatClassicInlineTranslation';
+        this.prefix='ewtClassicInlineTranslation';
         this.toolTipTop=0;
         this.toolTipLeft=0;
         this.showDebounce=false;
@@ -66,7 +66,7 @@ class ClassicTranslationTooltip {
             const rect = range.getBoundingClientRect();
 
             if (!this.reactRoot) {
-                this.reactRoot = ReactDOM.createRoot(document.getElementById('lmat-classic-inline-translation'));
+                this.reactRoot = ReactDOM.createRoot(document.getElementById('ewt-classic-inline-translation'));
             }
 
             this.toolTipTop=rect.top + 59;
@@ -89,7 +89,7 @@ jQuery(window).on('load', function () {
         if(contentTinyMCE){
 
             const wrapperElement=document.createElement('div');
-            wrapperElement.id = 'lmat-classic-inline-translation';
+            wrapperElement.id = 'ewt-classic-inline-translation';
             document.querySelector('#wp-content-wrap')?.appendChild(wrapperElement);
 
             const classicTranslationTooltip = new ClassicTranslationTooltip(contentTinyMCE);

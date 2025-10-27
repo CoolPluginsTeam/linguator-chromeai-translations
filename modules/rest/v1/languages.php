@@ -1,24 +1,24 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Modules\REST\V1;
+namespace EasyWPTranslator\Modules\REST\V1;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Other\LMAT_Language;
-use Linguator\Includes\Other\LMAT_Model;
-use Linguator\Modules\REST\Abstract_Controller;
-use Linguator\Includes\Models\Translatable\LMAT_Translatable_Objects;
+use EasyWPTranslator\Includes\Other\EWT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Model;
+use EasyWPTranslator\Modules\REST\Abstract_Controller;
+use EasyWPTranslator\Includes\Models\Translatable\EWT_Translatable_Objects;
 use stdClass;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
-use Linguator\Includes\Models\Languages as Languages_Model;
+use EasyWPTranslator\Includes\Models\Languages as Languages_Model;
 
 
 
@@ -34,14 +34,14 @@ class Languages extends Abstract_Controller {
 	private $languages;
 
 	/**
-	 * @var LMAT_Translatable_Objects
+	 * @var EWT_Translatable_Objects
 	 */
 	private $translatable_objects;
 
 	/**
 	 * Reference to the model object
 	 *
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
@@ -52,10 +52,10 @@ class Languages extends Abstract_Controller {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Model $model Linguator's model.
+	 * @param EWT_Model $model EasyWPTranslator's model.
 	 */
-	public function __construct( LMAT_Model $model ) {
-		$this->namespace            = 'lmat/v1';
+	public function __construct( EWT_Model $model ) {
+		$this->namespace            = 'ewt/v1';
 		$this->rest_base            = 'languages';
 		$this->model                = $model;
 		$this->languages            = $model->languages;
@@ -108,7 +108,7 @@ class Languages extends Abstract_Controller {
 			array(
 				'args'   => array(
 					'term_id' => array(
-						'description' => __( 'Unique identifier for the language.', 'easy-web-translator' ),
+						'description' => __( 'Unique identifier for the language.', 'easy-wp-translator' ),
 						'type'        => 'integer',
 					),
 				),
@@ -141,7 +141,7 @@ class Languages extends Abstract_Controller {
 			array(
 				'args'   => array(
 					'slug'    => array(
-						'description' => __( 'Language code - preferably 2-letters ISO 639-1 (for example: en).', 'easy-web-translator' ),
+						'description' => __( 'Language code - preferably 2-letters ISO 639-1 (for example: en).', 'easy-wp-translator' ),
 						'type'        => 'string',
 					),
 				),
@@ -166,7 +166,7 @@ class Languages extends Abstract_Controller {
 				'permission_callback' => array( $this, 'assign_language_permissions_check' ),
 				'args'                => array(
 					'locale' => array(
-						'description' => __( 'Locale of the language to assign.', 'easy-web-translator' ),
+						'description' => __( 'Locale of the language to assign.', 'easy-wp-translator' ),
 						'type'        => 'string',
 						'required'    => true,
 					),
@@ -183,17 +183,17 @@ class Languages extends Abstract_Controller {
 				'permission_callback' => array( $this, 'link_translation_permissions_check' ),
 				'args'                => array(
 					'source_id' => array(
-						'description' => __( 'ID of the source post (current).', 'easy-web-translator' ),
+						'description' => __( 'ID of the source post (current).', 'easy-wp-translator' ),
 						'type'        => 'integer',
 						'required'    => true,
 					),
 					'target_id' => array(
-						'description' => __( 'ID of the existing page to link.', 'easy-web-translator' ),
+						'description' => __( 'ID of the existing page to link.', 'easy-wp-translator' ),
 						'type'        => 'integer',
 						'required'    => true,
 					),
 					'target_lang' => array(
-						'description' => __( 'Language slug of the target page.', 'easy-web-translator' ),
+						'description' => __( 'Language slug of the target page.', 'easy-wp-translator' ),
 						'type'        => 'string',
 						'required'    => true,
 					),
@@ -219,22 +219,22 @@ class Languages extends Abstract_Controller {
 				'permission_callback' => array( $this, 'create_translation_permissions_check' ),
 				'args'                => array(
 					'source_id' => array(
-						'description' => __( 'ID of the source post (current).', 'easy-web-translator' ),
+						'description' => __( 'ID of the source post (current).', 'easy-wp-translator' ),
 						'type'        => 'integer',
 						'required'    => true,
 					),
 					'target_lang' => array(
-						'description' => __( 'Language slug for the new translation.', 'easy-web-translator' ),
+						'description' => __( 'Language slug for the new translation.', 'easy-wp-translator' ),
 						'type'        => 'string',
 						'required'    => true,
 					),
 					'title' => array(
-						'description' => __( 'Title for the new translation post.', 'easy-web-translator' ),
+						'description' => __( 'Title for the new translation post.', 'easy-wp-translator' ),
 						'type'        => 'string',
 						'required'    => true,
 					),
 					'post_type' => array(
-						'description' => __( 'Post type for the new translation (default page).', 'easy-web-translator' ),
+						'description' => __( 'Post type for the new translation (default page).', 'easy-wp-translator' ),
 						'type'        => 'string',
 						'required'    => false,
 					),
@@ -254,7 +254,7 @@ class Languages extends Abstract_Controller {
 	public function get_all_pages_data( $request ) {
 		$response = array();
 
-		// Get post types managed by Linguator
+		// Get post types managed by EasyWPTranslator
 		$post_types = array( 'page' );
 		if ( empty( $post_types ) ) {
 			return rest_ensure_response( $response );
@@ -305,7 +305,7 @@ class Languages extends Abstract_Controller {
 		if ( ! current_user_can( 'edit_posts' ) ) {
 			return new WP_Error(
 				'rest_forbidden',
-				__( 'Sorry, you are not allowed to view posts data.', 'easy-web-translator' ),
+				__( 'Sorry, you are not allowed to view posts data.', 'easy-wp-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -356,7 +356,7 @@ class Languages extends Abstract_Controller {
 		if ( isset( $request['term_id'] ) ) {
 			return new WP_Error(
 				'rest_exists',
-				__( 'Cannot create existing language.', 'easy-web-translator' ),
+				__( 'Cannot create existing language.', 'easy-wp-translator' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -386,7 +386,7 @@ class Languages extends Abstract_Controller {
 			return $this->add_status_to_error( $result );
 		}
 
-		/** @var LMAT_Language */
+		/** @var EWT_Language */
 		// Try to get the language by locale first, then by slug if not found
 		$language = $this->languages->get( $args['locale'] );
 		if ( ! $language ) {
@@ -419,7 +419,7 @@ class Languages extends Abstract_Controller {
 					'language' => $language_identifier,
 					'error' => new WP_Error(
 						'rest_exists',
-						__( 'Cannot create existing language.', 'easy-web-translator' ),
+						__( 'Cannot create existing language.', 'easy-wp-translator' ),
 						array( 'status' => 400 )
 					)
 				);
@@ -466,7 +466,7 @@ class Languages extends Abstract_Controller {
 			}
 
 			// Get the created language and prepare response
-			/** @var LMAT_Language */
+			/** @var EWT_Language */
 			// Try to get the language by locale first, then by slug if not found
 			$language = $this->languages->get( $args['locale'] );
 			if ( ! $language ) {
@@ -512,7 +512,7 @@ class Languages extends Abstract_Controller {
 		}
 		
 		// Fallback to a generic identifier
-		return __( 'Unknown language', 'easy-web-translator' );
+		return __( 'Unknown language', 'easy-wp-translator' );
 	}
 
 	/**
@@ -572,7 +572,7 @@ class Languages extends Abstract_Controller {
 			return $this->add_status_to_error( $update );
 		}
 
-		/** @var LMAT_Language */
+		/** @var EWT_Language */
 		$language = $this->languages->get( $args['lang_id'] );
 		return $this->prepare_item_for_response( $language, $request );
 	}
@@ -621,10 +621,10 @@ class Languages extends Abstract_Controller {
 		
 		$lang = sanitize_text_field( $request['slug'] );
 		$language = $this->model->get_language( $lang );
-		if ( ! ( $language instanceof LMAT_Language ) ) {
+		if ( ! ( $language instanceof EWT_Language ) ) {
 			return new WP_Error(
-				'lmat_invalid_language',
-				__( 'Invalid language locale provided.', 'easy-web-translator' ),
+				'ewt_invalid_language',
+				__( 'Invalid language locale provided.', 'easy-wp-translator' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -632,12 +632,12 @@ class Languages extends Abstract_Controller {
 		$this->model->set_language_in_mass( $language );
 		
 		// Set option to track that untranslated content has been handled
-		update_option('lmat_untranslated_content_handled', true);
+		update_option('ewt_untranslated_content_handled', true);
 		
 		return rest_ensure_response( array(
 			'success'  => true,
 			// translators: %s is the language name being assigned to untranslated content.
-			'message'  => sprintf( __( 'Language %s assigned to untranslated content.', 'easy-web-translator' ), $language->name ),
+			'message'  => sprintf( __( 'Language %s assigned to untranslated content.', 'easy-wp-translator' ), $language->name ),
 			'language' => $language->to_array(),
 		) );
 	}
@@ -654,19 +654,19 @@ class Languages extends Abstract_Controller {
 		$target_lang_slug = sanitize_key( $request['target_lang'] );
 
 		if ( ! $source_id || ! $target_id || ! $target_lang_slug ) {
-			return new WP_Error( 'lmat_link_invalid_params', __( 'Missing required parameters.', 'easy-web-translator' ), array( 'status' => 400 ) );
+			return new WP_Error( 'ewt_link_invalid_params', __( 'Missing required parameters.', 'easy-wp-translator' ), array( 'status' => 400 ) );
 		}
 
 		$source = get_post( $source_id );
 		$target = get_post( $target_id );
 		if ( ! $source || ! $target ) {
-			return new WP_Error( 'lmat_link_invalid_posts', __( 'Invalid source or target.', 'easy-web-translator' ), array( 'status' => 404 ) );
+			return new WP_Error( 'ewt_link_invalid_posts', __( 'Invalid source or target.', 'easy-wp-translator' ), array( 'status' => 404 ) );
 		}
 
 		// Validate target language
 		$target_lang = $this->model->get_language( $target_lang_slug );
 		if ( ! $target_lang ) {
-			return new WP_Error( 'lmat_invalid_language', __( 'Invalid target language.', 'easy-web-translator' ), array( 'status' => 400 ) );
+			return new WP_Error( 'ewt_invalid_language', __( 'Invalid target language.', 'easy-wp-translator' ), array( 'status' => 400 ) );
 		}
 
 		// Ensure target is in requested language
@@ -706,7 +706,7 @@ class Languages extends Abstract_Controller {
 		$source_id = (int) $request['source_id'];
 		$target_id = (int) $request['target_id'];
 		if ( ( $source_id && ! current_user_can( 'edit_post', $source_id ) ) || ( $target_id && ! current_user_can( 'edit_post', $target_id ) ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'You are not allowed to link these posts.', 'easy-web-translator' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'rest_forbidden', __( 'You are not allowed to link these posts.', 'easy-wp-translator' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 		// Verify nonce for non-GET requests
 		$nonce_check = $this->verify_nonce( $request );
@@ -729,17 +729,17 @@ class Languages extends Abstract_Controller {
 		$post_type       = sanitize_key( $request['post_type'] ?: 'page' );
 
 		if ( ! $source_id || ! $target_lang_slug || '' === $title ) {
-			return new WP_Error( 'lmat_create_tr_invalid_params', __( 'Missing required parameters.', 'easy-web-translator' ), array( 'status' => 400 ) );
+			return new WP_Error( 'ewt_create_tr_invalid_params', __( 'Missing required parameters.', 'easy-wp-translator' ), array( 'status' => 400 ) );
 		}
 
 		$source = get_post( $source_id );
 		if ( ! $source ) {
-			return new WP_Error( 'lmat_create_tr_invalid_source', __( 'Invalid source post.', 'easy-web-translator' ), array( 'status' => 404 ) );
+			return new WP_Error( 'ewt_create_tr_invalid_source', __( 'Invalid source post.', 'easy-wp-translator' ), array( 'status' => 404 ) );
 		}
 
 		$target_lang = $this->model->get_language( $target_lang_slug );
 		if ( ! $target_lang ) {
-			return new WP_Error( 'lmat_create_tr_invalid_language', __( 'Invalid target language.', 'easy-web-translator' ), array( 'status' => 400 ) );
+			return new WP_Error( 'ewt_create_tr_invalid_language', __( 'Invalid target language.', 'easy-wp-translator' ), array( 'status' => 400 ) );
 		}
 
 		// If a translation already exists, return it.
@@ -761,11 +761,11 @@ class Languages extends Abstract_Controller {
 		) );
 
 		if ( is_wp_error( $new_post_id ) || ! $new_post_id ) {
-			return new WP_Error( 'lmat_create_tr_failed', __( 'Failed to create translation post.', 'easy-web-translator' ), array( 'status' => 500 ) );
+			return new WP_Error( 'ewt_create_tr_failed', __( 'Failed to create translation post.', 'easy-wp-translator' ), array( 'status' => 500 ) );
 		}
 
 		// Assign language and link translations.
-		lmat_set_post_language( $new_post_id, $target_lang_slug );
+		ewt_set_post_language( $new_post_id, $target_lang_slug );
 
 		$translations = $this->model->post->get_translations( $source_id );
 		$source_lang  = $this->model->post->get_language( $source_id );
@@ -796,10 +796,10 @@ class Languages extends Abstract_Controller {
 	public function create_translation_permissions_check( $request ) {
 		$source_id = (int) $request['source_id'];
 		if ( $source_id && ! current_user_can( 'edit_post', $source_id ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'You are not allowed to create a translation for this post.', 'easy-web-translator' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'rest_forbidden', __( 'You are not allowed to create a translation for this post.', 'easy-wp-translator' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 		if ( ! current_user_can( 'edit_posts' ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'You are not allowed to create posts.', 'easy-web-translator' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'rest_forbidden', __( 'You are not allowed to create posts.', 'easy-wp-translator' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 		$nonce_check = $this->verify_nonce( $request );
 		if ( is_wp_error( $nonce_check ) ) {
@@ -824,11 +824,11 @@ class Languages extends Abstract_Controller {
 		$created_pages = [];
 		
 		// Get source language
-		$source_language = $this->model->get_language(lmat_get_post_language($source_id));
+		$source_language = $this->model->get_language(ewt_get_post_language($source_id));
 		if (!$source_language) {
 			return new WP_Error(
-				'lmat_invalid_source',
-				__('Source page has no language assigned', 'easy-web-translator'),
+				'ewt_invalid_source',
+				__('Source page has no language assigned', 'easy-wp-translator'),
 				array('status' => 400)
 			);
 		}
@@ -839,14 +839,14 @@ class Languages extends Abstract_Controller {
 		);
 
 		// Get and merge existing translations
-		$existing_translations = lmat_get_post_translations($source_id);
+		$existing_translations = ewt_get_post_translations($source_id);
 		if (!empty($existing_translations)) {
 			$all_translations = array_merge($all_translations, $existing_translations);
 		}
 		
 		// Create pages for each language
 		foreach ($languages as $language_data) {
-			// Convert language data to LMAT_Language object if needed
+			// Convert language data to EWT_Language object if needed
 			$language = $this->model->get_language($language_data['locale']);
 			
 			if (!$language) {
@@ -870,7 +870,7 @@ class Languages extends Abstract_Controller {
 			
 			if (!is_wp_error($new_page)) {
 				// Set language for new page
-				lmat_set_post_language($new_page, $language->locale);
+				ewt_set_post_language($new_page, $language->locale);
 				
 				// Add to translations array
 				$all_translations[$language->locale] = $new_page;
@@ -887,15 +887,15 @@ class Languages extends Abstract_Controller {
 		if (!empty($created_pages)) {
 			// Ensure all pages have their languages set
 			foreach ($all_translations as $locale => $page_id) {
-				lmat_set_post_language($page_id, $locale);
+				ewt_set_post_language($page_id, $locale);
 			}
 
 			// Save translations multiple times to ensure all links are created
-			lmat_save_post_translations($all_translations);
+			ewt_save_post_translations($all_translations);
 			// Second pass to ensure bidirectional links
 			foreach ($all_translations as $page_id) {
-				$page_translations = lmat_get_post_translations($page_id);
-				lmat_save_post_translations(array_merge($page_translations, $all_translations));
+				$page_translations = ewt_get_post_translations($page_id);
+				ewt_save_post_translations(array_merge($page_translations, $all_translations));
 			}
 		}
 		
@@ -918,7 +918,7 @@ class Languages extends Abstract_Controller {
 		if ( ! $this->check_update_permission() ) {
 			return new WP_Error(
 				'rest_cannot_create',
-				__( 'Sorry, you are not allowed to create a home page translation.', 'easy-web-translator' ),
+				__( 'Sorry, you are not allowed to create a home page translation.', 'easy-wp-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -947,7 +947,7 @@ class Languages extends Abstract_Controller {
 		if ( 'edit' === $request['context'] && ! $this->check_update_permission() ) {
 			return new WP_Error(
 				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit languages.', 'easy-web-translator' ),
+				__( 'Sorry, you are not allowed to edit languages.', 'easy-wp-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -970,7 +970,7 @@ class Languages extends Abstract_Controller {
 		if ( ! $this->check_update_permission() ) {
 			return new WP_Error(
 				'rest_cannot_create',
-				__( 'Sorry, you are not allowed to create a language.', 'easy-web-translator' ),
+				__( 'Sorry, you are not allowed to create a language.', 'easy-wp-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -1015,7 +1015,7 @@ class Languages extends Abstract_Controller {
 		if ( ! $this->check_update_permission() ) {
 			return new WP_Error(
 				'rest_cannot_update',
-				__( 'Sorry, you are not allowed to edit this language.', 'easy-web-translator' ),
+				__( 'Sorry, you are not allowed to edit this language.', 'easy-wp-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -1045,7 +1045,7 @@ class Languages extends Abstract_Controller {
 		if ( ! $this->check_update_permission() ) {
 			return new WP_Error(
 				'rest_cannot_delete',
-				__( 'Sorry, you are not allowed to delete this language.', 'easy-web-translator' ),
+				__( 'Sorry, you are not allowed to delete this language.', 'easy-wp-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -1075,7 +1075,7 @@ class Languages extends Abstract_Controller {
 		if ( ! $this->check_update_permission() ) {
 			return new WP_Error(
 				'rest_cannot_assign',
-				__( 'Sorry, you are not allowed to assign languages.', 'easy-web-translator' ),
+				__( 'Sorry, you are not allowed to assign languages.', 'easy-wp-translator' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -1094,7 +1094,7 @@ class Languages extends Abstract_Controller {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language    $item    Language object.
+	 * @param EWT_Language    $item    Language object.
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 *
@@ -1137,39 +1137,39 @@ class Languages extends Abstract_Controller {
 			'type'       => 'object',
 			'properties' => array(
 				'term_id'         => array(
-					'description' => __( 'Unique identifier for the language.', 'easy-web-translator' ),
+					'description' => __( 'Unique identifier for the language.', 'easy-wp-translator' ),
 					'type'        => 'integer',
 					'minimum'     => 1,
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'name'            => array(
-					'description' => __( 'The name is how it is displayed on your site (for example: English).', 'easy-web-translator' ),
+					'description' => __( 'The name is how it is displayed on your site (for example: English).', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'minLength'   => 1,
 					'context'     => array( 'view', 'edit' ),
 				),
 				'slug'            => array(
-					'description' => __( 'Language code - preferably 2-letters ISO 639-1 (for example: en).', 'easy-web-translator' ),
+					'description' => __( 'Language code - preferably 2-letters ISO 639-1 (for example: en).', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'pattern'     => Languages_Model::SLUG_PATTERN,
 					'context'     => array( 'view', 'edit' ),
 				),
 				'locale'          => array(
-					'description' => __( 'WordPress Locale for the language (for example: en_US).', 'easy-web-translator' ),
+					'description' => __( 'WordPress Locale for the language (for example: en_US).', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'pattern'     => Languages_Model::LOCALE_PATTERN,
 					'context'     => array( 'view', 'edit' ),
 					'required'    => true,
 				),
 				'w3c'             => array(
-					'description' => __( 'W3C Locale for the language (for example: en-US).', 'easy-web-translator' ),
+					'description' => __( 'W3C Locale for the language (for example: en-US).', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'facebook'        => array(
-					'description' => __( 'Facebook Locale for the language (for example: en_US).', 'easy-web-translator' ),
+					'description' => __( 'Facebook Locale for the language (for example: en_US).', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
@@ -1177,97 +1177,97 @@ class Languages extends Abstract_Controller {
 				'is_rtl'          => array(
 					'description' => sprintf(
 						/* translators: %s is a value. */
-						__( 'Text direction. %s for right-to-left.', 'easy-web-translator' ),
+						__( 'Text direction. %s for right-to-left.', 'easy-wp-translator' ),
 						'`true`'
 					),
 					'type'        => 'boolean',
 					'context'     => array( 'view', 'edit' ),
 				),
 				'term_group'      => array(
-					'description' => __( 'Position of the language in the language switcher.', 'easy-web-translator' ),
+					'description' => __( 'Position of the language in the language switcher.', 'easy-wp-translator' ),
 					'type'        => 'integer',
 					'context'     => array( 'view', 'edit' ),
 				),
 				'flag_code'       => array(
-					'description' => __( 'Flag code corresponding to ISO 3166-1 (for example: us for the United States flag).', 'easy-web-translator' ),
+					'description' => __( 'Flag code corresponding to ISO 3166-1 (for example: us for the United States flag).', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 				),
 				'flag_url'        => array(
-					'description' => __( 'Flag URL.', 'easy-web-translator' ),
+					'description' => __( 'Flag URL.', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'flag'            => array(
-					'description' => __( 'HTML tag for the flag.', 'easy-web-translator' ),
+					'description' => __( 'HTML tag for the flag.', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'custom_flag_url' => array(
-					'description' => __( 'Custom flag URL.', 'easy-web-translator' ),
+					'description' => __( 'Custom flag URL.', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'custom_flag'     => array(
-					'description' => __( 'HTML tag for the custom flag.', 'easy-web-translator' ),
+					'description' => __( 'HTML tag for the custom flag.', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'is_default'      => array(
-					'description' => __( 'Tells whether the language is the default one.', 'easy-web-translator' ),
+					'description' => __( 'Tells whether the language is the default one.', 'easy-wp-translator' ),
 					'type'        => 'boolean',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'active'          => array(
-					'description' => __( 'Tells whether the language is active.', 'easy-web-translator' ),
+					'description' => __( 'Tells whether the language is active.', 'easy-wp-translator' ),
 					'type'        => 'boolean',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'home_url'        => array(
-					'description' => __( 'Home URL in this language.', 'easy-web-translator' ),
+					'description' => __( 'Home URL in this language.', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'search_url'      => array(
-					'description' => __( 'Search URL in this language.', 'easy-web-translator' ),
+					'description' => __( 'Search URL in this language.', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'host'            => array(
-					'description' => __( 'Host for this language.', 'easy-web-translator' ),
+					'description' => __( 'Host for this language.', 'easy-wp-translator' ),
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'page_on_front'   => array(
-					'description' => __( 'Page on front ID in this language.', 'easy-web-translator' ),
+					'description' => __( 'Page on front ID in this language.', 'easy-wp-translator' ),
 					'type'        => 'integer',
 					'minimum'     => 0,
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'page_for_posts'  => array(
-					'description' => __( 'Identifier of the page for posts in this language.', 'easy-web-translator' ),
+					'description' => __( 'Identifier of the page for posts in this language.', 'easy-wp-translator' ),
 					'type'        => 'integer',
 					'minimum'     => 0,
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'fallbacks'       => array(
-					'description' => __( 'List of language locale fallbacks.', 'easy-web-translator' ),
+					'description' => __( 'List of language locale fallbacks.', 'easy-wp-translator' ),
 					'type'        => 'array',
 					'uniqueItems' => true,
 					'items'       => array(
@@ -1278,14 +1278,14 @@ class Languages extends Abstract_Controller {
 					'readonly'    => true,
 				),
 				'term_props'      => array(
-					'description' => __( 'Language properties.', 'easy-web-translator' ),
+					'description' => __( 'Language properties.', 'easy-wp-translator' ),
 					'type'        => 'object',
 					'properties'  => array(),
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
 				'no_default_cat'  => array(
-					'description' => __( 'Tells whether the default category must be created when creating a new language.', 'easy-web-translator' ),
+					'description' => __( 'Tells whether the default category must be created when creating a new language.', 'easy-wp-translator' ),
 					'type'        => 'boolean',
 					'context'     => array( 'edit' ),
 					'default'     => false,
@@ -1300,18 +1300,18 @@ class Languages extends Abstract_Controller {
 				'properties'  => array(
 					'term_id'          => array(
 						/* translators: %s is the name of the term property (`term_id` or `term_taxonomy_id`). */
-						'description' => sprintf( __( 'The %s of the language term for this translatable entity.', 'easy-web-translator' ), '`term_id`' ),
+						'description' => sprintf( __( 'The %s of the language term for this translatable entity.', 'easy-wp-translator' ), '`term_id`' ),
 						'type'        => 'integer',
 						'minimum'     => 1,
 					),
 					'term_taxonomy_id' => array(
 						/* translators: %s is the name of the term property (`term_id` or `term_taxonomy_id`). */
-						'description' => sprintf( __( 'The %s of the language term for this translatable entity.', 'easy-web-translator' ), '`term_taxonomy_id`' ),
+						'description' => sprintf( __( 'The %s of the language term for this translatable entity.', 'easy-wp-translator' ), '`term_taxonomy_id`' ),
 						'type'        => 'integer',
 						'minimum'     => 1,
 					),
 					'count'            => array(
-						'description' => __( 'Number of items of this type of content in this language.', 'easy-web-translator' ),
+						'description' => __( 'Number of items of this type of content in this language.', 'easy-wp-translator' ),
 						'type'        => 'integer',
 						'minimum'     => 0,
 					),
@@ -1397,7 +1397,7 @@ class Languages extends Abstract_Controller {
 			// Should not happen.
 			return new WP_Error(
 				'rest_invalid_locale',
-				__( 'The locale is invalid.', 'easy-web-translator' ),
+				__( 'The locale is invalid.', 'easy-wp-translator' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -1415,12 +1415,12 @@ class Languages extends Abstract_Controller {
 		}
 
 		// Create a language from our default list with only the locale.
-		$languages = include LINGUATOR_DIR . '/admin/settings/controllers/languages.php';
+		$languages = include EASY_WP_TRANSLATOR_DIR . '/admin/settings/controllers/languages.php';
 
 		if ( empty( $languages[ $request['locale'] ] ) ) {
 			return new WP_Error(
-				'lmat_rest_invalid_locale',
-				__( 'The locale is invalid.', 'easy-web-translator' ),
+				'ewt_rest_invalid_locale',
+				__( 'The locale is invalid.', 'easy-wp-translator' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -1455,7 +1455,7 @@ class Languages extends Abstract_Controller {
 	 *  
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
-	 * @return LMAT_Language|WP_Error Language object if the ID or slug is valid, WP_Error otherwise.
+	 * @return EWT_Language|WP_Error Language object if the ID or slug is valid, WP_Error otherwise.
 	 *
 	 * @phpstan-template T of array
 	 * @phpstan-param WP_REST_Request<T> $request
@@ -1464,7 +1464,7 @@ class Languages extends Abstract_Controller {
 		if ( isset( $request['term_id'] ) ) {
 			$error = new WP_Error(
 				'rest_invalid_id',
-				__( 'Invalid language ID', 'easy-web-translator' ),
+				__( 'Invalid language ID', 'easy-wp-translator' ),
 				array( 'status' => 404 )
 			);
 
@@ -1474,7 +1474,7 @@ class Languages extends Abstract_Controller {
 
 			$language = $this->languages->get( (int) $request['term_id'] );
 
-			if ( ! $language instanceof LMAT_Language ) {
+			if ( ! $language instanceof EWT_Language ) {
 				return $error;
 			}
 
@@ -1484,10 +1484,10 @@ class Languages extends Abstract_Controller {
 		if ( isset( $request['slug'] ) ) {
 			$language = $this->languages->get( (string) $request['slug'] );
 
-			if ( ! $language instanceof LMAT_Language ) {
+			if ( ! $language instanceof EWT_Language ) {
 				return new WP_Error(
 					'rest_invalid_slug',
-					__( 'Invalid language slug', 'easy-web-translator' ),
+					__( 'Invalid language slug', 'easy-wp-translator' ),
 					array( 'status' => 404 )
 				);
 			}
@@ -1498,7 +1498,7 @@ class Languages extends Abstract_Controller {
 		// Should not happen.
 		return new WP_Error(
 			'rest_invalid_identifier',
-			__( 'Invalid language identifier', 'easy-web-translator' ),
+			__( 'Invalid language identifier', 'easy-wp-translator' ),
 			array( 'status' => 404 )
 		);
 	}

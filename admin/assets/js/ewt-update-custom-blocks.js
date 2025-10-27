@@ -15,12 +15,12 @@ class blockDataReterive {
 
         // Create full-page overlay and append to <body>
         this.loaderContainer = document.createElement('div');
-        this.loaderContainer.className = 'lmat-overlay';
+        this.loaderContainer.className = 'ewt-overlay';
         this.loaderContainer.setAttribute('role', 'status');
         this.loaderContainer.setAttribute('aria-live', 'polite');
         this.loaderContainer.innerHTML = this.getOverlayTemplate(); // see section 2
         document.body.appendChild(this.loaderContainer);
-        document.body.classList.add('lmat-overlay-open');
+        document.body.classList.add('ewt-overlay-open');
     }
 
     getBlocks = (blocks) => {
@@ -51,10 +51,10 @@ class blockDataReterive {
          * Prepare data to send in API request.
         */
         const apiSendData = {
-            lmat_nonce: lmat_block_update_object.ajax_nonce,
-            action: lmat_block_update_object.action_get_content
+            ewt_nonce: ewt_block_update_object.ajax_nonce,
+            action: ewt_block_update_object.action_get_content
         };
-        const apiUrl = lmat_block_update_object.ajax_url;
+        const apiUrl = ewt_block_update_object.ajax_url;
 
         fetch(apiUrl, {
             method: 'POST',
@@ -94,12 +94,12 @@ class blockDataReterive {
         * Prepare data to send in API request & update latest translate block data.
        */
         const apiSendData = {
-            lmat_nonce: lmat_block_update_object.ajax_nonce,
-            action: lmat_block_update_object.action_update_content,
+            ewt_nonce: ewt_block_update_object.ajax_nonce,
+            action: ewt_block_update_object.action_update_content,
             save_block_data: JSON.stringify(this.customBlockTranslateData)
         };
 
-        const apiUrl = lmat_block_update_object.ajax_url;
+        const apiUrl = ewt_block_update_object.ajax_url;
 
         fetch(apiUrl, {
             method: 'POST',
@@ -133,8 +133,8 @@ class blockDataReterive {
             // Process each key-value pair in the object
             for (let key in obj) {
                 if (obj.hasOwnProperty(key)) {
-                    // If the current value is an object and has the key 'lmat_array_key_replace'
-                    if (typeof obj[key] === 'object' && obj[key] !== null && obj[key].hasOwnProperty('lmat_array_key_replace')) {
+                    // If the current value is an object and has the key 'ewt_array_key_replace'
+                    if (typeof obj[key] === 'object' && obj[key] !== null && obj[key].hasOwnProperty('ewt_array_key_replace')) {
                         // Replace the value with 'true' directly in the array
                         obj[key] = Object.values(obj[key]);
                         obj[key] = convertToArrays(obj[key]);
@@ -190,7 +190,7 @@ class blockDataReterive {
 
     filterBlockArrayAttr = (idsArr, blockData) => {
         const newIdArr = new Array(...idsArr);
-        newIdArr.push('lmat_array_key_replace');
+        newIdArr.push('ewt_array_key_replace');
         blockData.forEach((value, key) => {
             if ((typeof value === 'string' && /Make This Content Available for Translation/i.test(value)) || (![null, undefined].includes(value) && [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value)))) {
                 this.filterAttr(newIdArr, value)
@@ -245,50 +245,50 @@ class blockDataReterive {
 
     setOverlayState = (state /* 'loading' | 'success' | 'error' */) => {
         if (!this.loaderContainer) return;
-        const panel = this.loaderContainer.querySelector('.lmat-overlay .lmat-box');
+        const panel = this.loaderContainer.querySelector('.ewt-overlay .ewt-box');
         if (panel) panel.setAttribute('data-state', state);
     };
     
     teardownOverlay = (delayMs = 3000) => {
         if (!this.loaderContainer) return;
         setTimeout(() => {
-            this.loaderContainer.classList.add('lmat-overlay--closing');
+            this.loaderContainer.classList.add('ewt-overlay--closing');
             setTimeout(() => {
                 this.loaderContainer.remove();
                 this.loaderContainer = null;
-                document.body.classList.remove('lmat-overlay-open');
+                document.body.classList.remove('ewt-overlay-open');
             }, 300);
         }, delayMs);
     };
 
     getOverlayTemplate = () => {
         return `
-    <div class="lmat-overlay" role="status" aria-live="polite">
-    <div class="lmat-backdrop"></div>
-    <div class="lmat-box" data-state="loading">
-      <div class="lmat-row">
-        <span class="lmat-spinner" aria-hidden="true"></span>
-        <span class="lmat-icon lmat-icon--ok" aria-hidden="true">✓</span>
-        <span class="lmat-icon lmat-icon--err" aria-hidden="true">!</span>
+    <div class="ewt-overlay" role="status" aria-live="polite">
+    <div class="ewt-backdrop"></div>
+    <div class="ewt-box" data-state="loading">
+      <div class="ewt-row">
+        <span class="ewt-spinner" aria-hidden="true"></span>
+        <span class="ewt-icon ewt-icon--ok" aria-hidden="true">✓</span>
+        <span class="ewt-icon ewt-icon--err" aria-hidden="true">!</span>
 
-        <div class="lmat-text">
-          <div class="lmat-title" data-label="loading">Saving block content</div>
-          <div class="lmat-title" data-label="success">Supported block content has been updated</div>
-          <div class="lmat-title" data-label="error">Update failed</div>
+        <div class="ewt-text">
+          <div class="ewt-title" data-label="loading">Saving block content</div>
+          <div class="ewt-title" data-label="success">Supported block content has been updated</div>
+          <div class="ewt-title" data-label="error">Update failed</div>
 
-          <div class="lmat-desc" data-label="loading">
+          <div class="ewt-desc" data-label="loading">
             Please don’t close or refresh this window until the update is complete.
           </div>
-          <div class="lmat-desc" data-label="success">
+          <div class="ewt-desc" data-label="success">
             Supported block content has been updated. You may continue.
           </div>
-          <div class="lmat-desc" data-label="error">
+          <div class="ewt-desc" data-label="error">
             Something went wrong. You can retry without closing this window.
           </div>
         </div>
       </div>
 
-      <div class="lmat-bar"><span></span></div>
+      <div class="ewt-bar"><span></span></div>
     </div>
   </div>
     `;

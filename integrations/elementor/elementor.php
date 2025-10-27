@@ -1,16 +1,16 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\elementor;
+namespace EasyWPTranslator\Integrations\elementor;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 
-use Linguator\Frontend\Controllers\LMAT_Frontend;
-use Linguator\Includes\Other\LMAT_Model;
+use EasyWPTranslator\Frontend\Controllers\EWT_Frontend;
+use EasyWPTranslator\Includes\Other\EWT_Model;
 
 
 /**
@@ -18,7 +18,7 @@ use Linguator\Includes\Other\LMAT_Model;
  *
  *  
  */
-class LMAT_Elementor {
+class EWT_Elementor {
 	/**
 	 * Constructor
 	 *
@@ -32,15 +32,15 @@ class LMAT_Elementor {
     /**
 	 * Elementor compatibility.
 	 *
-	 * Fix Elementor compatibility with Linguator.
+	 * Fix Elementor compatibility with EasyWPTranslator.
 	 *
 	 *  
 	 * @access private
 	 * @static
 	 */
 	private static function elementor_compatibility() {
-		// Copy elementor data while linguator creates a translation copy.
-		add_filter( 'lmat_copy_post_metas', [ __CLASS__, 'save_elementor_meta' ], 10, 4 );
+		// Copy elementor data while easywptranslator creates a translation copy.
+		add_filter( 'ewt_copy_post_metas', [ __CLASS__, 'save_elementor_meta' ], 10, 4 );
 	}
 
 	/**
@@ -60,7 +60,7 @@ class LMAT_Elementor {
 	 * @static
 	 */
 	public static function register_rest_routes() {
-		register_rest_route( 'lmat/v1', '/post-language/(?P<post_id>\d+)', [
+		register_rest_route( 'ewt/v1', '/post-language/(?P<post_id>\d+)', [
 			'methods' => 'GET',
 			'callback' => [ __CLASS__, 'get_post_language_rest' ],
 			'permission_callback' => [ __CLASS__, 'rest_permission_check' ],
@@ -105,14 +105,14 @@ class LMAT_Elementor {
 		}
 
 		// Get the post language
-		$language = lmat_get_post_language( $post_id );
+		$language = ewt_get_post_language( $post_id );
 		
 		if ( ! $language ) {
 			return new WP_Error( 'language_not_found', 'Language not found for this post', [ 'status' => 404 ] );
 		}
 
 		// Get language object with flag information
-		$language_object = LMAT()->model->get_language( $language );
+		$language_object = EWT()->model->get_language( $language );
 		
 		if ( ! $language_object ) {
 			return new WP_Error( 'language_object_not_found', 'Language object not found', [ 'status' => 404 ] );
@@ -131,9 +131,9 @@ class LMAT_Elementor {
     /**
 	 * Save elementor meta.
 	 *
-	 * Copy elementor data while Linguator creates a translation copy.
+	 * Copy elementor data while EasyWPTranslator creates a translation copy.
 	 *
-	 * Fired by `lmat_copy_post_metas` filter.
+	 * Fired by `ewt_copy_post_metas` filter.
 	 *
 	 *  
 	 * @access public

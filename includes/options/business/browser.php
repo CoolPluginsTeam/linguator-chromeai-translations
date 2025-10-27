@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
-use Linguator\Includes\Options\Primitive\Abstract_Boolean;
-use Linguator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Options\Primitive\Abstract_Boolean;
+use EasyWPTranslator\Includes\Options\Options;
 
 
 /**
@@ -46,9 +46,9 @@ class Browser extends Abstract_Boolean {
 	 */
 	public function add_to_site_health_info( array $info, Options $options ): array { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		if ( ! $this->get() ) {
-			$value = '0: ' . __( 'Detect browser language deactivated', 'easy-web-translator' );
+			$value = '0: ' . __( 'Detect browser language deactivated', 'easy-wp-translator' );
 		} else {
-			$value = '1: ' . __( 'Detect browser language activated', 'easy-web-translator' );
+			$value = '1: ' . __( 'Detect browser language activated', 'easy-wp-translator' );
 		}
 
 		return $this->get_site_health_info( $info, $value, self::key() );
@@ -66,7 +66,7 @@ class Browser extends Abstract_Boolean {
 	 * @return bool|WP_Error The sanitized value. An instance of `WP_Error` in case of blocking error.
 	 */
 	protected function sanitize( $value, Options $options ) {
-		if ( 3 === $options->get( 'force_lang' ) && ! class_exists( 'LMAT_Xdata_Domain', true ) ) {
+		if ( 3 === $options->get( 'force_lang' ) && ! class_exists( 'EWT_Xdata_Domain', true ) ) {
 			// Cannot share cookies between domains.
 			return false;
 		}
@@ -86,7 +86,7 @@ class Browser extends Abstract_Boolean {
 	protected function get_description(): string {
 		return sprintf(
 			/* translators: %1$s and %2$s are "true/false" values. */
-			__( 'Detect preferred browser language on front page: %1$s to detect, %2$s to not detect.', 'easy-web-translator' ),
+			__( 'Detect preferred browser language on front page: %1$s to detect, %2$s to not detect.', 'easy-wp-translator' ),
 			'`true`',
 			'`false`'
 		);

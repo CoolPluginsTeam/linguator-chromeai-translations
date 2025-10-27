@@ -3,7 +3,7 @@
  * Loads the integration with Jetpack.
  * Works for Twenty Fourteen featured content too.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,9 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once __DIR__ . '/jetpack.php';
 require_once __DIR__ . '/featured-content.php';
 
-use Linguator\Integrations\jetpack\LMAT_Jetpack;
-use Linguator\Integrations\jetpack\LMAT_Featured_Content;
-use Linguator\Integrations\LMAT_Integrations;
+use EasyWPTranslator\Integrations\jetpack\EWT_Jetpack;
+use EasyWPTranslator\Integrations\jetpack\EWT_Featured_Content;
+use EasyWPTranslator\Integrations\EWT_Integrations;
 
-LMAT_Integrations::instance()->jetpack = new LMAT_Jetpack(); // Must be loaded before the plugin is active.
-add_action( 'lmat_init', array( LMAT_Integrations::instance()->featured_content = new LMAT_Featured_Content(), 'init' ) );
+EWT_Integrations::instance()->jetpack = new EWT_Jetpack(); // Must be loaded before the plugin is active.
+add_action( 'ewt_init', array( EWT_Integrations::instance()->featured_content = new EWT_Featured_Content(), 'init' ) );

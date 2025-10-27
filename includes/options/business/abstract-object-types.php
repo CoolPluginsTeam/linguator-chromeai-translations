@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,8 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
-use Linguator\Includes\Options\Primitive\Abstract_List;
-use Linguator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Options\Primitive\Abstract_List;
+use EasyWPTranslator\Includes\Options\Options;
 
 
 /**

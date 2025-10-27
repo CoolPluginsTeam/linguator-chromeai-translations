@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Multilingual_Sitemaps_Provider extends WP_Sitemaps_Provider {
+class EWT_Multilingual_Sitemaps_Provider extends WP_Sitemaps_Provider {
 	/**
 	 * The decorated sitemaps provider.
 	 *
@@ -23,20 +23,20 @@ class LMAT_Multilingual_Sitemaps_Provider extends WP_Sitemaps_Provider {
 	protected $provider;
 
 	/**
-	 * The LMAT_Links_Model instance.
+	 * The EWT_Links_Model instance.
 	 *
 	 *  
 	 *
-	 * @var LMAT_Links_Model
+	 * @var EWT_Links_Model
 	 */
 	protected $links_model;
 
 	/**
-	 * The LMAT_Model instance.
+	 * The EWT_Model instance.
 	 *
 	 *  
 	 *
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
@@ -56,7 +56,7 @@ class LMAT_Multilingual_Sitemaps_Provider extends WP_Sitemaps_Provider {
 	 *  
 	 *
 	 * @param WP_Sitemaps_Provider $provider    An instance of a WP_Sitemaps_Provider child class.
-	 * @param LMAT_Links_Model      $links_model The LMAT_Links_Model instance.
+	 * @param EWT_Links_Model      $links_model The EWT_Links_Model instance.
 	 */
 	public function __construct( $provider, &$links_model ) {
 		$this->name = $provider->name;
@@ -102,7 +102,7 @@ class LMAT_Multilingual_Sitemaps_Provider extends WP_Sitemaps_Provider {
 	 */
 	public static function query_args( $args ) {
 		if ( ! empty( self::$filter_lang ) ) {
-			$args['lmat_lang'] = self::$filter_lang;
+			$args['ewt_lang'] = self::$filter_lang;
 		}
 		return $args;
 	}
@@ -200,8 +200,8 @@ class LMAT_Multilingual_Sitemaps_Provider extends WP_Sitemaps_Provider {
 		}
 
 		// If no language is present in $name, we may attempt to get the current sitemap url (e.g. in redirect_canonical() ).
-		if ( get_query_var( 'lmat_lang' ) ) {
-			$lang = $this->model->get_language( get_query_var( 'lmat_lang' ) );
+		if ( get_query_var( 'ewt_lang' ) ) {
+			$lang = $this->model->get_language( get_query_var( 'ewt_lang' ) );
 			$url = $this->provider->get_sitemap_url( $name, $page );
 			return $this->links_model->add_language_to_link( $url, $lang );
 		}

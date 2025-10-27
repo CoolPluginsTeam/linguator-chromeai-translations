@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name:       Easy Web Translator – On-Device Chrome AI Translation
- * Plugin URI:        https://github.com/CoolPluginsTeam/linguator-chromeai-translations
- * Description:       Create a multilingual WordPress website in minutes with Easy Web Translator – On-Device Chrome AI Translation.
+ * Plugin Name:       Easy WP Translator – On-Device Chrome AI Translation
+ * Plugin URI:        https://github.com/CoolPluginsTeam/easywptranslator-chromeai-translations
+ * Description:       Create a multilingual WordPress website in minutes with Easy WP Translator – On-Device Chrome AI Translation.
  * Version:           0.0.6
  * Requires at least: 6.2
  * Requires PHP:      7.2
- * Text Domain:       easy-web-translator
+ * Text Domain:       easy-wp-translator
  * License:           GPL2
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -15,39 +15,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Don't access directly.
 }
 
-use Linguator\Includes\Core\Linguator;
+use EasyWPTranslator\Includes\Core\EasyWPTranslator;
 
 
 
-define( 'LINGUATOR_VERSION', '0.0.6' );
-define( 'LMAT_MIN_WP_VERSION', '6.2' );
-define( 'LMAT_MIN_PHP_VERSION', '7.2' );
-define( 'LINGUATOR_FILE', __FILE__ ); 
-define( 'LINGUATOR_DIR', __DIR__ );
-define('LINGUATOR_URL', plugin_dir_url(LINGUATOR_FILE));
+define( 'EASY_WP_TRANSLATOR_VERSION', '0.0.6' );
+define( 'EWT_MIN_WP_VERSION', '6.2' );
+define( 'EWT_MIN_PHP_VERSION', '7.2' );
+define( 'EASY_WP_TRANSLATOR_FILE', __FILE__ ); 
+define( 'EASY_WP_TRANSLATOR_DIR', __DIR__ );
+define('EASY_WP_TRANSLATOR_URL', plugin_dir_url(EASY_WP_TRANSLATOR_FILE));
 
-// Whether we are using Linguator, get the filename of the plugin in use.
-if ( ! defined( 'LINGUATOR_ROOT_FILE' ) ) {
-	define( 'LINGUATOR_ROOT_FILE', __FILE__ );
+// Whether we are using EasyWPTranslator, get the filename of the plugin in use.
+if ( ! defined( 'EASY_WP_TRANSLATOR_ROOT_FILE' ) ) {
+	define( 'EASY_WP_TRANSLATOR_ROOT_FILE', __FILE__ );
 }
 
-if ( ! defined( 'LINGUATOR_BASENAME' ) ) {
-	define( 'LINGUATOR_BASENAME', plugin_basename( __FILE__ ) ); // Plugin name as known by WP.
+if ( ! defined( 'EASY_WP_TRANSLATOR_BASENAME' ) ) {
+	define( 'EASY_WP_TRANSLATOR_BASENAME', plugin_basename( __FILE__ ) ); // Plugin name as known by WP.
 	require __DIR__ . '/vendor/autoload.php';
 }
 
-define( 'LINGUATOR', ucwords( str_replace( '-', ' ', dirname( LINGUATOR_BASENAME ) ) ) );
+define( 'EASY_WP_TRANSLATOR', ucwords( str_replace( '-', ' ', dirname( EASY_WP_TRANSLATOR_BASENAME ) ) ) );
 
 // Create installer instance
-$installer = new \Linguator\Install\LMAT_Install( LINGUATOR_BASENAME );
+$installer = new \EasyWPTranslator\Install\EWT_Install( EASY_WP_TRANSLATOR_BASENAME );
 
 // Register activation/deactivation hooks
 register_activation_hook( __FILE__, array( $installer, 'activate' ) );
 register_deactivation_hook( __FILE__, array( $installer, 'deactivate' ) );
 
 // Initialize the plugin
-if ( empty( $_GET['deactivate-linguator'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-	new Linguator();
+if ( empty( $_GET['deactivate-easywptranslator'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+	new EasyWPTranslator();
 }
 
 // Handle redirect after activation and language switcher visibility
@@ -65,19 +65,19 @@ add_action('admin_init', function() {
 	// Only run on plugins page
 	if ( $is_plugins_page ) {
 		// Only proceed if we need setup and are in admin
-		if (get_option('lmat_needs_setup') === 'yes' && is_admin()) {
+		if (get_option('ewt_needs_setup') === 'yes' && is_admin()) {
 			if (!is_network_admin() && !isset($_GET['activate-multi'])) {
 				// Remove the setup flag
-				delete_option('lmat_needs_setup');
+				delete_option('ewt_needs_setup');
 				// Redirect to the setup wizard
-				wp_safe_redirect(admin_url('admin.php?page=lmat_wizard'));
+				wp_safe_redirect(admin_url('admin.php?page=ewt_wizard'));
 				exit;
 			}
 		}
 	}
 	
 	// Ensure language switcher is visible on nav-menus page for new installations
-	$install_date = get_option('lmat_install_date');
+	$install_date = get_option('ewt_install_date');
 	
 	if ($install_date) {
 		// Check if this is a recent installation (within last 24 hours)
@@ -102,7 +102,7 @@ add_action('admin_init', function() {
 				}
 				
 				// Remove language switcher from hidden meta boxes to make it visible
-				$hidden_meta_boxes = array_diff($hidden_meta_boxes, array('lmat_lang_switch_box'));
+				$hidden_meta_boxes = array_diff($hidden_meta_boxes, array('ewt_lang_switch_box'));
 				
 				// Update user meta
 				update_user_meta($user_id, 'metaboxhidden_nav-menus', $hidden_meta_boxes);

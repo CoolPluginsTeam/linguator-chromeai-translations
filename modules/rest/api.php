@@ -1,20 +1,20 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Modules\REST;
+namespace EasyWPTranslator\Modules\REST;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Other\LMAT_Model;
+use EasyWPTranslator\Includes\Other\EWT_Model;
 
 
 
 /**
- * Sets all Linguator REST controllers up.
+ * Sets all EasyWPTranslator REST controllers up.
  *
  *  
  */
@@ -41,7 +41,7 @@ class API {
 	public $bulk_translate;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	private $model;
 
@@ -50,9 +50,9 @@ class API {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Model $model Linguator's model.
+	 * @param EWT_Model $model EasyWPTranslator's model.
 	 */
-	public function __construct( LMAT_Model $model ) {
+	public function __construct( EWT_Model $model ) {
 		$this->model = $model;
 	}
 

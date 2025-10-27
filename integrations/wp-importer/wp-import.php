@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_WP_Import extends WP_Import {
+class EWT_WP_Import extends WP_Import {
 	/**
 	 * Stores post_translations terms.
 	 *
@@ -30,10 +30,10 @@ class LMAT_WP_Import extends WP_Import {
 
 		// Store this for future usage as parent function unsets $this->terms.
 		foreach ( $this->terms as $term ) {
-			if ( 'lmat_post_translations' == $term['term_taxonomy'] ) {
+			if ( 'ewt_post_translations' == $term['term_taxonomy'] ) {
 				$this->post_translations[] = $term;
 			}
-			if ( 'lmat_term_translations' == $term['term_taxonomy'] ) {
+			if ( 'ewt_term_translations' == $term['term_taxonomy'] ) {
 				$term_translations[] = $term;
 			}
 		}
@@ -44,14 +44,14 @@ class LMAT_WP_Import extends WP_Import {
 		wp_cache_set( 'last_changed', microtime(), 'terms' );
 
 		// Assign the default language in case the importer created the first language.
-		if ( empty( LMAT()->options['default_lang'] ) ) {
-			$languages = get_terms( array( 'taxonomy' => 'lmat_language', 'hide_empty' => false, 'orderby' => 'term_id' ) );
+		if ( empty( EWT()->options['default_lang'] ) ) {
+			$languages = get_terms( array( 'taxonomy' => 'ewt_language', 'hide_empty' => false, 'orderby' => 'term_id' ) );
 			$default_lang = reset( $languages );
-			LMAT()->options['default_lang'] = $default_lang->slug;
+			EWT()->options['default_lang'] = $default_lang->slug;
 		}
 
 		// Clean languages cache in case some of them were created during import.
-		LMAT()->model->clean_languages_cache();
+		EWT()->model->clean_languages_cache();
 
 		$this->remap_terms_relations( $term_translations );
 		$this->remap_translations( $term_translations, $this->processed_terms );
@@ -72,18 +72,18 @@ class LMAT_WP_Import extends WP_Import {
 				$menu_items[] = $post;
 			}
 
-			if ( 0 === strpos( $post['post_title'], 'linguator_mo_' ) ) {
+			if ( 0 === strpos( $post['post_title'], 'easywptranslator_mo_' ) ) {
 				$mo_posts[] = $post;
 			}
 		}
 
 		if ( ! empty( $mo_posts ) ) {
-			new LMAT_MO(); // Just to register the linguator_mo post type before processing posts
+			new EWT_MO(); // Just to register the easywptranslator_mo post type before processing posts
 		}
 
 		parent::process_posts();
 
-		LMAT()->model->clean_languages_cache(); // To update the posts count in ( cached ) languages list
+		EWT()->model->clean_languages_cache(); // To update the posts count in ( cached ) languages list
 
 		$this->remap_translations( $this->post_translations, $this->processed_posts );
 		unset( $this->post_translations );
@@ -91,8 +91,8 @@ class LMAT_WP_Import extends WP_Import {
 		// Language switcher menu items
 		foreach ( $menu_items as $item ) {
 			foreach ( $item['postmeta'] as $meta ) {
-				if ( '_lmat_menu_item' == $meta['key'] ) {
-					update_post_meta( $this->processed_menu_items[ $item['post_id'] ], '_lmat_menu_item', maybe_unserialize( $meta['value'] ) );
+				if ( '_ewt_menu_item' == $meta['key'] ) {
+					update_post_meta( $this->processed_menu_items[ $item['post_id'] ], '_ewt_menu_item', maybe_unserialize( $meta['value'] ) );
 				}
 			}
 		}
@@ -103,7 +103,7 @@ class LMAT_WP_Import extends WP_Import {
 
 			if ( ! empty( $this->processed_terms[ $lang_id ] ) ) {
 				if ( $strings = maybe_unserialize( $post['post_content'] ) ) {
-					$mo = new LMAT_MO();
+					$mo = new EWT_MO();
 					$mo->import_from_db( $this->processed_terms[ $lang_id ] );
 					foreach ( $strings as $msg ) {
 						$mo->add_entry_or_merge( $mo->make_entry( $msg[0], $msg[1] ) );
@@ -121,7 +121,7 @@ class LMAT_WP_Import extends WP_Import {
 	 *
 	 *  
 	 *
-	 * @param array $terms array of terms in 'lmat_term_translations' taxonomy
+	 * @param array $terms array of terms in 'ewt_term_translations' taxonomy
 	 */
 	protected function remap_terms_relations( &$terms ) {
 		$term_relationships = array();
@@ -129,19 +129,19 @@ class LMAT_WP_Import extends WP_Import {
 		foreach ( $terms as $term ) {
 			$translations = maybe_unserialize( $term['term_description'] );
 			foreach ( $translations as $slug => $old_id ) {
-				if ( $old_id && ! empty( $this->processed_terms[ $old_id ] ) && $lang = LMAT()->model->get_language( $slug ) ) {
+				if ( $old_id && ! empty( $this->processed_terms[ $old_id ] ) && $lang = EWT()->model->get_language( $slug ) ) {
 					$object_id = $this->processed_terms[ $old_id ];
 					
 					// Language relationship.
-					$lang_term = $lang->get_tax_prop( 'lmat_term_language', 'term_id' );
+					$lang_term = $lang->get_tax_prop( 'ewt_term_language', 'term_id' );
 					if ( $lang_term ) {
-						$term_relationships[ $object_id ]['lmat_term_language'][] = $lang_term;
+						$term_relationships[ $object_id ]['ewt_term_language'][] = $lang_term;
 					}
 
 					// Translation relationship.
 					$translation_term_id = $this->processed_terms[ $term['term_id'] ];
 					if ( $translation_term_id ) {
-						$term_relationships[ $object_id ]['lmat_term_translations'][] = $translation_term_id;
+						$term_relationships[ $object_id ]['ewt_term_translations'][] = $translation_term_id;
 					}
 				}
 			}
@@ -159,7 +159,7 @@ class LMAT_WP_Import extends WP_Import {
 				if ( is_wp_error( $result ) ) {
 					if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
 						// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Legitimate error logging for import failures, only when debug logging is enabled
-						error_log( sprintf( 'Linguator Import: Failed to set %s terms for object %d: %s', $taxonomy, $object_id, $result->get_error_message() ) );
+						error_log( sprintf( 'EasyWPTranslator Import: Failed to set %s terms for object %d: %s', $taxonomy, $object_id, $result->get_error_message() ) );
 					}
 				}
 			}
@@ -171,7 +171,7 @@ class LMAT_WP_Import extends WP_Import {
 	 *
 	 *  
 	 *
-	 * @param array $terms array of terms in 'lmat_post_translations' or 'lmat_term_translations' taxonomies
+	 * @param array $terms array of terms in 'ewt_post_translations' or 'ewt_term_translations' taxonomies
 	 * @param array $processed_objects array of posts or terms processed by WordPress Importer
 	 */
 	protected function remap_translations( &$terms, &$processed_objects ) {

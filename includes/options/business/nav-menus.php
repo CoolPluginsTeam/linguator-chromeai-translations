@@ -1,18 +1,18 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Options\Abstract_Option;
-use Linguator\Includes\Options\Options;
-use Linguator\Includes\Models\Languages;
+use EasyWPTranslator\Includes\Options\Abstract_Option;
+use EasyWPTranslator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Models\Languages;
 
 
 
@@ -63,7 +63,7 @@ class Nav_Menus extends Abstract_Option {
 		foreach ( $nav_menus[ $current_theme ] as $location => $lang ) {
 			if ( empty( $lang ) ) {
 				/* translators: default value when a menu location is not used. */
-				$lang = __( 'Not used', 'easy-web-translator' );
+				$lang = __( 'Not used', 'easy-wp-translator' );
 			}
 
 			$fields[ $location ]['label'] = sprintf( 'menu: %s', $location );
@@ -184,6 +184,6 @@ class Nav_Menus extends Abstract_Option {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'Translated navigation menus for each theme.', 'easy-web-translator' );
+		return __( 'Translated navigation menus for each theme.', 'easy-wp-translator' );
 	}
 }

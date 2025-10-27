@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -11,9 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Admin_Sync extends LMAT_Sync {
+class EWT_Admin_Sync extends EWT_Sync {
 	/**
-	 * @var LMAT_Admin_Links
+	 * @var EWT_Admin_Links
 	 */
 	private $links;
 
@@ -22,12 +22,12 @@ class LMAT_Admin_Sync extends LMAT_Sync {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		parent::__construct( $linguator );
+	public function __construct( &$easywptranslator ) {
+		parent::__construct( $easywptranslator );
 
-		$this->links = &$linguator->links;
+		$this->links = &$easywptranslator->links;
 
 		add_filter( 'wp_insert_post_parent', array( $this, 'wp_insert_post_parent' ), 10, 3 );
 		add_filter( 'wp_insert_post_data', array( $this, 'wp_insert_post_data' ) );
@@ -189,8 +189,8 @@ class LMAT_Admin_Sync extends LMAT_Sync {
 	 * @param WP_Post $post         Post object.
 	 * @param int[]   $translations Post translations.
 	 */
-	public function lmat_save_post( $post_id, $post, $translations ) {
-		parent::lmat_save_post( $post_id, $post, $translations );
+	public function ewt_save_post( $post_id, $post, $translations ) {
+		parent::ewt_save_post( $post_id, $post, $translations );
 
 		// Sticky posts
 		if ( in_array( 'sticky_posts', $this->options['sync'] ) ) {

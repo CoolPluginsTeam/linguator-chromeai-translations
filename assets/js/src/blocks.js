@@ -20,9 +20,9 @@
     // ---------------------------------------------------------------------------
     const TranslationIcon = function () {
       return wp.element.createElement('span', {
-        className: 'linguator-block-icon',
+        className: 'easywptranslator-block-icon',
         style: {
-          fontFamily: 'linguator',
+          fontFamily: 'easywptranslator',
           fontSize: '20px',
           lineHeight: '1',
           display: 'inline-block'
@@ -85,37 +85,37 @@
         {},
         wp.element.createElement(
           PanelBody,
-          { title: __('Language switcher settings', 'linguator') },
+          { title: __('Language switcher settings', 'easywptranslator') },
           wp.element.createElement(ToggleControl, {
-            label: __('Display as dropdown', 'linguator'),
+            label: __('Display as dropdown', 'easywptranslator'),
             checked: !!dropdown,
             onChange: (v) => update({ dropdown: !!v }),
           }),
           (!dropdown || showHideCurrentEvenInDropdown) &&
             wp.element.createElement(ToggleControl, {
-              label: __('Show language names', 'linguator'),
+              label: __('Show language names', 'easywptranslator'),
               checked: !!show_names,
               onChange: (v) => update({ show_names: !!v }),
             }),
           (!dropdown || showHideCurrentEvenInDropdown) &&
             wp.element.createElement(ToggleControl, {
-              label: __('Show flags', 'linguator'),
+              label: __('Show flags', 'easywptranslator'),
               checked: !!show_flags,
               onChange: (v) => update({ show_flags: !!v }),
             }),
           wp.element.createElement(ToggleControl, {
-            label: __('Force switch to homepage', 'linguator'),
+            label: __('Force switch to homepage', 'easywptranslator'),
             checked: !!force_home,
             onChange: (v) => update({ force_home: !!v }),
           }),
           !attributes.dropdown &&
             wp.element.createElement(ToggleControl, {
-              label: __('Hide current language', 'linguator'),
+              label: __('Hide current language', 'easywptranslator'),
               checked: !!hide_current,
               onChange: (v) => update({ hide_current: !!v }),
             }),
           wp.element.createElement(ToggleControl, {
-            label: __('Hide languages without translation', 'linguator'),
+            label: __('Hide languages without translation', 'easywptranslator'),
             checked: !!hide_if_no_translation,
             onChange: (v) => update({ hide_if_no_translation: !!v }),
           })
@@ -124,11 +124,11 @@
     }
   
     // ---------------------------------------------------------------------------
-    // Regular block: linguator/language-switcher
+    // Regular block: easywptranslator/language-switcher
     // ---------------------------------------------------------------------------
-    registerBlockType('linguator/language-switcher', {
-      title: __('Language switcher', 'linguator'),
-      description: __('Add a language switcher so visitors can select their preferred language.', 'linguator'),
+    registerBlockType('easywptranslator/language-switcher', {
+      title: __('Language switcher', 'easywptranslator'),
+      description: __('Add a language switcher so visitors can select their preferred language.', 'easywptranslator'),
       icon: TranslationIcon,
       category: 'widgets',
       attributes: { ...sharedAttributes },
@@ -146,10 +146,10 @@
             {},
             ServerSideRender
               ? wp.element.createElement(ServerSideRender, {
-                  block: 'linguator/language-switcher',
+                  block: 'easywptranslator/language-switcher',
                   attributes: props.attributes,
                 })
-              : wp.element.createElement('div', blockProps, __('Language Switcher preview (SSR not available).', 'linguator'))
+              : wp.element.createElement('div', blockProps, __('Language Switcher preview (SSR not available).', 'easywptranslator'))
           )
         );
       },
@@ -157,12 +157,12 @@
     });
   
     // ---------------------------------------------------------------------------
-    // Navigation child block: linguator/navigation-language-switcher
+    // Navigation child block: easywptranslator/navigation-language-switcher
     // ---------------------------------------------------------------------------
-    const NAV_BLOCK = 'linguator/navigation-language-switcher';
+    const NAV_BLOCK = 'easywptranslator/navigation-language-switcher';
     registerBlockType(NAV_BLOCK, {
-      title: __('Language switcher', 'linguator'),
-      description: __('Add a language switcher to the Navigation block.', 'linguator'),
+      title: __('Language switcher', 'easywptranslator'),
+      description: __('Add a language switcher to the Navigation block.', 'easywptranslator'),
       icon: TranslationIcon,
       category: 'widgets',
       parent: ['core/navigation'],
@@ -222,7 +222,7 @@
                     attributes,
                     className: 'wp-block-navigation__container block-editor-block-list__layout',
                   })
-                : wp.element.createElement('div', {}, __('Language Switcher (Navigation) preview (SSR not available).', 'linguator')),
+                : wp.element.createElement('div', {}, __('Language Switcher (Navigation) preview (SSR not available).', 'easywptranslator')),
               maybeSubmenuIcon
             )
           )
@@ -233,7 +233,7 @@
   
     // ---------------------------------------------------------------------------
     // Classic Menu → Navigation conversion hook
-    // Replaces a menu item with URL "#lmat_switcher" by our NAV_BLOCK with options from meta._lmat_menu_item
+    // Replaces a menu item with URL "#ewt_switcher" by our NAV_BLOCK with options from meta._ewt_menu_item
     // WARNING: relies on an unstable filter that may change across WP versions.
     // ---------------------------------------------------------------------------
     function mapBlockTree(blocks, menuItems, blocksMapping, mapper) {
@@ -246,9 +246,9 @@
     }
   
     function blocksFilter(block, menuItems, blocksMapping) {
-      if (block.name === 'core/navigation-link' && block.attributes && block.attributes.url === '#lmat_switcher') {
-        const menuItem = (menuItems || []).find((m) => m && m.url === '#lmat_switcher');
-        const attrs = (menuItem && menuItem.meta && menuItem.meta._lmat_menu_item) || {};
+      if (block.name === 'core/navigation-link' && block.attributes && block.attributes.url === '#ewt_switcher') {
+        const menuItem = (menuItems || []).find((m) => m && m.url === '#ewt_switcher');
+        const attrs = (menuItem && menuItem.meta && menuItem.meta._ewt_menu_item) || {};
         const newBlock = createBlock(NAV_BLOCK, attrs);
         if (menuItem && typeof menuItem.id !== 'undefined') {
           blocksMapping[menuItem.id] = newBlock.clientId;
@@ -267,7 +267,7 @@
   
     addFilter(
       'blocks.navigation.__unstableMenuItemsToBlocks',
-      'linguator/include-language-switcher',
+      'easywptranslator/include-language-switcher',
       menuItemsToBlocksFilter
     );
   })();

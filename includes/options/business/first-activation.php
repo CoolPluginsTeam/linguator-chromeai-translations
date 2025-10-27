@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-use Linguator\Includes\Options\Abstract_Option;
+use EasyWPTranslator\Includes\Options\Abstract_Option;
 
 
 
@@ -73,6 +73,6 @@ class First_Activation extends Abstract_Option {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'Time of first activation of Linguator.', 'easy-web-translator' );
+		return __( 'Time of first activation of EasyWPTranslator.', 'easy-wp-translator' );
 	}
 }

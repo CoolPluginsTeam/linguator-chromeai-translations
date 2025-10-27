@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return bool True if the cache compatibility must be loaded
  */
-function lmat_is_cache_active() {
+function ewt_is_cache_active() {
 	/**
 	 * Filters whether we should load the cache compatibility
 	 *
@@ -27,7 +27,7 @@ function lmat_is_cache_active() {
 	 * @bool $is_cache True if a known cache plugin is active
 	 *                 incl. WP Fastest Cache which doesn't use WP_CACHE
 	 */
-	return apply_filters( 'lmat_is_cache_active', ( defined( 'WP_CACHE' ) && WP_CACHE ) || defined( 'WPFC_MAIN_PATH' ) );
+	return apply_filters( 'ewt_is_cache_active', ( defined( 'WP_CACHE' ) && WP_CACHE ) || defined( 'WPFC_MAIN_PATH' ) );
 }
 
 /**
@@ -37,7 +37,7 @@ function lmat_is_cache_active() {
  *
  * @return string Requested url
  */
-function lmat_get_requested_url() {
+function ewt_get_requested_url() {
 	if ( isset( $_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI'] ) ) {
 		return set_url_scheme( sanitize_url( wp_unslash( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ) ) );
 	}
@@ -78,7 +78,7 @@ function lmat_get_requested_url() {
  *
  * @phpstan-param non-falsy-string $constant_name
  */
-function lmat_has_constant( string $constant_name ): bool {
+function ewt_has_constant( string $constant_name ): bool {
 	return defined( $constant_name ); // phpcs:ignore WordPressVIPMinimum.Constants.ConstantString.NotCheckingConstantName
 }
 
@@ -94,8 +94,8 @@ function lmat_has_constant( string $constant_name ): bool {
  * @phpstan-param non-falsy-string $constant_name
  * @phpstan-param int|float|string|bool|array|null $default
  */
-function lmat_get_constant( string $constant_name, $default = null ) {
-	if ( ! lmat_has_constant( $constant_name ) ) {
+function ewt_get_constant( string $constant_name, $default = null ) {
+	if ( ! ewt_has_constant( $constant_name ) ) {
 		return $default;
 	}
 
@@ -114,8 +114,8 @@ function lmat_get_constant( string $constant_name, $default = null ) {
  * @phpstan-param non-falsy-string $constant_name
  * @phpstan-param int|float|string|bool|array|null $value
  */
-function lmat_set_constant( string $constant_name, $value ): bool {
-	if ( lmat_has_constant( $constant_name ) ) {
+function ewt_set_constant( string $constant_name, $value ): bool {
+	if ( ewt_has_constant( $constant_name ) ) {
 		return false;
 	}
 
@@ -132,7 +132,7 @@ function lmat_set_constant( string $constant_name, $value ): bool {
  * @param string $plugin_name Plugin basename.
  * @return bool True if activated, false otherwise.
  */
-function lmat_is_plugin_active( string $plugin_name ) {
+function ewt_is_plugin_active( string $plugin_name ) {
 	$sitewide_plugins     = get_site_option( 'active_sitewide_plugins' );
 	$sitewide_plugins     = ! empty( $sitewide_plugins ) && is_array( $sitewide_plugins ) ? array_keys( $sitewide_plugins ) : array();
 	$current_site_plugins = (array) get_option( 'active_plugins', array() );
@@ -151,7 +151,7 @@ function lmat_is_plugin_active( string $plugin_name ) {
  * @param WP_Error $error Error object.
  * @return void
  */
-function lmat_add_notice( WP_Error $error ) {
+function ewt_add_notice( WP_Error $error ) {
 	if ( ! $error->has_errors() ) {
 		return;
 	}
@@ -171,7 +171,7 @@ function lmat_add_notice( WP_Error $error ) {
 			)
 		);
 
-		add_settings_error( 'easy-web-translator', $error_code, $message, $type );
+		add_settings_error( 'easy-wp-translator', $error_code, $message, $type );
 	}
 }
 
@@ -182,7 +182,7 @@ function lmat_add_notice( WP_Error $error ) {
  * @param string $locale The locale to replace links for.
  * @return string The content with links replaced.
  */
-function lmat_replace_links_with_translations($content, $locale, $current_locale){
+function ewt_replace_links_with_translations($content, $locale, $current_locale){
 	// Get all URLs in the content that start with the current home page URL (current domain), regardless of attribute or tag.
 	$home_url = preg_quote(get_home_url(), '/');
 	$pattern = '/(' . $home_url . '[^\s"\'<>]*)/i';
@@ -199,9 +199,9 @@ function lmat_replace_links_with_translations($content, $locale, $current_locale
 		 }
 	 }
  
-	 function lmat_extract_taxonomy_name($path, $terms_data){
-		 // Remove the language prefix if using Linguator
-		 $languages = lmat_languages_list(); // e.g., ['en', 'fr']
+	 function ewt_extract_taxonomy_name($path, $terms_data){
+		 // Remove the language prefix if using EasyWPTranslator
+		 $languages = ewt_languages_list(); // e.g., ['en', 'fr']
 		 $segments = explode('/', $path);
 		 if (in_array($segments[0], $languages)) {
 			 array_shift($segments); // remove 'en', 'fr', etc.
@@ -227,7 +227,7 @@ function lmat_replace_links_with_translations($content, $locale, $current_locale
 			$postID = url_to_postid($href);
  
 			if ($postID > 0) {
-				$translatedPost = lmat_get_post($postID, $locale);
+				$translatedPost = ewt_get_post($postID, $locale);
 				if ($translatedPost) {
 					$link = get_permalink($translatedPost);
 					
@@ -237,21 +237,21 @@ function lmat_replace_links_with_translations($content, $locale, $current_locale
 					}
 				}
 			} else {
-				 $path = trim(str_replace(lmat_home_url($current_locale), '', $href), '/');
+				 $path = trim(str_replace(ewt_home_url($current_locale), '', $href), '/');
 				 $path_parts = array_filter(explode('/', $path));
 				 $category_slug = end($path_parts);
-				 $taxonomy_name=lmat_extract_taxonomy_name($path, $terms_data);
+				 $taxonomy_name=ewt_extract_taxonomy_name($path, $terms_data);
 				 $taxonomy_name=$taxonomy_name ? $taxonomy_name : 'category';
  
 				$category = get_term_by('slug', $category_slug, $taxonomy_name);
  
 				if(!$category){
-						// Remove the language prefix if using Linguator
-					$languages = lmat_languages_list(); // e.g., ['en', 'fr']
+						// Remove the language prefix if using EasyWPTranslator
+					$languages = ewt_languages_list(); // e.g., ['en', 'fr']
 					$segments = explode('/', $path);
 					if (in_array($segments[0], $languages)) {
 						$lang_code=$segments[0];
-						$category_id=Lmat()->model->term_exists_by_slug($category_slug, $lang_code, $taxonomy_name);
+						$category_id=EWT()->model->term_exists_by_slug($category_slug, $lang_code, $taxonomy_name);
  
 						if($category_id){
 							$category=get_term($category_id, $taxonomy_name);
@@ -261,7 +261,7 @@ function lmat_replace_links_with_translations($content, $locale, $current_locale
  
 				
 				if ($category) {
-					$term_id = lmat_get_term($category->term_id, $locale);
+					$term_id = ewt_get_term($category->term_id, $locale);
 					if ($term_id > 0) {
 						$link = get_category_link($term_id);
 						$content = str_replace($href, esc_url($link), $content);
@@ -273,7 +273,7 @@ function lmat_replace_links_with_translations($content, $locale, $current_locale
 	
 	return $content;
  }
-function lmat_is_edit_rest_request(WP_REST_Request $request): bool {
+function ewt_is_edit_rest_request(WP_REST_Request $request): bool {
 	if (in_array($request->get_method(), array('PATCH', 'POST', 'PUT'), true)) {
 		return true;
 	}
@@ -287,13 +287,13 @@ function lmat_is_edit_rest_request(WP_REST_Request $request): bool {
  *
  * @return bool True to use the block editor plugin.
  */
-function lmat_use_block_editor_plugin() {
+function ewt_use_block_editor_plugin() {
 	/**
 	 * Filters whether we should load the block editor plugin or the legacy languages metabox.
 	 *
 	 * @param bool $use_plugin True when loading the block editor plugin.
 	 */
-	return class_exists( 'Linguator\Modules\Editors\Screens\Abstract_Screen' ) && apply_filters( 'lmat_use_block_editor_plugin', ! defined( 'LMAT_USE_BLOCK_EDITOR_PLUGIN' ) || LMAT_USE_BLOCK_EDITOR_PLUGIN );
+	return class_exists( 'EasyWPTranslator\Modules\Editors\Screens\Abstract_Screen' ) && apply_filters( 'ewt_use_block_editor_plugin', ! defined( 'EWT_USE_BLOCK_EDITOR_PLUGIN' ) || EWT_USE_BLOCK_EDITOR_PLUGIN );
 }
 
 /**
@@ -304,16 +304,16 @@ function lmat_use_block_editor_plugin() {
  * @param string $switcher_type The switcher type to check ('default', 'block', 'elementor')
  * @return bool True if the switcher type is enabled
  */
-function lmat_is_switcher_type_enabled( $switcher_type ) {
+function ewt_is_switcher_type_enabled( $switcher_type ) {
 	// Get the options instance
-	global $linguator;
+	global $easywptranslator;
 	
-	if ( ! isset( $linguator->options ) ) {
+	if ( ! isset( $easywptranslator->options ) ) {
 		// Fallback to default if options not available
 		return 'default' === $switcher_type;
 	}
 	
-	$enabled_switchers = $linguator->options->get( 'lmat_language_switcher_options' );
+	$enabled_switchers = $easywptranslator->options->get( 'ewt_language_switcher_options' );
 	
 	// Ensure it's an array
 	if ( ! is_array( $enabled_switchers ) ) {

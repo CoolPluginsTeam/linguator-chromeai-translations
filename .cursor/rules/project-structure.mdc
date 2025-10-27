@@ -1,8 +1,8 @@
-# Linguator Multilingual AI Translation - Project Structure
+# Easy WP Translator – On-Device Chrome AI Translation - Project Structure
 
 ## Main Entry Points
-- [linguator-multilingual-ai-translation.php](mdc:linguator-multilingual-ai-translation.php) - Main plugin file with WordPress plugin headers
-- [Includes/Core/linguator.php](mdc:Includes/Core/linguator.php) - Core plugin class that initializes everything
+- [easy-wp-translator.php](mdc:easy-wp-translator.php) - Main plugin file with WordPress plugin headers
+- [Includes/Core/easy-wp-translator.php](mdc:Includes/Core/easy-wp-translator.php) - Core plugin class that initializes everything
 - [Includes/Base/base.php](mdc:Includes/Base/base.php) - Abstract base class for admin and frontend
 
 ## Key Directories
@@ -44,12 +44,12 @@
 - [postcss.config.js](mdc:postcss.config.js) - PostCSS configuration
 
 ## Key Constants
-- `LINGUATOR_VERSION` - Plugin version
-- `LINGUATOR_FILE` - Main plugin file path
-- `LINGUATOR_DIR` - Plugin directory path
-- `LMAT_COOKIE` - Language cookie name
-- `LMAT_ADMIN` - Whether in admin context
-- `LMAT_AJAX_ON_FRONT` - Whether AJAX request on frontend
+- `EASY_WP_TRANSLATOR_VERSION` - Plugin version
+- `EASY_WP_TRANSLATOR_FILE` - Main plugin file path
+- `EASY_WP_TRANSLATOR_DIR` - Plugin directory path
+- `EWT_COOKIE` - Language cookie name
+- `EWT_ADMIN` - Whether in admin context
+- `EWT_AJAX_ON_FRONT` - Whether AJAX request on frontend
 description:
 globs:
 alwaysApply: false

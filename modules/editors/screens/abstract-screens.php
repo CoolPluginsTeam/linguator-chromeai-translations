@@ -1,15 +1,15 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Modules\Editors\Screens;
+namespace EasyWPTranslator\Modules\Editors\Screens;
 
-use Linguator\Includes\Other\LMAT_Model;
-use Linguator\Includes\Base\LMAT_Base;
+use EasyWPTranslator\Includes\Other\EWT_Model;
+use EasyWPTranslator\Includes\Base\EWT_Base;
 use WP_Screen;
-use Linguator\Includes\Other\LMAT_Language;
-use Linguator\Admin\Controllers\LMAT_Admin_Block_Editor;
+use EasyWPTranslator\Includes\Other\EWT_Language;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin_Block_Editor;
 
 /**
  * Template class to manage editors scripts.
@@ -24,12 +24,12 @@ abstract class Abstract_Screen {
 	protected $suffix = '';
 
 	/**
-	 * @var LMAT_Admin_Block_Editor|null
+	 * @var EWT_Admin_Block_Editor|null
 	 */
 	protected $block_editor;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
@@ -37,13 +37,13 @@ abstract class Abstract_Screen {
 	 * Constructor.
 	 *
 	 *
-	 * @param LMAT_Base $linguator Linguator main object.
+	 * @param EWT_Base $easywptranslator EasyWPTranslator main object.
 	 */
-	public function __construct( &$linguator ) {
+	public function __construct( &$easywptranslator ) {
 		$this->suffix = '';
 
-		$this->model        = &$linguator->model;
-		$this->block_editor = &$linguator->block_editor;
+		$this->model        = &$easywptranslator->model;
+		$this->block_editor = &$easywptranslator->block_editor;
 	}
 
 	/**
@@ -80,7 +80,7 @@ abstract class Abstract_Screen {
 
 		wp_enqueue_script(
 			static::get_handle(),
-			plugins_url( $this->get_script_path(), LINGUATOR_ROOT_FILE ),
+			plugins_url( $this->get_script_path(), EASY_WP_TRANSLATOR_ROOT_FILE ),
 			array(
 				'wp-api-fetch',
 				'wp-data',
@@ -88,7 +88,7 @@ abstract class Abstract_Screen {
 				'wp-sanitize',
 				'lodash',
 			),
-			LINGUATOR_VERSION,
+			EASY_WP_TRANSLATOR_VERSION,
 			true
 		);
 
@@ -100,7 +100,7 @@ abstract class Abstract_Screen {
 		// Get translations table data for the current post
 		$translations_table_data = $this->get_translations_table_data();
 
-		$lmat_settings_script = 'let lmat_block_editor_plugin_settings = ' . wp_json_encode(
+		$ewt_settings_script = 'let ewt_block_editor_plugin_settings = ' . wp_json_encode(
 			/**
 			 * Filters settings required by the UI.
 			 *
@@ -108,17 +108,17 @@ abstract class Abstract_Screen {
 			 * @param array $settings.
 			 */
 			(array) apply_filters(
-				'lmat_block_editor_plugin_settings',
+				'ewt_block_editor_plugin_settings',
 				array(
 					'lang'  => $editor_lang,
-					'nonce' => wp_create_nonce( 'lmat_language' ),
+					'nonce' => wp_create_nonce( 'ewt_language' ),
 					'translations_table' => $translations_table_data,
 				)
 			)
 		);
 
-		wp_add_inline_script( static::get_handle(), $lmat_settings_script, 'before' );
-		wp_set_script_translations( static::get_handle(), 'easy-web-translator' );
+		wp_add_inline_script( static::get_handle(), $ewt_settings_script, 'before' );
+		wp_set_script_translations( static::get_handle(), 'easy-wp-translator' );
 
 		if ( ! empty( $this->block_editor ) ) {
 			$this->block_editor->filter_rest_routes->add_inline_script( static::get_handle() );
@@ -138,9 +138,9 @@ abstract class Abstract_Screen {
 	 * Returns the current editor language.
 	 *
 	 *
-	 * @return LMAT_Language|null The language object if found, `null` otherwise.
+	 * @return EWT_Language|null The language object if found, `null` otherwise.
 	 */
-	abstract protected function get_language(): ?LMAT_Language;
+	abstract protected function get_language(): ?EWT_Language;
 
 	/**
 	 * Returns the screen name to use across all process.
@@ -169,7 +169,7 @@ abstract class Abstract_Screen {
 	 * @return string The handle.
 	 */
 	protected function get_handle(): string {
-		return "lmat_{$this->get_screen_name()}_sidebar";
+		return "ewt_{$this->get_screen_name()}_sidebar";
 	}
 
 	/**
@@ -191,10 +191,10 @@ abstract class Abstract_Screen {
 	 */
 	protected function enqueue_style(): void {
 		wp_enqueue_style(
-			'linguator-block-widget-editor-css',
-			plugins_url( '/admin/assets/css/build/style' . $this->suffix . '.css', LINGUATOR_ROOT_FILE ),
+			'easywptranslator-block-widget-editor-css',
+			plugins_url( '/admin/assets/css/build/style' . $this->suffix . '.css', EASY_WP_TRANSLATOR_ROOT_FILE ),
 			array( 'wp-components' ),
-			LINGUATOR_VERSION
+			EASY_WP_TRANSLATOR_VERSION
 		);
 	}
 

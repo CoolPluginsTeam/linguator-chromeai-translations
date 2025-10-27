@@ -1,16 +1,16 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 
-use Linguator\Includes\Options\Primitive\Abstract_Boolean;
+use EasyWPTranslator\Includes\Options\Primitive\Abstract_Boolean;
 
 
 
@@ -44,9 +44,9 @@ class Media_Support extends Abstract_Boolean {
 	 */
 	public function add_to_site_health_info( array $info, Options $options ): array { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		if ( $this->get() ) {
-			$value = '1: ' . __( 'The media are translated', 'easy-web-translator' );
+			$value = '1: ' . __( 'The media are translated', 'easy-wp-translator' );
 		} else {
-			$value = '0: ' . __( 'The media are not translated', 'easy-web-translator' );
+			$value = '0: ' . __( 'The media are not translated', 'easy-wp-translator' );
 		}
 
 		return $this->get_site_health_info( $info, $value, self::key() );
@@ -62,7 +62,7 @@ class Media_Support extends Abstract_Boolean {
 	protected function get_description(): string {
 		return sprintf(
 			/* translators: %1$s and %2$s are "true/false" values. */
-			__( 'Translate media: %1$s to translate, %2$s otherwise.', 'easy-web-translator' ),
+			__( 'Translate media: %1$s to translate, %2$s otherwise.', 'easy-wp-translator' ),
 			'`true`',
 			'`false`'
 		);

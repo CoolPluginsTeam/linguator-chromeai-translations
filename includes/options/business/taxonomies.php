@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -40,7 +40,7 @@ class Taxonomies extends Abstract_Object_Types {
 	protected function get_object_types(): array {
 		$public_taxonomies = get_taxonomies( array( '_builtin' => false ) );
 		/** @phpstan-var array<non-falsy-string> */
-		return array_diff( $public_taxonomies, get_taxonomies( array( '_lmat' => true ) ) );
+		return array_diff( $public_taxonomies, get_taxonomies( array( '_ewt' => true ) ) );
 	}
 
 	/**
@@ -51,6 +51,6 @@ class Taxonomies extends Abstract_Object_Types {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'List of taxonomies to translate.', 'easy-web-translator' );
+		return __( 'List of taxonomies to translate.', 'easy-wp-translator' );
 	}
 }

@@ -7,7 +7,7 @@ import FilterClassicContent from '../classic/index.js';
  * @returns {string}
  */
 const FilterTaxonomyContent = async ({content, service, postId, storeDispatch, filterHtmlContent}) => {
-    const postMetaSync = lmatBulkTranslationGlobal.postMetaSync === 'true' && lmatBulkTranslationGlobal.taxonomy_page !== 'taxonomy';
+    const postMetaSync = ewtBulkTranslationGlobal.postMetaSync === 'true' && ewtBulkTranslationGlobal.taxonomy_page !== 'taxonomy';
 
     if(postMetaSync){
         return content;

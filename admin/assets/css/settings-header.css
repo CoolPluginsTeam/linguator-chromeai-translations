@@ -1,5 +1,5 @@
 
-.lmat-settings-header-tab-container{
+.ewt-settings-header-tab-container{
     display: flex;
     align-items: center;
     background-color: #fff;
@@ -13,30 +13,30 @@
     margin: 0;
 }
 
-.toplevel_page_lmat #lmat-settings-header{
+.toplevel_page_ewt #ewt-settings-header{
     position:absolute;
     top:0;
     width:100%;
 }
-.toplevel_page_lmat .show-settings:not(.screen-meta-active){
+.toplevel_page_ewt .show-settings:not(.screen-meta-active){
     margin-top:65px;
 
 }
-.toplevel_page_lmat .show-settings.screen-meta-active{
+.toplevel_page_ewt .show-settings.screen-meta-active{
     margin-top:0;
 }
-.toplevel_page_lmat #screen-meta{
+.toplevel_page_ewt #screen-meta{
     margin-top:65px;
     margin-right:0;
 }
-.toplevel_page_lmat #wpbody{
+.toplevel_page_ewt #wpbody{
     background-color: #FFF;
 }
 
-.toplevel_page_lmat .wrap{
+.toplevel_page_ewt .wrap{
     margin-top:95px;
 }
-.languages_page_lmat_settings #wpbody{
+.languages_page_ewt_settings #wpbody{
     background-color: #F3F4F6;
 }
 #wpcontent{
@@ -52,26 +52,26 @@
 }
 
 
-.lmat-settings-header-logo{
+.ewt-settings-header-logo{
     height: 32px;
 }
 
-.lmat-settings-header-logo a{
+.ewt-settings-header-logo a{
     outline: none;
     box-shadow: none;
 }
 
-.lmat-settings-header-logo a:focus{
+.ewt-settings-header-logo a:focus{
     outline: none;
     box-shadow: none;
 }
 
-.lmat-settings-header-logo img{
+.ewt-settings-header-logo img{
     height: 32px;
     object-fit: contain;
 }
 
-.lmat-settings-header-tab-list{
+.ewt-settings-header-tab-list{
     display: flex;
     align-items: center;
     margin-left: 1.5rem;
@@ -83,30 +83,30 @@
     font-family: inherit;
 }
 
-.lmat-settings-header-tab-list a{
+.ewt-settings-header-tab-list a{
     color: #4b5563;
     text-decoration: none;
     padding: 0px;
 }
 
-.lmat-settings-header-tab-list a:hover{
+.ewt-settings-header-tab-list a:hover{
     color: #4b5563;
 }
 
-.lmat-settings-header-tab-list a:focus{
+.ewt-settings-header-tab-list a:focus{
     color: #4b5563;
     outline: none;
     border: none;
     box-shadow: none;
 }
 
-.lmat-settings-header-tab{
+.ewt-settings-header-tab{
     padding: 1.4rem 0.3rem;
     cursor: pointer;
     position: relative;
 }
 
-.lmat-settings-header-tab.active:after{
+.ewt-settings-header-tab.active:after{
     content: '';
     position: absolute;
     bottom: 0;
@@ -117,13 +117,13 @@
 }
 
 
-.languages_page_lmat_settings .wrap #string-translation{
+.languages_page_ewt_settings .wrap #string-translation{
     margin-top: 1rem;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
 }
 
-.lmat-header-action-link{
+.ewt-header-action-link{
     color: #4b5563;
     text-decoration: none;
     font-size: 0.875rem;
@@ -133,12 +133,12 @@
     transition: color 0.2s ease;
 }
 
-.lmat-header-action-link:hover{
+.ewt-header-action-link:hover{
     color: #3b82f6;
     text-decoration: none;
 }
 
-.lmat-header-action-link:focus{
+.ewt-header-action-link:focus{
     color: #3b82f6;
     outline: none;
     box-shadow: none;

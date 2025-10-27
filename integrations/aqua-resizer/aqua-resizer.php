@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\aqua_resizer;
+namespace EasyWPTranslator\Integrations\aqua_resizer;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -13,14 +13,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Aqua_Resizer {
+class EWT_Aqua_Resizer {
 	/**
 	 * Setups filters.
 	 *
 	 *  
 	 */
 	public function init() {
-		add_filter( 'lmat_home_url_black_list', array( $this, 'home_url_black_list' ) );
+		add_filter( 'ewt_home_url_black_list', array( $this, 'home_url_black_list' ) );
 	}
 
 	/**

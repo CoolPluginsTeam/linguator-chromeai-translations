@@ -41,7 +41,7 @@ const initBulkTranslate=async (postKeys=[], nonce, storeDispatch, prefix, update
                 for(const lang of languages){   
                     storeDispatch(unsetPendingPost(postId+'_'+lang));
                     storeDispatch(updateProgressStatus(100 / pendingPosts.length));
-                    storeDispatch(updateTranslatePostInfo({[postId+'_'+lang]: {status: 'error', messageClass: 'error', errorMessage: __('This post editor type is not supported for translation', 'easy-web-translator')}}));
+                    storeDispatch(updateTranslatePostInfo({[postId+'_'+lang]: {status: 'error', messageClass: 'error', errorMessage: __('This post editor type is not supported for translation', 'easy-wp-translator')}}));
                 }
             }
 
@@ -84,8 +84,8 @@ export const updateContent=async ({source, postId, sourceLang, lang, editorType,
 
     const updateContent=await updateFilterContent({source: deepCloneSource,postId, lang, editorType, service});
 
-    const bulkTranslateRouteUrl = lmatBulkTranslationGlobal.bulkTranslateRouteUrl;
-    const nonce = lmatBulkTranslationGlobal.nonce;
+    const bulkTranslateRouteUrl = ewtBulkTranslationGlobal.bulkTranslateRouteUrl;
+    const nonce = ewtBulkTranslationGlobal.nonce;
 
     storeDispatch(updateTranslatePostInfo({[postId+'_'+lang]: { status: 'in-progress', messageClass: 'in-progress'}}));
 
@@ -103,7 +103,7 @@ export const updateContent=async ({source, postId, sourceLang, lang, editorType,
         body.term_id=postId;
         body.taxonomy_name=updateContent.title || '';
         body.taxonomy_description=updateContent.content || '';
-        body.taxonomy=lmatBulkTranslationGlobal.taxonomy_page;
+        body.taxonomy=ewtBulkTranslationGlobal.taxonomy_page;
 
         if(updateContent.post_name && updateContent.post_name.trim() !== ''){
             body.taxonomy_slug=updateContent.post_name;
@@ -135,12 +135,12 @@ export const updateContent=async ({source, postId, sourceLang, lang, editorType,
             const extraData={};
 
             if(editorType === 'taxonomy'){
-                extraData.taxonomy=lmatBulkTranslationGlobal.taxonomy_page;
+                extraData.taxonomy=ewtBulkTranslationGlobal.taxonomy_page;
             }
 
             updateTranslateData({provider: service, sourceLang, targetLang: lang, currentPostId: data.data.post_id, parentPostId: postId, editorType, updateTranslateDataNonce: data?.data?.update_translate_data_nonce, extraData});
 
-            data.data.post_title = '' === data.data.post_title ? __('N/A', 'easy-web-translator') : data.data.post_title;
+            data.data.post_title = '' === data.data.post_title ? __('N/A', 'easy-wp-translator') : data.data.post_title;
             updateData={targetPostId: data.data.post_id, targetPostTitle: data.data.post_title, targetLanguage: lang, postLink: data.data.post_link, postEditLink: data.data.post_edit_link, status: 'completed', messageClass: 'success'};
             storeDispatch(updateCountInfo({postsTranslated: store.getState().countInfo.postsTranslated+1}));
         }else{
@@ -155,15 +155,15 @@ export const updateContent=async ({source, postId, sourceLang, lang, editorType,
                     errorHtml+='<br>Error Message:' + JSON.stringify(data.data.error);
                 }
 
-                updateData={status: 'error', messageClass: 'error', errorMessage: __('Post not created. Please try again.', 'easy-web-translator'), errorHtml: '<div class="lmat-error-html">'+errorHtml+'</div>'};
+                updateData={status: 'error', messageClass: 'error', errorMessage: __('Post not created. Please try again.', 'easy-wp-translator'), errorHtml: '<div class="ewt-error-html">'+errorHtml+'</div>'};
             }else if(data.code && data.message){
-                updateData={status: 'error', messageClass: 'error', errorMessage: __('Post not created. Please try again.', 'easy-web-translator'), errorHtml: '<div class="lmat-error-html">'+data.message+'</div>'};
+                updateData={status: 'error', messageClass: 'error', errorMessage: __('Post not created. Please try again.', 'easy-wp-translator'), errorHtml: '<div class="ewt-error-html">'+data.message+'</div>'};
             }else if(!data.success || data.data){
-                updateData={status: 'error', messageClass: 'error', errorMessage: __('Post not created. Please try again.', 'easy-web-translator'), errorHtml: '<div class="lmat-error-html">'+data.data+'</div>'};
+                updateData={status: 'error', messageClass: 'error', errorMessage: __('Post not created. Please try again.', 'easy-wp-translator'), errorHtml: '<div class="ewt-error-html">'+data.data+'</div>'};
             }else if(!data.data.post_id){
-                updateData={status: 'error', messageClass: 'error', errorMessage: __('Post not created. Please try again.', 'easy-web-translator'), errorHtml: '<div class="lmat-error-html">'+data.data+'</div>'};
+                updateData={status: 'error', messageClass: 'error', errorMessage: __('Post not created. Please try again.', 'easy-wp-translator'), errorHtml: '<div class="ewt-error-html">'+data.data+'</div>'};
             }else if(typeof data === 'string'){
-                updateData={status: 'error', messageClass: 'error', errorMessage: __('Post not created. Please try again.', 'easy-web-translator'), errorHtml: '<div class="lmat-error-html">'+data+'</div>'};
+                updateData={status: 'error', messageClass: 'error', errorMessage: __('Post not created. Please try again.', 'easy-wp-translator'), errorHtml: '<div class="ewt-error-html">'+data+'</div>'};
             }
         }
         
@@ -193,15 +193,15 @@ export const updateContent=async ({source, postId, sourceLang, lang, editorType,
             }
         }
 
-        storeDispatch(updateTranslatePostInfo({[postId+'_'+lang]: { status: 'error', messageClass: 'error', errorMessage: __('Post not created. Please try again.', 'easy-web-translator'), errorHtml: '<div class="lmat-error-html">'+errorHtml+'</div>'}}));
+        storeDispatch(updateTranslatePostInfo({[postId+'_'+lang]: { status: 'error', messageClass: 'error', errorMessage: __('Post not created. Please try again.', 'easy-wp-translator'), errorHtml: '<div class="ewt-error-html">'+errorHtml+'</div>'}}));
     })
 }
 
 const bulkTranslateEntries = async ({ids, langs, storeDispatch}) => {
     
-    const bulkTranslateRouteUrl = lmatBulkTranslationGlobal.bulkTranslateRouteUrl;
-    const bulkTranslatePrivateKey = lmatBulkTranslationGlobal.bulkTranslatePrivateKey;
-    const nonce = lmatBulkTranslationGlobal.nonce;
+    const bulkTranslateRouteUrl = ewtBulkTranslationGlobal.bulkTranslateRouteUrl;
+    const bulkTranslatePrivateKey = ewtBulkTranslationGlobal.bulkTranslatePrivateKey;
+    const nonce = ewtBulkTranslationGlobal.nonce;
     let storeParseBlockRules=false;
 
     const body={
@@ -210,11 +210,11 @@ const bulkTranslateEntries = async ({ids, langs, storeDispatch}) => {
         privateKey: bulkTranslatePrivateKey,
     }
 
-    let postUrl='lmat:bulk-translate-entries';
+    let postUrl='ewt:bulk-translate-entries';
 
-    if(lmatBulkTranslationGlobal.taxonomy_page && '' !== lmatBulkTranslationGlobal.taxonomy_page){
-        body.taxonomy=lmatBulkTranslationGlobal.taxonomy_page;
-        postUrl='lmat:bulk-translate-taxonomy-entries';
+    if(ewtBulkTranslationGlobal.taxonomy_page && '' !== ewtBulkTranslationGlobal.taxonomy_page){
+        body.taxonomy=ewtBulkTranslationGlobal.taxonomy_page;
+        postUrl='ewt:bulk-translate-taxonomy-entries';
     }
 
     const untranslatedPosts=await fetch(bulkTranslateRouteUrl + '/' + postUrl, {
@@ -245,7 +245,7 @@ const bulkTranslateEntries = async ({ids, langs, storeDispatch}) => {
     }
 
     if(!untranslatedPostsData){
-        return {success: false, message: __('No posts to translate data undefined', 'easy-web-translator')};
+        return {success: false, message: __('No posts to translate data undefined', 'easy-wp-translator')};
     }
 
     if(!untranslatedPostsData.success){
@@ -253,15 +253,15 @@ const bulkTranslateEntries = async ({ids, langs, storeDispatch}) => {
     }
 
     if(!untranslatedPostsData.data){
-        return {success: false, message: __('No posts to translate untranslated data not found', 'easy-web-translator')};
+        return {success: false, message: __('No posts to translate untranslated data not found', 'easy-wp-translator')};
     }
 
     if(!untranslatedPostsData.data.posts){
-        return {success: false, message: __('No posts to translate untranslated posts data not found', 'easy-web-translator')};
+        return {success: false, message: __('No posts to translate untranslated posts data not found', 'easy-wp-translator')};
     }
 
     if(!untranslatedPostsData.data.CreateTranslatePostNonce){
-        return {success: false, message: __('No create translate post nonce', 'easy-web-translator')};
+        return {success: false, message: __('No create translate post nonce', 'easy-wp-translator')};
     }
 
     const posts=untranslatedPostsData.data.posts;
@@ -290,8 +290,8 @@ const bulkTranslateEntries = async ({ids, langs, storeDispatch}) => {
                         firstPostLanguage=true;
                     }
 
-                    const flagUrl=lmatBulkTranslationGlobal.languageObject[language].flag;
-                    const languageName=lmatBulkTranslationGlobal.languageObject[language].name;
+                    const flagUrl=ewtBulkTranslationGlobal.languageObject[language].flag;
+                    const languageName=ewtBulkTranslationGlobal.languageObject[language].name;
                     storeDispatch(updatePendingPosts([postId+'_'+language]));
                     storeDispatch(updateTranslatePostInfo({[postId+'_'+language]: {parentPostId: postId, targetPostId: null, targetLanguage: language, postLink: null, status: 'pending', parentPostTitle, firstPostLanguage, flagUrl, languageName, messageClass: 'warning'}}));
                 });
@@ -319,9 +319,9 @@ const bulkTranslateEntries = async ({ids, langs, storeDispatch}) => {
                     editorType: editor_type,
                     sourceLanguage,
                     errorMessage: sprintf(
-                        __('Set source language for this %s %s before translating.', 'easy-web-translator'),
+                        __('Set source language for this %s %s before translating.', 'easy-wp-translator'),
                         titleLink ? '<a href="'+titleLink+'" target="_blank" rel="noopener noreferrer">'+postTitle+'</a>' : postTitle,
-                        window?.lmatBulkTranslationGlobal?.taxonomy_page || window?.lmatBulkTranslationGlobal?.post_label
+                        window?.ewtBulkTranslationGlobal?.taxonomy_page || window?.ewtBulkTranslationGlobal?.post_label
                     )
                 }
 

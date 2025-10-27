@@ -2,7 +2,7 @@
 /**
  * Displays the wizard notice content
  *
- * @package Linguator
+ * @package EasyWPTranslator
  *
  *  
  */
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $wizard_url = add_query_arg(
 	array(
-		'page' => 'lmat_wizard',
+		'page' => 'ewt_wizard',
 	),
 	admin_url( 'admin.php' )
 );
@@ -22,14 +22,14 @@ $wizard_url = add_query_arg(
 	<?php
 	printf(
 		/* translators: %s is the plugin name */
-		esc_html__( 'Welcome to %s', 'easy-web-translator' ),
-		esc_html( LINGUATOR )
+		esc_html__( 'Welcome to %s', 'easy-wp-translator' ),
+		esc_html( EASY_WP_TRANSLATOR )
 	);
 	?>
 	</strong>
 	<?php
 	echo ' &#8211; ';
-	esc_html_e( 'You&lsquo;re almost ready to translate your contents!', 'easy-web-translator' );
+	esc_html_e( 'You&lsquo;re almost ready to translate your contents!', 'easy-wp-translator' );
 	?>
 </p>
 <p class="buttons">
@@ -37,12 +37,12 @@ $wizard_url = add_query_arg(
 		href="<?php echo esc_url( $wizard_url ); ?>"
 		class="button button-primary"
 	>
-		<?php esc_html_e( 'Run the Setup Wizard', 'easy-web-translator' ); ?>
+		<?php esc_html_e( 'Run the Setup Wizard', 'easy-wp-translator' ); ?>
 	</a>
 	<a
 		class="button button-secondary skip"
-		href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'lmat-hide-notice', 'wizard' ), 'wizard', '_lmat_notice_nonce' ) ); ?>"
+		href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'ewt-hide-notice', 'wizard' ), 'wizard', '_ewt_notice_nonce' ) ); ?>"
 	>
-		<?php esc_html_e( 'Skip setup', 'easy-web-translator' ); ?>
+		<?php esc_html_e( 'Skip setup', 'easy-wp-translator' ); ?>
 	</a>
 </p>

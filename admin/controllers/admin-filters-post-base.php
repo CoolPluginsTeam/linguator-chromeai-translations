@@ -1,40 +1,40 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 /**
- * Some common code for LMAT_Admin_Filters_Post and LMAT_Admin_Filters_Media
+ * Some common code for EWT_Admin_Filters_Post and EWT_Admin_Filters_Media
  *
  *  
  */
-abstract class LMAT_Admin_Filters_Post_Base {
+abstract class EWT_Admin_Filters_Post_Base {
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
 	/**
-	 * @var LMAT_Admin_Links
+	 * @var EWT_Admin_Links
 	 */
 	public $links;
 
 	/**
 	 * Language selected in the admin language filter.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $filter_lang;
 
 	/**
 	 * Preferred language to assign to new contents.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $pref_lang;
 
@@ -43,12 +43,12 @@ abstract class LMAT_Admin_Filters_Post_Base {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->links = &$linguator->links;
-		$this->model = &$linguator->model;
-		$this->pref_lang = &$linguator->pref_lang;
+	public function __construct( &$easywptranslator ) {
+		$this->links = &$easywptranslator->links;
+		$this->model = &$easywptranslator->model;
+		$this->pref_lang = &$easywptranslator->pref_lang;
 	}
 
 	/**
@@ -62,7 +62,7 @@ abstract class LMAT_Admin_Filters_Post_Base {
 	 */
 	protected function save_translations( $post_id, $arr ) {
 		// Security check as 'wp_insert_post' can be called from outside WP admin.
-		check_admin_referer( 'lmat_language', '_lmat_nonce' );
+		check_admin_referer( 'ewt_language', '_ewt_nonce' );
 
 		$translations = $this->model->post->save_translations( $post_id, $arr );
 		return $translations;

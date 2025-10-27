@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const bulkTranslateStore = createSlice({
-  name: 'lmat-bulk-translate',
+  name: 'ewt-bulk-translate',
   initialState: {
     completedPosts: [],
     pendingPosts: [],

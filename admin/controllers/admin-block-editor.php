@@ -1,16 +1,16 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 
-use Linguator\Includes\Filters\LMAT_Filter_REST_Routes;
-use Linguator\Includes\Other\LMAT_Model;
+use EasyWPTranslator\Includes\Filters\EWT_Filter_REST_Routes;
+use EasyWPTranslator\Includes\Other\EWT_Model;
 use WP_Block_Editor_Context;
 use WP_Post;
 
@@ -20,14 +20,14 @@ use WP_Post;
  *
  *  
  */
-class LMAT_Admin_Block_Editor {
+class EWT_Admin_Block_Editor {
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
 	/**
-	 * @var LMAT_Filter_REST_Routes
+	 * @var EWT_Filter_REST_Routes
 	 */
 	public $filter_rest_routes;
 
@@ -36,14 +36,14 @@ class LMAT_Admin_Block_Editor {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Admin $linguator The Linguator object.
+	 * @param EWT_Admin $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->model              = &$linguator->model;
-		$this->filter_rest_routes = new LMAT_Filter_REST_Routes( $linguator->model );
+	public function __construct( &$easywptranslator ) {
+		$this->model              = &$easywptranslator->model;
+		$this->filter_rest_routes = new EWT_Filter_REST_Routes( $easywptranslator->model );
 
 		add_filter( 'block_editor_rest_api_preload_paths', array( $this, 'filter_preload_paths' ), 50, 2 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'add_block_editor_inline_script' ), 15 ); // After `LMAT_Admin_Base::admin_enqueue_scripts()` to ensure `lmat_block-editor`script is enqueued.
+		add_action( 'admin_enqueue_scripts', array( $this, 'add_block_editor_inline_script' ), 15 ); // After `EWT_Admin_Base::admin_enqueue_scripts()` to ensure `ewt_block-editor`script is enqueued.
 	}
 
 	/**
@@ -93,7 +93,7 @@ class LMAT_Admin_Block_Editor {
 	 * @return void
 	 */
 	public function add_block_editor_inline_script() {
-		$handle = 'lmat_block-editor';
+		$handle = 'ewt_block-editor';
 
 		if ( wp_script_is( $handle, 'enqueued' ) ) {
 			$this->filter_rest_routes->add_inline_script( $handle );

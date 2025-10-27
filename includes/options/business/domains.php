@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,9 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-use Linguator\Includes\Options\Abstract_Option;
-use Linguator\Includes\Options\Options;
-use Linguator\Includes\Models\Languages;
+use EasyWPTranslator\Includes\Options\Abstract_Option;
+use EasyWPTranslator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Models\Languages;
 
 
 
@@ -132,14 +132,14 @@ class Domains extends Abstract_Option {
 			// Non-blocking error.
 			if ( 1 === count( $missing_langs ) ) {
 				/* translators: %s is a native language name. */
-				$message = __( 'Please enter a valid URL for %s.', 'easy-web-translator' );
+				$message = __( 'Please enter a valid URL for %s.', 'easy-wp-translator' );
 			} else {
 				/* translators: %s is a list of native language names. */
-				$message = __( 'Please enter valid URLs for %s.', 'easy-web-translator' );
+				$message = __( 'Please enter valid URLs for %s.', 'easy-wp-translator' );
 			}
 
 			$this->errors->add(
-				'lmat_empty_domains',
+				'ewt_empty_domains',
 				sprintf( $message, wp_sprintf_l( '%l', $missing_langs ) ),
 				'warning'
 			);
@@ -160,7 +160,7 @@ class Domains extends Abstract_Option {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'Domains used when the language is set from different domains.', 'easy-web-translator' );
+		return __( 'Domains used when the language is set from different domains.', 'easy-wp-translator' );
 
 	}
 

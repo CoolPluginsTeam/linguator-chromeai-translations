@@ -1,14 +1,14 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Settings\Tables;
+namespace EasyWPTranslator\Settings\Tables;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 use WP_List_Table;
 
 
@@ -18,11 +18,11 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 }
 
 /**
- * A class to create the languages table in Linguator settings
+ * A class to create the languages table in EasyWPTranslator settings
  *
  *  
  */
-class LMAT_Table_Languages extends WP_List_Table {
+class EWT_Table_Languages extends WP_List_Table {
 
 	/**
 	 * Constructor
@@ -43,7 +43,7 @@ class LMAT_Table_Languages extends WP_List_Table {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language $item The language item.
+	 * @param EWT_Language $item The language item.
 	 * @return void
 	 */
 	public function single_row( $item ) {
@@ -53,9 +53,9 @@ class LMAT_Table_Languages extends WP_List_Table {
 		 *  
 		 *
 		 * @param array        $classes The list of class names.
-		 * @param LMAT_Language $item    The language item.
+		 * @param EWT_Language $item    The language item.
 		 */
-		$classes = apply_filters( 'lmat_languages_row_classes', array(), $item );
+		$classes = apply_filters( 'ewt_languages_row_classes', array(), $item );
 		echo '<tr' . ( empty( $classes ) ? '>' : ' class="' . esc_attr( implode( ' ', $classes ) ) . '">' );
 		$this->single_row_columns( $item );
 		echo '</tr>';
@@ -66,7 +66,7 @@ class LMAT_Table_Languages extends WP_List_Table {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language $item        The language item.
+	 * @param EWT_Language $item        The language item.
 	 * @param string       $column_name The column name.
 	 * @return string|int
 	 */
@@ -80,7 +80,7 @@ class LMAT_Table_Languages extends WP_List_Table {
 				return (int) $item->$column_name;
 
 			case 'count':
-				return $item->get_tax_prop( 'lmat_language', $column_name );
+				return $item->get_tax_prop( 'ewt_language', $column_name );
 
 			default:
 				return $item->$column_name; // Flag.
@@ -93,14 +93,14 @@ class LMAT_Table_Languages extends WP_List_Table {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language $item The language item.
+	 * @param EWT_Language $item The language item.
 	 * @return string
 	 */
 	public function column_name( $item ) {
 		return sprintf(
 			'<a title="%s" href="%s">%s</a>',
-			esc_attr__( 'Edit this language', 'easy-web-translator' ),
-			esc_url( admin_url( 'admin.php?page=lmat&amp;lmat_action=edit&amp;lang=' . $item->term_id ) ),
+			esc_attr__( 'Edit this language', 'easy-wp-translator' ),
+			esc_url( admin_url( 'admin.php?page=ewt&amp;ewt_action=edit&amp;lang=' . $item->term_id ) ),
 			esc_html( $item->name )
 		);
 	}
@@ -111,7 +111,7 @@ class LMAT_Table_Languages extends WP_List_Table {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language $item The language item.
+	 * @param EWT_Language $item The language item.
 	 * @return string
 	 */
 	public function column_default_lang( $item ) {
@@ -120,10 +120,10 @@ class LMAT_Table_Languages extends WP_List_Table {
 				'<div class="row-actions"><span class="default-lang">
 				<a class="icon-default-lang" title="%1$s" href="%2$s"><span class="screen-reader-text">%3$s</span></a>
 				</span></div>',
-				esc_attr__( 'Select as default language', 'easy-web-translator' ),
-				wp_nonce_url( '?page=lmat&amp;lmat_action=default-lang&amp;noheader=true&amp;lang=' . $item->term_id, 'default-lang' ),
+				esc_attr__( 'Select as default language', 'easy-wp-translator' ),
+				wp_nonce_url( '?page=ewt&amp;ewt_action=default-lang&amp;noheader=true&amp;lang=' . $item->term_id, 'default-lang' ),
 				/* translators: accessibility text, %s is a native language name */
-				esc_html( sprintf( __( 'Choose %s as default language', 'easy-web-translator' ), $item->name ) )
+				esc_html( sprintf( __( 'Choose %s as default language', 'easy-wp-translator' ), $item->name ) )
 			);
 
 			/**
@@ -132,14 +132,14 @@ class LMAT_Table_Languages extends WP_List_Table {
 			 *  
 			 *
 			 * @param string       $s    The html markup of the action.
-			 * @param LMAT_Language $item The language item.
+			 * @param EWT_Language $item The language item.
 			 */
-			$s = apply_filters( 'lmat_default_lang_row_action', $s, $item );
+			$s = apply_filters( 'ewt_default_lang_row_action', $s, $item );
 		} else {
 			$s = sprintf(
 				'<span class="icon-default-lang"><span class="screen-reader-text">%1$s</span></span>',
 				/* translators: accessibility text */
-				esc_html__( 'Default language', 'easy-web-translator' )
+				esc_html__( 'Default language', 'easy-wp-translator' )
 			);
 		}
 
@@ -155,13 +155,13 @@ class LMAT_Table_Languages extends WP_List_Table {
 	 */
 	public function get_columns() {
 		return array(
-			'name'         => esc_html__( 'Full name', 'easy-web-translator' ),
-			'locale'       => esc_html__( 'Locale', 'easy-web-translator' ),
-			'slug'         => esc_html__( 'Code', 'easy-web-translator' ),
-			'default_lang' => sprintf( '<span title="%1$s" class="icon-default-lang"><span class="screen-reader-text">%2$s</span></span>', esc_attr__( 'Default language', 'easy-web-translator' ), esc_html__( 'Default language', 'easy-web-translator' ) ),
-			'term_group'   => esc_html__( 'Order', 'easy-web-translator' ),
-			'flag'         => esc_html__( 'Flag', 'easy-web-translator' ),
-			'count'        => esc_html__( 'Posts', 'easy-web-translator' ),
+			'name'         => esc_html__( 'Full name', 'easy-wp-translator' ),
+			'locale'       => esc_html__( 'Locale', 'easy-wp-translator' ),
+			'slug'         => esc_html__( 'Code', 'easy-wp-translator' ),
+			'default_lang' => sprintf( '<span title="%1$s" class="icon-default-lang"><span class="screen-reader-text">%2$s</span></span>', esc_attr__( 'Default language', 'easy-wp-translator' ), esc_html__( 'Default language', 'easy-wp-translator' ) ),
+			'term_group'   => esc_html__( 'Order', 'easy-wp-translator' ),
+			'flag'         => esc_html__( 'Flag', 'easy-wp-translator' ),
+			'count'        => esc_html__( 'Posts', 'easy-wp-translator' ),
 		);
 	}
 
@@ -198,7 +198,7 @@ class LMAT_Table_Languages extends WP_List_Table {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language $item        The language item being acted upon.
+	 * @param EWT_Language $item        The language item being acted upon.
 	 * @param string       $column_name Current column name.
 	 * @param string       $primary     Primary column name.
 	 * @return string The row actions output.
@@ -211,16 +211,16 @@ class LMAT_Table_Languages extends WP_List_Table {
 		$actions = array(
 			'edit'   => sprintf(
 				'<a title="%s" href="%s">%s</a>',
-				esc_attr__( 'Edit this language', 'easy-web-translator' ),
-				esc_url( admin_url( 'admin.php?page=lmat&amp;lmat_action=edit&amp;lang=' . $item->term_id ) ),
-				esc_html__( 'Edit', 'easy-web-translator' )
+				esc_attr__( 'Edit this language', 'easy-wp-translator' ),
+				esc_url( admin_url( 'admin.php?page=ewt&amp;ewt_action=edit&amp;lang=' . $item->term_id ) ),
+				esc_html__( 'Edit', 'easy-wp-translator' )
 			),
 			'delete' => sprintf(
 				'<a title="%s" href="%s" onclick = "return confirm( \'%s\' );">%s</a>',
-				esc_attr__( 'Delete this language and all its associated data', 'easy-web-translator' ),
-				wp_nonce_url( '?page=lmat&amp;lmat_action=delete&amp;noheader=true&amp;lang=' . $item->term_id, 'delete-lang' ),
-				esc_js( __( 'You are about to permanently delete this language. Are you sure?', 'easy-web-translator' ) ),
-				esc_html__( 'Delete', 'easy-web-translator' )
+				esc_attr__( 'Delete this language and all its associated data', 'easy-wp-translator' ),
+				wp_nonce_url( '?page=ewt&amp;ewt_action=delete&amp;noheader=true&amp;lang=' . $item->term_id, 'delete-lang' ),
+				esc_js( __( 'You are about to permanently delete this language. Are you sure?', 'easy-wp-translator' ) ),
+				esc_html__( 'Delete', 'easy-wp-translator' )
 			),
 		);
 
@@ -230,9 +230,9 @@ class LMAT_Table_Languages extends WP_List_Table {
 		 *  
 		 *
 		 * @param array        $actions A list of html markup actions.
-		 * @param LMAT_Language $item    The language item.
+		 * @param EWT_Language $item    The language item.
 		 */
-		$actions = apply_filters( 'lmat_languages_row_actions', $actions, $item );
+		$actions = apply_filters( 'ewt_languages_row_actions', $actions, $item );
 
 		return $this->row_actions( $actions );
 	}
@@ -242,8 +242,8 @@ class LMAT_Table_Languages extends WP_List_Table {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language $a The first language to compare.
-	 * @param LMAT_Language $b The second language to compare.
+	 * @param EWT_Language $a The first language to compare.
+	 * @param EWT_Language $b The second language to compare.
 	 * @return int -1 or 1 if $a is considered to be respectively less than or greater than $b.
 	 */
 	protected function usort_reorder( $a, $b ) {
@@ -263,11 +263,11 @@ class LMAT_Table_Languages extends WP_List_Table {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language[] $data The list of languages.
+	 * @param EWT_Language[] $data The list of languages.
 	 * @return void
 	 */
 	public function prepare_items( $data = array() ) {
-		$per_page = $this->get_items_per_page( 'lmat_lang_per_page' );
+		$per_page = $this->get_items_per_page( 'ewt_lang_per_page' );
 		$this->_column_headers = array( $this->get_columns(), array(), $this->get_sortable_columns() );
 
 		usort( $data, array( $this, 'usort_reorder' ) );

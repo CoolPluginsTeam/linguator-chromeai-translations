@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Filters;
+namespace EasyWPTranslator\Includes\Filters;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Setup specific filters useful for sanitization.
  *
- * Extract from LMAT_Admin_Filters to be able to use in a REST API context.
+ * Extract from EWT_Admin_Filters to be able to use in a REST API context.
  *
  *  
  */
-class LMAT_Filters_Sanitization {
+class EWT_Filters_Sanitization {
 	/**
 	 * Language used for the sanitization depending on the context.
 	 *

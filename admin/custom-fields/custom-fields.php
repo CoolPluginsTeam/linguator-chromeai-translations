@@ -1,6 +1,6 @@
 <?php
 
-namespace Linguator\Custom_Fields;
+namespace EasyWPTranslator\Custom_Fields;
 
 if(!defined('ABSPATH')) exit;
 
@@ -8,8 +8,8 @@ if(!class_exists('Custom_Fields')) {
 
     class Custom_Fields {
         private static $instance = null;
-        private $lmat_saved_fields = array();
-        private $lmat_allowed_fields = array();
+        private $ewt_saved_fields = array();
+        private $ewt_allowed_fields = array();
     
         public static function get_instance() {
             if(null === self::$instance) {
@@ -19,63 +19,63 @@ if(!class_exists('Custom_Fields')) {
         }
 
         public function __construct() {
-            add_action('wp_ajax_lmat_update_custom_fields_content', array($this, 'update_custom_fields_content'));
+            add_action('wp_ajax_ewt_update_custom_fields_content', array($this, 'update_custom_fields_content'));
         }
     
         public static function enqueue_editor_assets() {
-            wp_enqueue_script( 'lmat-datatable-script', plugins_url( 'admin/assets/js/dataTables.min.js', LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION, true );
-			wp_enqueue_script( 'lmat-datatable-style', plugins_url( 'admin/assets/js/dataTables.min.js', LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION, true );
-			wp_enqueue_style( 'lmat-editor-custom-fields', plugins_url( 'admin/assets/css/lmat-custom-data-table.min.css', LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION );
-			wp_enqueue_script( 'lmat-editor-custom-fields', plugins_url( 'admin/assets/js/lmat-custom-data-table.min.js', LINGUATOR_ROOT_FILE ), array('lmat-datatable-script'), LINGUATOR_VERSION, true );
+            wp_enqueue_script( 'ewt-datatable-script', plugins_url( 'admin/assets/js/dataTables.min.js', EASY_WP_TRANSLATOR_ROOT_FILE ), array(), EASY_WP_TRANSLATOR_VERSION, true );
+			wp_enqueue_script( 'ewt-datatable-style', plugins_url( 'admin/assets/js/dataTables.min.js', EASY_WP_TRANSLATOR_ROOT_FILE ), array(), EASY_WP_TRANSLATOR_VERSION, true );
+			wp_enqueue_style( 'ewt-editor-custom-fields', plugins_url( 'admin/assets/css/ewt-custom-data-table.min.css', EASY_WP_TRANSLATOR_ROOT_FILE ), array(), EASY_WP_TRANSLATOR_VERSION );
+			wp_enqueue_script( 'ewt-editor-custom-fields', plugins_url( 'admin/assets/js/ewt-custom-data-table.min.js', EASY_WP_TRANSLATOR_ROOT_FILE ), array('ewt-datatable-script'), EASY_WP_TRANSLATOR_VERSION, true );
         
-            wp_localize_script( 'lmat-editor-custom-fields', 'lmatCustomTableDataObject', array(
+            wp_localize_script( 'ewt-editor-custom-fields', 'ewtCustomTableDataObject', array(
                 'admin_url' => esc_url(admin_url('admin-ajax.php')),
-                'save_button_handler' => 'lmat_update_custom_fields_content',
-                'save_button_nonce' => wp_create_nonce('lmat_save_custom_fields'),
+                'save_button_handler' => 'ewt_update_custom_fields_content',
+                'save_button_nonce' => wp_create_nonce('ewt_save_custom_fields'),
                 'save_button_enabled'=>true,
-                'save_button_text'=>__('Save Fields', 'easy-web-translator'),
-                'save_button_class'=>'lmat-save-custom-fields',
+                'save_button_text'=>__('Save Fields', 'easy-wp-translator'),
+                'save_button_class'=>'ewt-save-custom-fields',
             ) );
         }
     
-        public function lmat_render_custom_fields_page() {
-                $this->lmat_allowed_fields = self::get_allowed_custom_fields();
+        public function ewt_render_custom_fields_page() {
+                $this->ewt_allowed_fields = self::get_allowed_custom_fields();
                 $s_no                        = 1;
                 ?>
-                <div class="lmat-custom-data-table-wrapper lmat-custom-fields">
-                    <h3><?php echo __('Custom Fields Translation Settings', 'easy-web-translator'); ?>
+                <div class="ewt-custom-data-table-wrapper ewt-custom-fields">
+                    <h3><?php echo __('Custom Fields Translation Settings', 'easy-wp-translator'); ?>
                     <br>
-                    <p><?php echo sprintf(esc_html__('Select which custom fields will be translated by %s.', 'easy-web-translator'), 'Linguator'); ?></p>
+                    <p><?php echo sprintf(esc_html__('Select which custom fields will be translated by %s.', 'easy-wp-translator'), 'EasyWPTranslator'); ?></p>
                     </h3>
-                    <button class="button button-primary lmat-save-custom-fields"><?php esc_html_e( 'Save Fields', 'easy-web-translator' ); ?></button>
-                    <div class="lmat-custom-data-table-filters">
-                        <div class="lmat-filter-tab" data-column="3" data-default="all">
-                            <label for="lmat-fields-filter"><?php esc_html_e( 'Show Fields:', 'easy-web-translator' ); ?></label>
-                            <select id="lmat-fields-filter" name="lmat_fields_filter">
-                                <option value="all"><?php esc_html_e( 'All', 'easy-web-translator' ); ?></option>
-                                <option value="supported"><?php esc_html_e( 'Translatable', 'easy-web-translator' ); ?></option>
-                                <option value="unsupported"><?php esc_html_e( 'Non-Translatable', 'easy-web-translator' ); ?></option>
+                    <button class="button button-primary ewt-save-custom-fields"><?php esc_html_e( 'Save Fields', 'easy-wp-translator' ); ?></button>
+                    <div class="ewt-custom-data-table-filters">
+                        <div class="ewt-filter-tab" data-column="3" data-default="all">
+                            <label for="ewt-fields-filter"><?php esc_html_e( 'Show Fields:', 'easy-wp-translator' ); ?></label>
+                            <select id="ewt-fields-filter" name="ewt_fields_filter">
+                                <option value="all"><?php esc_html_e( 'All', 'easy-wp-translator' ); ?></option>
+                                <option value="supported"><?php esc_html_e( 'Translatable', 'easy-wp-translator' ); ?></option>
+                                <option value="unsupported"><?php esc_html_e( 'Non-Translatable', 'easy-wp-translator' ); ?></option>
                             </select>
                         </div>
-                        <div class="lmat-filter-tab" data-column="2" data-default="all">
-                            <label for="lmat-fields-filter"><?php esc_html_e( 'Type:', 'easy-web-translator' ); ?></label>
-                            <select id="lmat-fields-value-type-filter" name="lmat_fields_value_type_filter">
-                                <option value="all"><?php esc_html_e( 'All', 'easy-web-translator' ); ?></option>
-                                <option value="string"><?php esc_html_e( 'String', 'easy-web-translator' ); ?></option>
-                                <option value="array"><?php esc_html_e( 'Array', 'easy-web-translator' ); ?></option>
+                        <div class="ewt-filter-tab" data-column="2" data-default="all">
+                            <label for="ewt-fields-filter"><?php esc_html_e( 'Type:', 'easy-wp-translator' ); ?></label>
+                            <select id="ewt-fields-value-type-filter" name="ewt_fields_value_type_filter">
+                                <option value="all"><?php esc_html_e( 'All', 'easy-wp-translator' ); ?></option>
+                                <option value="string"><?php esc_html_e( 'String', 'easy-wp-translator' ); ?></option>
+                                <option value="array"><?php esc_html_e( 'Array', 'easy-wp-translator' ); ?></option>
                             </select>
                         </div>
                     </div>
-                    <div class="lmat-custom-table-section">
-                        <div class="lmat-custom-table-lists">
-                            <table class="lmat-custom-data-table-table" id="lmat-custom-datatable">
+                    <div class="ewt-custom-table-section">
+                        <div class="ewt-custom-table-lists">
+                            <table class="ewt-custom-data-table-table" id="ewt-custom-datatable">
                                 <thead>
                                     <tr>
-                                        <th><?php esc_html_e( 'Sr.No', 'easy-web-translator' ); ?></th>
-                                        <th><?php esc_html_e( 'Field Name', 'easy-web-translator' ); ?></th>
-                                        <th><?php esc_html_e( 'Type', 'easy-web-translator' ); ?></th>
-                                        <th><?php esc_html_e( 'Status', 'easy-web-translator' ); ?></th>
-                                        <th align="center"><?php esc_html_e( 'Translate', 'easy-web-translator' ); ?></th>
+                                        <th><?php esc_html_e( 'Sr.No', 'easy-wp-translator' ); ?></th>
+                                        <th><?php esc_html_e( 'Field Name', 'easy-wp-translator' ); ?></th>
+                                        <th><?php esc_html_e( 'Type', 'easy-wp-translator' ); ?></th>
+                                        <th><?php esc_html_e( 'Status', 'easy-wp-translator' ); ?></th>
+                                        <th align="center"><?php esc_html_e( 'Translate', 'easy-wp-translator' ); ?></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -95,7 +95,7 @@ if(!class_exists('Custom_Fields')) {
             if($meta_fields && is_array($meta_fields)) {
                 $s_no                        = 1;
                 foreach($meta_fields as $meta_field => $value) { 
-                    $checked=isset($this->lmat_allowed_fields[$meta_field]) && !empty($this->lmat_allowed_fields[$meta_field]['status']) ? 'checked' : '';
+                    $checked=isset($this->ewt_allowed_fields[$meta_field]) && !empty($this->ewt_allowed_fields[$meta_field]['status']) ? 'checked' : '';
                     $status=isset($value['status']) && !empty($value['status']) ? $value['status'] : 'Unsupported';
                     $value_type=isset($value['type']) && !empty($value['type']) ? $value['type'] : 'string';
                     
@@ -104,20 +104,20 @@ if(!class_exists('Custom_Fields')) {
                     echo '<td>' . $meta_field . '</td>';
                     echo '<td>' . $value_type . '</td>';
                     echo '<td>' . $status . '</td>';
-                    echo '<td align="center"><input type="checkbox" name="lmat_fields_status" value="' . $meta_field . '" ' . $checked . '></td>';
+                    echo '<td align="center"><input type="checkbox" name="ewt_fields_status" value="' . $meta_field . '" ' . $checked . '></td>';
                     echo '</tr>';
                 }
             }
         }
 
         public function update_custom_fields_content(){
-            if ( ! check_ajax_referer( 'lmat_save_custom_fields', 'lmat_nonce', false ) ) {
-                wp_send_json_error( __( 'Invalid security token sent.', 'easy-web-translator' ) );
+            if ( ! check_ajax_referer( 'ewt_save_custom_fields', 'ewt_nonce', false ) ) {
+                wp_send_json_error( __( 'Invalid security token sent.', 'easy-wp-translator' ) );
                 wp_die( '0', 400 );
             }
 
             if(!current_user_can('edit_posts')){
-                wp_send_json_error( __( 'Unauthorized', 'easy-web-translator' ), 403 );
+                wp_send_json_error( __( 'Unauthorized', 'easy-wp-translator' ), 403 );
                 wp_die( '0', 403 );
             }
             
@@ -125,17 +125,17 @@ if(!class_exists('Custom_Fields')) {
             $updated_custom_fields_data = json_decode($json, true);
 
 			$updated_custom_fields_data=array_map('sanitize_text_field', $updated_custom_fields_data);
-			$existing_fields=get_option('lmat_allowed_custom_fields', false);
+			$existing_fields=get_option('ewt_allowed_custom_fields', false);
 
 			if(json_last_error() !== JSON_ERROR_NONE){ 
-                wp_send_json_error( __( 'Invalid JSON', 'easy-web-translator' ) );
+                wp_send_json_error( __( 'Invalid JSON', 'easy-wp-translator' ) );
                 wp_die( '0', 400 );
             }
 			
 			$allowed_fields=self::get_custom_fields_data();
 
 			if(!$allowed_fields || !is_array($allowed_fields)){
-				wp_send_json_error( __( 'Invalid allowed fields', 'easy-web-translator' ) );
+				wp_send_json_error( __( 'Invalid allowed fields', 'easy-wp-translator' ) );
 				wp_die( '0', 400 );
 			}
 
@@ -164,21 +164,21 @@ if(!class_exists('Custom_Fields')) {
 			}
 
 			if(count($sanitize_fields) < 1){
-				wp_send_json_success(array( 'message' => __( 'No changes detected. All selected custom fields are already up to date.', 'easy-web-translator' ) ));
+				wp_send_json_success(array( 'message' => __( 'No changes detected. All selected custom fields are already up to date.', 'easy-wp-translator' ) ));
 				exit;
 			}
 
-			update_option('lmat_allowed_custom_fields', array_merge($old_fields, $sanitize_fields));
+			update_option('ewt_allowed_custom_fields', array_merge($old_fields, $sanitize_fields));
 
-			$save_settings=get_option('lmat_allowed_custom_fields', false);
+			$save_settings=get_option('ewt_allowed_custom_fields', false);
 
 			if ( ! $save_settings || ! is_array( $save_settings ) || count( $save_settings ) < 1 ) {
-				wp_send_json_success( array( 'message' => __( 'No custom fields selected. Autopoly cannot translate any fields.', 'easy-web-translator' ) ) );
+				wp_send_json_success( array( 'message' => __( 'No custom fields selected. Autopoly cannot translate any fields.', 'easy-wp-translator' ) ) );
 				exit;
 			}
 
             wp_send_json_success( array(
-                'message' => __( 'Custom fields translation settings have been updated successfully. Your selected fields will now be translated automatically.', 'easy-web-translator' ),
+                'message' => __( 'Custom fields translation settings have been updated successfully. Your selected fields will now be translated automatically.', 'easy-wp-translator' ),
                 'updated_fields' => $sanitize_fields
             ) );
 
@@ -216,13 +216,13 @@ if(!class_exists('Custom_Fields')) {
 
 			foreach($default_key_diff as $key){
 				$status='Supported';
-				$saved_allowed_fields=get_option('lmat_allowed_custom_fields', false);
+				$saved_allowed_fields=get_option('ewt_allowed_custom_fields', false);
 				$status=isset($saved_allowed_fields[$key]) && true === $saved_allowed_fields[$key]['status'] ? 'Supported' : 'Unsupported';
 
 				$data[$key]=['type'=>$default_allowed_fields[$key]['type'], 'status'=>$status];
 			}
 
-			$data=apply_filters('lmat/custom_fields/all_fields', $data);
+			$data=apply_filters('ewt/custom_fields/all_fields', $data);
 
 			return $data;
 		}
@@ -269,26 +269,26 @@ if(!class_exists('Custom_Fields')) {
                 'atfpp_parent_post_language',
                 'atfp_parent_post_language_slug',
                 'atfpp_parent_post_language_slug',
-                'lmat_parent_post_language',
-                'lmat_parent_post_language_slug',
+                'ewt_parent_post_language',
+                'ewt_parent_post_language_slug',
                 'twae_exists',
                 'twae_post_migration',
                 'twae_style_migration',
                 '_thumbnail_id',
             );
 
-            return apply_filters('lmat/custom_fields/excluded_keys', $excluded_fields);
+            return apply_filters('ewt/custom_fields/excluded_keys', $excluded_fields);
 		}
 
 		public static function get_allowed_custom_fields(){
 			$allowed_custom_fields=self::get_allowed_custom_fields_data();
-			$allowed_custom_fields=apply_filters('lmat/custom_fields/allowed_fields', $allowed_custom_fields);
+			$allowed_custom_fields=apply_filters('ewt/custom_fields/allowed_fields', $allowed_custom_fields);
 		
 			return $allowed_custom_fields;
 		}
 
 		private static function get_allowed_custom_fields_data(){			
-			$allowed_fields=get_option('lmat_allowed_custom_fields', false);
+			$allowed_fields=get_option('ewt_allowed_custom_fields', false);
 
             if(!$allowed_fields){
                 $allowed_fields=array();
@@ -305,7 +305,7 @@ if(!class_exists('Custom_Fields')) {
 					$allowed_fields[$key]=['status'=>true, 'type'=>'string'];
 				}
 
-				update_option('lmat_allowed_custom_fields', $allowed_fields);
+				update_option('ewt_allowed_custom_fields', $allowed_fields);
 			}
 
 			ksort($allowed_fields);
@@ -316,7 +316,7 @@ if(!class_exists('Custom_Fields')) {
 		private static function get_default_allowed_fields(){
 			$found=false;
 
-			$response = wp_remote_get( esc_url_raw( LINGUATOR_URL . 'modules/page-translation/block-translation-rules/default-allow-metafields.json' ), array(
+			$response = wp_remote_get( esc_url_raw( EASY_WP_TRANSLATOR_URL . 'modules/page-translation/block-translation-rules/default-allow-metafields.json' ), array(
 				'timeout' => 15,
 			) );
 
@@ -330,7 +330,7 @@ if(!class_exists('Custom_Fields')) {
 
 				WP_Filesystem();
 
-				$local_path = LINGUATOR_DIR_PATH . 'modules/page-translation/block-translation-rules/default-allow-metafields.json';
+				$local_path = EASY_WP_TRANSLATOR_DIR_PATH . 'modules/page-translation/block-translation-rules/default-allow-metafields.json';
 				if($wp_filesystem->exists($local_path) && $wp_filesystem->is_readable( $local_path )){
 					$found=true;
 					$default_allowed_fields = $wp_filesystem->get_contents( $local_path );

@@ -1,15 +1,15 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Includes\Other;
+namespace EasyWPTranslator\Includes\Other;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 /**
- * A language object is made of two terms in 'lmat_language' and 'lmat_term_language' taxonomies.
+ * A language object is made of two terms in 'ewt_language' and 'ewt_term_language' taxonomies.
  * Manipulating only one object per language instead of two terms should make things easier.
  *
  *  
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * }
  * @phpstan-type LanguageData array{
  *     term_props: array{
- *         lmat_language: LanguagePropData,
+ *         ewt_language: LanguagePropData,
  *     }&array<non-empty-string, LanguagePropData>,
  *     name: non-empty-string,
  *     slug: non-empty-string,
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *     is_default: bool
  * }
  */
-class LMAT_Language {
+class EWT_Language {
 
 	/**
 	 * Language name. Ex: English.
@@ -74,8 +74,8 @@ class LMAT_Language {
 	public $term_group;
 
 	/**
-	 * ID of the term in 'lmat_language' taxonomy.
-	 * Duplicated from `$this->term_props['lmat_language']['term_id'],
+	 * ID of the term in 'ewt_language' taxonomy.
+	 * Duplicated from `$this->term_props['ewt_language']['term_id'],
 	 * but kept to facilitate the use of it.
 	 *
 	 * @var int
@@ -146,7 +146,7 @@ class LMAT_Language {
 	public $host;
 
 	/**
-	 * ID of the page on front in this language (set from lmat_additional_language_data filter).
+	 * ID of the page on front in this language (set from ewt_additional_language_data filter).
 	 *
 	 * @var int
 	 *
@@ -155,7 +155,7 @@ class LMAT_Language {
 	public $page_on_front = 0;
 
 	/**
-	 * ID of the page for posts in this language (set from lmat_additional_language_data filter).
+	 * ID of the page for posts in this language (set from ewt_additional_language_data filter).
 	 *
 	 * @var int
 	 *
@@ -228,13 +228,13 @@ class LMAT_Language {
 	public $is_default;
 
 	/**
-	 * Stores language term properties for each language taxonomy (`lmat_language`,
-	 * `lmat_term_language`, etc).
+	 * Stores language term properties for each language taxonomy (`ewt_language`,
+	 * `ewt_term_language`, etc).
 	 *
 	 * @var array[] Array keys are language term names.
 	 *
 	 * @phpstan-var array{
-	 *         lmat_language: LanguagePropData,
+	 *         ewt_language: LanguagePropData,
 	 *     }
 	 *     &array<non-empty-string, LanguagePropData>
 	 */
@@ -250,7 +250,7 @@ class LMAT_Language {
 	 *     Language object properties stored as an array.
 	 *
 	 *     @type array[]  $term_props      An array of language term properties. Array keys are language taxonomy names
-	 *                                     (`lmat_language` and `lmat_term_language` are mandatory), array values are arrays of
+	 *                                     (`ewt_language` and `ewt_term_language` are mandatory), array values are arrays of
 	 *                                     language term properties (`term_id`, `term_taxonomy_id`, and `count`).
 	 *     @type string   $name            Language name. Ex: English.
 	 *     @type string   $slug            Language code used in URL. Ex: en.
@@ -281,7 +281,7 @@ class LMAT_Language {
 			$this->$prop = $value;
 		}
 
-		$this->term_id = $this->term_props['lmat_language']['term_id'];
+		$this->term_id = $this->term_props['ewt_language']['term_id'];
 	}
 
 	/**
@@ -362,19 +362,19 @@ class LMAT_Language {
 			'src' => '',
 		);
 
-		// Linguator builtin flags.
-		if ( ! empty( $code ) && is_readable( LINGUATOR_DIR . '/assets/flags/' . $code . '.svg' ) ) {
-			$default_flag['url'] = plugins_url( 'assets/flags/' . $code . '.svg', LINGUATOR_FILE );
+		// EasyWPTranslator builtin flags.
+		if ( ! empty( $code ) && is_readable( EASY_WP_TRANSLATOR_DIR . '/assets/flags/' . $code . '.svg' ) ) {
+			$default_flag['url'] = plugins_url( 'assets/flags/' . $code . '.svg', EASY_WP_TRANSLATOR_FILE );
 
 			// If base64 encoded flags are preferred.
-			if ( lmat_get_constant( 'LMAT_ENCODED_FLAGS', true ) ) {
-				$file_path = LINGUATOR_DIR . '/assets/flags/' . $code . '.svg';
+			if ( ewt_get_constant( 'EWT_ENCODED_FLAGS', true ) ) {
+				$file_path = EASY_WP_TRANSLATOR_DIR . '/assets/flags/' . $code . '.svg';
 				$imagesize = getimagesize( $file_path );
 				if ( is_array( $imagesize ) ) {
 					list( $default_flag['width'], $default_flag['height'] ) = $imagesize;
 				}
 				$file_contents       = file_get_contents( $file_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-				$default_flag['src'] = plugins_url( 'assets/flags/' . $code . '.svg', LINGUATOR_FILE ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+				$default_flag['src'] = plugins_url( 'assets/flags/' . $code . '.svg', EASY_WP_TRANSLATOR_FILE ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 			}
 		}
 
@@ -393,7 +393,7 @@ class LMAT_Language {
 		 * }
 		 * @param string $code Flag code.
 		 */
-		$flag = apply_filters( 'lmat_flag', $default_flag, $code );
+		$flag = apply_filters( 'ewt_flag', $default_flag, $code );
 
 		$flag['url'] = sanitize_url( $flag['url'] );
 
@@ -491,9 +491,9 @@ class LMAT_Language {
 		 *  
 		 *
 		 * @param string       $flag_url Flag URL.
-		 * @param LMAT_Language $language Current `LMAT_language` instance.
+		 * @param EWT_Language $language Current `EWT_language` instance.
 		 */
-		return apply_filters( 'lmat_language_flag_url', $flag_url, $this );
+		return apply_filters( 'ewt_language_flag_url', $flag_url, $this );
 	}
 
 	/**
@@ -550,11 +550,11 @@ class LMAT_Language {
 	}
 
 	/**
-	 * Converts current `LMAT_language` into a `stdClass` object. Mostly used to allow dynamic properties.
+	 * Converts current `EWT_language` into a `stdClass` object. Mostly used to allow dynamic properties.
 	 *
 	 *  
 	 *
-	 * @return stdClass Converted `LMAT_Language` object.
+	 * @return stdClass Converted `EWT_Language` object.
 	 */
 	public function to_std_class() {
 		return (object) $this->to_array();
@@ -582,16 +582,16 @@ class LMAT_Language {
 	 * @return string Language home URL.
 	 */
 	public function get_home_url() {
-		if ( ! lmat_get_constant( 'LMAT_CACHE_LANGUAGES', true ) || ! lmat_get_constant( 'LMAT_CACHE_HOME_URL', true ) ) {
+		if ( ! ewt_get_constant( 'EWT_CACHE_LANGUAGES', true ) || ! ewt_get_constant( 'EWT_CACHE_HOME_URL', true ) ) {
 			/**
-			 * Filters current `LMAT_Language` instance `home_url` property.
+			 * Filters current `EWT_Language` instance `home_url` property.
 			 *
 			 *  
 			 *
 			 * @param string $home_url         The `home_url` prop.
-			 * @param array  $language Current Array of `LMAT_Language` properties.
+			 * @param array  $language Current Array of `EWT_Language` properties.
 			 */
-			return apply_filters( 'lmat_language_home_url', $this->home_url, $this->to_array( 'db' ) );
+			return apply_filters( 'ewt_language_home_url', $this->home_url, $this->to_array( 'db' ) );
 		}
 
 		return $this->home_url;
@@ -605,16 +605,16 @@ class LMAT_Language {
 	 * @return string Language search URL.
 	 */
 	public function get_search_url() {
-		if ( ! lmat_get_constant( 'LMAT_CACHE_LANGUAGES', true ) || ! lmat_get_constant( 'LMAT_CACHE_HOME_URL', true ) ) {
+		if ( ! ewt_get_constant( 'EWT_CACHE_LANGUAGES', true ) || ! ewt_get_constant( 'EWT_CACHE_HOME_URL', true ) ) {
 			/**
-			 * Filters current `LMAT_Language` instance `search_url` property.
+			 * Filters current `EWT_Language` instance `search_url` property.
 			 *
 			 *  
 			 *
 			 * @param string $search_url        The `search_url` prop.
-			 * @param array  $language Current Array of `LMAT_Language` properties.
+			 * @param array  $language Current Array of `EWT_Language` properties.
 			 */
-			return apply_filters( 'lmat_language_search_url', $this->search_url, $this->to_array( 'db' ) );
+			return apply_filters( 'ewt_language_search_url', $this->search_url, $this->to_array( 'db' ) );
 		}
 
 		return $this->search_url;
@@ -627,8 +627,8 @@ class LMAT_Language {
 	 *  
 	 *
 	 * @param string $property A property name. A composite value can be used for language term property values, in the
-	 *                         form of `{language_taxonomy_name}:{property_name}` (see {@see LMAT_Language::get_tax_prop()}
-	 *                         for the possible values). Ex: `lmat_term_language:term_taxonomy_id`.
+	 *                         form of `{language_taxonomy_name}:{property_name}` (see {@see EWT_Language::get_tax_prop()}
+	 *                         for the possible values). Ex: `ewt_term_language:term_taxonomy_id`.
 	 * @return string|int|bool|string[] The requested property for the language, `false` if the property doesn't exist.
 	 *
 	 * @phpstan-return (
@@ -636,7 +636,7 @@ class LMAT_Language {
 	 * )
 	 */
 	public function get_prop( $property ) {
-		// Composite property like 'lmat_term_language:term_taxonomy_id'.
+		// Composite property like 'ewt_term_language:term_taxonomy_id'.
 		if ( preg_match( '/^(?<tax>.{1,32}):(?<field>term_id|term_taxonomy_id|count)$/', $property, $matches ) ) {
 			/** @var array{tax:non-empty-string, field:'term_id'|'term_taxonomy_id'|'count'} $matches */
 			return $this->get_tax_prop( $matches['tax'], $matches['field'] );

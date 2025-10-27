@@ -216,7 +216,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-var SIDEBAR_NAME = 'lmat-post-sidebar';
+var SIDEBAR_NAME = 'ewt-post-sidebar';
 
 /**
  * Simple debounce hook
@@ -251,13 +251,13 @@ var getSettings = function getSettings() {
   // Provided by PHP in Abstract_Screen::enqueue via wp_add_inline_script
   try {
     // eslint-disable-next-line no-undef
-    if (typeof lmat_block_editor_plugin_settings !== 'undefined') {
+    if (typeof ewt_block_editor_plugin_settings !== 'undefined') {
       // eslint-disable-next-line no-undef
-      return lmat_block_editor_plugin_settings;
+      return ewt_block_editor_plugin_settings;
     }
   } catch (e) {}
-  if (typeof window !== 'undefined' && window.lmat_block_editor_plugin_settings) {
-    return window.lmat_block_editor_plugin_settings;
+  if (typeof window !== 'undefined' && window.ewt_block_editor_plugin_settings) {
+    return window.ewt_block_editor_plugin_settings;
   }
   return {
     lang: null,
@@ -286,7 +286,7 @@ var LanguageSection = function LanguageSection(_ref) {
     return list;
   }, [lang, allLanguages]);
   return /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.PanelBody, {
-    title: (0,external_wp_i18n_namespaceObject.__)('Language', 'easy-web-translator'),
+    title: (0,external_wp_i18n_namespaceObject.__)('Language', 'easy-wp-translator'),
     initialOpen: true
   }, /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.Flex, {
     align: "center"
@@ -393,7 +393,7 @@ var TranslationRow = function TranslationRow(_ref2) {
               // Expect your server to create/update a placeholder translation record’s title.
               _context.n = 2;
               return external_wp_apiFetch_namespaceObject({
-                path: '/lmat/v1/translation-title',
+                path: '/ewt/v1/translation-title',
                 method: 'POST',
                 data: {
                   postId: (translated_post === null || translated_post === void 0 ? void 0 : translated_post.id) || null,
@@ -410,7 +410,7 @@ var TranslationRow = function TranslationRow(_ref2) {
               _context.p = 3;
               _t = _context.v;
               setSaving(false);
-              setError((0,external_wp_i18n_namespaceObject.__)('Failed to save title. Please try again.', 'easy-web-translator'));
+              setError((0,external_wp_i18n_namespaceObject.__)('Failed to save title. Please try again.', 'easy-wp-translator'));
               // Optional: console.error(e);
             case 4:
               return _context.a(2);
@@ -440,7 +440,7 @@ var TranslationRow = function TranslationRow(_ref2) {
           setLoadingPages(true);
           _context2.n = 2;
           return external_wp_apiFetch_namespaceObject({
-            path: '/lmat/v1/languages/utils/get_all_pages_data'
+            path: '/ewt/v1/languages/utils/get_all_pages_data'
           });
         case 2:
           pages = _context2.v;
@@ -506,7 +506,7 @@ var TranslationRow = function TranslationRow(_ref2) {
             postId = (_select = (0,external_wp_data_namespaceObject.select)('core/editor')) === null || _select === void 0 || (_select$getCurrentPos = _select.getCurrentPostId) === null || _select$getCurrentPos === void 0 ? void 0 : _select$getCurrentPos.call(_select);
             _context3.n = 2;
             return external_wp_apiFetch_namespaceObject({
-              path: '/lmat/v1/languages/link-translation',
+              path: '/ewt/v1/languages/link-translation',
               method: 'POST',
               data: {
                 source_id: postId,
@@ -521,7 +521,7 @@ var TranslationRow = function TranslationRow(_ref2) {
           case 3:
             _context3.p = 3;
             _t3 = _context3.v;
-            setError((0,external_wp_i18n_namespaceObject.__)('Failed to link page. Please try again.', 'easy-web-translator'));
+            setError((0,external_wp_i18n_namespaceObject.__)('Failed to link page. Please try again.', 'easy-wp-translator'));
           case 4:
             _context3.p = 4;
             setLinking(false);
@@ -560,7 +560,7 @@ var TranslationRow = function TranslationRow(_ref2) {
             postType = (_select3 = (0,external_wp_data_namespaceObject.select)('core/editor')) === null || _select3 === void 0 || (_select3$getCurrentPo = _select3.getCurrentPostType) === null || _select3$getCurrentPo === void 0 ? void 0 : _select3$getCurrentPo.call(_select3);
             _context4.n = 2;
             return external_wp_apiFetch_namespaceObject({
-              path: '/lmat/v1/languages/create-translation',
+              path: '/ewt/v1/languages/create-translation',
               method: 'POST',
               data: {
                 source_id: postId,
@@ -577,7 +577,7 @@ var TranslationRow = function TranslationRow(_ref2) {
           case 3:
             _context4.p = 3;
             _t4 = _context4.v;
-            setError((0,external_wp_i18n_namespaceObject.__)('Failed to create page. Please try again.', 'easy-web-translator'));
+            setError((0,external_wp_i18n_namespaceObject.__)('Failed to create page. Please try again.', 'easy-wp-translator'));
           case 4:
             _context4.p = 4;
             setLinking(false);
@@ -620,17 +620,17 @@ var TranslationRow = function TranslationRow(_ref2) {
   }, /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.TextControl, {
     value: title,
     onChange: handleTitleChange,
-    placeholder: (0,external_wp_i18n_namespaceObject.__)('title', 'easy-web-translator'),
+    placeholder: (0,external_wp_i18n_namespaceObject.__)('title', 'easy-wp-translator'),
     readOnly: !editable,
     disabled: !editable,
-    help: editable ? saving ? (0,external_wp_i18n_namespaceObject.__)('Saving…', 'easy-web-translator') : (0,external_wp_i18n_namespaceObject.__)('Type title to save translation.', 'easy-web-translator') : (0,external_wp_i18n_namespaceObject.__)('Modify title via Edit.', 'easy-web-translator')
+    help: editable ? saving ? (0,external_wp_i18n_namespaceObject.__)('Saving…', 'easy-wp-translator') : (0,external_wp_i18n_namespaceObject.__)('Type title to save translation.', 'easy-wp-translator') : (0,external_wp_i18n_namespaceObject.__)('Modify title via Edit.', 'easy-wp-translator')
   })), /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.FlexItem, {
     style: {
       paddingTop: '14px'
     }
   }, hasEdit ? /*#__PURE__*/React.createElement("a", {
     href: links.edit_link,
-    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Edit translation', 'easy-web-translator'),
+    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Edit translation', 'easy-wp-translator'),
     style: {
       marginLeft: 8,
       height: "100%",
@@ -643,7 +643,7 @@ var TranslationRow = function TranslationRow(_ref2) {
     size: 20
   })) : null, !hasEdit && (selectedSuggestion ? /*#__PURE__*/React.createElement("button", {
     onClick: linkSelected,
-    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Link existing page', 'easy-web-translator'),
+    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Link existing page', 'easy-wp-translator'),
     style: {
       marginLeft: 8,
       background: 'transparent',
@@ -655,7 +655,7 @@ var TranslationRow = function TranslationRow(_ref2) {
     size: 20
   })) : hasAdd ? (title || '').trim().length > 0 ? /*#__PURE__*/React.createElement("button", {
     onClick: createFromTyped,
-    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Create translation from typed title', 'easy-web-translator'),
+    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Create translation from typed title', 'easy-wp-translator'),
     style: {
       marginLeft: 8,
       background: 'transparent',
@@ -667,7 +667,7 @@ var TranslationRow = function TranslationRow(_ref2) {
     size: 20
   })) : /*#__PURE__*/React.createElement("a", {
     href: links.add_link,
-    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Add translation', 'easy-web-translator'),
+    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Add translation', 'easy-wp-translator'),
     style: {
       marginLeft: 8,
       height: "100%",
@@ -710,7 +710,7 @@ var TranslationsSection = function TranslationsSection(_ref7) {
   var translations = _ref7.translations;
   var rows = Object.values(translations);
   return /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.PanelBody, {
-    title: (0,external_wp_i18n_namespaceObject.__)('Translations', 'easy-web-translator'),
+    title: (0,external_wp_i18n_namespaceObject.__)('Translations', 'easy-wp-translator'),
     initialOpen: true
   }, rows.map(function (row) {
     return /*#__PURE__*/React.createElement(TranslationRow, {
@@ -725,9 +725,9 @@ var Sidebar = function Sidebar() {
   var translations = (settings === null || settings === void 0 ? void 0 : settings.translations_table) || {};
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(external_wp_editPost_namespaceObject.PluginSidebarMoreMenuItem, {
     target: SIDEBAR_NAME
-  }, (0,external_wp_i18n_namespaceObject.__)('Linguator', 'easy-web-translator')), /*#__PURE__*/React.createElement(external_wp_editPost_namespaceObject.PluginSidebar, {
+  }, (0,external_wp_i18n_namespaceObject.__)('EasyWPTranslator', 'easy-wp-translator')), /*#__PURE__*/React.createElement(external_wp_editPost_namespaceObject.PluginSidebar, {
     name: SIDEBAR_NAME,
-    title: (0,external_wp_i18n_namespaceObject.__)('Linguator', 'easy-web-translator')
+    title: (0,external_wp_i18n_namespaceObject.__)('EasyWPTranslator', 'easy-wp-translator')
   }, /*#__PURE__*/React.createElement(LanguageSection, {
     lang: lang,
     allLanguages: translations
@@ -902,9 +902,9 @@ if (hasLangParam) {
 
                   // Then try to click our specific sidebar tab
                   setTimeout(function () {
-                    var linguatorTab = document.querySelector('button[aria-label*="Linguator"], .components-button[aria-label*="Linguator"]');
-                    if (linguatorTab) {
-                      linguatorTab.click();
+                    var easywptranslatorTab = document.querySelector('button[aria-label*="EasyWPTranslator"], .components-button[aria-label*="EasyWPTranslator"]');
+                    if (easywptranslatorTab) {
+                      easywptranslatorTab.click();
                     }
                   }, 300);
                 }
@@ -931,7 +931,7 @@ if (hasLangParam) {
       } else {
         // As a last resort, try to find and click the sidebar button in DOM
         setTimeout(function () {
-          var sidebarButton = document.querySelector("button[aria-label*=\"Linguator\"], button[data-label*=\"Linguator\"], [data-sidebar=\"".concat(SIDEBAR_NAME, "\"]"));
+          var sidebarButton = document.querySelector("button[aria-label*=\"EasyWPTranslator\"], button[data-label*=\"EasyWPTranslator\"], [data-sidebar=\"".concat(SIDEBAR_NAME, "\"]"));
           if (sidebarButton) {
             sidebarButton.click();
 

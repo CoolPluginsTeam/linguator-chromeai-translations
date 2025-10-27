@@ -24,7 +24,7 @@ const MainComponent = ({ currentPage }) => {
     async function serverCall() {
       //API call for getting general settings           
       const responseData = await apiFetch({
-        path: 'lmat/v1/settings',
+        path: 'ewt/v1/settings',
         method: 'GET',
         'headers': {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const MainComponent = ({ currentPage }) => {
                   icon={<LoaderPinwheel className="animate-spin" />}
                   size="md"
                   variant="primary"
-                /></h1> <h1 className='m-0'>{__("Loading", "easy-web-translator")}</h1>
+                /></h1> <h1 className='m-0'>{__("Loading", "easy-wp-translator")}</h1>
             </div> :
             <>
               <ComponentSelector currentPage={currentPage} data={data} setData={setData} />

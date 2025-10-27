@@ -1,4 +1,4 @@
-# Linguator Plugin Architecture Patterns
+# EasyWPTranslator Plugin Architecture Patterns
 
 ## MVC Pattern
 The plugin follows a modified MVC pattern:
@@ -28,7 +28,7 @@ The plugin follows a modified MVC pattern:
 
 ## Hook System
 - WordPress hooks and filters throughout
-- Custom hooks with `lmat_` prefix
+- Custom hooks with `ewt_` prefix
 - Action and filter registration in constructors
 
 ## Factory Pattern

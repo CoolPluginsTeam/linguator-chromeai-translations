@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Frontend\Controllers;
+namespace EasyWPTranslator\Frontend\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -18,7 +18,7 @@ use WP_Term;
  *
  *  
  */
-class LMAT_Choose_Lang_Content extends LMAT_Choose_Lang {
+class EWT_Choose_Lang_Content extends EWT_Choose_Lang {
 
 	/**
 	 * Defers the language choice to the 'wp' action (when the content is known)
@@ -30,12 +30,12 @@ class LMAT_Choose_Lang_Content extends LMAT_Choose_Lang {
 	public function init() {
 		parent::init();
 
-		if ( ! did_action( 'lmat_language_defined' ) ) {
+		if ( ! did_action( 'ewt_language_defined' ) ) {
 			// Set the languages from content
 			add_action( 'wp', array( $this, 'wp' ), 5 ); // Priority 5 for post types and taxonomies registered in wp hook with default priority
 
 			// If no language found, choose the preferred one
-			add_filter( 'lmat_get_current_language', array( $this, 'lmat_get_current_language' ) );
+			add_filter( 'ewt_get_current_language', array( $this, 'ewt_get_current_language' ) );
 		}
 	}
 
@@ -44,7 +44,7 @@ class LMAT_Choose_Lang_Content extends LMAT_Choose_Lang {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language $curlang Current language.
+	 * @param EWT_Language $curlang Current language.
 	 * @return void
 	 */
 	protected function set_language( $curlang ) {
@@ -57,7 +57,7 @@ class LMAT_Choose_Lang_Content extends LMAT_Choose_Lang {
 	 *
 	 *  
 	 *
-	 * @return LMAT_Language|false detected language, false if none was found
+	 * @return EWT_Language|false detected language, false if none was found
 	 */
 	protected function get_language_from_content() {
 		// No language set for 404
@@ -65,7 +65,7 @@ class LMAT_Choose_Lang_Content extends LMAT_Choose_Lang {
 			return $this->get_preferred_language();
 		}
 
-		if ( $var = get_query_var( 'lmat_lang' ) ) {
+		if ( $var = get_query_var( 'ewt_lang' ) ) {
 			$lang = explode( ',', $var );
 			$lang = $this->model->get_language( reset( $lang ) ); // Choose the first queried language
 		}
@@ -103,9 +103,9 @@ class LMAT_Choose_Lang_Content extends LMAT_Choose_Lang {
 		 *
 		 *  
 		 *
-		 * @param LMAT_Language|false $lang Language object or false if none was found.
+		 * @param EWT_Language|false $lang Language object or false if none was found.
 		 */
-		return apply_filters( 'lmat_get_current_language', $lang ?? false );
+		return apply_filters( 'ewt_get_current_language', $lang ?? false );
 	}
 
 	/**
@@ -140,7 +140,7 @@ class LMAT_Choose_Lang_Content extends LMAT_Choose_Lang {
 
 		// Sets the language in case we hide the default language
 		// Use $query->query['s'] as is_search is not set when search is empty
-		if ( $this->options['hide_default'] && ! isset( $qv['lmat_lang'] ) && ( $is_archive || isset( $query->query['s'] ) || ( count( $query->query ) == 1 && ! empty( $qv['feed'] ) ) ) ) {
+		if ( $this->options['hide_default'] && ! isset( $qv['ewt_lang'] ) && ( $is_archive || isset( $query->query['s'] ) || ( count( $query->query ) == 1 && ! empty( $qv['feed'] ) ) ) ) {
 			$this->set_language( $this->model->get_default_language() );
 			$this->set_curlang_in_query( $query );
 		}
@@ -161,14 +161,14 @@ class LMAT_Choose_Lang_Content extends LMAT_Choose_Lang {
 	}
 
 	/**
-	 * If no language is found by {@see LMAT_Choose_Lang_Content::get_language_from_content()}, returns the preferred one.
+	 * If no language is found by {@see EWT_Choose_Lang_Content::get_language_from_content()}, returns the preferred one.
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language|false $lang Language found by {@see LMAT_Choose_Lang_Content::get_language_from_content()}.
-	 * @return LMAT_Language|false
+	 * @param EWT_Language|false $lang Language found by {@see EWT_Choose_Lang_Content::get_language_from_content()}.
+	 * @return EWT_Language|false
 	 */
-	public function lmat_get_current_language( $lang ) {
+	public function ewt_get_current_language( $lang ) {
 		return ! $lang ? $this->get_preferred_language() : $lang;
 	}
 }

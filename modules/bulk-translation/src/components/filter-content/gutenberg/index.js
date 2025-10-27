@@ -9,7 +9,7 @@ import saveSourceString from '../../store-source-string/index.js';
  * @returns {Object}
  */
 const FilterGutenbergContent = async ({content, service, blockParseRules, postId, storeDispatch, filterHtmlContent}) => {
-    const allowedBlocks=Object.keys(blockParseRules?.LmatBlockParseRules);
+    const allowedBlocks=Object.keys(blockParseRules?.EWTBlockParseRules);
     const block=JSON.parse(JSON.stringify(content));
 
     const loopCallback=async (callback, loop, index)=>{
@@ -49,7 +49,7 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
         let transltedStrings=[];
         if(allowedBlocks.includes(blockContent.blockName)){
             if(blockContent.attrs && Object.keys(blockContent.attrs).length > 0){
-                transltedStrings = await filterBlockAttr([...keys, 'attrs'], blockContent, blockParseRules?.LmatBlockParseRules[blockContent.blockName]);
+                transltedStrings = await filterBlockAttr([...keys, 'attrs'], blockContent, blockParseRules?.EWTBlockParseRules[blockContent.blockName]);
             }
         }
 
@@ -113,7 +113,7 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
             
             string=string.replace(/\s/g, '');
             if(string && '' !== string){
-                const uniqueKey=[...keys, index].join('_lmat_bulk_content_temp_');
+                const uniqueKey=[...keys, index].join('_ewt_bulk_content_temp_');
                 const stringContent=await getStringContent(innerContent[index], uniqueKey, ['script', 'style']);
 
                 if(stringContent && '' !== stringContent){ 
@@ -137,7 +137,7 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
 
             const runLoopAsyncInner=async(key, index)=>{
                 if(typeof blockRule[key] === 'boolean' && true === blockRule[key] && currentBlock && currentBlock[key]){
-                    const uniqueKey=[...keys, key].join('_lmat_bulk_content_temp_');
+                    const uniqueKey=[...keys, key].join('_ewt_bulk_content_temp_');
                     const stringContent=await getStringContent(currentBlock[key], uniqueKey);
 
                     if(stringContent && '' !== stringContent){
@@ -153,7 +153,7 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
         }else if(Object.getPrototypeOf(blockRule) === Array.prototype){
             const runLoopAsyncInner=async(item, index)=>{
                 if(typeof blockRule[0] === 'boolean' && true === blockRule[0]){
-                    const uniqueKey=[...keys, index].join('_lmat_bulk_content_temp_');
+                    const uniqueKey=[...keys, index].join('_ewt_bulk_content_temp_');
 
                     const stringContent=await getStringContent(item, uniqueKey);
 
@@ -192,7 +192,7 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
 
             if(true === activeBlockRule){
                 currentKey.push(key);
-                const uniqueKey=currentKey.join('_lmat_bulk_content_temp_');
+                const uniqueKey=currentKey.join('_ewt_bulk_content_temp_');
                 if(currentBlock[key] && '' !== currentBlock[key]){
                     const stringContent=await getStringContent(currentBlock[key], uniqueKey);
 
@@ -217,7 +217,7 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
     const filterContentObject=async (content)=>{
         const runLoopAsync=async(key, index)=>{
             if(allowedBlocks.includes(content[key].blockName) && content[key].attrs){
-                await filterBlockContent(['content', key], content[key], blockParseRules?.LmatBlockParseRules[content[key].blockName]);
+                await filterBlockContent(['content', key], content[key], blockParseRules?.EWTBlockParseRules[content[key].blockName]);
             }else if(content[key].innerBlocks && content[key].innerBlocks.length > 0){
                 const runLoopAsyncInner=async(innerBlock, index)=>{
                     await filterBlockContent(['content', key,'innerBlocks', index], innerBlock);

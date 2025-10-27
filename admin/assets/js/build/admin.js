@@ -3,7 +3,7 @@
 
 ;// ./assets/js/src/lib/ajax-filter/index.js
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 /**
@@ -40,12 +40,12 @@ function ajaxFilter(data) {
   });
 }
 ;// ./assets/js/src/admin.js
-var _lmat_admin;
+var _ewt_admin;
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 
-ajaxFilter((_lmat_admin = lmat_admin) === null || _lmat_admin === void 0 ? void 0 : _lmat_admin.ajax_filter);
+ajaxFilter((_ewt_admin = ewt_admin) === null || _ewt_admin === void 0 ? void 0 : _ewt_admin.ajax_filter);
 /******/ })()
 ;

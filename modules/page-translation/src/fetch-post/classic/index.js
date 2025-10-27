@@ -3,7 +3,7 @@ import { __ } from "@wordpress/i18n";
 import ClassicSaveSource from "../../store-source-string/classic/index.js";
 
 const ClassicPostFetch = async (props) => {
-    const apiUrl = lmatPageTranslationGlobal.ajax_url;
+    const apiUrl = ewtPageTranslationGlobal.ajax_url;
     const apiController = [];
 
     const destroyHandler = () => {
@@ -18,7 +18,7 @@ const ClassicPostFetch = async (props) => {
 
     const ContentFetch = async () => {
 
-        const contentFetchStatus = select('block-lmatPageTranslation/translate').contentFetchStatus();
+        const contentFetchStatus = select('block-ewtPageTranslation/translate').contentFetchStatus();
         if (contentFetchStatus) {
             return;
         }
@@ -30,8 +30,8 @@ const ClassicPostFetch = async (props) => {
             postId: parseInt(props.postId),
             local: props.targetLang,
             current_local: props.sourceLang,
-            lmat_page_translation_nonce: lmatPageTranslationGlobal.ajax_nonce,
-            action: lmatPageTranslationGlobal.action_fetch
+            ewt_page_translation_nonce: ewtPageTranslationGlobal.ajax_nonce,
+            action: ewtPageTranslationGlobal.action_fetch
         };
 
         const contentController = new AbortController();
@@ -54,7 +54,7 @@ const ClassicPostFetch = async (props) => {
             .then(response => response.json())
             .then(data => {
 
-                const contentFetchStatus = select('block-lmatPageTranslation/translate').contentFetchStatus();
+                const contentFetchStatus = select('block-ewtPageTranslation/translate').contentFetchStatus();
                 
                 if (contentFetchStatus) {
                     return;
@@ -64,7 +64,7 @@ const ClassicPostFetch = async (props) => {
                 ClassicSaveSource(post_data);
                 props.refPostData(post_data);
                 props.updatePostDataFetch(true);
-                dispatch('block-lmatPageTranslation/translate').contentFetchStatus(true);
+                dispatch('block-ewtPageTranslation/translate').contentFetchStatus(true);
             })
             .catch(error => {
                 console.error('Error fetching post content:', error);

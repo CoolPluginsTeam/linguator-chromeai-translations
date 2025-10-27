@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Includes\Other;
+namespace EasyWPTranslator\Includes\Other;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -10,31 +10,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class to handle site language switch.
  */
-class LMAT_Switch_Language {
+class EWT_Switch_Language {
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	private static $model;
 
 	/**
 	 * The previous language.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public static $previous_language;
 
 	/**
 	 * The original language.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	private static $original_language;
 
 	/**
 	 * The current language.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	private static $current_language;
 
@@ -42,18 +42,18 @@ class LMAT_Switch_Language {
 	 * Setups filters.
 	 *
 	 *
-	 * @param LMAT_Model $model Instance of `LMAT_Model`.
+	 * @param EWT_Model $model Instance of `EWT_Model`.
 	 * @return void
 	 */
-	public static function init( LMAT_Model $model ): void {
+	public static function init( EWT_Model $model ): void {
 		self::$model = $model;
 
-		add_action( 'lmat_language_defined', array( static::class, 'set_current_language' ), -1000 );
+		add_action( 'ewt_language_defined', array( static::class, 'set_current_language' ), -1000 );
 	}
 
 	/**
 	 * Sets the current language.
-	 * Hooked to `lmat_language_defined`.
+	 * Hooked to `ewt_language_defined`.
 	 *
 	 *
 	 * @param string $slug Current language slug.
@@ -66,7 +66,7 @@ class LMAT_Switch_Language {
 
 	/**
 	 * Switches to the given language.
-	 * Hooked to `lmat_post_synchronized` at first.
+	 * Hooked to `ewt_post_synchronized` at first.
 	 *
 	 *
 	 * @param int    $post_id ID of the source post.
@@ -80,7 +80,7 @@ class LMAT_Switch_Language {
 
 	/**
 	 * Switches the language back.
-	 * Hooked to `lmat_post_synchronized` at last.
+	 * Hooked to `ewt_post_synchronized` at last.
 	 *
 	 * @since 3.7
 	 *
@@ -96,7 +96,7 @@ class LMAT_Switch_Language {
 	 * Switches the site to the given language.
 	 *
 	 *
-	 * @param LMAT_Language|string|null $language The language we want to switch to.
+	 * @param EWT_Language|string|null $language The language we want to switch to.
 	 * @return void
 	 */
 	public static function switch_language( $language = null ): void {
@@ -106,7 +106,7 @@ class LMAT_Switch_Language {
 		}
 
 		$language = self::$model->languages->get( $language );
-		if ( ! $language instanceof LMAT_Language ) {
+		if ( ! $language instanceof EWT_Language ) {
 			return;
 		}
 
@@ -131,9 +131,9 @@ class LMAT_Switch_Language {
 		 * Fires when the language is switched.
 		 *
 		 *
-		 * @param LMAT_Language $language The new language.
+		 * @param EWT_Language $language The new language.
 		 */
-		do_action( 'lmat_switch_language', $language );
+		do_action( 'ewt_switch_language', $language );
 	}
 
 	/**
@@ -155,17 +155,17 @@ class LMAT_Switch_Language {
 	 */
 	public static function load_strings_translations( $locale = '' ): void {
 		if ( empty( $locale ) ) {
-			$locale = ( is_admin() && ! Linguator::is_ajax_on_front() ) ? get_user_locale() : get_locale();
+			$locale = ( is_admin() && ! EasyWPTranslator::is_ajax_on_front() ) ? get_user_locale() : get_locale();
 		}
 
 		$language = self::$model->get_language( $locale );
 
 		if ( ! empty( $language ) ) {
-			$mo = new LMAT_MO();
+			$mo = new EWT_MO();
 			$mo->import_from_db( $language );
-			$GLOBALS['l10n']['lmat_string'] = &$mo;
+			$GLOBALS['l10n']['ewt_string'] = &$mo;
 		} else {
-			unset( $GLOBALS['l10n']['lmat_string'] );
+			unset( $GLOBALS['l10n']['ewt_string'] );
 		}
 	}
 }

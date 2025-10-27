@@ -1,18 +1,18 @@
 <?php
 
-namespace Linguator\Settings\Header;
+namespace EasyWPTranslator\Settings\Header;
 
 /**
  * Header file for settings page
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'Linguator\Settings\Header\Header' ) ) {
+if ( ! class_exists( 'EasyWPTranslator\Settings\Header\Header' ) ) {
     /**
      * Header class
      * @param mixed $tab
@@ -77,25 +77,25 @@ if ( ! class_exists( 'Linguator\Settings\Header\Header' ) ) {
 			$default_url = '';
 
 			if ( $this->active_tab && in_array($this->active_tab, ['strings', 'lang', 'supported-blocks','custom-fields']) ) {
-				$default_url = 'lmat_settings';
+				$default_url = 'ewt_settings';
 			}
 
 			$tabs = array(
-				'general'     => array( 'title' => __( 'General Settings', 'easy-web-translator' ) ),
-				'lang'   => array( 'title' => __( 'Manage Languages', 'easy-web-translator' ), 'redirect' => true, 'redirect_url' => 'lmat' ),
-				'translation' => array( 'title' => __( 'AI Translation', 'easy-web-translator' ) ),
-				'switcher'    => array( 'title' => __( 'Language Switcher', 'easy-web-translator' ) ),
-				'supported-blocks' => array( 'title' => __( 'Supported Blocks', 'easy-web-translator' ), 'redirect' => true, 'redirect_url' => 'lmat_settings&tab=supported-blocks' ),
-				'custom-fields' => array( 'title' => __( 'Custom Fields', 'easy-web-translator' ), 'redirect' => true, 'redirect_url' => 'lmat_settings&tab=custom-fields' ),
+				'general'     => array( 'title' => __( 'General Settings', 'easy-wp-translator' ) ),
+				'lang'   => array( 'title' => __( 'Manage Languages', 'easy-wp-translator' ), 'redirect' => true, 'redirect_url' => 'ewt' ),
+				'translation' => array( 'title' => __( 'AI Translation', 'easy-wp-translator' ) ),
+				'switcher'    => array( 'title' => __( 'Language Switcher', 'easy-wp-translator' ) ),
+				'supported-blocks' => array( 'title' => __( 'Supported Blocks', 'easy-wp-translator' ), 'redirect' => true, 'redirect_url' => 'ewt_settings&tab=supported-blocks' ),
+				'custom-fields' => array( 'title' => __( 'Custom Fields', 'easy-wp-translator' ), 'redirect' => true, 'redirect_url' => 'ewt_settings&tab=custom-fields' ),
 			);
 
             $languages = $this->model->get_languages_list();
             $static_strings_visibility = $this->model->options->get( 'static_strings_visibility' );
             if(!empty($languages) && $static_strings_visibility){
                 $tabs['strings']     = array(
-					'title'        => __( 'Static Strings', 'easy-web-translator' ),
+					'title'        => __( 'Static Strings', 'easy-wp-translator' ),
 					'redirect'     => true,
-					'redirect_url' => 'lmat_settings&tab=strings',
+					'redirect_url' => 'ewt_settings&tab=strings',
 				);
             }
 
@@ -109,29 +109,29 @@ if ( ! class_exists( 'Linguator\Settings\Header\Header' ) ) {
 				$tabs['switcher']['redirect_url'] = $default_url . '&tab=switcher';
 			}
 
-			return apply_filters( 'lmat_settings_header_tabs', $tabs );
+			return apply_filters( 'ewt_settings_header_tabs', $tabs );
 		}
 
 		/**
 		 * @return void
 		 */
 		public function header() {
-			echo '<div id="lmat-settings-header">';
-			echo '<div id="lmat-settings-header-tabs">';
-			echo '<div class="lmat-settings-header-tab-container">';
-			echo '<div class="lmat-settings-header-logo">';
-			echo '<a href="' . esc_url( admin_url( 'admin.php?page=lmat_settings&tab=general' ) ) . '"><img src="' . esc_url( plugin_dir_url( LINGUATOR_ROOT_FILE ) . 'assets/logo/linguator_icon.svg' ) . '" alt="Linguator" /></a>';
+			echo '<div id="ewt-settings-header">';
+			echo '<div id="ewt-settings-header-tabs">';
+			echo '<div class="ewt-settings-header-tab-container">';
+			echo '<div class="ewt-settings-header-logo">';
+			echo '<a href="' . esc_url( admin_url( 'admin.php?page=ewt_settings&tab=general' ) ) . '"><img src="' . esc_url( plugin_dir_url( EASY_WP_TRANSLATOR_ROOT_FILE ) . 'assets/logo/easywptranslator_icon.svg' ) . '" alt="EasyWPTranslator" /></a>';
 			echo '</div>';
-			echo '<div class="lmat-settings-header-tab-list">';
+			echo '<div class="ewt-settings-header-tab-list">';
 			foreach ( $this->tabs() as $key => $value ) {
 				$active_class = $this->active_tab === $key ? 'active' : '';
 				$title        = $value['title'];
 				$redirect     = isset( $value['redirect'] ) ? $value['redirect'] : false;
 				$redirect_url = $redirect && isset( $value['redirect_url'] ) ? $value['redirect_url'] : false;
 				if ( $redirect && $redirect_url && $this->active_tab !== $key ) {
-					echo '<a href="' . esc_url( admin_url( 'admin.php?page=' . esc_attr( $redirect_url ) ) ) . '"><div class="lmat-settings-header-tab ' . esc_attr( $active_class ) . '" data-tab="' . esc_attr( $key ) . '" title="' . esc_attr( $title ) . '" data-link="true">' . esc_html(  $title  ) . '</div></a>';
+					echo '<a href="' . esc_url( admin_url( 'admin.php?page=' . esc_attr( $redirect_url ) ) ) . '"><div class="ewt-settings-header-tab ' . esc_attr( $active_class ) . '" data-tab="' . esc_attr( $key ) . '" title="' . esc_attr( $title ) . '" data-link="true">' . esc_html(  $title  ) . '</div></a>';
 				} else {
-					echo '<div class="lmat-settings-header-tab ' . esc_attr( $active_class ) . '" data-tab="' . esc_attr( $key ) . '" title="' . esc_attr( $title ) . '">' . esc_html(  $title  ) . '</div>';
+					echo '<div class="ewt-settings-header-tab ' . esc_attr( $active_class ) . '" data-tab="' . esc_attr( $key ) . '" title="' . esc_attr( $title ) . '">' . esc_html(  $title  ) . '</div>';
 				}
 			}
 			echo '</div>';
@@ -144,7 +144,7 @@ if ( ! class_exists( 'Linguator\Settings\Header\Header' ) ) {
 		 * @return void
 		 */
 		public function header_assets() {
-			wp_enqueue_style( 'lmat-settings-header', plugins_url( 'admin/assets/css/settings-header.css', LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION );
+			wp_enqueue_style( 'ewt-settings-header', plugins_url( 'admin/assets/css/settings-header.css', EASY_WP_TRANSLATOR_ROOT_FILE ), array(), EASY_WP_TRANSLATOR_VERSION );
 		}
 	}
 

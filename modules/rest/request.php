@@ -1,13 +1,13 @@
 <?php
 /**
- * @package Linguator 
+ * @package EasyWPTranslator 
  */
 
-namespace Linguator\Modules\REST;
+namespace EasyWPTranslator\Modules\REST;
 
 use Closure;
-use Linguator\Includes\Other\LMAT_Model;
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Model;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 use WP_REST_Request;
 use WP_REST_Posts_Controller;
 use WP_REST_Terms_Controller;
@@ -30,7 +30,7 @@ class Request {
 	private $handler;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	private $model;
 
@@ -38,9 +38,9 @@ class Request {
 	 * Constructor.
 	 *
 	 *
-	 * @param LMAT_Model $model Instance of LMAT_Model.
+	 * @param EWT_Model $model Instance of EWT_Model.
 	 */
-	public function __construct( LMAT_Model $model ) {
+	public function __construct( EWT_Model $model ) {
 		$this->model = $model;
 
 		/*
@@ -105,9 +105,9 @@ class Request {
 	 * Returns the language of the current request.
 	 *
 	 *
-	 * @return LMAT_Language|null Language of the current request, or null if no request is set or the language is not found.
+	 * @return EWT_Language|null Language of the current request, or null if no request is set or the language is not found.
 	 */
-	public function get_language(): ?LMAT_Language {
+	public function get_language(): ?EWT_Language {
 		if ( ! $this->request ) {
 			return null;
 		}
@@ -193,7 +193,7 @@ class Request {
 		 * @param WP_REST_Request $request Request used to generate the response.
 		 *                                 Accepted values are 'post' and 'term'.
 		 */
-		$type = apply_filters( 'lmat_rest_request_object_type', null, $this->handler, $this->request );
+		$type = apply_filters( 'ewt_rest_request_object_type', null, $this->handler, $this->request );
 
 		if ( in_array( $type, array( 'post', 'term' ), true ) ) {
 			return $type;

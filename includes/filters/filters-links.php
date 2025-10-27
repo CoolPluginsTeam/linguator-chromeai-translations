@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Filters;
+namespace EasyWPTranslator\Includes\Filters;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Filters_Links {
+class EWT_Filters_Links {
 	/**
 	 * Stores the plugin options.
 	 *
@@ -23,26 +23,26 @@ class LMAT_Filters_Links {
 	public $options;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
 	/**
-	 * Instance of a child class of LMAT_Links_Model.
+	 * Instance of a child class of EWT_Links_Model.
 	 *
-	 * @var LMAT_Links_Model
+	 * @var EWT_Links_Model
 	 */
 	public $links_model;
 
 	/**
-	 * @var LMAT_Links|null
+	 * @var EWT_Links|null
 	 */
 	public $links;
 
 	/**
 	 * Current language.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $curlang;
 
@@ -51,14 +51,14 @@ class LMAT_Filters_Links {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->links = &$linguator->links;
-		$this->links_model = &$linguator->links_model;
-		$this->model = &$linguator->model;
-		$this->options = &$linguator->options;
-		$this->curlang = &$linguator->curlang;
+	public function __construct( &$easywptranslator ) {
+		$this->links = &$easywptranslator->links;
+		$this->links_model = &$easywptranslator->links_model;
+		$this->model = &$easywptranslator->model;
+		$this->options = &$easywptranslator->options;
+		$this->curlang = &$easywptranslator->curlang;
 
 		// Low priority on links filters to come after any other modifications.
 		if ( $this->options['force_lang'] ) {
@@ -74,7 +74,7 @@ class LMAT_Filters_Links {
 		}
 
 		// Keeps the preview post link on default domain when using multiple domains and SSO is not available.
-		if ( 3 === $this->options['force_lang'] && ! class_exists( 'LMAT_Xdata_Domain' ) ) {
+		if ( 3 === $this->options['force_lang'] && ! class_exists( 'EWT_Xdata_Domain' ) ) {
 			add_filter( 'preview_post_link', array( $this, 'preview_post_link' ), 20 );
 		}
 
@@ -130,10 +130,10 @@ class LMAT_Filters_Links {
 			 *  
 			 *
 			 * @param string       $link The post link.
-			 * @param LMAT_Language $lang The current language.
+			 * @param EWT_Language $lang The current language.
 			 * @param WP_Post      $post The post object.
 			 */
-			$link = apply_filters( 'lmat_post_type_link', $link, $lang, $post );
+			$link = apply_filters( 'ewt_post_type_link', $link, $lang, $post );
 		}
 
 		return $link;
@@ -160,14 +160,14 @@ class LMAT_Filters_Links {
 			 *  
 			 *
 			 * @param string       $link The term link.
-			 * @param LMAT_Language $lang The current language.
+			 * @param EWT_Language $lang The current language.
 			 * @param WP_Term      $term The term object.
 			 */
-			return apply_filters( 'lmat_term_link', $link, $lang, $term );
+			return apply_filters( 'ewt_term_link', $link, $lang, $term );
 		}
 
-		// In case someone calls get_term_link for the 'lmat_language' taxonomy.
-		if ( 'lmat_language' === $tax ) {
+		// In case someone calls get_term_link for the 'ewt_language' taxonomy.
+		if ( 'ewt_language' === $tax ) {
 			$lang = $this->model->get_language( $term->term_id );
 			if ( $lang ) {
 				return $this->links_model->home_url( $lang );

@@ -14,10 +14,10 @@ const ElementorSaveSource = (content) => {
 
     const translateContent=(ids,value)=>{
         if(typeof value === 'string' && value.trim() !== '' && ids.length > 0){
-            const uniqueKey = ids.join('_lmat_page_translation_');
+            const uniqueKey = ids.join('_ewt_page_translation_');
 
             if(value && '' !== value){  
-                dispatch('block-lmatPageTranslation/translate').contentSaveSource(uniqueKey, value);
+                dispatch('block-ewtPageTranslation/translate').contentSaveSource(uniqueKey, value);
             }
         }
     }
@@ -99,19 +99,19 @@ const ElementorSaveSource = (content) => {
     }
 
     if(content.title && '' !== content.title){
-        const currentPostId=lmatPageTranslationGlobal.current_post_id;
+        const currentPostId=ewtPageTranslationGlobal.current_post_id;
 
         if(currentPostId){
             const existingTitle=elementor?.settings?.page?.model?.get('post_title');
 
             if(existingTitle && '' !== existingTitle && existingTitle === `Elementor #${currentPostId}`){
-                dispatch('block-lmatPageTranslation/translate').titleSaveSource(content.title);
+                dispatch('block-ewtPageTranslation/translate').titleSaveSource(content.title);
             }
         }
     }
 
-    if(lmatPageTranslationGlobal.slug_translation_option === 'slug_translate'){
-        dispatch('block-lmatPageTranslation/translate').slugSaveSource(content.slug_name);
+    if(ewtPageTranslationGlobal.slug_translation_option === 'slug_translate'){
+        dispatch('block-ewtPageTranslation/translate').slugSaveSource(content.slug_name);
     }
 }
 

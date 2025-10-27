@@ -1,4 +1,4 @@
-.lmat-elementor-translate-confirm-box{
+.ewt-elementor-translate-confirm-box{
     display: none;
     position: fixed;
     z-index: 99999;
@@ -12,7 +12,7 @@
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
 }
 
-.lmat-elementor-translate-confirm-box .modal-content{
+.ewt-elementor-translate-confirm-box .modal-content{
     padding: 16px;
     text-align: center;
     position: relative;
@@ -33,12 +33,12 @@
     border-radius: 8px;
 }
 
-.lmat-elementor-translate-confirm-box .modal-content p{
+.ewt-elementor-translate-confirm-box .modal-content p{
     font-size: 19.2px;
     font-weight: 500;
 }
 
-.lmat-elementor-translate-confirm-box .modal-content button[data-value]{
+.ewt-elementor-translate-confirm-box .modal-content button[data-value]{
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -60,7 +60,7 @@
     text-align: center;
 }
 
-.lmat-elementor-translate-confirm-box .modal-content button[data-value="yes"]{
+.ewt-elementor-translate-confirm-box .modal-content button[data-value="yes"]{
     padding: 2px 11px;
     white-space: nowrap;
     background: #3db63d;
@@ -68,7 +68,7 @@
     color: #fff;
 }
 
-.lmat-elementor-translate-confirm-box .modal-content button[data-value="no"]{
+.ewt-elementor-translate-confirm-box .modal-content button[data-value="no"]{
     background: #ee4237;
     border-color: #dd362b;
     color: #fff;
@@ -77,12 +77,12 @@
     align-items: center;
 }
 
-.lmat-elementor-translate-confirm-box .modal-content button[data-value="yes"]:hover{
+.ewt-elementor-translate-confirm-box .modal-content button[data-value="yes"]:hover{
     background: #37a737;
     border-color: #238b23;
 }
 
-.lmat-elementor-translate-confirm-box .modal-content button[data-value="no"]:hover{
+.ewt-elementor-translate-confirm-box .modal-content button[data-value="no"]:hover{
     background: #dd382e;
     border-color: #c72a20;
 }

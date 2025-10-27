@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Controllers;
+namespace EasyWPTranslator\Includes\Controllers;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,10 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-use Linguator\Includes\Walkers\LMAT_Walker_Dropdown;
-use Linguator\Includes\Walkers\LMAT_Walker_List;
-use Linguator\Frontend\Services\LMAT_Frontend_Links;
-use Linguator\Admin\Controllers\LMAT_Admin_Links;
+use EasyWPTranslator\Includes\Walkers\EWT_Walker_Dropdown;
+use EasyWPTranslator\Includes\Walkers\EWT_Walker_List;
+use EasyWPTranslator\Frontend\Services\EWT_Frontend_Links;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin_Links;
 use WP_Post;
 
 
@@ -24,7 +24,7 @@ use WP_Post;
  *
  *  
  */
-class LMAT_Switcher {
+class EWT_Switcher {
 	public const DEFAULTS = array(
 		'dropdown'               => 0, // Display as list and not as dropdown.
 		'echo'                   => 1, // Echoes the list.
@@ -43,7 +43,7 @@ class LMAT_Switcher {
 	);
 
 	/**
-	 * @var LMAT_Links|null
+	 * @var EWT_Links|null
 	 */
 	protected $links;
 
@@ -59,12 +59,12 @@ class LMAT_Switcher {
 	 */
 	public static function get_switcher_options( $type = 'widget', $key = 'string' ) {
 		$options = array(
-			'dropdown'               => array( 'string' => __( 'Displays as a dropdown', 'easy-web-translator' ), 'default' => 0 ),
-			'show_names'             => array( 'string' => __( 'Displays language names', 'easy-web-translator' ), 'default' => 1 ),
-			'show_flags'             => array( 'string' => __( 'Displays flags', 'easy-web-translator' ), 'default' => 0 ),
-			'force_home'             => array( 'string' => __( 'Forces link to front page', 'easy-web-translator' ), 'default' => 0 ),
-			'hide_current'           => array( 'string' => __( 'Hides the current language', 'easy-web-translator' ), 'default' => 0 ),
-			'hide_if_no_translation' => array( 'string' => __( 'Hides languages with no translation', 'easy-web-translator' ), 'default' => 0 ),
+			'dropdown'               => array( 'string' => __( 'Displays as a dropdown', 'easy-wp-translator' ), 'default' => 0 ),
+			'show_names'             => array( 'string' => __( 'Displays language names', 'easy-wp-translator' ), 'default' => 1 ),
+			'show_flags'             => array( 'string' => __( 'Displays flags', 'easy-wp-translator' ), 'default' => 0 ),
+			'force_home'             => array( 'string' => __( 'Forces link to front page', 'easy-wp-translator' ), 'default' => 0 ),
+			'hide_current'           => array( 'string' => __( 'Hides the current language', 'easy-wp-translator' ), 'default' => 0 ),
+			'hide_if_no_translation' => array( 'string' => __( 'Hides languages with no translation', 'easy-wp-translator' ), 'default' => 0 ),
 		);
 		return wp_list_pluck( $options, $key );
 	}
@@ -74,7 +74,7 @@ class LMAT_Switcher {
 	 *
 	 *  
 	 *
-	 * @param array $args Arguments passed to {@see LMAT_Switcher::the_languages()}.
+	 * @param array $args Arguments passed to {@see EWT_Switcher::the_languages()}.
 	 * @return string
 	 */
 	protected function get_current_language( $args ) {
@@ -94,8 +94,8 @@ class LMAT_Switcher {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language $language Language.
-	 * @param array        $args     Arguments passed to {@see LMAT_Switcher::the_languages()}.
+	 * @param EWT_Language $language Language.
+	 * @param array        $args     Arguments passed to {@see EWT_Switcher::the_languages()}.
 	 * @return string|null
 	 */
 	protected function get_link( $language, $args ) {
@@ -110,7 +110,7 @@ class LMAT_Switcher {
 		}
 
 		// If we are on frontend.
-		if ( $this->links instanceof LMAT_Frontend_Links ) {
+		if ( $this->links instanceof EWT_Frontend_Links ) {
 			return $this->links->get_translation_url( $language );
 		}
 
@@ -130,7 +130,7 @@ class LMAT_Switcher {
 	 *
 	 *  
 	 *
-	 * @param array $args  Arguments passed to {@see LMAT_Switcher::the_languages()}.
+	 * @param array $args  Arguments passed to {@see EWT_Switcher::the_languages()}.
 	 * @return array Language switcher elements.
 	 */
 	protected function get_elements( $args ) {
@@ -176,7 +176,7 @@ class LMAT_Switcher {
 			 * @param string      $slug   The language code.
 			 * @param string      $locale The language locale
 			 */
-			$url = apply_filters( 'lmat_the_language_link', $url, $slug, $language->locale );
+			$url = apply_filters( 'ewt_the_language_link', $url, $slug, $language->locale );
 
 			// Hide if no translation exists
 			if ( empty( $url ) && $args['hide_if_no_translation'] ) {
@@ -212,7 +212,7 @@ class LMAT_Switcher {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Links $links Instance of LMAT_Links.
+	 * @param EWT_Links $links Instance of EWT_Links.
 	 * @param array     $args {
 	 *   Optional array of arguments.
 	 *
@@ -241,16 +241,16 @@ class LMAT_Switcher {
 		$args = wp_parse_args( $args, self::DEFAULTS );
 
 		/**
-		 * Filter the arguments of the 'lmat_the_languages' template tag
+		 * Filter the arguments of the 'ewt_the_languages' template tag
 		 *
 		 *  
 		 *
 		 * @param array $args
 		 */
-		$args = apply_filters( 'lmat_the_languages_args', $args );
+		$args = apply_filters( 'ewt_the_languages_args', $args );
 
 		// Force not to hide the language for the widget preview even if the option is checked.
-		if ( $this->links instanceof LMAT_Admin_Links ) {
+		if ( $this->links instanceof EWT_Admin_Links ) {
 			$args['hide_if_no_translation'] = 0;
 		}
 
@@ -267,12 +267,12 @@ class LMAT_Switcher {
 
 		if ( $args['dropdown'] ) {
 			$args['name'] = 'lang_choice_' . $args['dropdown'];
-			$args['class'] = 'lmat-switcher-select';
+			$args['class'] = 'ewt-switcher-select';
 			$args['value'] = 'url';
 			$args['selected'] = $this->get_link( $this->links->model->get_language( $this->get_current_language( $args ) ), $args );
-			$walker = new LMAT_Walker_Dropdown();
+			$walker = new EWT_Walker_Dropdown();
 		} else {
-			$walker = new LMAT_Walker_List();
+			$walker = new EWT_Walker_List();
 		}
 
 		// Cast each element to stdClass because $walker::walk() expects an array of objects.
@@ -281,23 +281,23 @@ class LMAT_Switcher {
 		}
 
 		/**
-		 * Filter the whole html markup returned by the 'lmat_the_languages' template tag
+		 * Filter the whole html markup returned by the 'ewt_the_languages' template tag
 		 *
 		 *  
 		 *
 		 * @param string $html html returned/outputted by the template tag
 		 * @param array  $args arguments passed to the template tag
 		 */
-		$out = apply_filters( 'lmat_the_languages', $walker->walk( $elements, -1, $args ), $args );
+		$out = apply_filters( 'ewt_the_languages', $walker->walk( $elements, -1, $args ), $args );
 
 		// Javascript to switch the language when using a dropdown list.
 		if ( $args['dropdown'] && 0 === $args['admin_render'] ) {
 			// Enqueue an empty script handle and attach the inline behavior to comply with WP standards.
-			if ( ! wp_script_is( 'lmat_switcher', 'registered' ) ) {
-				wp_register_script( 'lmat_switcher', '', array(), LINGUATOR_VERSION, true );
+			if ( ! wp_script_is( 'ewt_switcher', 'registered' ) ) {
+				wp_register_script( 'ewt_switcher', '', array(), EASY_WP_TRANSLATOR_VERSION, true );
 			}
-			wp_enqueue_script( 'lmat_switcher' );
-			wp_add_inline_script( 'lmat_switcher', sprintf(
+			wp_enqueue_script( 'ewt_switcher' );
+			wp_add_inline_script( 'ewt_switcher', sprintf(
 				'document.getElementById(%s)?.addEventListener("change",function(e){location.href=e.currentTarget.value});',
 				wp_json_encode( $args['name'] )
 			) );

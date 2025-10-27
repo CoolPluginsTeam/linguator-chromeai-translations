@@ -19,7 +19,7 @@ export const TranslatorModalCompat = (props: any) =>{
 
   // @ts-ignore
   // eslint-disable-next-line no-undef
-  const TranslatorModal = window?.lmatInlineTranslation?.TranslatorModal;
+  const TranslatorModal = window?.ewtInlineTranslation?.TranslatorModal;
   
   if (!TranslatorModal) {
     return null;
@@ -29,7 +29,7 @@ export const TranslatorModalCompat = (props: any) =>{
 }
 
 const ParagraphRewriter = ({ value, onChange }) => {
-  const activePageLanguage = (window as any).lmatInlineTranslation?.pageLanguage || 'en';
+  const activePageLanguage = (window as any).ewtInlineTranslation?.pageLanguage || 'en';
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedText, setSelectedText] = useState<string>("");
@@ -102,12 +102,12 @@ const ParagraphRewriter = ({ value, onChange }) => {
   );
 };
 
-registerFormatType("lmat/paragraph-rewriter", {
+registerFormatType("ewt/paragraph-rewriter", {
   object: false,
   title: "AI Paragraph Rewriter",
-  name: "lmat/paragraph-rewriter",
+  name: "ewt/paragraph-rewriter",
   interactive: true,
-  tagName: "lmat-paragraph-rewriter",
+  tagName: "ewt-paragraph-rewriter",
   className: null,
   edit: ParagraphRewriter,
 });

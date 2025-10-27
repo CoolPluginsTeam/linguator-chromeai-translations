@@ -2,7 +2,7 @@
 /**
  * Wizard page rendered as proper WordPress admin page
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,6 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<div class="wrap lmat-styles">
-	<div id="lmat-setup"></div>
+<div class="wrap ewt-styles">
+	<div id="ewt-setup"></div>
 </div>

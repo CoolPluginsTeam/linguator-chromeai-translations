@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Settings\Controllers;
+namespace EasyWPTranslator\Settings\Controllers;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Don't access directly
 }

@@ -1,26 +1,26 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Factories;
+namespace EasyWPTranslator\Includes\Factories;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 
 
 
 /**
- * LMAT_Language factory.
+ * EWT_Language factory.
  *
  *  
  *
- * @phpstan-import-type LanguageData from LMAT_Language
+ * @phpstan-import-type LanguageData from EWT_Language
  */
-class LMAT_Language_Factory {
+class EWT_Language_Factory {
 	/**
 	 * Predefined languages.
 	 *
@@ -31,7 +31,7 @@ class LMAT_Language_Factory {
 	private static $languages;
 
 	/**
-	 * Linguator's options.
+	 * EasyWPTranslator's options.
 	 *
 	 * @var array
 	 */
@@ -54,15 +54,15 @@ class LMAT_Language_Factory {
 	 *
 	 *  
 	 *
-	 * @param array $language_data Language object properties stored as an array. See `LMAT_Language::__construct()`
+	 * @param array $language_data Language object properties stored as an array. See `EWT_Language::__construct()`
 	 *                             for information on accepted properties.
 	 *
-	 * @return LMAT_Language A language object if given data pass sanitization.
+	 * @return EWT_Language A language object if given data pass sanitization.
 	 *
 	 * @phpstan-param LanguageData $language_data
 	 */
 	public function get( $language_data ) {
-		return new LMAT_Language( $this->sanitize_data( $language_data ) );
+		return new EWT_Language( $this->sanitize_data( $language_data ) );
 	}
 
 	/**
@@ -71,24 +71,24 @@ class LMAT_Language_Factory {
 	 *  
 	 *
 	 * @param WP_Term[] $terms List of language terms, with the language taxonomy names as array keys.
-	 *                         `lmat_language` is a mandatory key for the object to be created,
-	 *                         `lmat_term_language` should be too in a fully operational environment.
-	 * @return LMAT_Language|null Language object on success, `null` on failure.
+	 *                         `ewt_language` is a mandatory key for the object to be created,
+	 *                         `ewt_term_language` should be too in a fully operational environment.
+	 * @return EWT_Language|null Language object on success, `null` on failure.
 	 *
-	 * @phpstan-param array{lmat_language?:WP_Term}&array<string, WP_Term> $terms
+	 * @phpstan-param array{ewt_language?:WP_Term}&array<string, WP_Term> $terms
 	 */
 	public function get_from_terms( array $terms ) {
-		if ( ! isset( $terms['lmat_language'] ) ) {
+		if ( ! isset( $terms['ewt_language'] ) ) {
 			return null;
 		}
 
 		$languages = $this->get_languages();
 		$data      = array(
-			'name'       => $terms['lmat_language']->name,
-			'slug'       => $terms['lmat_language']->slug,
-			'term_group' => $terms['lmat_language']->term_group,
+			'name'       => $terms['ewt_language']->name,
+			'slug'       => $terms['ewt_language']->slug,
+			'term_group' => $terms['ewt_language']->term_group,
 			'term_props' => array(),
-			'is_default' => $this->options['default_lang'] === $terms['lmat_language']->slug,
+			'is_default' => $this->options['default_lang'] === $terms['ewt_language']->slug,
 		);
 
 		foreach ( $terms as $term ) {
@@ -100,7 +100,7 @@ class LMAT_Language_Factory {
 		}
 
 		// The description fields can contain any property.
-		$description = maybe_unserialize( $terms['lmat_language']->description );
+		$description = maybe_unserialize( $terms['ewt_language']->description );
 
 		if ( is_array( $description ) ) {
 			$description = array_intersect_key(
@@ -146,7 +146,7 @@ class LMAT_Language_Factory {
 		 * @phpstan-param array<non-empty-string, mixed> $additional_data
 		 * @phpstan-param non-empty-array<non-empty-string, mixed> $data
 		 */
-		$additional_data = apply_filters( 'lmat_additional_language_data', $additional_data, $data );
+		$additional_data = apply_filters( 'ewt_additional_language_data', $additional_data, $data );
 
 		$allowed_additional_data = array(
 			'home_url'       => '',
@@ -157,7 +157,7 @@ class LMAT_Language_Factory {
 
 		$data = array_merge( $data, array_intersect_key( $additional_data, $allowed_additional_data ) );
 
-		return new LMAT_Language( $this->sanitize_data( $data ) );
+		return new EWT_Language( $this->sanitize_data( $data ) );
 	}
 
 	/**
@@ -166,7 +166,7 @@ class LMAT_Language_Factory {
 	 *
 	 *  
 	 *
-	 * @param array $data Data to process. See `LMAT_Language::__construct()` for information on accepted data.
+	 * @param array $data Data to process. See `EWT_Language::__construct()` for information on accepted data.
 	 * @return array Sanitized Data.
 	 *
 	 * @phpstan-return LanguageData
@@ -207,7 +207,7 @@ class LMAT_Language_Factory {
 	 */
 	private function get_languages() {
 		if ( empty( self::$languages ) ) {
-			self::$languages = include LINGUATOR_DIR . '/admin/settings/controllers/languages.php';
+			self::$languages = include EASY_WP_TRANSLATOR_DIR . '/admin/settings/controllers/languages.php';
 		}
 
 		return self::$languages;
@@ -240,14 +240,14 @@ class LMAT_Language_Factory {
 	 */
 	private function get_flag( $flag_code, $name, $slug, $locale ) {
 		$flags = array(
-			'flag' => LMAT_Language::get_flag_information( $flag_code ),
+			'flag' => EWT_Language::get_flag_information( $flag_code ),
 		);
 
 		// Custom flags?
 		$directories = array(
-			LMAT_LOCAL_DIR,
-			get_stylesheet_directory() . '/linguator',
-			get_template_directory() . '/linguator',
+			EWT_LOCAL_DIR,
+			get_stylesheet_directory() . '/easywptranslator',
+			get_template_directory() . '/easywptranslator',
 		);
 
 		foreach ( $directories as $dir ) {
@@ -274,7 +274,7 @@ class LMAT_Language_Factory {
 		 * }
 		 * @param string     $code Flag code.
 		 */
-		$flags['custom_flag'] = apply_filters( 'lmat_custom_flag', empty( $flags['custom_flag'] ) ? null : $flags['custom_flag'], $flag_code );
+		$flags['custom_flag'] = apply_filters( 'ewt_custom_flag', empty( $flags['custom_flag'] ) ? null : $flags['custom_flag'], $flag_code );
 
 		if ( ! empty( $flags['custom_flag']['url'] ) ) {
 			if ( empty( $flags['custom_flag']['src'] ) ) {
@@ -296,7 +296,7 @@ class LMAT_Language_Factory {
 		 * @param string $slug   The language code.
 		 * @param string $locale The language locale.
 		 */
-		$title  = apply_filters( 'lmat_flag_title', $name, $slug, $locale );
+		$title  = apply_filters( 'ewt_flag_title', $name, $slug, $locale );
 		$return = array();
 
 		/**
@@ -327,8 +327,8 @@ class LMAT_Language_Factory {
 			 * @param string $slug Language code.
 			 */
 			$return[ $key ] = apply_filters(
-				'lmat_get_flag',
-				LMAT_Language::get_flag_html( $flag, $title, $name ),
+				'ewt_get_flag',
+				EWT_Language::get_flag_html( $flag, $title, $name ),
 				$slug
 			);
 		}

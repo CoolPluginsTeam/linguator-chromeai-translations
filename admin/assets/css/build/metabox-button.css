@@ -1,4 +1,4 @@
-.lmat-button {
+.ewt-button {
 	padding: 0;
 	height: 20px;
 	background: none;
@@ -7,19 +7,19 @@
 	cursor: pointer;
 }
 
-.lmat-button:not(.wp-ui-text-highlight) {
+.ewt-button:not(.wp-ui-text-highlight) {
 	color: #DDDDDD;
 }
 
-.lmat-button svg {
+.ewt-button svg {
 	fill: currentColor;
 }
 
-.lmat-before-post-translations-button {
+.ewt-before-post-translations-button {
 	float: right;
 	margin: 13px 7px;
 }
 
-.rtl .lmat-before-post-translations-button {
+.rtl .ewt-before-post-translations-button {
 	float: left;
 }

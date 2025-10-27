@@ -1,15 +1,15 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Settings\Controllers;
+namespace EasyWPTranslator\Settings\Controllers;
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 use WP_Error;
 use WP_Ajax_Response;
-use Linguator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Options\Options;
 
 
 /**
@@ -17,7 +17,7 @@ use Linguator\Includes\Options\Options;
  *
  *  
  */
-class LMAT_Settings_Module {
+class EWT_Settings_Module {
 	/**
 	 * Stores the plugin options.
 	 *
@@ -26,14 +26,14 @@ class LMAT_Settings_Module {
 	public $options;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
 	/**
-	 * Instance of a child class of LMAT_Links_Model.
+	 * Instance of a child class of EWT_Links_Model.
 	 *
-	 * @var LMAT_Links_Model
+	 * @var EWT_Links_Model
 	 */
 	public $links_model;
 
@@ -106,7 +106,7 @@ class LMAT_Settings_Module {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 * @param array  $args {
 	 *   @type string $module        Unique module name.
 	 *   @type string $title         The title of the settings module.
@@ -126,10 +126,10 @@ class LMAT_Settings_Module {
 	 *   active_option?: non-falsy-string
 	 * } $args
 	 */
-	public function __construct( &$linguator, $args ) {
-		$this->options     = &$linguator->options;
-		$this->model       = &$linguator->model;
-		$this->links_model = &$linguator->links_model;
+	public function __construct( &$easywptranslator, $args ) {
+		$this->options     = &$easywptranslator->options;
+		$this->model       = &$easywptranslator->model;
+		$this->links_model = &$easywptranslator->links_model;
 
 		$args = wp_parse_args(
 			$args,
@@ -149,33 +149,33 @@ class LMAT_Settings_Module {
 		$this->action_links = array(
 			'configure'   => sprintf(
 				'<a title="%s" href="%s">%s</a>',
-				esc_attr__( 'Configure this module', 'easy-web-translator' ),
+				esc_attr__( 'Configure this module', 'easy-wp-translator' ),
 				'#',
-				esc_html__( 'Settings', 'easy-web-translator' )
+				esc_html__( 'Settings', 'easy-wp-translator' )
 			),
 			'deactivate'  => sprintf(
 				'<a title="%s" href="%s">%s</a>',
-				esc_attr__( 'Deactivate this module', 'easy-web-translator' ),
-				esc_url( wp_nonce_url( '?page=lmat&tab=modules&lmat_action=deactivate&noheader=true&module=' . $this->module, 'lmat_deactivate' ) ),
-				esc_html__( 'Deactivate', 'easy-web-translator' )
+				esc_attr__( 'Deactivate this module', 'easy-wp-translator' ),
+				esc_url( wp_nonce_url( '?page=ewt&tab=modules&ewt_action=deactivate&noheader=true&module=' . $this->module, 'ewt_deactivate' ) ),
+				esc_html__( 'Deactivate', 'easy-wp-translator' )
 			),
 			'activate'    => sprintf(
 				'<a title="%s" href="%s">%s</a>',
-				esc_attr__( 'Activate this module', 'easy-web-translator' ),
-				esc_url( wp_nonce_url( '?page=lmat&tab=modules&lmat_action=activate&noheader=true&module=' . $this->module, 'lmat_activate' ) ),
-				esc_html__( 'Activate', 'easy-web-translator' )
+				esc_attr__( 'Activate this module', 'easy-wp-translator' ),
+				esc_url( wp_nonce_url( '?page=ewt&tab=modules&ewt_action=activate&noheader=true&module=' . $this->module, 'ewt_activate' ) ),
+				esc_html__( 'Activate', 'easy-wp-translator' )
 			),
-			'activated'   => esc_html__( 'Activated', 'easy-web-translator' ),
-			'deactivated' => esc_html__( 'Deactivated', 'easy-web-translator' ),
+			'activated'   => esc_html__( 'Activated', 'easy-wp-translator' ),
+			'deactivated' => esc_html__( 'Deactivated', 'easy-wp-translator' ),
 		);
 
 		$this->buttons = array(
-			'cancel' => sprintf( '<button type="button" class="button button-secondary cancel">%s</button>', esc_html__( 'Cancel', 'easy-web-translator' ) ),
-			'save'   => sprintf( '<button type="button" class="button button-primary save">%s</button>', esc_html__( 'Save Changes', 'easy-web-translator' ) ),
+			'cancel' => sprintf( '<button type="button" class="button button-secondary cancel">%s</button>', esc_html__( 'Cancel', 'easy-wp-translator' ) ),
+			'save'   => sprintf( '<button type="button" class="button button-primary save">%s</button>', esc_html__( 'Save Changes', 'easy-wp-translator' ) ),
 		);
 
 		// Ajax action to save options.
-		add_action( 'wp_ajax_lmat_save_options', array( $this, 'save_options' ) );
+		add_action( 'wp_ajax_ewt_save_options', array( $this, 'save_options' ) );
 	}
 
 	/**
@@ -268,14 +268,14 @@ class LMAT_Settings_Module {
 	 * @return void
 	 */
 	public function save_options() {
-		check_ajax_referer( 'lmat_options', '_lmat_nonce' );
+		check_ajax_referer( 'ewt_options', '_ewt_nonce' );
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( -1 );
 		}
 
 		if ( isset( $_POST['module'] ) && $this->module === $_POST['module'] ) {
 			// It's up to the child class to decide which options are saved, whether there are errors or not
-			$posted_options   = array_diff_key( map_deep( $_POST, 'sanitize_text_field' ), array_flip( array( 'action', 'module', 'lmat_ajax_backend', 'lmat_ajax_settings', '_lmat_nonce' ) ) );
+			$posted_options   = array_diff_key( map_deep( $_POST, 'sanitize_text_field' ), array_flip( array( 'action', 'module', 'ewt_ajax_backend', 'ewt_ajax_settings', '_ewt_nonce' ) ) );
 			$errors           = $this->options->merge( $this->prepare_raw_data( $posted_options ) );
 
 			// Refresh language cache in case home urls have been modified
@@ -289,14 +289,14 @@ class LMAT_Settings_Module {
 
 			if ( ! $errors->has_errors() ) {
 				// Send update message
-				lmat_add_notice( new WP_Error( 'settings_updated', __( 'Settings saved.', 'easy-web-translator' ), 'success' ) );
-				$notice_html = $this->render_settings_errors_html( 'linguator' );
+				ewt_add_notice( new WP_Error( 'settings_updated', __( 'Settings saved.', 'easy-wp-translator' ), 'success' ) );
+				$notice_html = $this->render_settings_errors_html( 'easywptranslator' );
 				$x = new WP_Ajax_Response( array( 'what' => 'success', 'data' => $notice_html ) );
 				$x->send();
 			} else {
 				// Send error messages
-				lmat_add_notice( $errors );
-				$notice_html = $this->render_settings_errors_html( 'linguator' );
+				ewt_add_notice( $errors );
+				$notice_html = $this->render_settings_errors_html( 'easywptranslator' );
 				$x = new WP_Ajax_Response( array( 'what' => 'error', 'data' => $notice_html ) );
 				$x->send();
 			}

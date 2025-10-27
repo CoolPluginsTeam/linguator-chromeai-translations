@@ -6,8 +6,8 @@ const SettingModalBody = (props) => {
     const ServiceProviders = TranslateService();
 
     return (
-        <div className="lmat-page-translation-setting-modal-body">
-            <div className="lmat-page-translation-setting-modal-notice-wrapper">
+        <div className="ewt-page-translation-setting-modal-body">
+            <div className="ewt-page-translation-setting-modal-notice-wrapper">
             </div>
             <table>
                 <thead>

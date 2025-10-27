@@ -9,10 +9,10 @@ import { ChromeIcon } from "../../../../../assets/logo/chrome.js";
 export default (props) => {
     props=props || {};
     const { Service = false, openErrorModalHandler=()=>{}, prefix='' } = props;
-    const adminUrl = window.lmatBulkTranslationGlobal.admin_url;
-    const assetsUrl = window.lmatBulkTranslationGlobal.lmat_url+'admin/assets/images/';
+    const adminUrl = window.ewtBulkTranslationGlobal.admin_url;
+    const assetsUrl = window.ewtBulkTranslationGlobal.ewt_url+'admin/assets/images/';
     const errorIcon = assetsUrl + 'error-icon.svg';
-    const providers=window.lmatBulkTranslationGlobal.providers;
+    const providers=window.ewtBulkTranslationGlobal.providers;
 
     const Services = {
         localAiTranslator: {
@@ -20,11 +20,11 @@ export default (props) => {
             title: "Chrome Built-in AI",
             SettingBtnText: "Translate",
             serviceLabel: "Chrome AI Translator",
-            heading: sprintf(__("Translate Using %s", 'easy-web-translator'), "Chrome built-in API"),
-            Docs: "https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=lmat_plugin&utm_medium=inside&utm_campaign=docs&utm_content=bulk_translate_chrome",
+            heading: sprintf(__("Translate Using %s", 'easy-wp-translator'), "Chrome built-in API"),
+            Docs: "https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=ewt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=bulk_translate_chrome",
             BetaEnabled: true,
             ButtonDisabled: props.localAiTranslatorButtonDisabled,
-            ErrorMessage: props.localAiTranslatorButtonDisabled ? <div className={`${prefix}-provider-error button button-primary`} onClick={() => openErrorModalHandler(props.localAiTranslatorButtonDisabled)}><img src={errorIcon} alt="error" /> {__('View Error', 'easy-web-translator')}</div> : <></>,
+            ErrorMessage: props.localAiTranslatorButtonDisabled ? <div className={`${prefix}-provider-error button button-primary`} onClick={() => openErrorModalHandler(props.localAiTranslatorButtonDisabled)}><img src={errorIcon} alt="error" /> {__('View Error', 'easy-wp-translator')}</div> : <></>,
             Logo: <ChromeIcon className="icon-size"  />,
             filterHtmlContent: true
         }

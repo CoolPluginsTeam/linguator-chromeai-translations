@@ -1,17 +1,17 @@
 const { __, sprintf } = wp.i18n;
 
-const lmatElementorConfirmBox = {
+const ewtElementorConfirmBox = {
     init: function() {
         this.pageTitleEvent=false;
-        if(window.lmatElementorConfirmBoxData){
+        if(window.ewtElementorConfirmBoxData){
             this.createConfirmBox();
         }
     },
 
     createConfirmBox: function() {
-        const sourceLangName=window.lmatElementorConfirmBoxData.sourceLangName;
-        const targetLangName=window.lmatElementorConfirmBoxData.targetLangName;
-        const confirmBox = jQuery(`<div class="lmat-elementor-translate-confirm-box modal-container" style="display:flex">
+        const sourceLangName=window.ewtElementorConfirmBoxData.sourceLangName;
+        const targetLangName=window.ewtElementorConfirmBoxData.targetLangName;
+        const confirmBox = jQuery(`<div class="ewt-elementor-translate-confirm-box modal-container" style="display:flex">
             <div class="modal-content">
             <p>
                 ${sprintf(
@@ -40,18 +40,18 @@ const lmatElementorConfirmBox = {
 
     closeConfirmBox: function() {
         this.setPageTitle();
-        const confirmBox = jQuery('.lmat-elementor-translate-confirm-box.modal-container');
+        const confirmBox = jQuery('.ewt-elementor-translate-confirm-box.modal-container');
         confirmBox.remove();
     },
 
     confirmTranslation: function(e) {
         this.setPageTitle();
         e.preventDefault();
-        const postId=window.lmatElementorConfirmBoxData.postId;
-        const targetLangSlug=window.lmatElementorConfirmBoxData.targetLangSlug;
+        const postId=window.ewtElementorConfirmBoxData.postId;
+        const targetLangSlug=window.ewtElementorConfirmBoxData.targetLangSlug;
 
         if(postId && targetLangSlug) {
-            let oldData=localStorage.getItem('lmatElementorConfirmBox');
+            let oldData=localStorage.getItem('ewtElementorConfirmBox');
             let data={[postId+'_'+targetLangSlug]: true};
 
             if(oldData && 'string' === typeof oldData && '' !== oldData) {
@@ -59,7 +59,7 @@ const lmatElementorConfirmBox = {
                 data={...oldData, ...data};
             }
 
-            localStorage.setItem('lmatElementorConfirmBox', JSON.stringify(data));
+            localStorage.setItem('ewtElementorConfirmBox', JSON.stringify(data));
 
             const elementorButton=document.getElementById('elementor-editor-button');
             const elementorEditModeButton=document.getElementById('elementor-edit-mode-button');
@@ -76,7 +76,7 @@ const lmatElementorConfirmBox = {
 
     setPageTitle: function() {
 
-        if(window.lmatElementorConfirmBoxData.editorType !== 'classic') {
+        if(window.ewtElementorConfirmBoxData.editorType !== 'classic') {
             return;
         }
 
@@ -122,5 +122,5 @@ const lmatElementorConfirmBox = {
 };
 
 jQuery(document).ready(function($) {
-    lmatElementorConfirmBox.init();
+    ewtElementorConfirmBox.init();
 });

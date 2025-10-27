@@ -1,21 +1,21 @@
 <?php
 /**
- * @package Linguator 
+ * @package EasyWPTranslator 
  */
 
-namespace Linguator\Modules\Editors\Screens;
+namespace EasyWPTranslator\Modules\Editors\Screens;
 
-use Linguator\Includes\Base\LMAT_Base;
+use EasyWPTranslator\Includes\Base\EWT_Base;
 use WP_Screen;
-use Linguator\Includes\Other\LMAT_Language;
-use Linguator\Includes\Services\Crud\LMAT_CRUD_Posts;
+use EasyWPTranslator\Includes\Other\EWT_Language;
+use EasyWPTranslator\Includes\Services\Crud\EWT_CRUD_Posts;
 
 /**
  * Class to manage Post editor scripts.
  */
 class Post extends Abstract_Screen {
 	/**
-	 * @var LMAT_CRUD_Posts|null
+	 * @var EWT_CRUD_Posts|null
 	 */
 	protected $posts;
 
@@ -23,12 +23,12 @@ class Post extends Abstract_Screen {
 	 * Constructor
 	 *
 	 *
-	 * @param LMAT_Base $linguator Linguator object.
+	 * @param EWT_Base $easywptranslator EasyWPTranslator object.
 	 */
-	public function __construct( LMAT_Base &$linguator ) {
-		parent::__construct( $linguator );
+	public function __construct( EWT_Base &$easywptranslator ) {
+		parent::__construct( $easywptranslator );
 
-		$this->posts = &$linguator->posts;
+		$this->posts = &$easywptranslator->posts;
 	}
 
 
@@ -52,9 +52,9 @@ class Post extends Abstract_Screen {
 	 * Returns the language to use in the Post editor.
 	 *
 	 *
-	 * @return LMAT_Language|null
+	 * @return EWT_Language|null
 	 */
-	protected function get_language(): ?LMAT_Language {
+	protected function get_language(): ?EWT_Language {
 		global $post;
 
 

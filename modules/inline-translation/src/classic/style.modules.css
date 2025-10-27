@@ -1,4 +1,4 @@
-.lmatClassicInlineTranslation-wrapper {
+.ewtClassicInlineTranslation-wrapper {
   position: absolute;
   background: rgba(0, 0, 0, 0.75);
   color: #fff;
@@ -28,7 +28,7 @@
   z-index: 99999;
 }
 
-.lmatClassicInlineTranslation-wrapper::after {
+.ewtClassicInlineTranslation-wrapper::after {
   border-right: 7px solid transparent;
   border-bottom: 7px solid transparent;
   border-left: 7px solid transparent;
@@ -41,7 +41,7 @@
   position: absolute;
 }
 
-.lmatClassicInlineTranslation-wrapper svg {
+.ewtClassicInlineTranslation-wrapper svg {
   font-size: 1rem;
 }
 

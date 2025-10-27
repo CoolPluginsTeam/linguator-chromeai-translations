@@ -4,8 +4,8 @@ import { parse } from "@wordpress/blocks";
 import { __ } from "@wordpress/i18n";
 
 const GutenbergPostFetch = async (props) => {
-    const apiUrl = lmatPageTranslationGlobal.ajax_url;
-    let blockRules = wp.data.select('block-lmatPageTranslation/translate').getBlockRules() || {};
+    const apiUrl = ewtPageTranslationGlobal.ajax_url;
+    let blockRules = wp.data.select('block-ewtPageTranslation/translate').getBlockRules() || {};
     const apiController = [];
 
     const destroyHandler = () => {
@@ -20,13 +20,13 @@ const GutenbergPostFetch = async (props) => {
 
     const BlockParseFetch = async () => {
 
-        if (blockRules && blockRules.LmatBlockParseRules && Object.keys(blockRules.LmatBlockParseRules).length > 0) {
+        if (blockRules && blockRules.EWTBlockParseRules && Object.keys(blockRules.EWTBlockParseRules).length > 0) {
             return;
         }
 
         const blockRulesApiSendData = {
-            lmat_fetch_block_rules_key: lmatPageTranslationGlobal.fetchBlockRulesNonce,
-            action: lmatPageTranslationGlobal.action_block_rules
+            ewt_fetch_block_rules_key: ewtPageTranslationGlobal.fetchBlockRulesNonce,
+            action: ewtPageTranslationGlobal.action_block_rules
         };
 
 
@@ -44,7 +44,7 @@ const GutenbergPostFetch = async (props) => {
             .then(response => response.json())
             .then(data => {
                 blockRules = JSON.parse(data.data.blockRules);
-                dispatch('block-lmatPageTranslation/translate').setBlockRules(blockRules);
+                dispatch('block-ewtPageTranslation/translate').setBlockRules(blockRules);
 
             })
             .catch(error => {
@@ -56,7 +56,7 @@ const GutenbergPostFetch = async (props) => {
 
     const ContentFetch = async () => {
         
-        const contentFetchStatus = select('block-lmatPageTranslation/translate').contentFetchStatus();
+        const contentFetchStatus = select('block-ewtPageTranslation/translate').contentFetchStatus();
         if (contentFetchStatus) {
             return;
         }
@@ -68,8 +68,8 @@ const GutenbergPostFetch = async (props) => {
             postId: parseInt(props.postId),
             local: props.targetLang,
             current_local: props.sourceLang,
-            lmat_page_translation_nonce: lmatPageTranslationGlobal.ajax_nonce,
-            action: lmatPageTranslationGlobal.action_fetch
+            ewt_page_translation_nonce: ewtPageTranslationGlobal.ajax_nonce,
+            action: ewtPageTranslationGlobal.action_fetch
         };
 
         const contentController = new AbortController();
@@ -92,7 +92,7 @@ const GutenbergPostFetch = async (props) => {
             .then(response => response.json())
             .then(data => {
 
-                const contentFetchStatus = select('block-lmatPageTranslation/translate').contentFetchStatus();
+                const contentFetchStatus = select('block-ewtPageTranslation/translate').contentFetchStatus();
                 
                 if (contentFetchStatus) {
                     return;
@@ -107,7 +107,7 @@ const GutenbergPostFetch = async (props) => {
                 GutenbergBlockSaveSource(post_data, blockRules);
                 props.refPostData(post_data);
                 props.updatePostDataFetch(true);
-                dispatch('block-lmatPageTranslation/translate').contentFetchStatus(true);
+                dispatch('block-ewtPageTranslation/translate').contentFetchStatus(true);
             })
             .catch(error => {
                 console.error('Error fetching post content:', error);

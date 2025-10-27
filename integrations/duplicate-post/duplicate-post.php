@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\duplicate_post;
+namespace EasyWPTranslator\Integrations\duplicate_post;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Duplicate_Post {
+class EWT_Duplicate_Post {
 	/**
 	 * Setups actions.
 	 *
@@ -24,7 +24,7 @@ class LMAT_Duplicate_Post {
 	}
 
 	/**
-	 * Avoid duplicating the 'lmat_post_translations' taxonomy.
+	 * Avoid duplicating the 'ewt_post_translations' taxonomy.
 	 *
 	 *  
 	 *
@@ -36,7 +36,7 @@ class LMAT_Duplicate_Post {
 			$taxonomies = array(); // As we get an empty string when there is no taxonomy.
 		}
 
-		$taxonomies[] = 'lmat_post_translations';
+		$taxonomies[] = 'ewt_post_translations';
 		return $taxonomies;
 	}
 }

@@ -1,28 +1,28 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Services\Links;
+namespace EasyWPTranslator\Includes\Services\Links;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 
 
 
 /**
  * Links model for the default permalinks
- * for example mysite.com/?somevar=something&lmat_lang=en.
+ * for example mysite.com/?somevar=something&ewt_lang=en.
  *
  *  
  */
-class LMAT_Links_Default extends LMAT_Links_Model {
+class EWT_Links_Default extends EWT_Links_Model {
 	/**
-	 * Tells this child class of LMAT_Links_Model does not use pretty permalinks.
+	 * Tells this child class of EWT_Links_Model does not use pretty permalinks.
 	 *
 	 * @var bool
 	 */
@@ -35,15 +35,15 @@ class LMAT_Links_Default extends LMAT_Links_Model {
 	 *   Accepts now a language slug.
 	 *
 	 * @param string                    $url      The url to modify.
-	 * @param LMAT_Language|string|false $language Language object or slug.
+	 * @param EWT_Language|string|false $language Language object or slug.
 	 * @return string The modified url.
 	 */
 	public function add_language_to_link( $url, $language ) {
-		if ( $language instanceof LMAT_Language ) {
+		if ( $language instanceof EWT_Language ) {
 			$language = $language->slug;
 		}
 
-		return empty( $language ) || ( $this->options['hide_default'] && $this->options['default_lang'] === $language ) ? $url : add_query_arg( 'lmat_lang', $language, $url );
+		return empty( $language ) || ( $this->options['hide_default'] && $this->options['default_lang'] === $language ) ? $url : add_query_arg( 'ewt_lang', $language, $url );
 	}
 
 	/**
@@ -55,7 +55,7 @@ class LMAT_Links_Default extends LMAT_Links_Model {
 	 * @return string The modified url.
 	 */
 	public function remove_language_from_link( $url ) {
-		return remove_query_arg( 'lmat_lang', $url );
+		return remove_query_arg( 'ewt_lang', $url );
 	}
 
 	/**
@@ -94,11 +94,11 @@ class LMAT_Links_Default extends LMAT_Links_Model {
 	 */
 	public function get_language_from_url( $url = '' ) {
 		if ( empty( $url ) ) {
-			$url = lmat_get_requested_url();
+			$url = ewt_get_requested_url();
 		}
 
 		$pattern = sprintf(
-			'#[?&]lmat_lang=(?<lang>%s)(?:$|&)#',
+			'#[?&]ewt_lang=(?<lang>%s)(?:$|&)#',
 			implode( '|', $this->model->get_languages_list( array( 'fields' => 'slug' ) ) )
 		);
 		return preg_match( $pattern, $url, $matches ) ? $matches['lang'] : '';
@@ -110,11 +110,11 @@ class LMAT_Links_Default extends LMAT_Links_Model {
 	 *  
 	 *   Accepts now an array of language properties.
 	 *
-	 * @param LMAT_Language|array $language Language object or array of language properties.
+	 * @param EWT_Language|array $language Language object or array of language properties.
 	 * @return string The static front page url.
 	 */
 	public function front_page_url( $language ) {
-		if ( $language instanceof LMAT_Language ) {
+		if ( $language instanceof EWT_Language ) {
 			$language = $language->to_array();
 		}
 

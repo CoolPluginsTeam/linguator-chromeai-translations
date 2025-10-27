@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -50,6 +50,6 @@ class Post_Types extends Abstract_Object_Types {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'List of post types to translate.', 'easy-web-translator' );
+		return __( 'List of post types to translate.', 'easy-wp-translator' );
 	}
 }

@@ -1,10 +1,10 @@
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 /**
  * Filters requests for translatable entities.
- * This logic is shared across all Linguator plugins.
+ * This logic is shared across all EasyWPTranslator plugins.
  *
  *
  * @param {APIFetchOptions} options

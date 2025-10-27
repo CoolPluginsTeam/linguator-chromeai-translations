@@ -57,7 +57,7 @@ const updateElementorContent = async ({source, lang, translatedContent, serviceP
      */
     const updateContent = (source, translation) => {
         Object.keys(translation).forEach(key=>{
-            const keys=key.split('_lmat_bulk_content_temp_');
+            const keys=key.split('_ewt_bulk_content_temp_');
             if(keys[0] === 'title'){
                 updateTitle(source, translation[keys[0]]);
             }else if(keys[0] === 'post_name'){
@@ -89,7 +89,7 @@ const updateElementorContent = async ({source, lang, translatedContent, serviceP
 
     updateContent(source, translatedContent);
 
-    if("false" === lmatBulkTranslationGlobal.postMetaSync && source.metaFields && Object.keys(source.metaFields).length > 0){
+    if("false" === ewtBulkTranslationGlobal.postMetaSync && source.metaFields && Object.keys(source.metaFields).length > 0){
         source.metaFields=updateMetaFields(source.metaFields, lang, serviceProvider, postId);
       }
 

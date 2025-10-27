@@ -1,5 +1,5 @@
 <?php
-namespace Linguator\Includes\Other;
+namespace EasyWPTranslator\Includes\Other;
 
 if(!defined('ABSPATH')){
     exit;
@@ -11,13 +11,13 @@ if(!defined('ABSPATH')){
  * example:
  * 
  * Dashbord initialize
- * if(!class_exists('LMAT_Translation_Dashboard')){
- * $dashboard=LMAT_Translation_Dashboard::get_instance();
+ * if(!class_exists('EWT_Translation_Dashboard')){
+ * $dashboard=EWT_Translation_Dashboard::get_instance();
  * }
  * 
  * Store options
- * if(class_exists('LMAT_Translation_Dashboard')){
- *  LMAT_Translation_Dashboard::store_options(
+ * if(class_exists('EWT_Translation_Dashboard')){
+ *  EWT_Translation_Dashboard::store_options(
  *      'prefix', // Required plugin prefix
  *      'unique_key',// Optional unique key is used to update the data based on post/page id or plugin/themes name
  *      'update', // Optional preview string count or character count update or replace
@@ -36,7 +36,7 @@ if(!defined('ABSPATH')){
  * }
  * 
  * Add Tabs
- * add_filter('LMAT_Translation_Dashboard_tabs', function($tabs){
+ * add_filter('EWT_Translation_Dashboard_tabs', function($tabs){
  *  $tabs[]=array(
  *      'prefix'=>'tab_name', // Required
  *      'tab_name'=>'Tab Name', // Required
@@ -54,8 +54,8 @@ if(!defined('ABSPATH')){
  * });
  * 
  * Display review notice
- * if(class_exists('LMAT_Translation_Dashboard')){
- *  LMAT_Translation_Dashboard::review_notice(
+ * if(class_exists('EWT_Translation_Dashboard')){
+ *  EWT_Translation_Dashboard::review_notice(
  *      'prefix', // Required
  *      'plugin_name', // Required
  *      'url', // Required
@@ -64,8 +64,8 @@ if(!defined('ABSPATH')){
  * }
  * 
  * Get translation data
- * if(class_exists('LMAT_Translation_Dashboard')){
- *  LMAT_Translation_Dashboard::get_translation_data(
+ * if(class_exists('EWT_Translation_Dashboard')){
+ *  EWT_Translation_Dashboard::get_translation_data(
  *      'prefix', // Required
  *      array(
  *          'editor_type' => 'gutenberg', // optional return data based on editor type
@@ -75,8 +75,8 @@ if(!defined('ABSPATH')){
  * }
  */
 
-if(!class_exists('LMAT_Translation_Dashboard')){
-    class LMAT_Translation_Dashboard{
+if(!class_exists('EWT_Translation_Dashboard')){
+    class EWT_Translation_Dashboard{
 
         /**
          * Init
@@ -102,7 +102,7 @@ if(!class_exists('LMAT_Translation_Dashboard')){
         }
 
         public function __construct(){
-            add_action('wp_ajax_lmat_hide_review_notice', array($this, 'lmat_hide_review_notice'));
+            add_action('wp_ajax_ewt_hide_review_notice', array($this, 'ewt_hide_review_notice'));
         }
 
         /**

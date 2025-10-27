@@ -1,14 +1,14 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Helpers\LMAT_Default_Term;
+use EasyWPTranslator\Includes\Helpers\EWT_Default_Term;
 
 
 
@@ -16,9 +16,9 @@ use Linguator\Includes\Helpers\LMAT_Default_Term;
  * Manages filters and actions related to default terms.
  *
  *  
- *   Extends `LMAT_Default_Term`, most of the code is moved to it.
+ *   Extends `EWT_Default_Term`, most of the code is moved to it.
  */
-class LMAT_Admin_Default_Term extends LMAT_Default_Term {
+class EWT_Admin_Default_Term extends EWT_Default_Term {
 
 	/**
 	 * Setups filters and actions needed.
@@ -33,7 +33,7 @@ class LMAT_Admin_Default_Term extends LMAT_Default_Term {
 		foreach ( $this->taxonomies as $taxonomy ) {
 			if ( 'category' === $taxonomy ) {
 				// Adds the language column in the 'Terms' table.
-				add_filter( 'lmat_first_language_term_column', array( $this, 'first_language_column' ), 10, 2 );
+				add_filter( 'ewt_first_language_term_column', array( $this, 'first_language_column' ), 10, 2 );
 			}
 		}
 	}

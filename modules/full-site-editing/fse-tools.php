@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Modules\Full_Site_Editing;
+namespace EasyWPTranslator\Modules\Full_Site_Editing;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -10,10 +10,10 @@ defined( 'ABSPATH' ) || exit;
  * Main class that handles the translation of the templates in full site editing.
  *
  */
-class LMAT_FSE_Tools {
+class EWT_FSE_Tools {
 
 	/**
-	 * Returns the name of the template post types that are translated by Linguator.
+	 * Returns the name of the template post types that are translated by EasyWPTranslator.
 	 *
 	 *
 	 * @return string[] Array keys and array values are identical.
@@ -25,7 +25,7 @@ class LMAT_FSE_Tools {
 	}
 
 	/**
-	 * Tells if the given post type is a template post type that is translated by Linguator.
+	 * Tells if the given post type is a template post type that is translated by EasyWPTranslator.
 	 *
 	 *
 	 * @param string $post_type A post type name.
@@ -36,7 +36,7 @@ class LMAT_FSE_Tools {
 	}
 
 	/**
-	 * Tells if the query is a template request that is translated by Linguator.
+	 * Tells if the query is a template request that is translated by EasyWPTranslator.
 	 *
 	 *
 	 * @param WP_Query $query Instance of `WP_Query`.

@@ -41,13 +41,13 @@ class Translator {
   ): Promise<object> => {
 
     document.body.classList.add('notranslate');
-    document.body.classList.add('lmat-inline-translate-start');
+    document.body.classList.add('ewt-inline-translate-start');
 
     let translateContent = '';
     let translateContentArray = {};
 
     Object.keys(texts).forEach((key) => {
-      translateContent += '<div class="translate" data-lmat-translate-key="'+key+'">'+texts[key]+'</div>';
+      translateContent += '<div class="translate" data-ewt-translate-key="'+key+'">'+texts[key]+'</div>';
     });
 
     const stringWrp=document.querySelector(`.${this.wrpId}`);
@@ -70,11 +70,11 @@ class Translator {
         await new Promise(resolve => setTimeout(resolve, 1200));
 
         // @ts-ignore
-        const translatedWrp=Array.from(document.querySelectorAll(`.${this.wrpId} .translate[data-lmat-translate-key]`));
+        const translatedWrp=Array.from(document.querySelectorAll(`.${this.wrpId} .translate[data-ewt-translate-key]`));
 
         translatedWrp.forEach((item) => {
           // @ts-ignore
-          const key=item?.dataset?.lmatTranslateKey;
+          const key=item?.dataset?.ewtTranslateKey;
           // @ts-ignore
           translateContentArray[key] = item.innerText;
         });
@@ -85,7 +85,7 @@ class Translator {
       document.body.classList.remove('notranslate');
     }
 
-    document.body.classList.remove('lmat-inline-translate-start');
+    document.body.classList.remove('ewt-inline-translate-start');
     return translateContentArray;
   };
 

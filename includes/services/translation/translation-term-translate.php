@@ -1,18 +1,18 @@
 <?php
 /**
- * @package Linguator Multilingual AI Translation
+ * @package EasyWPTranslator – On-Device Chrome AI Translation
  */
 
-namespace Linguator\Includes\Services\Translation;
+namespace EasyWPTranslator\Includes\Services\Translation;
 
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 use WP_Error;
 use WP_Term;
 use Translation_Entry;
 use Translations;
 
 /**
- * Handles cloning and translation of taxonomy terms for Linguator Multilingual AI Translation.
+ * Handles cloning and translation of taxonomy terms for EasyWPTranslator – On-Device Chrome AI Translation.
  *
  * Provides methods to translate taxonomy terms (categories, tags, custom taxonomies)
  * using translation entries, and to assign parent relationships for translated terms.
@@ -24,7 +24,7 @@ class Translation_Term_Model {
 	/**
 	 * Main model for managing languages and translations.
 	 *
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	private $model;
 
@@ -33,10 +33,10 @@ class Translation_Term_Model {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param LMAT_Settings|LMAT_Admin $linguator Main plugin object containing model and sync references.
+	 * @param EWT_Settings|EWT_Admin $easywptranslator Main plugin object containing model and sync references.
 	 */
-	public function __construct( &$linguator ) {
-		$this->model           = &$linguator->model;
+	public function __construct( &$easywptranslator ) {
+		$this->model           = &$easywptranslator->model;
 	}
 
 	/**
@@ -45,20 +45,20 @@ class Translation_Term_Model {
 	 * @since 1.0.0
 	 *
 	 * @param array         $entry           Array containing term properties and translation data.
-	 * @param LMAT_Language $target_language Target language object.
+	 * @param EWT_Language $target_language Target language object.
 	 * @return int|WP_Error The translated term ID, or WP_Error on failure.
 	 */
-	public function translate( array $entry, LMAT_Language $target_language ) {
+	public function translate( array $entry, EWT_Language $target_language ) {
 		if ( ! $entry['data'] instanceof Translations ) {
 			/* translators: %d is a term ID. */
-			return new WP_Error( 'lmat_translate_term_no_translations', sprintf( __( 'The term with ID %d could not be translated.', 'easy-web-translator' ), (int) $entry['id'] ) );
+			return new WP_Error( 'ewt_translate_term_no_translations', sprintf( __( 'The term with ID %d could not be translated.', 'easy-wp-translator' ), (int) $entry['id'] ) );
 		}
 
 		$source_term = get_term( $entry['id'] );
 
 		if ( ! $source_term instanceof WP_Term ) {
 			/* translators: %d is a term ID. */
-			return new WP_Error( 'lmat_translate_term_no_source_term', sprintf( __( 'The term with ID %d could not be translated as it doesn\'t exist.', 'easy-web-translator' ), (int) $entry['id'] ) );
+			return new WP_Error( 'ewt_translate_term_no_source_term', sprintf( __( 'The term with ID %d could not be translated as it doesn\'t exist.', 'easy-wp-translator' ), (int) $entry['id'] ) );
 		}
 
 		$source_language = $this->model->term->get_language( $source_term->term_id );
@@ -67,7 +67,7 @@ class Translation_Term_Model {
 		$tr_term_id          = $this->model->term->get( $entry['id'], $target_language );
 		$tr_term_slug        = $this->get_translated_term_slug( $source_term, $entry['data'] );
 
-		$language_link=apply_filters('lmat_bulk_term_language_link', true);
+		$language_link=apply_filters('ewt_bulk_term_language_link', true);
 
 		if ( $tr_term_id ) {
 			// The translation already exists.
@@ -83,7 +83,7 @@ class Translation_Term_Model {
 			$tr_term = $this->model->term->update( $tr_term_id, $args );
 			if ( is_wp_error( $tr_term ) ) {
 				/* translators: %d is a term ID. */
-				return new WP_Error( 'lmat_translate_update_term_failed', sprintf( __( 'The term with ID %d could not be updated.', 'easy-web-translator' ), (int) $tr_term_id ) );
+				return new WP_Error( 'ewt_translate_update_term_failed', sprintf( __( 'The term with ID %d could not be updated.', 'easy-wp-translator' ), (int) $tr_term_id ) );
 			}
 		} else {
 			$args = array();
@@ -103,7 +103,7 @@ class Translation_Term_Model {
 			$tr_term = $this->model->term->insert( $tr_term_name, $source_term->taxonomy, $target_language, $args );
 			if ( is_wp_error( $tr_term ) ) {
 				/* translators: %d is a term ID. */
-				return new WP_Error( 'lmat_translate_term_failed', sprintf( __( 'The term with ID %d could not be translated.', 'easy-web-translator' ), (int) $entry['id'] ) );
+				return new WP_Error( 'ewt_translate_term_failed', sprintf( __( 'The term with ID %d could not be translated.', 'easy-wp-translator' ), (int) $entry['id'] ) );
 			}
 			$tr_term_id = (int) $tr_term['term_id'];
 		}
@@ -121,7 +121,7 @@ class Translation_Term_Model {
 		 * @param array  $translations    Array of term translations.
 		 */
 		if($language_link){
-			do_action( 'lmat_save_term', $tr_term_id, $source_term->taxonomy, $this->model->term->get_translations( $tr_term_id ) );
+			do_action( 'ewt_save_term', $tr_term_id, $source_term->taxonomy, $this->model->term->get_translations( $tr_term_id ) );
 			$this->assign_parents( [ $entry['id'] ], $target_language );
 		}
 
@@ -191,10 +191,10 @@ class Translation_Term_Model {
 	 * @since 1.0.0
 	 *
 	 * @param int[]         $ids             Array of source term IDs.
-	 * @param LMAT_Language  $target_language Target language object.
+	 * @param EWT_Language  $target_language Target language object.
 	 * @return void
 	 */
-	public function assign_parents( array $ids, LMAT_Language $target_language ) {
+	public function assign_parents( array $ids, EWT_Language $target_language ) {
 		// Get the terms with their parents (or 0).
 		$terms = get_terms(
 			array(

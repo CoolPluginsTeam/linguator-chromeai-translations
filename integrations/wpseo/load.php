@@ -2,7 +2,7 @@
 /**
  * Loads the integration with Yoast SEO.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,14 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/wpseo.php';
 
-use Linguator\Integrations\wpseo\LMAT_WPSEO;
-use Linguator\Integrations\LMAT_Integrations;
+use EasyWPTranslator\Integrations\wpseo\EWT_WPSEO;
+use EasyWPTranslator\Integrations\EWT_Integrations;
 
 add_action(
 	'plugins_loaded',
 	function () {
 		if ( defined( 'WPSEO_VERSION' ) ) {
-			add_action( 'lmat_init', array( LMAT_Integrations::instance()->wpseo = new LMAT_WPSEO(), 'init' ) );
+			add_action( 'ewt_init', array( EWT_Integrations::instance()->wpseo = new EWT_WPSEO(), 'init' ) );
 		}
 	},
 	0

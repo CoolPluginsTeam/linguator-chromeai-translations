@@ -1,16 +1,16 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 
-use Linguator\Includes\Options\Abstract_Option;
+use EasyWPTranslator\Includes\Options\Abstract_Option;
 
 
 
@@ -45,16 +45,16 @@ class Force_Lang extends Abstract_Option {
 	public function add_to_site_health_info( array $info, Options $options ): array { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		switch ( $this->get() ) {
 			case '0':
-				$value = '0: ' . __( 'The language is set from content', 'easy-web-translator' );
+				$value = '0: ' . __( 'The language is set from content', 'easy-wp-translator' );
 				break;
 			case '1':
-				$value = '1: ' . __( 'The language is set from the directory name in pretty permalinks', 'easy-web-translator' );
+				$value = '1: ' . __( 'The language is set from the directory name in pretty permalinks', 'easy-wp-translator' );
 				break;
 			case '2':
-				$value = '2: ' . __( 'The language is set from the subdomain name in pretty permalinks', 'easy-web-translator' );
+				$value = '2: ' . __( 'The language is set from the subdomain name in pretty permalinks', 'easy-wp-translator' );
 				break;
 			case '3':
-				$value = '3: ' . __( 'The language is set from different domains', 'easy-web-translator' );
+				$value = '3: ' . __( 'The language is set from different domains', 'easy-wp-translator' );
 				break;
 			default:
 				$value = '';
@@ -87,7 +87,7 @@ class Force_Lang extends Abstract_Option {
 	protected function get_data_structure(): array {
 		return array(
 			'type' => 'integer',
-			'enum' => 'yes' === get_option( 'lmat_language_from_content_available' ) ? array( 0, 1, 2, 3 ) : array( 1, 2, 3 ),
+			'enum' => 'yes' === get_option( 'ewt_language_from_content_available' ) ? array( 0, 1, 2, 3 ) : array( 1, 2, 3 ),
 		);
 	}
 
@@ -99,6 +99,6 @@ class Force_Lang extends Abstract_Option {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'Determine how the current language is defined.', 'easy-web-translator' );
+		return __( 'Determine how the current language is defined.', 'easy-wp-translator' );
 	}
 }

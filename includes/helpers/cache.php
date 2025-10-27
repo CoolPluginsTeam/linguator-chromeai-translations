@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Helpers;
+namespace EasyWPTranslator\Includes\Helpers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @template TCacheData
  */
-class LMAT_Cache {
+class EWT_Cache {
 	/**
 	 * Current site id.
 	 *

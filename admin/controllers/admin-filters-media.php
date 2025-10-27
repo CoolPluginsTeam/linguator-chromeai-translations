@@ -1,14 +1,14 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Walkers\LMAT_Walker_Dropdown;
+use EasyWPTranslator\Includes\Walkers\EWT_Walker_Dropdown;
 
 
 
@@ -18,9 +18,9 @@ use Linguator\Includes\Walkers\LMAT_Walker_Dropdown;
  *
  *  
  */
-class LMAT_Admin_Filters_Media extends LMAT_Admin_Filters_Post_Base {
+class EWT_Admin_Filters_Media extends EWT_Admin_Filters_Post_Base {
 	/**
-	 * @var LMAT_CRUD_Posts|null
+	 * @var EWT_CRUD_Posts|null
 	 */
 	public $posts;
 
@@ -29,12 +29,12 @@ class LMAT_Admin_Filters_Media extends LMAT_Admin_Filters_Post_Base {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		parent::__construct( $linguator );
+	public function __construct( &$easywptranslator ) {
+		parent::__construct( $easywptranslator );
 
-		$this->posts = &$linguator->posts;
+		$this->posts = &$easywptranslator->posts;
 
 		// Adds the language field and translations tables in the 'Edit Media' panel.
 		add_filter( 'attachment_fields_to_edit', array( $this, 'attachment_fields_to_edit' ), 10, 2 );
@@ -64,9 +64,9 @@ class LMAT_Admin_Filters_Media extends LMAT_Admin_Filters_Post_Base {
 		$post_id = $post->ID;
 		$lang = $this->model->post->get_language( $post_id );
 
-		$dropdown = new LMAT_Walker_Dropdown();
+		$dropdown = new EWT_Walker_Dropdown();
 		$fields['language'] = array(
-			'label' => __( 'Language', 'easy-web-translator' ),
+			'label' => __( 'Language', 'easy-wp-translator' ),
 			'input' => 'html',
 			'html'  => $dropdown->walk(
 				$this->model->get_languages_list(),

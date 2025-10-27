@@ -1,21 +1,21 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Don't access directly.
 }
 
-use Linguator\Includes\Services\Links\LMAT_Links_Abstract_Domain;
+use EasyWPTranslator\Includes\Services\Links\EWT_Links_Abstract_Domain;
 
 
 
-if ( $linguator->model->has_languages() ) {
-	if ( $linguator->links_model instanceof LMAT_Links_Abstract_Domain ) {
-		$linguator->sitemaps = new LMAT_Sitemaps_Domain( $linguator );
+if ( $easywptranslator->model->has_languages() ) {
+	if ( $easywptranslator->links_model instanceof EWT_Links_Abstract_Domain ) {
+		$easywptranslator->sitemaps = new EWT_Sitemaps_Domain( $easywptranslator );
 	} else {
-		$linguator->sitemaps = new LMAT_Sitemaps( $linguator );
+		$easywptranslator->sitemaps = new EWT_Sitemaps( $easywptranslator );
 	}
-	$linguator->sitemaps->init();
+	$easywptranslator->sitemaps->init();
 }

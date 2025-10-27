@@ -1,33 +1,33 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Includes\Other;
+namespace EasyWPTranslator\Includes\Other;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 
-use Linguator\Includes\Core\Linguator;
+use EasyWPTranslator\Includes\Core\EasyWPTranslator;
 use WP_Locale;
 
 
 
 /**
  * It is best practice that plugins do nothing before `plugins_loaded` is fired.
- * So it is what Linguator intends to do.
+ * So it is what EasyWPTranslator intends to do.
  * But some plugins load their textdomain as soon as loaded, thus before `plugins_loaded` is fired.
  * This class defers textdomain loading until the language is defined either in a `plugins_loaded` action
  * or in a `wp` action (when the language is set from content on frontend).
  *
  *  
  */
-class LMAT_OLT_Manager {
+class EWT_OLT_Manager {
 	/**
 	 * Singleton instance
 	 *
-	 * @var LMAT_OLT_Manager|null
+	 * @var EWT_OLT_Manager|null
 	 */
 	protected static $instance;
 
@@ -37,12 +37,12 @@ class LMAT_OLT_Manager {
 	 *  
 	 */
 	public function __construct() {
-		// Allows Linguator to be the first plugin loaded ;-)
-		add_filter( 'pre_update_option_active_plugins', array( $this, 'make_linguator_first' ) );
-		add_filter( 'pre_update_option_active_sitewide_plugins', array( $this, 'make_linguator_first' ) );
+		// Allows EasyWPTranslator to be the first plugin loaded ;-)
+		add_filter( 'pre_update_option_active_plugins', array( $this, 'make_easywptranslator_first' ) );
+		add_filter( 'pre_update_option_active_sitewide_plugins', array( $this, 'make_easywptranslator_first' ) );
 
 		// Overriding load text domain only on front since WP 4.7.
-		if ( ( is_admin() && ! Linguator::is_ajax_on_front() ) || Linguator::is_rest_request() ) {
+		if ( ( is_admin() && ! EasyWPTranslator::is_ajax_on_front() ) || EasyWPTranslator::is_rest_request() ) {
 			return;
 		}
 
@@ -50,8 +50,8 @@ class LMAT_OLT_Manager {
 		add_filter( 'load_textdomain_mofile', '__return_empty_string' );
 
 		// Loads text domains.
-		add_action( 'lmat_language_defined', array( $this, 'load_textdomains' ), 2 ); // After LMAT_Frontend::lmat_language_defined.
-		add_action( 'lmat_no_language_defined', array( $this, 'load_textdomains' ) );
+		add_action( 'ewt_language_defined', array( $this, 'load_textdomains' ), 2 ); // After EWT_Frontend::ewt_language_defined.
+		add_action( 'ewt_no_language_defined', array( $this, 'load_textdomains' ) );
 	}
 
 	/**
@@ -59,7 +59,7 @@ class LMAT_OLT_Manager {
 	 *
 	 *  
 	 *
-	 * @return LMAT_OLT_Manager
+	 * @return EWT_OLT_Manager
 	 */
 	public static function instance() {
 		if ( empty( self::$instance ) ) {
@@ -110,17 +110,17 @@ class LMAT_OLT_Manager {
 	}
 
 	/**
-	 * Allows Linguator to be the first plugin loaded ;-).
+	 * Allows EasyWPTranslator to be the first plugin loaded ;-).
 	 *
 	 *  
 	 *
 	 * @param string[] $plugins List of active plugins.
 	 * @return string[] List of active plugins.
 	 */
-	public function make_linguator_first( $plugins ) {
-		if ( $key = array_search( LINGUATOR_BASENAME, $plugins ) ) {
+	public function make_easywptranslator_first( $plugins ) {
+		if ( $key = array_search( EASY_WP_TRANSLATOR_BASENAME, $plugins ) ) {
 			unset( $plugins[ $key ] );
-			array_unshift( $plugins, LINGUATOR_BASENAME );
+			array_unshift( $plugins, EASY_WP_TRANSLATOR_BASENAME );
 		}
 		return $plugins;
 	}

@@ -1,4 +1,4 @@
-# JavaScript & React Standards for Linguator Plugin
+# JavaScript & React Standards for EasyWPTranslator Plugin
 
 ## Build System
 - Uses `@wordpress/scripts` for building

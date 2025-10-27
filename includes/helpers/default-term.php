@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Helpers;
+namespace EasyWPTranslator\Includes\Helpers;
 
 use WP_Term;
 
@@ -16,24 +16,24 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Default_Term {
+class EWT_Default_Term {
 
 	/**
-	 * A reference to the LMAT_Model instance.
+	 * A reference to the EWT_Model instance.
 	 *
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
 	/**
 	 * Preferred language to assign to new contents.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	protected $curlang;
 
 	/**
-	 * Array of registered taxonomy names for which Linguator manages languages and translations.
+	 * Array of registered taxonomy names for which EasyWPTranslator manages languages and translations.
 	 *
 	 * @var string[]
 	 */
@@ -44,11 +44,11 @@ class LMAT_Default_Term {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->model      = &$linguator->model;
-		$this->curlang    = &$linguator->curlang;
+	public function __construct( &$easywptranslator ) {
+		$this->model      = &$easywptranslator->model;
+		$this->curlang    = &$easywptranslator->curlang;
 		$this->taxonomies = $this->model->get_translated_taxonomies();
 	}
 
@@ -67,10 +67,10 @@ class LMAT_Default_Term {
 				add_action( 'update_option_default_' . $taxonomy, array( $this, 'update_option_default_term' ), 10, 2 );
 			}
 		}
-		add_action( 'lmat_add_language', array( $this, 'handle_default_term_on_create_language' ) );
+		add_action( 'ewt_add_language', array( $this, 'handle_default_term_on_create_language' ) );
 
 		// The default term should be in the default language.
-		add_action( 'lmat_update_default_lang', array( $this, 'update_default_term_language' ) );
+		add_action( 'ewt_update_default_lang', array( $this, 'update_default_term_language' ) );
 
 		// Prevents deleting all the translations of the default term.
 		add_filter( 'map_meta_cap', array( $this, 'fix_delete_default_term' ), 10, 4 );
@@ -128,7 +128,7 @@ class LMAT_Default_Term {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language|string|int $lang     Language.
+	 * @param EWT_Language|string|int $lang     Language.
 	 * @param string                  $taxonomy The current taxonomy.
 	 * @return void
 	 */
@@ -141,7 +141,7 @@ class LMAT_Default_Term {
 
 		// Create a new term
 		// FIXME this is translated in admin language when we would like it in $lang
-		$cat_name = __( 'Uncategorized', 'easy-web-translator' );
+		$cat_name = __( 'Uncategorized', 'easy-wp-translator' );
 		$cat_slug = sanitize_title( $cat_name . '-' . $lang->locale );
 		$cat = wp_insert_term( $cat_name, $taxonomy, array( 'slug' => $cat_slug ) );
 
@@ -163,7 +163,7 @@ class LMAT_Default_Term {
 	 *
 	 *  
 	 *
-	 * @param  array $args Argument used to create the language. @see LMAT_Admin_Model::add_language().
+	 * @param  array $args Argument used to create the language. @see EWT_Admin_Model::add_language().
 	 * @return void
 	 */
 	public function handle_default_term_on_create_language( $args ) {

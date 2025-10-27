@@ -29,7 +29,7 @@ const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
 
             newIdArr.forEach(key => {
                 childIdArr.push(key);
-                uniqueId += `lmat_page_translation_${key}`;
+                uniqueId += `ewt_page_translation_${key}`;
                 dynamicBlockAttr = dynamicBlockAttr ? dynamicBlockAttr[key] : dynamicBlockAttr;
             });
 
@@ -48,7 +48,7 @@ const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
                     return false;
                 }
 
-                dispatch('block-lmatPageTranslation/translate').contentSaveSource(filterKey, blockAttrContent);
+                dispatch('block-ewtPageTranslation/translate').contentSaveSource(filterKey, blockAttrContent);
             }
 
             return;
@@ -71,13 +71,13 @@ const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
  * @param {Object} blockRules - The rules for translating the block.
  */
 const getTranslateString = (block, blockRules) => {
-    const blockTranslateName = Object.keys(blockRules.LmatBlockParseRules);
+    const blockTranslateName = Object.keys(blockRules.EWTBlockParseRules);
 
     if (!blockTranslateName.includes(block.name)) {
         return;
     }
 
-    filterTranslateAttr(block.clientId, block.attributes, blockRules['LmatBlockParseRules'][block.name]);
+    filterTranslateAttr(block.clientId, block.attributes, blockRules['EWTBlockParseRules'][block.name]);
 }
 
 /**
@@ -124,13 +124,13 @@ const GutenbergBlockSaveSource = (block, blockRules) => {
         }else if(['title', 'excerpt'].includes(key)){
             if(block[key] && block[key].trim() !== ''){
                 const action = `${key}SaveSource`;
-                dispatch('block-lmatPageTranslation/translate')[action](block[key]);
+                dispatch('block-ewtPageTranslation/translate')[action](block[key]);
             }
         }
 
-        if(key === 'slug_name' && lmatPageTranslationGlobal.slug_translation_option === 'slug_translate'){
+        if(key === 'slug_name' && ewtPageTranslationGlobal.slug_translation_option === 'slug_translate'){
             if(block[key] && block[key].trim() !== ''){
-                dispatch('block-lmatPageTranslation/translate').slugSaveSource(block[key]);
+                dispatch('block-ewtPageTranslation/translate').slugSaveSource(block[key]);
             }
         }
     });

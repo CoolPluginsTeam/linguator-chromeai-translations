@@ -1,15 +1,15 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Options\Primitive\Abstract_List;
+use EasyWPTranslator\Includes\Options\Primitive\Abstract_List;
 
 /**
  * Class defining language switcher options list.
@@ -24,10 +24,10 @@ class Language_Switcher_Options extends Abstract_List {
 	 *
 	 * @return string
 	 *
-	 * @phpstan-return 'lmat_language_switcher_options'
+	 * @phpstan-return 'ewt_language_switcher_options'
 	 */
 	public static function key(): string {
-		return 'lmat_language_switcher_options';
+		return 'ewt_language_switcher_options';
 	}
 
 	/**
@@ -49,6 +49,6 @@ class Language_Switcher_Options extends Abstract_List {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'List of enabled language switcher types.', 'easy-web-translator' );
+		return __( 'List of enabled language switcher types.', 'easy-wp-translator' );
 	}
 }

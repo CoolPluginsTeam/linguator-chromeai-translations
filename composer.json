@@ -1,5 +1,5 @@
 {
-    "name": "linguator/linguator",
+    "name": "easywptranslator/easywptranslator",
     "require": {
         "php": ">=7.2"
     },
@@ -11,13 +11,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Linguator\\Admin\\": "admin/",
-            "Linguator\\Frontend\\": "frontend/",
-            "Linguator\\includes\\": "includes/",
-            "Linguator\\Settings\\": "admin/settings/",
-            "Linguator\\Modules\\": "modules/",
-            "Linguator\\Integrations\\": "integrations/",
-            "Linguator\\Install\\": "install/"
+            "EasyWPTranslator\\Admin\\": "admin/",
+            "EasyWPTranslator\\Frontend\\": "frontend/",
+            "EasyWPTranslator\\includes\\": "includes/",
+            "EasyWPTranslator\\Settings\\": "admin/settings/",
+            "EasyWPTranslator\\Modules\\": "modules/",
+            "EasyWPTranslator\\Integrations\\": "integrations/",
+            "EasyWPTranslator\\Install\\": "install/"
         },
         "classmap": [
             "includes/",
@@ -35,7 +35,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Linguator\\Tests\\": "tests/"
+            "EasyWPTranslator\\Tests\\": "tests/"
         }
     },
     "scripts": {

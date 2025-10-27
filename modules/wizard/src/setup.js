@@ -14,7 +14,7 @@ const SetupPageComponent = () =>{
 
 // Mount the appropriate component based on which element exists
 domReady(() => {
-    const element = document.getElementById('lmat-setup');
+    const element = document.getElementById('ewt-setup');
         if (element) {
             const root = createRoot(element);
             root.render(<SetupPageComponent />);

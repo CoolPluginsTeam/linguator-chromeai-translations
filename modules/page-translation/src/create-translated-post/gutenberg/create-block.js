@@ -56,7 +56,7 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
 
             newIdArr.forEach(key => {
                 childIdArr.push(key);
-                uniqueId += `lmat_page_translation_${key}`;
+                uniqueId += `ewt_page_translation_${key}`;
                 dynamicBlockAttr = dynamicBlockAttr ? dynamicBlockAttr[key] : dynamicBlockAttr;
             });
 
@@ -73,7 +73,7 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
                 if (!/[\p{L}\p{N}]/gu.test(blockAttrContent)) {
                     translateContent = blockAttrContent;
                 } else {
-                    translateContent = select('block-lmatPageTranslation/translate').getTranslatedString('content', blockAttrContent, filterKey, service);
+                    translateContent = select('block-ewtPageTranslation/translate').getTranslatedString('content', blockAttrContent, filterKey, service);
                 }
 
                 block.attributes = updateNestedAttribute(block.attributes, newIdArr, translateContent);
@@ -108,14 +108,14 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
 const createTranslatedBlock = (block, childBlock, blockRules, service) => {
     const { createBlock } = wp.blocks;
     const { name: blockName, attributes } = block;
-    const blockTranslateName = Object.keys(blockRules.LmatBlockParseRules);
+    const blockTranslateName = Object.keys(blockRules.EWTBlockParseRules);
 
     let attribute = { ...attributes };
     let translatedBlock = block;
     let newBlock = '';
 
     if (blockTranslateName.includes(block.name)) {
-        translatedBlock = filterTranslateAttr(block, blockRules['LmatBlockParseRules'][block.name], service);
+        translatedBlock = filterTranslateAttr(block, blockRules['EWTBlockParseRules'][block.name], service);
 
         attribute = translatedBlock.attributes;
     }
@@ -154,7 +154,7 @@ const cretaeChildBlock = (block, blockRules, service) => {
  */
 const createBlocks = (block, service) => {
     const { select } = wp.data;
-    const blockRules = select('block-lmatPageTranslation/translate').getBlockRules();
+    const blockRules = select('block-ewtPageTranslation/translate').getBlockRules();
 
     const { dispatch } = wp.data;
     const { name: blockName } = block;

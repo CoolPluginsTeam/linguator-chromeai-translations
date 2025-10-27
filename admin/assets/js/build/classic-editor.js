@@ -3,7 +3,7 @@
 
 ;// ./assets/js/src/lib/confirmation-modal.js
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 var languagesList = jQuery('.post_lang_choice');
@@ -16,9 +16,9 @@ var initializeConfirmationModal = function initializeConfirmationModal() {
 
   // Create dialog container.
   var dialogContainer = jQuery('<div/>', {
-    id: 'lmat-dialog',
+    id: 'ewt-dialog',
     style: 'display:none;'
-  }).text(__('Are you sure you want to change the language of the current content?', 'easy-web-translator'));
+  }).text(__('Are you sure you want to change the language of the current content?', 'easy-wp-translator'));
 
   // Put it after languages list dropdown.
   // PHPCS ignore dialogContainer is a new safe HTML code generated above.
@@ -49,7 +49,7 @@ var initializeConfirmationModal = function initializeConfirmationModal() {
       modal: true,
       draggable: false,
       resizable: false,
-      title: __('Change language', 'easy-web-translator'),
+      title: __('Change language', 'easy-wp-translator'),
       minWidth: 600,
       maxWidth: '100%',
       open: function open(event, ui) {
@@ -66,12 +66,12 @@ var initializeConfirmationModal = function initializeConfirmationModal() {
         confirmDialog('no');
       },
       buttons: [{
-        text: __('OK', 'easy-web-translator'),
+        text: __('OK', 'easy-wp-translator'),
         click: function click(event) {
           confirmDialog('yes');
         }
       }, {
-        text: __('Cancel', 'easy-web-translator'),
+        text: __('Cancel', 'easy-wp-translator'),
         click: function click(event) {
           confirmDialog('no');
         }
@@ -81,7 +81,7 @@ var initializeConfirmationModal = function initializeConfirmationModal() {
     // jQuery UI >= 1.12 is available in WP 6.2+ (our minimum version)
     Object.assign(dialogOptions, {
       classes: {
-        'ui-dialog': 'lmat-confirmation-modal'
+        'ui-dialog': 'ewt-confirmation-modal'
       }
     });
     dialogContainer.dialog(dialogOptions);
@@ -97,17 +97,17 @@ var initializeLanguageOldValue = function initializeLanguageOldValue() {
 };
 ;// ./assets/js/src/lib/metabox-autocomplete.js
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 // Translations autocomplete input box.
 function initMetaboxAutoComplete() {
   jQuery('.tr_lang').each(function () {
     var tr_lang = jQuery(this).attr('id').substring(8);
-    var td = jQuery(this).parent().parent().siblings('.lmat-edit-column');
+    var td = jQuery(this).parent().parent().siblings('.ewt-edit-column');
     jQuery(this).autocomplete({
       minLength: 0,
-      source: ajaxurl + '?action=lmat_posts_not_translated' + '&post_language=' + jQuery('.post_lang_choice').val() + '&translation_language=' + tr_lang + '&post_type=' + jQuery('#post_type').val() + '&_lmat_nonce=' + jQuery('#_lmat_nonce').val(),
+      source: ajaxurl + '?action=ewt_posts_not_translated' + '&post_language=' + jQuery('.post_lang_choice').val() + '&translation_language=' + tr_lang + '&post_type=' + jQuery('#post_type').val() + '&_ewt_nonce=' + jQuery('#_ewt_nonce').val(),
       select: function select(event, ui) {
         jQuery('#htr_lang_' + tr_lang).val(ui.item.id);
         // ui.item.link is built and come from server side and is well escaped when necessary
@@ -127,7 +127,7 @@ function initMetaboxAutoComplete() {
 }
 ;// ./assets/js/src/classic-editor.js
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 
@@ -219,16 +219,16 @@ jQuery(function ($) {
     }
     dialogResult.then(function () {
       var data = {
-        action: 'lmat_post_lang_choice',
+        action: 'ewt_post_lang_choice',
         lang: selectedOption.value,
         post_type: $('#post_type').val(),
         taxonomies: taxonomies,
         post_id: $('#post_ID').val(),
-        _lmat_nonce: $('#_lmat_nonce').val()
+        _ewt_nonce: $('#_ewt_nonce').val()
       };
       $.post(ajaxurl, data, function (response) {
         // Target a non existing WP HTML id to avoid a conflict with WP ajax requests.
-        var res = wpAjax.parseAjaxResponse(response, 'lmat-ajax-response');
+        var res = wpAjax.parseAjaxResponse(response, 'ewt-ajax-response');
         $.each(res.responses, function () {
           switch (this.what) {
             case 'translations':
@@ -246,7 +246,7 @@ jQuery(function ($) {
               // @see wp_popular_terms_checklist https://github.com/WordPress/WordPress/blob/5.2.2/wp-admin/includes/template.php#L236
               $('#' + tax + 'checklist-pop').html(this.supplemental.populars); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.html
               // @see wp_dropdown_categories https://github.com/WordPress/WordPress/blob/5.5.1/wp-includes/category-template.php#L336
-              // which is called by LMAT_Admin_Classic_Editor::post_lang_choice to generate supplemental.dropdown
+              // which is called by EWT_Admin_Classic_Editor::post_lang_choice to generate supplemental.dropdown
               $('#new' + tax + '_parent').replaceWith(this.supplemental.dropdown); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.replaceWith
               $('#' + tax + '-lang').val($('.post_lang_choice').val()); // hidden field
               break;
@@ -259,7 +259,7 @@ jQuery(function ($) {
             case 'flag':
               // flag in front of the select dropdown
               // Data is built and come from server side and is well escaped when necessary
-              $('.lmat-select-flag').html(this.data); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.html
+              $('.ewt-select-flag').html(this.data); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.html
               break;
             case 'permalink':
               // Sample permalink
@@ -303,37 +303,37 @@ jQuery(function ($) {
 
     // Modifies the text direction.
     var dir = e.detail.lang.is_rtl ? 'rtl' : 'ltr';
-    $('body').removeClass('lmat-dir-rtl').removeClass('lmat-dir-ltr').addClass('lmat-dir-' + dir);
+    $('body').removeClass('ewt-dir-rtl').removeClass('ewt-dir-ltr').addClass('ewt-dir-' + dir);
     $('#content_ifr').contents().find('html').attr('lang', e.detail.lang.locale).attr('dir', dir);
     $('#content_ifr').contents().find('body').attr('dir', dir);
 
     // Refresh media libraries.
-    lmat.media.resetAllAttachmentsCollections();
+    ewt.media.resetAllAttachmentsCollections();
   });
   initMetaboxAutoComplete();
 });
 
 /**
  *
- * @namespace lmat
+ * @namespace ewt
  */
-var lmat = window.lmat || {};
+var ewt = window.ewt || {};
 
 /**
  *
- * @namespace lmat.media
+ * @namespace ewt.media
  */
-_.extend(lmat, {
+_.extend(ewt, {
   media: {}
 });
 
 /**
  *
- * @alias lmat.media
- * @memberOf lmat
+ * @alias ewt.media
+ * @memberOf ewt
  * @namespace
  */
-var media = _.extend(lmat.media, /** @lends lmat.media.prototype */
+var media = _.extend(ewt.media, /** @lends ewt.media.prototype */
 {
   /**
    * TODO: Find a way to delete references to Attachments collections that are not used anywhere else.
@@ -348,8 +348,8 @@ var media = _.extend(lmat.media, /** @lends lmat.media.prototype */
    * @return {wp.media.model.Attachments}
    */
   query: function query(props) {
-    var attachments = lmat.media.query.delegate(props);
-    lmat.media.attachmentsCollections.push(attachments);
+    var attachments = ewt.media.query.delegate(props);
+    ewt.media.attachmentsCollections.push(attachments);
     return attachments;
   },
   resetAllAttachmentsCollections: function resetAllAttachmentsCollections() {
@@ -371,9 +371,9 @@ var media = _.extend(lmat.media, /** @lends lmat.media.prototype */
 if ('undefined' !== typeof wp && 'undefined' !== typeof wp.media) {
   /**
    *
-   * @memberOf lmat.media
+   * @memberOf ewt.media
    */
-  media.query = _.extend(media.query, /** @lends lmat.media.query prototype */
+  media.query = _.extend(media.query, /** @lends ewt.media.query prototype */
   {
     /**
      * @type Function References WordPress { @see wp.media.query } constructor

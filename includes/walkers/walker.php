@@ -1,5 +1,5 @@
 <?php
-namespace Linguator\Includes\Walkers;
+namespace EasyWPTranslator\Includes\Walkers;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -8,21 +8,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 use Walker;
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 
 
 
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 /**
  * A class for displaying various tree-like language structures.
  *
- * Extend the `LMAT_Walker` class to use it, and implement some of the methods from `Walker`.
+ * Extend the `EWT_Walker` class to use it, and implement some of the methods from `Walker`.
  *
  *  
  */
-class LMAT_Walker extends Walker {
+class EWT_Walker extends Walker {
 	/**
 	 * Database fields to use.
 	 *
@@ -35,7 +35,7 @@ class LMAT_Walker extends Walker {
 	 * Overrides Walker::display_element as it expects an object with a parent property.
 	 *
 	 *
-	 * @param LMAT_Language|stdClass $element           Data object. `LMAT_language` in our case.
+	 * @param EWT_Language|stdClass $element           Data object. `EWT_language` in our case.
 	 * @param array                 $children_elements List of elements to continue traversing.
 	 * @param int                   $max_depth         Max depth to traverse.
 	 * @param int                   $depth             Depth of current element.
@@ -44,7 +44,7 @@ class LMAT_Walker extends Walker {
 	 * @return void
 	 */
 	public function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {
-		if ( $element instanceof LMAT_Language ) {
+		if ( $element instanceof EWT_Language ) {
 			$element = $element->to_std_class();
 
 			// Sets the w3c locale as the main locale.
@@ -57,7 +57,7 @@ class LMAT_Walker extends Walker {
 	}
 
 	/**
-	 * Sets `LMAT_Walker::walk()` arguments as it should
+	 * Sets `EWT_Walker::walk()` arguments as it should
 	 * and triggers an error in case of misuse of them.
 	 *
 	 *  

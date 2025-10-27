@@ -1,22 +1,22 @@
 <?php
 /**
- * @package Linguator 
+ * @package EasyWPTranslator 
  */
 
-namespace Linguator\Modules\Editors\Screens;
+namespace EasyWPTranslator\Modules\Editors\Screens;
 
-use Linguator\Includes\Base\LMAT_Base;
-use Linguator\Includes\Other\LMAT_Model;
+use EasyWPTranslator\Includes\Base\EWT_Base;
+use EasyWPTranslator\Includes\Other\EWT_Model;
 use WP_Screen;
-use Linguator\Includes\Other\LMAT_Language;
-use Linguator\Modules\Full_Site_Editing\LMAT_FSE_Tools;
+use EasyWPTranslator\Includes\Other\EWT_Language;
+use EasyWPTranslator\Modules\Full_Site_Editing\EWT_FSE_Tools;
 
 /**
  * Class to manage Site editor scripts.
  */
 class Site extends Abstract_Screen {
 	/**
-	 * @var LMAT_Language|false|null
+	 * @var EWT_Language|false|null
 	 */
 	protected $curlang;
 
@@ -24,12 +24,12 @@ class Site extends Abstract_Screen {
 	 * Constructor
 	 *
 	 *
-	 * @param LMAT_Base $linguator Linguator object.
+	 * @param EWT_Base $easywptranslator EasyWPTranslator object.
 	 */
-	public function __construct( LMAT_Base &$linguator ) {
-		parent::__construct( $linguator );
+	public function __construct( EWT_Base &$easywptranslator ) {
+		parent::__construct( $easywptranslator );
 
-		$this->curlang = &$linguator->curlang;
+		$this->curlang = &$easywptranslator->curlang;
 	}
 
 	/**
@@ -40,7 +40,7 @@ class Site extends Abstract_Screen {
 	 */
 	public function init() {
 		parent::init();
-		add_filter( 'lmat_admin_ajax_params', array( $this, 'ajax_filter' ) );
+		add_filter( 'ewt_admin_ajax_params', array( $this, 'ajax_filter' ) );
 
 		return $this;
 	}
@@ -94,10 +94,10 @@ class Site extends Abstract_Screen {
 	 * Returns the language to use in the Site editor.
 	 *
 	 *
-	 * @return LMAT_Language|null
+	 * @return EWT_Language|null
 	 */
-	protected function get_language(): ?LMAT_Language {
-		if ( ! empty( $this->curlang ) && LMAT_FSE_Tools::is_site_editor() ) {
+	protected function get_language(): ?EWT_Language {
+		if ( ! empty( $this->curlang ) && EWT_FSE_Tools::is_site_editor() ) {
 			return $this->curlang;
 		}
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Sync_Post_Metas extends LMAT_Sync_Metas {
+class EWT_Sync_Post_Metas extends EWT_Sync_Metas {
 	/**
 	 * Stores the plugin options.
 	 *
@@ -25,16 +25,16 @@ class LMAT_Sync_Post_Metas extends LMAT_Sync_Metas {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
+	public function __construct( &$easywptranslator ) {
 		$this->meta_type = 'post';
 
-		parent::__construct( $linguator );
+		parent::__construct( $easywptranslator );
 
-		$this->options = &$linguator->options;
+		$this->options = &$easywptranslator->options;
 
-		add_filter( 'lmat_translate_post_meta', array( $this, 'translate_thumbnail_id' ), 10, 3 );
+		add_filter( 'ewt_translate_post_meta', array( $this, 'translate_thumbnail_id' ), 10, 3 );
 	}
 
 	/**
@@ -79,7 +79,7 @@ class LMAT_Sync_Post_Metas extends LMAT_Sync_Metas {
 		}
 
 		/** This filter is documented in modules/sync/sync-metas.php */
-		return array_unique( apply_filters( 'lmat_copy_post_metas', $keys, $sync, $from, $to, $lang ) );
+		return array_unique( apply_filters( 'ewt_copy_post_metas', $keys, $sync, $from, $to, $lang ) );
 	}
 
 	/**

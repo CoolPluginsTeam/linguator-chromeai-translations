@@ -1,16 +1,16 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 
 /**
  * Smart copy of post content
  *
  *  
  */
-class LMAT_Sync_Post {
+class EWT_Sync_Post {
 	/**
 	 * Stores the plugin options.
 	 *
@@ -19,19 +19,19 @@ class LMAT_Sync_Post {
 	protected $options;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
 	/**
-	 * Instance of a child class of LMAT_Links_Model.
+	 * Instance of a child class of EWT_Links_Model.
 	 *
-	 * @var LMAT_Links_Model
+	 * @var EWT_Links_Model
 	 */
 	protected $links_model;
 
 	/**
-	 * @var LMAT_CRUD_Posts
+	 * @var EWT_CRUD_Posts
 	 */
 	protected $posts;
 
@@ -45,14 +45,14 @@ class LMAT_Sync_Post {
 	/**
 	 * Language of the target post.
 	 *
-	 * @var LMAT_Language
+	 * @var EWT_Language
 	 */
 	protected $target_language;
 
 	/**
 	 * Language of the source post.
 	 *
-	 * @var LMAT_Language
+	 * @var EWT_Language
 	 */
 	protected $from_language;
 
@@ -61,11 +61,11 @@ class LMAT_Sync_Post {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Frontend|LMAT_Admin|LMAT_Settings|LMAT_REST_Request $linguator Linguator object.
+	 * @param EWT_Frontend|EWT_Admin|EWT_Settings|EWT_REST_Request $easywptranslator EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->options = &$linguator->options;
-		$this->model   = &$linguator->model;
+	public function __construct( &$easywptranslator ) {
+		$this->options = &$easywptranslator->options;
+		$this->model   = &$easywptranslator->model;
 	}
 
 	/**
@@ -75,7 +75,7 @@ class LMAT_Sync_Post {
 	 *
 	 * @param WP_Post             $from_post       The post to copy from.
 	 * @param WP_Post             $target_post     The post to copy to.
-	 * @param LMAT_Language|string $target_language The language of the post to copy to.
+	 * @param EWT_Language|string $target_language The language of the post to copy to.
 	 * @return WP_Post|void
 	 */
 	public function copy_content( $from_post, $target_post, $target_language ) {
@@ -119,11 +119,11 @@ class LMAT_Sync_Post {
 	 *
 	 * @param string       $content         Text to translate.
 	 * @param WP_Post      $target_post     The post object to populate with translated content.
-	 * @param LMAT_Language $from_language   The source language .
-	 * @param LMAT_Language $target_language The language to translate to.
+	 * @param EWT_Language $from_language   The source language .
+	 * @param EWT_Language $target_language The language to translate to.
 	 * @return string Translated text
 	 */
-	public function translate_content( $content, $target_post, LMAT_Language $from_language, LMAT_Language $target_language ) {
+	public function translate_content( $content, $target_post, EWT_Language $from_language, EWT_Language $target_language ) {
 		global $shortcode_tags;
 
 		$this->target_post     = $target_post;
@@ -233,7 +233,7 @@ class LMAT_Sync_Post {
 						 * @param int    $to   Term ID of the new term translation.
 						 * @param string $lang Language code of the new translation.
 						 */
-						do_action( 'lmat_duplicate_term', $term->term_id, $tr_term_id, $lang );
+						do_action( 'ewt_duplicate_term', $term->term_id, $tr_term_id, $lang );
 					}
 				}
 			}
@@ -519,7 +519,7 @@ class LMAT_Sync_Post {
 		 * @param string  $lang      Language of target.
 		 * @param string  $from_lang Language of the source.
 		 */
-		return apply_filters( 'lmat_translate_blocks', $blocks, $this->target_language->slug, $this->from_language->slug );
+		return apply_filters( 'ewt_translate_blocks', $blocks, $this->target_language->slug, $this->from_language->slug );
 	}
 
 	/**

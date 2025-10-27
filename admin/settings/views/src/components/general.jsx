@@ -17,7 +17,7 @@ const General = ({ data, setData }) => {
     const [forceLang, setForceLang] = useState(data.force_lang); // Main Radio Options for URL modifications
     const [rewrite, setRewrite] = useState(data.rewrite); // if the first option is selected then for that radio options
     const [domains, setDomains] = useState([]) // if 3rd option is selected then for that url inputs
-    const currentDomain = window.lmat_settings.home_url; // Fetch the current domain of website
+    const currentDomain = window.ewt_settings.home_url; // Fetch the current domain of website
     const [AvailablePostTypes, setAvailablePostTypes] = useState([]); // Available Custom Post Types
     const [AvailableTaxonomies, setAvailableTaxonomies] = useState([]); // Available Custom Taxonomies
     const [selectedSynchronization, setSelectedSyncronization] = useState(data.sync); // Selected Synchronization options
@@ -29,14 +29,14 @@ const General = ({ data, setData }) => {
     const [selectAllPostTypes, setSelectAllPostTypes] = useState(false);
     const [selectAllTaxonomies, setSelectAllTaxonomies] = useState(false);
     const previousDomains = React.useRef([])
-    const [selectedLanguageSwitchers, setSelectedLanguageSwitchers] = useState(data.lmat_language_switcher_options || ['default']); // Selected Language Switcher options
+    const [selectedLanguageSwitchers, setSelectedLanguageSwitchers] = useState(data.ewt_language_switcher_options || ['default']); // Selected Language Switcher options
     const [showTerms, setShowTerms] = useState(false); // For showing/hiding terms box
     const [staticStringsVisibility, setStaticStringsVisibility] = useState(data.static_strings_visibility !== undefined ? data.static_strings_visibility : false); // For Static Strings tab visibility
 
 
     //make the Domains in a suitable way to view
     useEffect(() => {
-        let newDomains = window.lmat_settings.languages.map((item) => {
+        let newDomains = window.ewt_settings.languages.map((item) => {
             const code = item.slug;
             return {
                 value: data.domains[code] || "",
@@ -128,10 +128,10 @@ const General = ({ data, setData }) => {
             }
         }
 
-        if (data.lmat_language_switcher_options && data.lmat_language_switcher_options.length != selectedLanguageSwitchers.length) {
+        if (data.ewt_language_switcher_options && data.ewt_language_switcher_options.length != selectedLanguageSwitchers.length) {
             sameChecker.selectedLanguageSwitchers = false
-        } else if (data.lmat_language_switcher_options) {
-            for (const value of data.lmat_language_switcher_options) {
+        } else if (data.ewt_language_switcher_options) {
+            for (const value of data.ewt_language_switcher_options) {
                 if (!selectedLanguageSwitchers.includes(value)) {
                     sameChecker.selectedLanguageSwitchers = false
                     break;
@@ -314,12 +314,12 @@ const General = ({ data, setData }) => {
                 for (const domain of domains) {
                     // Check if domain is empty
                     if (!domain.value || domain.value.trim() === '') {
-                        throw new Error(__("Domain URL is required for all languages", "easy-web-translator"));
+                        throw new Error(__("Domain URL is required for all languages", "easy-wp-translator"));
                     }
                     
                     // Check if domain has proper protocol
                     if (!domain.value.includes("http://") && !domain.value.includes("https://")) {
-                        throw new Error(__("Please enter valid URLs with http:// or https://", "easy-web-translator"));
+                        throw new Error(__("Please enter valid URLs with http:// or https://", "easy-wp-translator"));
                     }
                     final_domain[domain.code] = domain.value;
                     
@@ -356,7 +356,7 @@ const General = ({ data, setData }) => {
             }))
             //API Call
             const response = apiFetch({
-                path: 'lmat/v1/settings',
+                path: 'ewt/v1/settings',
                 method: 'POST',
                 'headers': {
                     'Content-Type': 'application/json',
@@ -387,29 +387,29 @@ const General = ({ data, setData }) => {
                     if (error?.message) {
                         throw new Error(error.message);
                     }
-                    throw new Error(__("Something went wrong", 'easy-web-translator'));
+                    throw new Error(__("Something went wrong", 'easy-wp-translator'));
                 });
 
             toast.promise(response, {
-                loading: __('Saving Settings', 'easy-web-translator'),
-                success: __('Settings Saved', 'easy-web-translator'),
+                loading: __('Saving Settings', 'easy-wp-translator'),
+                success: __('Settings Saved', 'easy-wp-translator'),
                 error: (error) => error.message
             })
             setHandleButtonDisabled(true)
             
         } catch (error) {
             // Handle domain validation errors
-            if (error.message.includes(__("Please enter valid URLs", "easy-web-translator")) ||
-                error.message.includes(__("Domain URL is required", "easy-web-translator")) ||
-                error.message.includes(__("Invalid URL format", "easy-web-translator")) ||
-                error.message.includes(__("Invalid domain format", "easy-web-translator")) ||
-                error.message.includes(__("Duplicate domain host", "easy-web-translator")) ||
+            if (error.message.includes(__("Please enter valid URLs", "easy-wp-translator")) ||
+                error.message.includes(__("Domain URL is required", "easy-wp-translator")) ||
+                error.message.includes(__("Invalid URL format", "easy-wp-translator")) ||
+                error.message.includes(__("Invalid domain format", "easy-wp-translator")) ||
+                error.message.includes(__("Duplicate domain host", "easy-wp-translator")) ||
                 error.message.includes("domain") || error.message.includes("Domain")) {
                 toast.error(error.message);
-            } else if (error.message.includes(__("Linguator was unable to access", "easy-web-translator"))) {
+            } else if (error.message.includes(__("EasyWPTranslator was unable to access", "easy-wp-translator"))) {
                 toast.error(error.message);
             } else {
-                toast.error(error.message || __("Something went wrong", "easy-web-translator"));
+                toast.error(error.message || __("Something went wrong", "easy-wp-translator"));
             }
         }
     }
@@ -417,30 +417,30 @@ const General = ({ data, setData }) => {
 
     //label and descriptions of URL modifications
     const urlCheckboxes = [{
-        description: sprintf(__('Example1: %s/en/my-post', 'easy-web-translator'), currentDomain),
-        description2: sprintf(__('Example2: %s/hi/my-post', 'easy-web-translator'), currentDomain),
-        heading: __("Different languages in directories", 'easy-web-translator'),
+        description: sprintf(__('Example1: %s/en/my-post', 'easy-wp-translator'), currentDomain),
+        description2: sprintf(__('Example2: %s/hi/my-post', 'easy-wp-translator'), currentDomain),
+        heading: __("Different languages in directories", 'easy-wp-translator'),
         value: 1
     }, {
         
-        description: sprintf(__('Example1: %sen.%s/my-post', 'easy-web-translator'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
-        description2: sprintf(__('Example2: %shi.%s/my-post', 'easy-web-translator'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
-        heading: __("The language is set from the subdomain name ", 'easy-web-translator'),
+        description: sprintf(__('Example1: %sen.%s/my-post', 'easy-wp-translator'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
+        description2: sprintf(__('Example2: %shi.%s/my-post', 'easy-wp-translator'), currentDomain.match(/^https?:\/\//)[0], currentDomain.replace(/^https?:\/\//, '')),
+        heading: __("The language is set from the subdomain name ", 'easy-wp-translator'),
         value: 2
     }, {
         description: '',
         description2: '',
-        heading: __("A different domain per language", 'easy-web-translator'),
+        heading: __("A different domain per language", 'easy-wp-translator'),
         value: 3
     }]
 
     const directoryNamesLinks = [{
-        description: sprintf(__('Example: %s/en/', 'easy-web-translator'), currentDomain),
-        heading: __("Remove /language/ in pretty permalinks", 'easy-web-translator'),
+        description: sprintf(__('Example: %s/en/', 'easy-wp-translator'), currentDomain),
+        heading: __("Remove /language/ in pretty permalinks", 'easy-wp-translator'),
         value: true
     }, {
-        description: sprintf(__('Example: %s/language/en', 'easy-web-translator'), currentDomain),
-        heading: __("Keep /language/ in pretty permalinks", 'easy-web-translator'),
+        description: sprintf(__('Example: %s/language/en', 'easy-wp-translator'), currentDomain),
+        heading: __("Keep /language/ in pretty permalinks", 'easy-wp-translator'),
         value: false
     },]
     return (
@@ -459,7 +459,7 @@ const General = ({ data, setData }) => {
                             onClick={SaveSettings}
                             variant="primary"
                         >
-                            {__('Save Settings', 'easy-web-translator')}
+                            {__('Save Settings', 'easy-wp-translator')}
                         </Button>
                     </Container.Item>
                 </Container>
@@ -469,9 +469,9 @@ const General = ({ data, setData }) => {
                     <Container.Item>
                         <Label size='md' className='font-bold flex items-center gap-2'>
                             <Link className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Language URL format', 'easy-web-translator')}
+                            {__('Language URL format', 'easy-wp-translator')}
                         </Label>
-                        <Label variant='help'>{__('Decide how your website’s URLs will display different languages for visitors.', 'easy-web-translator')}</Label>
+                        <Label variant='help'>{__('Decide how your website’s URLs will display different languages for visitors.', 'easy-wp-translator')}</Label>
                     </Container.Item>
                     <Container cols="2" containerType='grid'>
                         <Container.Item >
@@ -544,7 +544,7 @@ const General = ({ data, setData }) => {
                                 forceLang !== 3 &&
                                 <Checkbox
                                     label={{
-                                        heading: __('Hide URL language information for default language', 'easy-web-translator')
+                                        heading: __('Hide URL language information for default language', 'easy-wp-translator')
                                     }}
                                     size="sm"
                                     className='cursor-pointer'
@@ -592,14 +592,14 @@ const General = ({ data, setData }) => {
                        <div>
                          <Label size='md' className='font-bold flex items-center gap-2'>
                             <Milestone className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Custom Post Types', 'easy-web-translator')}
+                            {__('Custom Post Types', 'easy-wp-translator')}
                         </Label>
-                        <p>{__("Choose the custom post types you want to enable for translation.For example, if you have a 'Portfolio' post type, check the box to enable it for translation.", 'easy-web-translator')}</p>
+                        <p>{__("Choose the custom post types you want to enable for translation.For example, if you have a 'Portfolio' post type, check the box to enable it for translation.", 'easy-wp-translator')}</p>
                        </div>
                         {AvailablePostTypes.length > 0 && (
                             <div className='flex justify-end gap-2' style={{paddingRight: '30%'}}>
                                 <Label size='sm' className='cursor-pointer items-start' htmlFor="select-all-post-types">
-                                    {__('Select All', 'easy-web-translator')}
+                                    {__('Select All', 'easy-wp-translator')}
                                 </Label>
                                 <Switch
                                     aria-label="Select All Post Types"
@@ -615,7 +615,7 @@ const General = ({ data, setData }) => {
                         {
                             AvailablePostTypes.length == 0 ?
                                 <div style={{ color: "red" }}>
-                                    {__('No Custom Post Types Available', 'easy-web-translator')}
+                                    {__('No Custom Post Types Available', 'easy-wp-translator')}
                                 </div> :
                                 <div className='flex gap-4 flex-wrap'>
                                     {
@@ -653,14 +653,14 @@ const General = ({ data, setData }) => {
                         <div>
                             <Label size='md' className='font-bold flex items-center gap-2'>
                             <Milestone className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Custom Taxonomies', 'easy-web-translator')}
+                            {__('Custom Taxonomies', 'easy-wp-translator')}
                         </Label>
-                        <p>{__('Choose the Custom Taxonomies you want to enable for translation', 'easy-web-translator')}</p>
+                        <p>{__('Choose the Custom Taxonomies you want to enable for translation', 'easy-wp-translator')}</p>
                         </div>
                         {AvailableTaxonomies.length > 0 && (
                             <div className='flex justify-end gap-2' style={{paddingRight: '30%'}}>
                                 <Label size='sm' className='cursor-pointer items-start' htmlFor="select-all-taxonomies">
-                                    {__('Select All', 'easy-web-translator')}
+                                    {__('Select All', 'easy-wp-translator')}
                                 </Label>
                                 <Switch
                                     aria-label="Select All Taxonomies"
@@ -676,7 +676,7 @@ const General = ({ data, setData }) => {
                         {
                             AvailableTaxonomies.length == 0 ?
                                 <div style={{ color: "red" }}>
-                                    {__('No Custom Taxonomies Available', 'easy-web-translator')}
+                                    {__('No Custom Taxonomies Available', 'easy-wp-translator')}
                                 </div> :
                                 <div className='flex gap-4 flex-wrap'>
                                     {
@@ -706,13 +706,13 @@ const General = ({ data, setData }) => {
                         <div>
                         <Label size='md' className='font-bold flex items-center gap-2'>
                             <RefreshCcw className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Synchronization', 'easy-web-translator')}
+                            {__('Synchronization', 'easy-wp-translator')}
                         </Label>
-                        <p>{__('Choose synchronization options for translated content.', 'easy-web-translator')}</p>
+                        <p>{__('Choose synchronization options for translated content.', 'easy-wp-translator')}</p>
                         </div>
                         <div className='flex  justify-end  gap-2' style={{paddingRight: '30%'}}>
                             <Label size='sm' className='cursor-pointer items-start' htmlFor="select-all-sync">
-                                {__('Select All', 'easy-web-translator')}
+                                {__('Select All', 'easy-wp-translator')}
                             </Label>
 
                             <Switch
@@ -750,10 +750,10 @@ const General = ({ data, setData }) => {
                     <Container.Item >
                         <h3 className='flex items-center gap-2'>
                             <Globe className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Detect Browser Language', 'easy-web-translator')}
+                            {__('Detect Browser Language', 'easy-wp-translator')}
                         </h3>
                         <p>
-                            {__('When visitors open your homepage, Linguator displays it in their preferred language. To avoid issues, homepage caching is turned off for supported cache plugins.', 'easy-web-translator')}
+                            {__('When visitors open your homepage, EasyWPTranslator displays it in their preferred language. To avoid issues, homepage caching is turned off for supported cache plugins.', 'easy-wp-translator')}
                         </p>
                     </Container.Item>
                     <Container.Item className='flex items-center justify-end' style={{paddingRight: '30%'}}>
@@ -789,10 +789,10 @@ const General = ({ data, setData }) => {
                     <Container.Item>
                         <h3 className='flex items-center gap-2'>
                             <Focus className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Media', 'easy-web-translator')}
+                            {__('Media', 'easy-wp-translator')}
                         </h3>
                         <p>
-                            {__('Turn on media translation only if you need to translate titles, alt text, captions, or descriptions. The original file stays the same.', 'easy-web-translator')}
+                            {__('Turn on media translation only if you need to translate titles, alt text, captions, or descriptions. The original file stays the same.', 'easy-wp-translator')}
                         </p>
                     </Container.Item>
                     <Container.Item className='flex items-center justify-end' style={{paddingRight: '30%'}}>
@@ -813,10 +813,10 @@ const General = ({ data, setData }) => {
                     <Container.Item>
                         <h3 className='flex items-center gap-2'>
                             <Settings2 className="flex-shrink-0 size-5 text-icon-secondary" />
-                            {__('Static Strings Tab', 'easy-web-translator')}
+                            {__('Static Strings Tab', 'easy-wp-translator')}
                         </h3>
                         <p>
-                            {__('Show or hide the Static Strings tab in the admin menu. This tab allows you to translate static strings from your theme and plugins.', 'easy-web-translator')}
+                            {__('Show or hide the Static Strings tab in the admin menu. This tab allows you to translate static strings from your theme and plugins.', 'easy-wp-translator')}
                         </p>
                     </Container.Item>
                     <Container.Item className='flex items-center justify-end' style={{paddingRight: '30%'}}>
@@ -844,7 +844,7 @@ const General = ({ data, setData }) => {
                             onClick={SaveSettings}
                             variant="primary"
                         >
-                            {__('Save Settings', 'easy-web-translator')}
+                            {__('Save Settings', 'easy-wp-translator')}
                         </Button>
 
                     </Container.Item>

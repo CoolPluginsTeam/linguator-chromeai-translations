@@ -2,17 +2,17 @@
 /**
  * Loads the site health.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Don't access directly.
 }
 
-use Linguator\Admin\Controllers\LMAT_Admin;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin;
 
 
 
-if ( $linguator instanceof LMAT_Admin && $linguator->model->has_languages() ) {
-	$linguator->site_health = new LMAT_Admin_Site_Health( $linguator );
+if ( $easywptranslator instanceof EWT_Admin && $easywptranslator->model->has_languages() ) {
+	$easywptranslator->site_health = new EWT_Admin_Site_Health( $easywptranslator );
 }

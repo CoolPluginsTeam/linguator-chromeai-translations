@@ -1,5 +1,5 @@
 <?php
-namespace Linguator\Includes\Options;
+namespace EasyWPTranslator\Includes\Options;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -8,11 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 use WP_Error;
 
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 
-use Linguator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Options\Options;
 
 
 
@@ -243,7 +243,7 @@ abstract class Abstract_Option {
 	protected function get_language_terms(): array {
 		$language_terms = get_terms(
 			array(
-				'taxonomy'   => 'lmat_language',
+				'taxonomy'   => 'ewt_language',
 				'hide_empty' => false,
 			)
 		);
@@ -261,14 +261,14 @@ abstract class Abstract_Option {
 	protected function add_unknown_languages_warning( array $language_slugs ): void {
 		if ( 1 === count( $language_slugs ) ) {
 			/* translators: %s is a language slug. */
-			$message = __( 'The language %s is unknown and has been discarded.', 'easy-web-translator' );
+			$message = __( 'The language %s is unknown and has been discarded.', 'easy-wp-translator' );
 		} else {
 			/* translators: %s is a list of language slugs. */
-			$message = __( 'The languages %s are unknown and have been discarded.', 'easy-web-translator' );
+			$message = __( 'The languages %s are unknown and have been discarded.', 'easy-wp-translator' );
 		}
 
 		$this->errors->add(
-			sprintf( 'lmat_unknown_%s_languages', static::key() ),
+			sprintf( 'ewt_unknown_%s_languages', static::key() ),
 			sprintf(
 				$message,
 				wp_sprintf_l(

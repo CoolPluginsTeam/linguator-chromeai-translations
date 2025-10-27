@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Filters;
+namespace EasyWPTranslator\Includes\Filters;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Filters {
+class EWT_Filters {
 	/**
 	 * Stores the plugin options.
 	 *
@@ -23,21 +23,21 @@ class LMAT_Filters {
 	public $options;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
 	/**
-	 * Instance of a child class of LMAT_Links_Model.
+	 * Instance of a child class of EWT_Links_Model.
 	 *
-	 * @var LMAT_Links_Model
+	 * @var EWT_Links_Model
 	 */
 	public $links_model;
 
 	/**
 	 * Current language.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $curlang;
 
@@ -46,15 +46,15 @@ class LMAT_Filters {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
+	public function __construct( &$easywptranslator ) {
 		global $wp_version;
 
-		$this->links_model = &$linguator->links_model;
-		$this->model = &$linguator->model;
-		$this->options = &$linguator->options;
-		$this->curlang = &$linguator->curlang;
+		$this->links_model = &$easywptranslator->links_model;
+		$this->model = &$easywptranslator->model;
+		$this->options = &$easywptranslator->options;
+		$this->curlang = &$easywptranslator->curlang;
 
 		// Deletes our cache for sticky posts when the list is updated.
 		add_action( 'update_option_sticky_posts', array( $this, 'delete_sticky_posts_cache' ) );
@@ -111,7 +111,7 @@ class LMAT_Filters {
 	 *   Always returns an array. Renamed from get_comments_queried_language().
 	 *
 	 * @param WP_Comment_Query $query WP_Comment_Query object.
-	 * @return LMAT_Language[] The languages to use in the filter.
+	 * @return EWT_Language[] The languages to use in the filter.
 	 */
 	protected function get_comments_queried_languages( $query ) {
 		// Don't filter comments if comment ids or post ids are specified.
@@ -126,9 +126,9 @@ class LMAT_Filters {
 			return array();
 		}
 
-		// If comments are queried with a 'lmat_lang' parameter, keeps only language codes.
-		if ( isset( $query->query_vars['lmat_lang'] ) ) {
-			$languages = is_string( $query->query_vars['lmat_lang'] ) ? explode( ',', $query->query_vars['lmat_lang'] ) : $query->query_vars['lmat_lang'];
+		// If comments are queried with a 'ewt_lang' parameter, keeps only language codes.
+		if ( isset( $query->query_vars['ewt_lang'] ) ) {
+			$languages = is_string( $query->query_vars['ewt_lang'] ) ? explode( ',', $query->query_vars['ewt_lang'] ) : $query->query_vars['ewt_lang'];
 			if ( is_array( $languages ) ) {
 				$languages = array_map( array( $this->model, 'get_language' ), $languages );
 				return array_filter( $languages );
@@ -144,7 +144,7 @@ class LMAT_Filters {
 
 	/**
 	 * Adds a language dependent cache domain when querying comments.
-	 * Useful as the 'lmat_lang' parameter is not included in cache key by WordPress.
+	 * Useful as the 'ewt_lang' parameter is not included in cache key by WordPress.
 	 * Needed since WP 4.6 as comments have been added to persistent cache. 
 	 *
 	 *  
@@ -157,7 +157,7 @@ class LMAT_Filters {
 		if ( ! empty( $lang ) ) {
 			$lang = wp_list_pluck( $lang, 'slug' );
 			$key = '_' . implode( ',', $lang );
-			$query->query_vars['cache_domain'] = empty( $query->query_vars['cache_domain'] ) ? 'lmat' . $key : $query->query_vars['cache_domain'] . $key;
+			$query->query_vars['cache_domain'] = empty( $query->query_vars['cache_domain'] ) ? 'ewt' . $key : $query->query_vars['cache_domain'] . $key;
 		}
 	}
 
@@ -199,11 +199,11 @@ class LMAT_Filters {
 	 * @return WP_Post[] Modified list of pages.
 	 */
 	public function get_pages( $pages, $args ) {
-		if ( isset( $args['lmat_lang'] ) && empty( $args['lmat_lang'] ) ) {
+		if ( isset( $args['ewt_lang'] ) && empty( $args['ewt_lang'] ) ) {
 			return $pages;
 		}
 
-		$language = empty( $args['lmat_lang'] ) ? $this->curlang : $this->model->get_language( $args['lmat_lang'] );
+		$language = empty( $args['ewt_lang'] ) ? $this->curlang : $this->model->get_language( $args['ewt_lang'] );
 
 		if ( empty( $language ) || empty( $pages ) || ! $this->model->is_translated_post_type( $args['post_type'] ) ) {
 			return $pages;
@@ -253,8 +253,8 @@ class LMAT_Filters {
 	 * @return array Array of arguments passed to WP_Query with the language.
 	 */
 	public function get_pages_query_args( $query_args, $parsed_args ) {
-		if ( isset( $parsed_args['lmat_lang'] ) ) {
-			$query_args['lmat_lang'] = $parsed_args['lmat_lang'];
+		if ( isset( $parsed_args['ewt_lang'] ) ) {
+			$query_args['ewt_lang'] = $parsed_args['ewt_lang'];
 		}
 
 		return $query_args;
@@ -265,14 +265,14 @@ class LMAT_Filters {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language $language The language to use in the relationship
+	 * @param EWT_Language $language The language to use in the relationship
 	 * @param string       $relation 'IN' or 'NOT IN'.
 	 * @param array        $args     Array of get_pages() arguments.
 	 * @return int[]
 	 */
 	protected function get_related_page_ids( $language, $relation, $args ) {
 		$r = array(
-			'lmat_lang'        => '', // Ensure this query is not filtered.
+			'ewt_lang'        => '', // Ensure this query is not filtered.
 			'numberposts' => -1,
 			'nopaging'    => true,
 			'post_type'   => $args['post_type'],
@@ -281,9 +281,9 @@ class LMAT_Filters {
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Using tax_query here is required to accurately filter pages by language for multilingual functionality. This ensures correct admin menu item handling and is essential for the plugin’s logic.
 			'tax_query'   => array(
 				array(
-					'taxonomy' => 'lmat_language',
+					'taxonomy' => 'ewt_language',
 					'field'    => 'term_taxonomy_id', // Since WP 3.5.
-					'terms'    => $language->get_tax_prop( 'lmat_language', 'term_taxonomy_id' ),
+					'terms'    => $language->get_tax_prop( 'ewt_language', 'term_taxonomy_id' ),
 					'operator' => $relation,
 				),
 			),
@@ -361,7 +361,7 @@ class LMAT_Filters {
 	 * @return string[] Translated email contents.
 	 */
 	public function translate_user_email( $email ) {
-		$blog_name = wp_specialchars_decode( lmat__( get_option( 'blogname' ) ), ENT_QUOTES );
+		$blog_name = wp_specialchars_decode( ewt__( get_option( 'blogname' ) ), ENT_QUOTES );
 		$email['subject'] = sprintf( $email['subject'], $blog_name );
 		$email['message'] = str_replace( '###SITENAME###', $blog_name, $email['message'] );
 		return $email;
@@ -411,7 +411,7 @@ class LMAT_Filters {
 	 */
 	public function register_personal_data_exporter( $exporters ) {
 		$exporters[] = array(
-			'exporter_friendly_name' => __( 'Translated user descriptions', 'easy-web-translator' ),
+			'exporter_friendly_name' => __( 'Translated user descriptions', 'easy-wp-translator' ),
 			'callback'               => array( $this, 'user_data_exporter' ),
 		);
 		return $exporters;
@@ -435,7 +435,7 @@ class LMAT_Filters {
 				if ( ! $lang->is_default && $value = get_user_meta( $user->ID, 'description_' . $lang->slug, true ) ) {
 					$user_data_to_export[] = array(
 						/* translators: %s is a language native name */
-						'name'  => sprintf( __( 'User description - %s', 'easy-web-translator' ), $lang->name ),
+						'name'  => sprintf( __( 'User description - %s', 'easy-wp-translator' ), $lang->name ),
 						'value' => $value,
 					);
 				}
@@ -444,7 +444,7 @@ class LMAT_Filters {
 			if ( ! empty( $user_data_to_export ) ) {
 				$data_to_export[] = array(
 					'group_id'    => 'user',
-					'group_label' => __( 'User', 'easy-web-translator' ),
+					'group_label' => __( 'User', 'easy-wp-translator' ),
 					'item_id'     => "user-{$user->ID}",
 					'data'        => $user_data_to_export,
 				);
@@ -459,7 +459,7 @@ class LMAT_Filters {
 
 	/**
 	 * Filters default query arguments for checking if a term exists.
-	 * In `term_exists()`, WP 6.0 uses `get_terms()`, which is filtered by language by Linguator.
+	 * In `term_exists()`, WP 6.0 uses `get_terms()`, which is filtered by language by EasyWPTranslator.
 	 * This filter prevents `term_exists()` to be filtered by language.
 	 *
 	 *  
@@ -478,8 +478,8 @@ class LMAT_Filters {
 			$defaults = array();
 		}
 
-		if ( ! isset( $defaults['lmat_lang'] ) ) {
-			$defaults['lmat_lang'] = '';
+		if ( ! isset( $defaults['ewt_lang'] ) ) {
+			$defaults['ewt_lang'] = '';
 		}
 
 		return $defaults;

@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 use WP_Error;
-use Linguator\Includes\Options\Primitive\Abstract_Boolean;
-use Linguator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Options\Primitive\Abstract_Boolean;
+use EasyWPTranslator\Includes\Options\Options;
 
 
 
@@ -48,13 +48,13 @@ class Rewrite extends Abstract_Boolean {
 		if ( $this->get() ) {
 			$value = '1: ' . sprintf(
 				/* translators: %s is a URL slug: `/language/`. */
-				__( 'Remove %s in pretty permalinks', 'easy-web-translator' ),
+				__( 'Remove %s in pretty permalinks', 'easy-wp-translator' ),
 				'`/language/`'
 			);
 		} else {
 			$value = '0: ' . sprintf(
 				/* translators: %s is a URL slug: `/language/`. */
-				__( 'Keep %s in pretty permalinks', 'easy-web-translator' ),
+				__( 'Keep %s in pretty permalinks', 'easy-wp-translator' ),
 				'`/language/`'
 			);
 		}
@@ -83,7 +83,7 @@ class Rewrite extends Abstract_Boolean {
 	protected function get_description(): string {
 		return sprintf(
 			/* translators: %1$s is a URL slug: `/language/`. %2$s and %3$s are "true/false" values. */
-			__( 'Remove %1$s in pretty permalinks: %2$s to remove, %3$s to keep.', 'easy-web-translator' ),
+			__( 'Remove %1$s in pretty permalinks: %2$s to remove, %3$s to keep.', 'easy-wp-translator' ),
 			'`/language/`',
 			'`true`',
 			'`false`'

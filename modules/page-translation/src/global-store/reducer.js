@@ -1,4 +1,4 @@
-import LmatActionTypes from "./types.js"; // Importing action types from the types module
+import EWTActionTypes from "./types.js"; // Importing action types from the types module
 
 /**
  * The default state for the translation reducer.
@@ -30,7 +30,7 @@ const TranslateDefaultState = {
  */
 const reducer = (state = TranslateDefaultState, action) => {
     switch (action.type) {
-        case LmatActionTypes.sourceTitle: // Action to save the source title
+        case EWTActionTypes.sourceTitle: // Action to save the source title
             // Check if the action text contains any letters or numbers
             if (/[\p{L}\p{N}]/gu.test(action.text)) {
                 // Update the state with the new source title
@@ -38,11 +38,11 @@ const reducer = (state = TranslateDefaultState, action) => {
             }
             return state; // Return the current state if no valid text
 
-        case LmatActionTypes.traslatedTitle: // Action to save the translated title
+        case EWTActionTypes.traslatedTitle: // Action to save the translated title
             // Update the state with the new target title
             return { ...state, title: { ...state.title, translatedData: { ...(state.title.translatedData || []), [action.provider]: action.text } } };
 
-        case LmatActionTypes.sourceExcerpt: // Action to save the source excerpt
+        case EWTActionTypes.sourceExcerpt: // Action to save the source excerpt
             // Check if the action text contains any letters or numbers
             if (/[\p{L}\p{N}]/gu.test(action.text)) {
                 // Update the state with the new source excerpt
@@ -50,19 +50,19 @@ const reducer = (state = TranslateDefaultState, action) => {
             }
             return state; // Return the current state if no valid text
 
-        case LmatActionTypes.traslatedExcerpt: // Action to save the translated excerpt
+        case EWTActionTypes.traslatedExcerpt: // Action to save the translated excerpt
             // Update the state with the new target excerpt
             return { ...state, excerpt: { ...state.excerpt, translatedData: { ...(state.excerpt.translatedData || []), [action.provider]: action.text } } };
 
-        case LmatActionTypes.sourceSlug: // Action to save the source slug
+        case EWTActionTypes.sourceSlug: // Action to save the source slug
             // Update the state with the new source slug
             return { ...state, slug: { ...state.slug, source: action.text } };
 
-        case LmatActionTypes.traslatedSlug: // Action to save the translated slug
+        case EWTActionTypes.traslatedSlug: // Action to save the translated slug
             // Update the state with the new target slug
             return { ...state, slug: { ...state.slug, translatedData: { ...(state.slug.translatedData || []), [action.provider]: action.text } } };
 
-        case LmatActionTypes.sourceContent: // Action to save the source content
+        case EWTActionTypes.sourceContent: // Action to save the source content
             // Check if the action text contains any letters or numbers
             if (/[\p{L}\p{N}]/gu.test(action.text)) {
                 // Update the state with the new source content for the specific ID
@@ -70,7 +70,7 @@ const reducer = (state = TranslateDefaultState, action) => {
             }
             return state; // Return the current state if no valid text
 
-        case LmatActionTypes.traslatedContent: // Action to save the translated content
+        case EWTActionTypes.traslatedContent: // Action to save the translated content
             // Check if the source of the content matches the action source
             if (state.content[action.id].source === action.source) {
                 // Update the state with the new target content for the specific ID
@@ -78,7 +78,7 @@ const reducer = (state = TranslateDefaultState, action) => {
             }
             return state; // Return the current state if no match
 
-        case LmatActionTypes.sourceMetaFields: // Action to save the source meta fields
+        case EWTActionTypes.sourceMetaFields: // Action to save the source meta fields
             // Check if the action text contains any letters or numbers
             if (/[\p{L}\p{N}]/gu.test(action.text)) {
                 // Update the state with the new source meta field for the specific ID
@@ -86,15 +86,15 @@ const reducer = (state = TranslateDefaultState, action) => {
             }
             return state; // Return the current state if no valid text
 
-        case LmatActionTypes.traslatedMetaFields: // Action to save the translated meta fields
+        case EWTActionTypes.traslatedMetaFields: // Action to save the translated meta fields
             // Update the state with the new target meta field for the specific ID
             return { ...state, metaFields: { ...state.metaFields, [action.id]: { ...(state.metaFields[action.id] || []), translatedData: { ...(state.metaFields[action.id].translatedData || []), [action.provider]: action.text } } } };
 
-        case LmatActionTypes.setBlockRules: // Action to save the block rules
+        case EWTActionTypes.setBlockRules: // Action to save the block rules
             // Update the state with the new block rules
             return { ...state, blockRules: action.data };
 
-        case LmatActionTypes.translationInfo: // Action to save the translation info
+        case EWTActionTypes.translationInfo: // Action to save the translation info
             // Update the state with the new translation info
             const data = {}
 
@@ -128,10 +128,10 @@ const reducer = (state = TranslateDefaultState, action) => {
 
             return { ...state, translationInfo: { ...state.translationInfo, ...data } };
 
-        case LmatActionTypes.allowedMetaFields: // Action to save the allowed meta fields
+        case EWTActionTypes.allowedMetaFields: // Action to save the allowed meta fields
             // Update the state with the new allowed meta fields
             return { ...state, allowedMetaFields: { ...state.allowedMetaFields, [action.id]: { ...(state.allowedMetaFields[action.id] || []), inputType: action.inputType, status: action.status } } };
-        case LmatActionTypes.contentFetchStatus: // Action to save the content fetch status
+        case EWTActionTypes.contentFetchStatus: // Action to save the content fetch status
             // Update the state with the new content fetch status
             return { ...state, contentFetchStatus: action.status };
         default: // If the action type does not match any case

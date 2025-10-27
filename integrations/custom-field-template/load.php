@@ -2,7 +2,7 @@
 /**
  * Loads the integration with Custom Field Template.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,15 +11,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/cft.php';
 
-use Linguator\Integrations\custom_field_template\LMAT_Cft;
-use Linguator\Integrations\LMAT_Integrations;
+use EasyWPTranslator\Integrations\custom_field_template\EWT_Cft;
+use EasyWPTranslator\Integrations\EWT_Integrations;
 
 add_action(
 	'plugins_loaded',
 	function () {
 		if ( defined( 'CFT_VERSION' ) ) {
-			LMAT_Integrations::instance()->cft = new LMAT_Cft();
-			LMAT_Integrations::instance()->cft->init();
+			EWT_Integrations::instance()->cft = new EWT_Cft();
+			EWT_Integrations::instance()->cft->init();
 		}
 	},
 	0

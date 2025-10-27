@@ -1,12 +1,12 @@
 <?php
-namespace Linguator\Admin\Views;
+namespace EasyWPTranslator\Admin\Views;
 /**
  * Displays the translations fields for posts
  *
- * @package Linguator
+ * @package EasyWPTranslator
  *
- * @var LMAT_Admin_Classic_Editor $this    LMAT_Admin_Classic_Editor object.
- * @var LMAT_Language             $lang    The post language. Default language if no language assigned yet.
+ * @var EWT_Admin_Classic_Editor $this    EWT_Admin_Classic_Editor object.
+ * @var EWT_Language             $lang    The post language. Default language if no language assigned yet.
  * @var int                      $post_ID The post id.
  */
 
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 ?>
-<p><strong><?php esc_html_e( 'Translations', 'easy-web-translator' ); ?></strong></p>
+<p><strong><?php esc_html_e( 'Translations', 'easy-wp-translator' ); ?></strong></p>
 <table>
 	<?php
 	foreach ( $this->model->get_languages_list() as $language ) {
@@ -42,9 +42,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 		?>
 		<tr>
-			<th class = "lmat-language-column"><?php echo $language->flag ? wp_kses( $language->flag, array( 'img' => array( 'src' => true, 'alt' => true, 'class' => true, 'width' => true, 'height' => true, 'style' => true ), 'span' => array( 'class' => true ), 'abbr' => array() ), array_merge( wp_allowed_protocols(), array( 'data' ) ) ) : esc_html( $language->slug ); ?></th>
+			<th class = "ewt-language-column"><?php echo $language->flag ? wp_kses( $language->flag, array( 'img' => array( 'src' => true, 'alt' => true, 'class' => true, 'width' => true, 'height' => true, 'style' => true ), 'span' => array( 'class' => true ), 'abbr' => array() ), array_merge( wp_allowed_protocols(), array( 'data' ) ) ) : esc_html( $language->slug ); ?></th>
 			<td class = "hidden"><?php echo wp_kses_post( $add_link ); ?></td>
-			<td class = "lmat-edit-column lmat-column-icon"><?php echo wp_kses_post( $link ); ?></td>
+			<td class = "ewt-edit-column ewt-column-icon"><?php echo wp_kses_post( $link ); ?></td>
 			<?php
 
 			/**
@@ -53,9 +53,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			 *
 			 *  
 			 */
-			do_action( 'lmat_before_post_translation_' . $language->slug );
+			do_action( 'ewt_before_post_translation_' . $language->slug );
 			?>
-			<td class = "lmat-translation-column">
+			<td class = "ewt-translation-column">
 				<?php
 				printf(
 					'<label class="screen-reader-text" for="tr_lang_%1$s">%2$s</label>
@@ -63,7 +63,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<span lang="%5$s" dir="%6$s"><input type="text" class="tr_lang" id="tr_lang_%1$s" value="%4$s" /></span>',
 					esc_attr( $language->slug ),
 					/* translators: accessibility text */
-					esc_html__( 'Translation', 'easy-web-translator' ),
+					esc_html__( 'Translation', 'easy-wp-translator' ),
 					( empty( $translation ) ? '0' : esc_attr( (string) $translation->ID ) ),
 					( empty( $translation ) ? '' : esc_attr( $translation->post_title ) ),
 					esc_attr( $language->get_locale( 'display' ) ),

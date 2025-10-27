@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -11,9 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-abstract class LMAT_Sync_Metas {
+abstract class EWT_Sync_Metas {
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
@@ -43,10 +43,10 @@ abstract class LMAT_Sync_Metas {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->model = &$linguator->model;
+	public function __construct( &$easywptranslator ) {
+		$this->model = &$easywptranslator->model;
 
 		add_filter( "add_{$this->meta_type}_metadata", array( $this, 'can_synchronize_metadata' ), 1, 3 );
 		add_filter( "update_{$this->meta_type}_metadata", array( $this, 'can_synchronize_metadata' ), 1, 3 );
@@ -54,7 +54,7 @@ abstract class LMAT_Sync_Metas {
 
 		$this->add_all_meta_actions();
 
-		add_action( "lmat_save_{$this->meta_type}", array( $this, 'save_object' ), 10, 3 );
+		add_action( "ewt_save_{$this->meta_type}", array( $this, 'save_object' ), 10, 3 );
 	}
 
 	/**
@@ -137,7 +137,7 @@ abstract class LMAT_Sync_Metas {
 		 * @param int    $from  Id of the source
 		 * @param int    $to    Id of the target
 		 */
-		return apply_filters( "lmat_translate_{$this->meta_type}_meta", maybe_unserialize( $value ), $key, $lang, $from, $to );
+		return apply_filters( "ewt_translate_{$this->meta_type}_meta", maybe_unserialize( $value ), $key, $lang, $from, $to );
 	}
 
 	/**
@@ -164,7 +164,7 @@ abstract class LMAT_Sync_Metas {
 		 * @param int      $to   Id of the post to which we paste information.
 		 * @param string   $lang Language slug.
 		 */
-		return array_unique( apply_filters( "lmat_copy_{$this->meta_type}_metas", array(), $sync, $from, $to, $lang ) );
+		return array_unique( apply_filters( "ewt_copy_{$this->meta_type}_metas", array(), $sync, $from, $to, $lang ) );
 	}
 
 	/**

@@ -1,12 +1,12 @@
-# 🧠 Easy Web Translator – On-Device Chrome AI Translation (Beta)
+# 🧠 Easy WP Translator – On-Device Chrome AI Translation (Beta)
 
 **Translate Your WordPress Website 10X Faster – Powered by AI, Built for Global Reach.**
 
-Linguator is a powerful multilingual WordPress plugin that helps you translate your website into multiple languages using the power of AI — quickly, easily, and directly from your WordPress dashboard.
+EasyWPTranslator is a powerful multilingual WordPress plugin that helps you translate your website into multiple languages using the power of AI — quickly, easily, and directly from your WordPress dashboard.
 
-**Note:** Linguator is currently in **Beta**, and we’re actively improving features and performance based on user feedback.
+**Note:** EasyWPTranslator is currently in **Beta**, and we’re actively improving features and performance based on user feedback.
 
-[👉 **Live Demo**](https://linguator-demo-site.instawp.co/wp-admin/admin.php?page=lmat_settings)  
+[👉 **Live Demo**](https://easywptranslator-demo-site.instawp.co/wp-admin/admin.php?page=ewt_settings)  
 
 **Username:** demo  
 **Password:** demo@123  
@@ -15,21 +15,21 @@ Linguator is a powerful multilingual WordPress plugin that helps you translate y
 
 ---
 
-## 🚀 Why Use Linguator?
+## 🚀 Why Use EasyWPTranslator?
 
-Linguator makes it simple to create and manage multilingual websites directly inside WordPress — no coding or external service needed.  
+EasyWPTranslator makes it simple to create and manage multilingual websites directly inside WordPress — no coding or external service needed.  
 It’s the easiest way to go global using the power of AI, right from your dashboard.
 
-With Linguator, you can:
+With EasyWPTranslator, you can:
 
 - **Save Time with AI-Powered Translation** – Instantly translate your posts, pages, and menus using advanced AI translation technology.  
 - **Reach a Global Audience** – Translate your content into multiple languages and expand your website’s reach worldwide.  
 - **Build Trust with Localized Content** – Speak to visitors in their own language to increase engagement and conversions.  
-- **No Monthly Fees or SaaS Dependency** – Linguator runs fully inside WordPress — once installed, it’s yours! No external API or subscription required.  
+- **No Monthly Fees or SaaS Dependency** – EasyWPTranslator runs fully inside WordPress — once installed, it’s yours! No external API or subscription required.  
 - **AI Power Without Extra Cost** – Leverage AI translation features for free — no need to pay for costly external AI credits.  
-- **Simple and Familiar Interface** – Built with WordPress standards in mind, Linguator feels natural and easy to use, even for beginners.  
+- **Simple and Familiar Interface** – Built with WordPress standards in mind, EasyWPTranslator feels natural and easy to use, even for beginners.  
 - **Fully Compatible with Elementor & Gutenberg** – Translate visually designed pages effortlessly without breaking layouts.  
-- **Lightweight & Optimized for Speed** – Linguator is built with performance in mind and doesn’t slow down your pages or website loading time.  
+- **Lightweight & Optimized for Speed** – EasyWPTranslator is built with performance in mind and doesn’t slow down your pages or website loading time.  
 - **SEO-Optimized for Multilingual Sites** – Generate search-friendly URLs for every language to improve visibility in Google.  
 
 ---
@@ -48,44 +48,44 @@ With Linguator, you can:
 
 ## 🧩 Installation
 
-1. Upload the plugin files to the `/wp-content/plugins/linguator-multilingual-ai-translation` directory or install via the WordPress Plugin screen.  
+1. Upload the plugin files to the `/wp-content/plugins/easywptranslator-multilingual-ai-translation` directory or install via the WordPress Plugin screen.  
 2. Activate the plugin through the **Plugins** menu in WordPress.  
 3. Follow the setup wizard to configure your languages.  
-4. Go to **Linguator → Settings** to adjust options.  
+4. Go to **EasyWPTranslator → Settings** to adjust options.  
 
 ---
 
 ## 💻 Development Info
 
-- **jQuery Source:** `linguator/assets/js/src`  
-- **React (Settings Tab):** `linguator/admin/settings/view/src`  
-- **React (Setup Wizard):** `linguator/modules/wizard/src`  
-- **Build Files:** `linguator/admin/assets`  
+- **jQuery Source:** `easywptranslator/assets/js/src`  
+- **React (Settings Tab):** `easywptranslator/admin/settings/view/src`  
+- **React (Setup Wizard):** `easywptranslator/modules/wizard/src`  
+- **Build Files:** `easywptranslator/admin/assets`  
 
 ---
 
 ## ❓ Frequently Asked Questions
 
 **Q: Which languages are supported?**  
-A: Linguator supports all languages that WordPress supports, including RTL languages.
+A: EasyWPTranslator supports all languages that WordPress supports, including RTL languages.
 
 **Q: Does it work with Elementor and Gutenberg?**  
 A: Yes! You can translate pages built with Elementor, Gutenberg, or the Classic Editor.
 
 **Q: Can I create different menus for each language?**  
-A: Yes, Linguator allows separate navigation menus for every language.
+A: Yes, EasyWPTranslator allows separate navigation menus for every language.
 
 **Q: Does it detect the visitor’s browser language?**  
-A: Yes, Linguator automatically detects and displays content in the visitor’s preferred language.
+A: Yes, EasyWPTranslator automatically detects and displays content in the visitor’s preferred language.
 
 **Q: Do I need to pay for AI translations?**  
-A: No, Linguator lets you use AI translation for free — no external API or monthly fee required.
+A: No, EasyWPTranslator lets you use AI translation for free — no external API or monthly fee required.
 
 
 
 ## 🧡 Trusted by 80,000+ Users
 
-**Trusted by 80,000+ users worldwide**, Linguator is built by experts in AI translation — the same team behind **LocoAI – Auto Translate for Loco Translate**.  
+**Trusted by 80,000+ users worldwide**, EasyWPTranslator is built by experts in AI translation — the same team behind **LocoAI – Auto Translate for Loco Translate**.  
 With **580+ five-star reviews**, our plugins are proven to deliver quality and user satisfaction.
 
 ## Changelog

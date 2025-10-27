@@ -8,7 +8,7 @@ const updateMetaFields = (source, lang, serviceProvider, postId) => {
     const translateObjectMetaFields = (keys, value) => {
         Object.keys(value).forEach(key => {
             const keyArr = [...keys, key];
-            const uniqueKey = 'metaFields_lmat_' + keyArr.join('_lmat_bulk_content_temp_');
+            const uniqueKey = 'metaFields_ewt_' + keyArr.join('_ewt_bulk_content_temp_');
             if(typeof value[key] === 'string'){
                 const translatedValue = selectTranslatedContent(store.getState(), postId, uniqueKey, lang, serviceProvider);
                 let currentObject = metaFields;
@@ -41,7 +41,7 @@ const updateMetaFields = (source, lang, serviceProvider, postId) => {
                 translateObjectMetaFields([key], source[key]);
             } else if(typeof source[key] === 'string'){
                 if (AllowedMetaFields && AllowedMetaFields[key] && AllowedMetaFields[key].status) {
-                    const uniqueKey = 'metaFields_lmat_' + key;
+                    const uniqueKey = 'metaFields_ewt_' + key;
                     const translatedValue=selectTranslatedContent(store.getState(), postId, uniqueKey, lang, serviceProvider);
 
                     if (translatedValue && '' !== translatedValue) {

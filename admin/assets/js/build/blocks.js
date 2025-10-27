@@ -28,9 +28,9 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
   // ---------------------------------------------------------------------------
   var TranslationIcon = function TranslationIcon() {
     return wp.element.createElement('span', {
-      className: 'linguator-block-icon',
+      className: 'easywptranslator-block-icon',
       style: {
-        fontFamily: 'linguator',
+        fontFamily: 'easywptranslator',
         fontSize: '20px',
         lineHeight: '1',
         display: 'inline-block'
@@ -120,9 +120,9 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       setAttributes(enforceNamesOrFlags(patch, attributes));
     };
     return wp.element.createElement(InspectorControls, {}, wp.element.createElement(PanelBody, {
-      title: __('Language switcher settings', 'linguator')
+      title: __('Language switcher settings', 'easywptranslator')
     }, wp.element.createElement(ToggleControl, {
-      label: __('Display as dropdown', 'linguator'),
+      label: __('Display as dropdown', 'easywptranslator'),
       checked: !!dropdown,
       onChange: function onChange(v) {
         return update({
@@ -130,7 +130,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         });
       }
     }), (!dropdown || showHideCurrentEvenInDropdown) && wp.element.createElement(ToggleControl, {
-      label: __('Show language names', 'linguator'),
+      label: __('Show language names', 'easywptranslator'),
       checked: !!show_names,
       onChange: function onChange(v) {
         return update({
@@ -138,7 +138,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         });
       }
     }), (!dropdown || showHideCurrentEvenInDropdown) && wp.element.createElement(ToggleControl, {
-      label: __('Show flags', 'linguator'),
+      label: __('Show flags', 'easywptranslator'),
       checked: !!show_flags,
       onChange: function onChange(v) {
         return update({
@@ -146,7 +146,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         });
       }
     }), wp.element.createElement(ToggleControl, {
-      label: __('Force switch to homepage', 'linguator'),
+      label: __('Force switch to homepage', 'easywptranslator'),
       checked: !!force_home,
       onChange: function onChange(v) {
         return update({
@@ -154,7 +154,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         });
       }
     }), !attributes.dropdown && wp.element.createElement(ToggleControl, {
-      label: __('Hide current language', 'linguator'),
+      label: __('Hide current language', 'easywptranslator'),
       checked: !!hide_current,
       onChange: function onChange(v) {
         return update({
@@ -162,7 +162,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         });
       }
     }), wp.element.createElement(ToggleControl, {
-      label: __('Hide languages without translation', 'linguator'),
+      label: __('Hide languages without translation', 'easywptranslator'),
       checked: !!hide_if_no_translation,
       onChange: function onChange(v) {
         return update({
@@ -173,11 +173,11 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
   }
 
   // ---------------------------------------------------------------------------
-  // Regular block: linguator/language-switcher
+  // Regular block: easywptranslator/language-switcher
   // ---------------------------------------------------------------------------
-  registerBlockType('linguator/language-switcher', {
-    title: __('Language switcher', 'linguator'),
-    description: __('Add a language switcher so visitors can select their preferred language.', 'linguator'),
+  registerBlockType('easywptranslator/language-switcher', {
+    title: __('Language switcher', 'easywptranslator'),
+    description: __('Add a language switcher so visitors can select their preferred language.', 'easywptranslator'),
     icon: TranslationIcon,
     category: 'widgets',
     attributes: _objectSpread({}, sharedAttributes),
@@ -190,9 +190,9 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         attributes: props.attributes,
         setAttributes: props.setAttributes
       }), wp.element.createElement(Disabled, {}, ServerSideRender ? wp.element.createElement(ServerSideRender, {
-        block: 'linguator/language-switcher',
+        block: 'easywptranslator/language-switcher',
         attributes: props.attributes
-      }) : wp.element.createElement('div', blockProps, __('Language Switcher preview (SSR not available).', 'linguator'))));
+      }) : wp.element.createElement('div', blockProps, __('Language Switcher preview (SSR not available).', 'easywptranslator'))));
     },
     save: function save() {
       return null;
@@ -200,12 +200,12 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
   });
 
   // ---------------------------------------------------------------------------
-  // Navigation child block: linguator/navigation-language-switcher
+  // Navigation child block: easywptranslator/navigation-language-switcher
   // ---------------------------------------------------------------------------
-  var NAV_BLOCK = 'linguator/navigation-language-switcher';
+  var NAV_BLOCK = 'easywptranslator/navigation-language-switcher';
   registerBlockType(NAV_BLOCK, {
-    title: __('Language switcher', 'linguator'),
-    description: __('Add a language switcher to the Navigation block.', 'linguator'),
+    title: __('Language switcher', 'easywptranslator'),
+    description: __('Add a language switcher to the Navigation block.', 'easywptranslator'),
     icon: TranslationIcon,
     category: 'widgets',
     parent: ['core/navigation'],
@@ -242,7 +242,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         block: NAV_BLOCK,
         attributes: attributes,
         className: 'wp-block-navigation__container block-editor-block-list__layout'
-      }) : wp.element.createElement('div', {}, __('Language Switcher (Navigation) preview (SSR not available).', 'linguator')), maybeSubmenuIcon)));
+      }) : wp.element.createElement('div', {}, __('Language Switcher (Navigation) preview (SSR not available).', 'easywptranslator')), maybeSubmenuIcon)));
     },
     save: function save() {
       return null;
@@ -251,7 +251,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
   // ---------------------------------------------------------------------------
   // Classic Menu → Navigation conversion hook
-  // Replaces a menu item with URL "#lmat_switcher" by our NAV_BLOCK with options from meta._lmat_menu_item
+  // Replaces a menu item with URL "#ewt_switcher" by our NAV_BLOCK with options from meta._ewt_menu_item
   // WARNING: relies on an unstable filter that may change across WP versions.
   // ---------------------------------------------------------------------------
   function mapBlockTree(blocks, menuItems, blocksMapping, mapper) {
@@ -267,11 +267,11 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     return blocks.map(_convert);
   }
   function blocksFilter(block, menuItems, blocksMapping) {
-    if (block.name === 'core/navigation-link' && block.attributes && block.attributes.url === '#lmat_switcher') {
+    if (block.name === 'core/navigation-link' && block.attributes && block.attributes.url === '#ewt_switcher') {
       var menuItem = (menuItems || []).find(function (m) {
-        return m && m.url === '#lmat_switcher';
+        return m && m.url === '#ewt_switcher';
       });
-      var attrs = menuItem && menuItem.meta && menuItem.meta._lmat_menu_item || {};
+      var attrs = menuItem && menuItem.meta && menuItem.meta._ewt_menu_item || {};
       var newBlock = createBlock(NAV_BLOCK, attrs);
       if (menuItem && typeof menuItem.id !== 'undefined') {
         blocksMapping[menuItem.id] = newBlock.clientId;
@@ -285,7 +285,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       innerBlocks: mapBlockTree(blocks.innerBlocks || [], menuItems || [], blocks.mapping || {}, blocksFilter)
     });
   }
-  addFilter('blocks.navigation.__unstableMenuItemsToBlocks', 'linguator/include-language-switcher', menuItemsToBlocksFilter);
+  addFilter('blocks.navigation.__unstableMenuItemsToBlocks', 'easywptranslator/include-language-switcher', menuItemsToBlocksFilter);
 })();
 /******/ })()
 ;

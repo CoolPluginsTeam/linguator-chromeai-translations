@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Helpers;
+namespace EasyWPTranslator\Includes\Helpers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Format_Util {
+class EWT_Format_Util {
 	/**
 	 * Cache for regex patterns.
 	 * Useful when using `filter_list()` for example.

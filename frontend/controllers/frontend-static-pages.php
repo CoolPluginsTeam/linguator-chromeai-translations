@@ -1,14 +1,14 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Frontend\Controllers;
+namespace EasyWPTranslator\Frontend\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Controllers\LMAT_Static_Pages;
+use EasyWPTranslator\Includes\Controllers\EWT_Static_Pages;
 
 
 
@@ -18,16 +18,16 @@ use Linguator\Includes\Controllers\LMAT_Static_Pages;
  *
  *  
  */
-class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
+class EWT_Frontend_Static_Pages extends EWT_Static_Pages {
 	/**
-	 * Instance of a child class of LMAT_Links_Model.
+	 * Instance of a child class of EWT_Links_Model.
 	 *
-	 * @var LMAT_Links_Model
+	 * @var EWT_Links_Model
 	 */
 	protected $links_model;
 
 	/**
-	 * @var LMAT_Frontend_Links|null
+	 * @var EWT_Frontend_Links|null
 	 */
 	protected $links;
 
@@ -43,25 +43,25 @@ class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		parent::__construct( $linguator );
+	public function __construct( &$easywptranslator ) {
+		parent::__construct( $easywptranslator );
 
-		$this->links_model = &$linguator->links_model;
-		$this->links       = &$linguator->links;
-		$this->options     = &$linguator->options;
+		$this->links_model = &$easywptranslator->links_model;
+		$this->links       = &$easywptranslator->links;
+		$this->options     = &$easywptranslator->options;
 
-		add_action( 'lmat_home_requested', array( $this, 'lmat_home_requested' ) );
+		add_action( 'ewt_home_requested', array( $this, 'ewt_home_requested' ) );
 
 		// Manages the redirection of the homepage.
 		add_filter( 'redirect_canonical', array( $this, 'redirect_canonical' ) );
 
-		add_filter( 'lmat_pre_translation_url', array( $this, 'lmat_pre_translation_url' ), 10, 3 );
-		add_filter( 'lmat_check_canonical_url', array( $this, 'lmat_check_canonical_url' ) );
+		add_filter( 'ewt_pre_translation_url', array( $this, 'ewt_pre_translation_url' ), 10, 3 );
+		add_filter( 'ewt_check_canonical_url', array( $this, 'ewt_check_canonical_url' ) );
 
-		add_filter( 'lmat_set_language_from_query', array( $this, 'page_on_front_query' ), 10, 2 );
-		add_filter( 'lmat_set_language_from_query', array( $this, 'page_for_posts_query' ), 10, 2 );
+		add_filter( 'ewt_set_language_from_query', array( $this, 'page_on_front_query' ), 10, 2 );
+		add_filter( 'ewt_set_language_from_query', array( $this, 'page_for_posts_query' ), 10, 2 );
 
 		// Specific cases for the customizer.
 		add_action( 'customize_register', array( $this, 'filter_customizer' ) );
@@ -74,7 +74,7 @@ class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
 	 *
 	 * @return void
 	 */
-	public function lmat_home_requested() {
+	public function ewt_home_requested() {
 		set_query_var( 'page_id', $this->curlang->page_on_front );
 	}
 
@@ -110,11 +110,11 @@ class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
 	 *  
 	 *
 	 * @param string       $url               Empty string or the url of the translation of the current page.
-	 * @param LMAT_Language $language          Language of the translation.
+	 * @param EWT_Language $language          Language of the translation.
 	 * @param int          $queried_object_id Queried object ID.
 	 * @return string The translation url.
 	 */
-	public function lmat_pre_translation_url( $url, $language, $queried_object_id ) {
+	public function ewt_pre_translation_url( $url, $language, $queried_object_id ) {
 		if ( empty( $queried_object_id ) ) {
 			return $url;
 		}
@@ -148,7 +148,7 @@ class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
 	 * @param string $redirect_url The redirect url.
 	 * @return string|false
 	 */
-	public function lmat_check_canonical_url( $redirect_url ) {
+	public function ewt_check_canonical_url( $redirect_url ) {
 		return $this->options['redirect_lang'] && ! $this->options['force_lang'] && ! empty( $this->curlang->page_on_front ) && is_page( $this->curlang->page_on_front ) ? false : $redirect_url;
 	}
 
@@ -162,7 +162,7 @@ class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
 	 */
 	protected function is_front_page( $query ) {
 		$query = array_diff( array_keys( $query->query ), array( 'preview', 'page', 'paged', 'cpage', 'orderby' ) );
-		return 1 === count( $query ) && in_array( 'lmat_lang', $query );
+		return 1 === count( $query ) && in_array( 'ewt_lang', $query );
 	}
 
 	/**
@@ -170,9 +170,9 @@ class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language|false $lang  The current language, false if it is not set yet.
+	 * @param EWT_Language|false $lang  The current language, false if it is not set yet.
 	 * @param WP_Query           $query The main WP query.
-	 * @return LMAT_Language|false
+	 * @return EWT_Language|false
 	 */
 	public function page_on_front_query( $lang, $query ) {
 		if ( ! empty( $lang ) || ! $this->page_on_front ) {
@@ -180,12 +180,12 @@ class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
 		}
 
 		// Redirect the language page to the homepage when using a static front page
-		if ( ( $this->options['redirect_lang'] || $this->options['hide_default'] ) && $this->is_front_page( $query ) && $lang = $this->model->get_language( get_query_var( 'lmat_lang' ) ) ) {
+		if ( ( $this->options['redirect_lang'] || $this->options['hide_default'] ) && $this->is_front_page( $query ) && $lang = $this->model->get_language( get_query_var( 'ewt_lang' ) ) ) {
 			$query->is_archive = $query->is_tax = false;
 			if ( 'page' === get_option( 'show_on_front' ) && ! empty( $lang->page_on_front ) ) {
 				$query->set( 'page_id', $lang->page_on_front );
 				$query->is_singular = $query->is_page = true;
-				unset( $query->query_vars['lmat_lang'], $query->queried_object ); // Reset queried object
+				unset( $query->query_vars['ewt_lang'], $query->queried_object ); // Reset queried object
 			} else {
 				// Handle case where the static front page hasn't be translated to avoid a possible infinite redirect loop.
 				$query->is_home = true;
@@ -201,7 +201,7 @@ class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
 			$query->set( 'page_id', $lang->page_on_front );
 			$query->is_singular = $query->is_page = true;
 			$query->is_archive = $query->is_tax = false;
-			unset( $query->query_vars['lmat_lang'], $query->queried_object ); // Reset queried object
+			unset( $query->query_vars['ewt_lang'], $query->queried_object ); // Reset queried object
 		}
 
 		// Set the language when requesting a static front page
@@ -231,9 +231,9 @@ class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language|false $lang  The current language, false if it is not set yet.
+	 * @param EWT_Language|false $lang  The current language, false if it is not set yet.
 	 * @param WP_Query           $query The main WP query.
-	 * @return LMAT_Language|false
+	 * @return EWT_Language|false
 	 */
 	public function page_for_posts_query( $lang, $query ) {
 		if ( ! empty( $lang ) || ! $this->page_for_posts ) {
@@ -290,7 +290,7 @@ class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
 		add_filter( 'pre_option_page_on_front', array( $this, 'customize_page' ), 20 ); // After the customizer.
 		add_filter( 'pre_option_page_for_post', array( $this, 'customize_page' ), 20 );
 
-		add_filter( 'lmat_pre_translation_url', array( $this, 'customize_translation_url' ), 20, 2 ); // After the generic hook in this class.
+		add_filter( 'ewt_pre_translation_url', array( $this, 'customize_translation_url' ), 20, 2 ); // After the generic hook in this class.
 	}
 
 	/**
@@ -302,7 +302,7 @@ class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
 	 * @return int|false
 	 */
 	public function customize_page( $pre ) {
-		return is_numeric( $pre ) ? lmat_get_post( (int) $pre ) : $pre;
+		return is_numeric( $pre ) ? ewt_get_post( (int) $pre ) : $pre;
 	}
 
 	/**
@@ -311,7 +311,7 @@ class LMAT_Frontend_Static_Pages extends LMAT_Static_Pages {
 	 *  
 	 *
 	 * @param string       $url      An empty string or the URL of the translation of the current page.
-	 * @param LMAT_Language $language The language of the translation.
+	 * @param EWT_Language $language The language of the translation.
 	 * @return string
 	 */
 	public function customize_translation_url( $url, $language ) {

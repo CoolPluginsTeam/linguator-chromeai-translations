@@ -21,11 +21,11 @@ const DropdownRenderLangauage = ({ flagUrl }) => {
           {" " + selectedLanguage?.name}
         </span> :
         <span>
-          <img src={`${window.lmat_setup_flag_data.flagsUrl}${selectedLanguage?.flag}.svg`} alt="" />
+          <img src={`${window.ewt_setup_flag_data.flagsUrl}${selectedLanguage?.flag}.svg`} alt="" />
           {" " + selectedLanguage?.name + " - " + selectedLanguage?.locale}</span>
     }
   </>)
-  else return (<div>{__('Select an option', 'easy-web-translator')}</div>)
+  else return (<div>{__('Select an option', 'easy-wp-translator')}</div>)
 }
 
 
@@ -41,7 +41,7 @@ export const RenderedLanguage = ({ languageName, languageFlag, flagUrl, language
             {" " + languageName + " - " + languageLocale}
           </span> :
           <span>
-            <img src={`${window.lmat_setup_flag_data.flagsUrl}${languageFlag}.svg`} alt="" />
+            <img src={`${window.ewt_setup_flag_data.flagsUrl}${languageFlag}.svg`} alt="" />
             {" " + languageName + " - " + languageLocale}</span>
       }
     </>
@@ -50,13 +50,13 @@ export const RenderedLanguage = ({ languageName, languageFlag, flagUrl, language
 
 
 const Languages = () => {
-  const { setupProgress, setSetupProgress, selectedLanguageData, setSelectedLanguageData, setLanguageDialog, selectedLanguage, setSelectedLanguage, lmat_all_languages, currentSelectedLanguage, setCurrentSelectedLanguage, contentSelectedLanguage, setContentSelectedLanguage, showUntranslatedContent, setShowUntranslatedContent, languageDeleteConfirmer, setLanguageDeleteConfirmer, languageToDelete, setLanguageToDelete, languageDialog } = React.useContext(setupContext) //get context
+  const { setupProgress, setSetupProgress, selectedLanguageData, setSelectedLanguageData, setLanguageDialog, selectedLanguage, setSelectedLanguage, ewt_all_languages, currentSelectedLanguage, setCurrentSelectedLanguage, contentSelectedLanguage, setContentSelectedLanguage, showUntranslatedContent, setShowUntranslatedContent, languageDeleteConfirmer, setLanguageDeleteConfirmer, languageToDelete, setLanguageToDelete, languageDialog } = React.useContext(setupContext) //get context
   
   // Ensure selectedLanguageData is always an array
   const languagesArray = Array.isArray(selectedLanguageData) ? selectedLanguageData : [];
   
-  let [validLanguages, setValidLanguages] = React.useState(lmat_all_languages.filter((language) => (language?.name && language?.flag && !languagesArray?.find((selectedLanguage) => selectedLanguage.locale === language.locale))))
-  const originalListLanguages = React.useRef(lmat_all_languages.filter((language) => (language?.name && language?.flag && !languagesArray?.find((selectedLanguage) => selectedLanguage.locale === language.locale))))
+  let [validLanguages, setValidLanguages] = React.useState(ewt_all_languages.filter((language) => (language?.name && language?.flag && !languagesArray?.find((selectedLanguage) => selectedLanguage.locale === language.locale))))
+  const originalListLanguages = React.useRef(ewt_all_languages.filter((language) => (language?.name && language?.flag && !languagesArray?.find((selectedLanguage) => selectedLanguage.locale === language.locale))))
   const [languageLoader,setLanguageLoader] = React.useState(false);
 
   // Reset language loader when dialog is closed
@@ -82,7 +82,7 @@ const Languages = () => {
       toast.info("Please select a language");
     }
     setValidLanguages(validLanguages.filter((language) => language.locale !== selectedLanguage.locale))
-    setSelectedLanguage({ id: 'none', name: __('None', 'easy-web-translator'), flag: null, locale: null })
+    setSelectedLanguage({ id: 'none', name: __('None', 'easy-wp-translator'), flag: null, locale: null })
   }
 
 
@@ -115,7 +115,7 @@ const Languages = () => {
         // Reset the loader state when dialog opens since we're not proceeding with API call
         setLanguageLoader(false)
       } else if (selectedLanguage.id == 'none' && currentSelectedLanguage.length == 0 && languagesArray?.length == 0) {
-        throw new Error(__('You have to select a language to continue', 'easy-web-translator'))
+        throw new Error(__('You have to select a language to continue', 'easy-wp-translator'))
       } else {
         try {
           let languageResponse = {
@@ -131,7 +131,7 @@ const Languages = () => {
             }
             //API call to save languages to database
             languageResponse = await apiFetch({
-              path: 'lmat/v1/languages',
+              path: 'ewt/v1/languages',
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ const Languages = () => {
 
         } catch (error) {
           setLanguageLoader(false)
-          toast.error(__('Please try again later', 'easy-web-translator'))
+          toast.error(__('Please try again later', 'easy-wp-translator'))
         }
         setLanguageLoader(false)
       }
@@ -184,16 +184,16 @@ const Languages = () => {
   return (
     <div className='mx-auto max-w-[600px] min-h-[40vh] p-10 bg-white shadow-sm flex flex-col'>
       <div className='flex-grow mb-5'>
-        <p className='text-sm'>{__('This wizard will help you set up Linguator to translate your website into multiple languages', 'easy-web-translator')}</p>
-        <p className='text-sm'>{__('First, let’s choose the languages for your website.', 'easy-web-translator')}</p>
-        <h2>{__('Translation Languages', 'easy-web-translator')}</h2>
+        <p className='text-sm'>{__('This wizard will help you set up EasyWPTranslator to translate your website into multiple languages', 'easy-wp-translator')}</p>
+        <p className='text-sm'>{__('First, let’s choose the languages for your website.', 'easy-wp-translator')}</p>
+        <h2>{__('Translation Languages', 'easy-wp-translator')}</h2>
         <div className='flex items-end gap-2'>
           <Select
             combobox
             onChange={(value) => setSelectedLanguage(value)}
             searchFn={(query) => {
               // Always filter from the original full list to avoid getting stuck
-              const filtered = lmat_all_languages.filter(lang =>
+              const filtered = ewt_all_languages.filter(lang =>
                 (lang.name.toLowerCase().includes(query.toLowerCase()) || lang.locale.toLowerCase().includes(query.toLowerCase()) || lang.label.toLowerCase().includes(query.toLowerCase())) &&
                 !languagesArray?.some(sl => sl.locale === lang.locale)
               );
@@ -205,15 +205,15 @@ const Languages = () => {
             searchPlaceholder="Search..."
           >
             <Select.Button
-              label={__('Which languages do you want to translate your site into?', 'easy-web-translator')}
-              placeholder={__('Select an option', 'easy-web-translator')}
+              label={__('Which languages do you want to translate your site into?', 'easy-wp-translator')}
+              placeholder={__('Select an option', 'easy-wp-translator')}
               render={() => <DropdownRenderLangauage flagUrl={false} />}
             />
             <Select.Options >
               <Select.Option
-                value={{ id: 'none', name: __('None', 'easy-web-translator'), flag: null, locale: null }}
+                value={{ id: 'none', name: __('None', 'easy-wp-translator'), flag: null, locale: null }}
               >
-                <span className="text-gray-500">{sprintf(__('None (%s)', 'easy-web-translator'), __('Clear selection', 'easy-web-translator'))}</span>
+                <span className="text-gray-500">{sprintf(__('None (%s)', 'easy-wp-translator'), __('Clear selection', 'easy-wp-translator'))}</span>
               </Select.Option>
               {
                 validLanguages.map((language, index) => (
@@ -240,14 +240,14 @@ const Languages = () => {
             onClick={handleClick}
             variant="primary"
           >
-            {__('ADD', 'easy-web-translator')}
+            {__('ADD', 'easy-wp-translator')}
           </Button>
         </div>
       </div>
       {
         currentSelectedLanguage.length > 0 &&
         <div style={{ paddingTop: "10px" }}>
-          <h4 className='m-0 ' style={{paddingBottom: "6px"}}>{__('Languages to be added', 'easy-web-translator')}</h4>
+          <h4 className='m-0 ' style={{paddingBottom: "6px"}}>{__('Languages to be added', 'easy-wp-translator')}</h4>
           {
             currentSelectedLanguage?.length > 0 && currentSelectedLanguage.map((language, index) => (
               <div className='flex justify-between items-center ' key={index} style={{paddingBottom: "6px"}}>
@@ -265,7 +265,7 @@ const Languages = () => {
       {
         languagesArray?.length > 0 &&
         <div className='py-4'>
-          <h4 className='m-0 ' style={{paddingBottom: "6px"}}>{__('Selected Languages', 'easy-web-translator')}</h4>
+          <h4 className='m-0 ' style={{paddingBottom: "6px"}}>{__('Selected Languages', 'easy-wp-translator')}</h4>
           <table style={{ width: "100%" }}>
             <tbody>
               {

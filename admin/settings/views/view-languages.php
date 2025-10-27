@@ -2,9 +2,9 @@
 /**
  * Displays the Languages admin panel
  *
- * @package Linguator
+ * @package EasyWPTranslator
  *
- * @var string $active_tab Active Linguator settings page.
+ * @var string $active_tab Active EasyWPTranslator settings page.
  */
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -22,12 +22,12 @@ require ABSPATH . 'wp-admin/options-head.php'; // Displays the errors messages a
 
 		default:
 			/**
-			 * Fires when loading the active Linguator settings tab
+			 * Fires when loading the active EasyWPTranslator settings tab
 			 * Allows plugins to add their own tab
 			 *
 			 *  
 			 */
-			do_action( 'lmat_settings_active_tab_' . $active_tab );
+			do_action( 'ewt_settings_active_tab_' . $active_tab );
 			break;
 	}
 	?>

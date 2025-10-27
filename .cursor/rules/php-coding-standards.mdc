@@ -1,22 +1,22 @@
-# PHP Coding Standards for Linguator Plugin
+# PHP Coding Standards for EasyWPTranslator Plugin
 
 ## WordPress Standards
 - Follow WordPress Coding Standards (WPCS)
-- Use WordPress naming conventions: `lmat_` prefix for functions, `LMAT_` for classes
+- Use WordPress naming conventions: `ewt_` prefix for functions, `EWT_` for classes
 - Always check for `ABSPATH` constant before direct file access
 - Use WordPress sanitization functions: `sanitize_key()`, `sanitize_text_field()`, etc.
 - Use WordPress nonce verification for forms and AJAX requests
 
 ## Namespace Structure
-- Use `Linguator\` namespace prefix
+- Use `EasyWPTranslator\` namespace prefix
 - Follow PSR-4 autoloading structure
-- Example: `Linguator\Includes\Core\Linguator`
+- Example: `EasyWPTranslator\Includes\Core\EasyWPTranslator`
 
 ## Class Naming
-- Abstract classes: `LMAT_Base`, `LMAT_Abstract_*`
-- Controllers: `LMAT_Admin_*`, `LMAT_Frontend_*`
-- Models: `LMAT_Model`, `LMAT_Languages`
-- Services: `LMAT_*_Service` or descriptive names
+- Abstract classes: `EWT_Base`, `EWT_Abstract_*`
+- Controllers: `EWT_Admin_*`, `EWT_Frontend_*`
+- Models: `EWT_Model`, `EWT_Languages`
+- Services: `EWT_*_Service` or descriptive names
 
 ## File Structure
 - One class per file
@@ -38,7 +38,7 @@
 - Use `get_post_meta()`, `update_post_meta()` for post data
 
 ## Hooks and Filters
-- Use descriptive hook names with `lmat_` prefix
+- Use descriptive hook names with `ewt_` prefix
 - Document all hooks with PHPDoc
 - Use `add_action()` and `add_filter()` consistently
 - Remove hooks in destructors or deactivation

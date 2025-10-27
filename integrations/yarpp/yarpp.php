@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\yarpp;
+namespace EasyWPTranslator\Integrations\yarpp;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -13,13 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Yarpp {
+class EWT_Yarpp {
 	/**
-	 * Just makes YARPP aware of the language taxonomy ( after Linguator registered it ).
+	 * Just makes YARPP aware of the language taxonomy ( after EasyWPTranslator registered it ).
 	 *
 	 *  
 	 */
 	public function init() {
-		$GLOBALS['wp_taxonomies']['lmat_language']->yarpp_support = 1;
+		$GLOBALS['wp_taxonomies']['ewt_language']->yarpp_support = 1;
 	}
 }

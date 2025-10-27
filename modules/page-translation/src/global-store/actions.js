@@ -1,4 +1,4 @@
-import LmatActionTypes from "./types.js"; // Importing action types from the types module
+import EWTActionTypes from "./types.js"; // Importing action types from the types module
 
 /**
  * Action creator for saving the source title.
@@ -7,7 +7,7 @@ import LmatActionTypes from "./types.js"; // Importing action types from the typ
  */
 export const titleSaveSource = (data) => {
     return {
-        type: LmatActionTypes.sourceTitle, // Action type for saving the source title
+        type: EWTActionTypes.sourceTitle, // Action type for saving the source title
         text: data, // The source title text
     }
 };
@@ -20,7 +20,7 @@ export const titleSaveSource = (data) => {
  */
 export const titleSaveTranslate = (data, provider) => {
     return {
-        type: LmatActionTypes.traslatedTitle, // Action type for saving the translated title
+        type: EWTActionTypes.traslatedTitle, // Action type for saving the translated title
         text: data, // The translated title text
         provider: provider // The provider of the translated title
     }
@@ -33,7 +33,7 @@ export const titleSaveTranslate = (data, provider) => {
  */
 export const excerptSaveSource = (data) => {
     return {
-        type: LmatActionTypes.sourceExcerpt, // Action type for saving the source excerpt
+        type: EWTActionTypes.sourceExcerpt, // Action type for saving the source excerpt
         text: data, // The source excerpt text
     }
 };
@@ -46,7 +46,7 @@ export const excerptSaveSource = (data) => {
  */
 export const excerptSaveTranslate = (data, provider) => {
     return {
-        type: LmatActionTypes.traslatedExcerpt, // Action type for saving the translated excerpt
+        type: EWTActionTypes.traslatedExcerpt, // Action type for saving the translated excerpt
         text: data, // The translated excerpt text
         provider: provider // The provider of the translated excerpt
     }
@@ -59,7 +59,7 @@ export const excerptSaveTranslate = (data, provider) => {
  */
 export const slugSaveSource = (data) => {
     return {
-        type: LmatActionTypes.sourceSlug, // Action type for saving the source slug
+        type: EWTActionTypes.sourceSlug, // Action type for saving the source slug
         text: data, // The source slug text
     }
 };
@@ -72,7 +72,7 @@ export const slugSaveSource = (data) => {
  */
 export const slugSaveTranslate = (data, provider) => {
     return {
-        type: LmatActionTypes.traslatedSlug, // Action type for saving the translated slug
+        type: EWTActionTypes.traslatedSlug, // Action type for saving the translated slug
         text: data, // The translated slug text
         provider: provider // The provider of the translated slug
     }
@@ -86,7 +86,7 @@ export const slugSaveTranslate = (data, provider) => {
  */
 export const contentSaveSource = (id, data) => {
     return {
-        type: LmatActionTypes.sourceContent, // Action type for saving the source content
+        type: EWTActionTypes.sourceContent, // Action type for saving the source content
         text: data, // The source content text
         id: id // The identifier for the content
     }
@@ -102,7 +102,7 @@ export const contentSaveSource = (id, data) => {
  */
 export const contentSaveTranslate = (id, data, source, provider) => {
     return {
-        type: LmatActionTypes.traslatedContent, // Action type for saving the translated content
+        type: EWTActionTypes.traslatedContent, // Action type for saving the translated content
         text: data, // The translated content text
         id: id, // The identifier for the content
         source: source, // The source of the translated content
@@ -118,7 +118,7 @@ export const contentSaveTranslate = (id, data, source, provider) => {
  */
 export const metaFieldsSaveSource = (id, data) => {
     return {
-        type: LmatActionTypes.sourceMetaFields, // Action type for saving the source meta fields
+        type: EWTActionTypes.sourceMetaFields, // Action type for saving the source meta fields
         text: data, // The source meta fields text
         id: id, // The identifier for the meta fields
     }
@@ -134,7 +134,7 @@ export const metaFieldsSaveSource = (id, data) => {
  */
 export const metaFieldsSaveTranslate = (id, data, source, provider) => {
     return {
-        type: LmatActionTypes.traslatedMetaFields, // Action type for saving the translated meta fields
+        type: EWTActionTypes.traslatedMetaFields, // Action type for saving the translated meta fields
         text: data, // The translated meta fields text
         id: id, // The identifier for the meta fields
         source: source, // The source of the translated meta fields
@@ -149,7 +149,7 @@ export const metaFieldsSaveTranslate = (id, data, source, provider) => {
  */
 export const setBlockRules = (data) => {
     return {
-        type: LmatActionTypes.setBlockRules, // Action type for saving the block rules
+        type: EWTActionTypes.setBlockRules, // Action type for saving the block rules
         data: data // The block rules data
     }
 };
@@ -161,7 +161,7 @@ export const setBlockRules = (data) => {
  */
 export const translationInfo = ({ sourceStringCount = null, sourceWordCount = null, sourceCharacterCount = null, timeTaken = null, provider = null, targetStringCount = null, targetWordCount = null, targetCharacterCount = null, translateStatus = null }) => {
     return {
-        type: LmatActionTypes.translationInfo, // Action type for saving the translation info
+        type: EWTActionTypes.translationInfo, // Action type for saving the translation info
         sourceStringCount: sourceStringCount,
         sourceWordCount: sourceWordCount,
         sourceCharacterCount: sourceCharacterCount, // The character count
@@ -181,7 +181,7 @@ export const translationInfo = ({ sourceStringCount = null, sourceWordCount = nu
  */
 export const allowedMetaFields = ({id, type, status}) => {
     return {
-        type: LmatActionTypes.allowedMetaFields,
+        type: EWTActionTypes.allowedMetaFields,
         id: id,
         inputType: type,
         status: status
@@ -195,7 +195,7 @@ export const allowedMetaFields = ({id, type, status}) => {
  */
 export const contentFetchStatus = (status) => {
     return {
-        type: LmatActionTypes.contentFetchStatus,
+        type: EWTActionTypes.contentFetchStatus,
         status: status
     }
 }

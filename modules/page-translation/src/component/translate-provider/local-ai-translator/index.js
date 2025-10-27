@@ -5,9 +5,9 @@ import SaveTranslation from "../../store-translated-string/index.js";
 import StoreTimeTaken from "../../../component/store-time-taken/index.js";
 
 const localAiTranslator = async (props) => {
-    const targetLangName = lmatPageTranslationGlobal.languageObject[props.targetLang]['name'];
-    const sourceLangName = lmatPageTranslationGlobal.languageObject[props.sourceLang]['name'];
-    const AllowedMetaFields = select('block-lmatPageTranslation/translate').getAllowedMetaFields();
+    const targetLangName = ewtPageTranslationGlobal.languageObject[props.targetLang]['name'];
+    const sourceLangName = ewtPageTranslationGlobal.languageObject[props.sourceLang]['name'];
+    const AllowedMetaFields = select('block-ewtPageTranslation/translate').getAllowedMetaFields();
 
     const { translateStatusHandler, translateStatus } = props;
 
@@ -16,9 +16,9 @@ const localAiTranslator = async (props) => {
     const startTranslation = () => {
         startTime = new Date().getTime();
 
-        const stringContainer = jQuery("#lmat_page_translation_strings_model .modal-content .lmat_page_translation_string_container");
+        const stringContainer = jQuery("#ewt_page_translation_strings_model .modal-content .ewt_page_translation_string_container");
         if (stringContainer[0].scrollHeight > 100) {
-            jQuery("#lmat_page_translation_strings_model .lmat_page_translation_translate_progress").fadeIn("slow");
+            jQuery("#ewt_page_translation_strings_model .ewt_page_translation_translate_progress").fadeIn("slow");
         }
     }
 
@@ -26,12 +26,12 @@ const localAiTranslator = async (props) => {
         StoreTimeTaken({ prefix: 'localAiTranslator', start: startTime, end: new Date().getTime(), translateStatus: true });
         setTimeout(() => {
             translateStatusHandler(false);
-            jQuery("#lmat_page_translation_strings_model .lmat_page_translation_translate_progress").fadeOut("slow");
+            jQuery("#ewt_page_translation_strings_model .ewt_page_translation_translate_progress").fadeOut("slow");
         }, 4000);
     }
 
     const beforeTranslate = (ele) => {
-        const stringContainer = jQuery("#lmat_page_translation_strings_model .modal-content .lmat_page_translation_string_container");
+        const stringContainer = jQuery("#ewt_page_translation_strings_model .modal-content .ewt_page_translation_string_container");
         if (stringContainer.length < 1) {
             TranslateProvider.stopTranslation();
             StoreTimeTaken({ prefix: 'localAiTranslator', start: startTime, end: new Date().getTime() });
@@ -61,23 +61,23 @@ const localAiTranslator = async (props) => {
 
         SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText, provider: 'localAiTranslator', AllowedMetaFields });
 
-        const translationEntry = select('block-lmatPageTranslation/translate').getTranslationInfo().translateData?.localAiTranslator;
+        const translationEntry = select('block-ewtPageTranslation/translate').getTranslationInfo().translateData?.localAiTranslator;
         const previousTargetStringCount = translationEntry && translationEntry.targetStringCount ? translationEntry.targetStringCount : 0;
         const previousTargetWordCount = translationEntry && translationEntry.targetWordCount ? translationEntry.targetWordCount : 0;
         const previousTargetCharacterCount = translationEntry && translationEntry.targetCharacterCount ? translationEntry.targetCharacterCount : 0;
 
         if (translatedText.trim() !== '' && translatedText.trim().length > 0) {
-            dispatch('block-lmatPageTranslation/translate').translationInfo({ targetStringCount: previousTargetStringCount + sourceText.trim().split(/(?<=[.!?]+)\s+/).length, targetWordCount: previousTargetWordCount + sourceText.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length, targetCharacterCount: previousTargetCharacterCount + sourceText.trim().length, provider: 'localAiTranslator' });
+            dispatch('block-ewtPageTranslation/translate').translationInfo({ targetStringCount: previousTargetStringCount + sourceText.trim().split(/(?<=[.!?]+)\s+/).length, targetWordCount: previousTargetWordCount + sourceText.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length, targetCharacterCount: previousTargetCharacterCount + sourceText.trim().length, provider: 'localAiTranslator' });
         }
     }
 
     const TranslateProvider = await ChromeAiTranslator.Object({
-        mainWrapperSelector: "#lmat_page_translation_strings_model",
+        mainWrapperSelector: "#ewt_page_translation_strings_model",
         btnSelector: `#${props.ID}`,
         btnClass: "local_ai_translator_btn",
-        btnText: __("Translate To", 'easy-web-translator') + ' ' + targetLangName + ' (Beta)',
-        stringSelector: ".lmat_page_translation_string_container tbody tr td.translate:not([data-translate-status='translated'])",
-        progressBarSelector: "#lmat_page_translation_strings_model .lmat_page_translation_translate_progress",
+        btnText: __("Translate To", 'easy-wp-translator') + ' ' + targetLangName + ' (Beta)',
+        stringSelector: ".ewt_page_translation_string_container tbody tr td.translate:not([data-translate-status='translated'])",
+        progressBarSelector: "#ewt_page_translation_strings_model .ewt_page_translation_translate_progress",
         sourceLanguage: props.sourceLang,
         targetLanguage: props.targetLang,
         targetLanguageLabel: targetLangName,
@@ -90,7 +90,7 @@ const localAiTranslator = async (props) => {
 
     if (TranslateProvider.hasOwnProperty('init')) {
         TranslateProvider.init();
-        const button = document.querySelector('#lmat_page_translation_localAiTranslator_translate_element .local_ai_translator_btn');
+        const button = document.querySelector('#ewt_page_translation_localAiTranslator_translate_element .local_ai_translator_btn');
 
         if (button && translateStatus) {
             button.disabled = translateStatus;

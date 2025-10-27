@@ -61,7 +61,7 @@ const ErrorModalBox = ({ message, onClose, Title, prefix, children }) => {
                     {children}
                 </div>
                 <div className={`${prefix}-error-modal-box-footer`}>
-                    <button className={`${prefix}-error-modal-box-close button button-primary`} onClick={onClose}>{__('Back', 'easy-web-translator')}</button>
+                    <button className={`${prefix}-error-modal-box-close button button-primary`} onClick={onClose}>{__('Back', 'easy-wp-translator')}</button>
                 </div>
             </div>
         </div>

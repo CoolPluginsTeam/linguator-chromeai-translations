@@ -1,20 +1,20 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Other\LMAT_Model;
+use EasyWPTranslator\Includes\Other\EWT_Model;
 
 
 
 /**
- * Extends the LMAT_Model class with methods needed only in Linguator settings pages.
+ * Extends the EWT_Model class with methods needed only in EasyWPTranslator settings pages.
  *
  *  
  */
-class LMAT_Admin_Model extends LMAT_Model {}
+class EWT_Admin_Model extends EWT_Model {}

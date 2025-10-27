@@ -1,15 +1,15 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Filters;
+namespace EasyWPTranslator\Includes\Filters;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Other\LMAT_Model;
+use EasyWPTranslator\Includes\Other\EWT_Model;
 
 
 /**
@@ -17,7 +17,7 @@ use Linguator\Includes\Other\LMAT_Model;
  *
  *  
  */
-class LMAT_Filter_REST_Routes {
+class EWT_Filter_REST_Routes {
 	/**
 	 * Cached REST routes filterable by language ordered by types.
 	 *
@@ -27,7 +27,7 @@ class LMAT_Filter_REST_Routes {
 	private $filtered_routes = array();
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	private $model;
 
@@ -36,9 +36,9 @@ class LMAT_Filter_REST_Routes {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Model $model Shared instance of the current LMAT_Model.
+	 * @param EWT_Model $model Shared instance of the current EWT_Model.
 	 */
-	public function __construct( LMAT_Model $model ) {
+	public function __construct( EWT_Model $model ) {
 		$this->model = $model;
 	}
 
@@ -105,7 +105,7 @@ class LMAT_Filter_REST_Routes {
 	 * @return void
 	 */
 	public function add_inline_script( string $script_handle ) {
-		$script_var = 'let lmatFilteredRoutes = ' . (string) wp_json_encode( $this->get() );
+		$script_var = 'let ewtFilteredRoutes = ' . (string) wp_json_encode( $this->get() );
 
 		wp_add_inline_script( $script_handle, $script_var, 'before' );
 	}
@@ -142,7 +142,7 @@ class LMAT_Filter_REST_Routes {
 		 * @param string[] $routes Array of filterable REST routes, with types as key.
 		 */
 		$this->filtered_routes = apply_filters(
-			'lmat_filtered_rest_routes',
+			'ewt_filtered_rest_routes',
 			array_merge(
 				$filtered_entities,
 				array( 'search' => 'wp/v2/search' )

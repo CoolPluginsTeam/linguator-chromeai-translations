@@ -2,7 +2,7 @@
 /**
  * Loads the integration with WordPress Importer.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/wordpress-importer.php';
 
-use Linguator\Integrations\wp_importer\LMAT_WordPress_Importer;
-use Linguator\Integrations\LMAT_Integrations;
+use EasyWPTranslator\Integrations\wp_importer\EWT_WordPress_Importer;
+use EasyWPTranslator\Integrations\EWT_Integrations;
 
 
-LMAT_Integrations::instance()->wp_importer = new LMAT_WordPress_Importer();
+EWT_Integrations::instance()->wp_importer = new EWT_WordPress_Importer();

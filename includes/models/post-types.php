@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Models;
+namespace EasyWPTranslator\Includes\Models;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-use Linguator\Includes\Models\Translated\LMAT_Translated_Post;
+use EasyWPTranslator\Includes\Models\Translated\EWT_Translated_Post;
 
 
 /**
- * Model for post types translated by Linguator.
+ * Model for post types translated by EasyWPTranslator.
  *
  *  	
  */
@@ -23,7 +23,7 @@ class Post_Types {
 	/**
 	 * Translated post model.
 	 *
-	 * @var LMAT_Translated_Post
+	 * @var EWT_Translated_Post
 	 */
 	public $translated_object;
 
@@ -32,9 +32,9 @@ class Post_Types {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Translated_Post $translated_object Posts model.
+	 * @param EWT_Translated_Post $translated_object Posts model.
 	 */
-	public function __construct( LMAT_Translated_Post $translated_object ) {
+	public function __construct( EWT_Translated_Post $translated_object ) {
 		$this->translated_object = $translated_object;
 	}
 
@@ -47,14 +47,14 @@ class Post_Types {
 	 *  
 	 *
 	 * @param bool $filter True if we should return only valid registered post types.
-	 * @return string[] Post type names for which Linguator manages languages and translations.
+	 * @return string[] Post type names for which EasyWPTranslator manages languages and translations.
 	 */
 	public function get_translated( $filter = true ): array {
 		return $this->translated_object->get_translated_object_types( $filter );
 	}
 
 	/**
-	 * Returns true if Linguator manages languages and translations for this post type.
+	 * Returns true if EasyWPTranslator manages languages and translations for this post type.
 	 *
 	 *  
 	 *

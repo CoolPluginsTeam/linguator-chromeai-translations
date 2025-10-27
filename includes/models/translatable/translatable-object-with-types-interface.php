@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Models\Translatable;
+namespace EasyWPTranslator\Includes\Models\Translatable;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *     default_alias: non-empty-string
  * }
  */
-interface LMAT_Translatable_Object_With_Types_Interface {
+interface EWT_Translatable_Object_With_Types_Interface {
 
 	/**
 	 * Returns object types that need to be translated.
@@ -29,14 +29,14 @@ interface LMAT_Translatable_Object_With_Types_Interface {
 	 *  
 	 *
 	 * @param bool $filter True if we should return only valid registered object types.
-	 * @return string[] Object type names for which Linguator manages languages.
+	 * @return string[] Object type names for which EasyWPTranslator manages languages.
 	 *
 	 * @phpstan-return array<non-empty-string, non-empty-string>
 	 */
 	public function get_translated_object_types( $filter = true );
 
 	/**
-	 * Returns true if Linguator manages languages for this object type.
+	 * Returns true if EasyWPTranslator manages languages for this object type.
 	 *
 	 *  
 	 *

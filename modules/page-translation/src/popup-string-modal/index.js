@@ -9,7 +9,7 @@ const popStringModal = (props) => {
 
     let selectedService = props.service;
 
-    const translateData = select('block-lmatPageTranslation/translate').getTranslationInfo().translateData[selectedService] || false;
+    const translateData = select('block-ewtPageTranslation/translate').getTranslationInfo().translateData[selectedService] || false;
     const translateStatus=translateData?.translateStatus || false;
 
     const [popupVisibility, setPopupVisibility] = useState(true);
@@ -78,7 +78,7 @@ const popStringModal = (props) => {
     const translateStatusHandler = (status) => {
         let service = props.service;
 
-        const characterCount = select('block-lmatPageTranslation/translate').getTranslationInfo().translateData[service]?.targetCharacterCount || 0;
+        const characterCount = select('block-ewtPageTranslation/translate').getTranslationInfo().translateData[service]?.targetCharacterCount || 0;
         setCharacterCount(characterCount);
         setTranslatePending(status);
     }
@@ -109,7 +109,7 @@ const popStringModal = (props) => {
         }
 
         setTimeout(() => {
-            const stringModal = document.querySelector('.lmat_page_translation_string_container');
+            const stringModal = document.querySelector('.ewt_page_translation_string_container');
             if (stringModal) {
                 stringModal.scrollTop = 0
             };
@@ -118,7 +118,7 @@ const popStringModal = (props) => {
 
     return (
         <> {popupVisibility &&
-            <div id={`lmat-page-translation-${props.service}-strings-modal`} className="modal-container" style={{ display: popupVisibility ? 'flex' : 'none' }} data-render-id={props.modalRender}>
+            <div id={`ewt-page-translation-${props.service}-strings-modal`} className="modal-container" style={{ display: popupVisibility ? 'flex' : 'none' }} data-render-id={props.modalRender}>
                 <div className="modal-content">
                     <StringPopUpHeader
                         modalRender={props.modalRender}

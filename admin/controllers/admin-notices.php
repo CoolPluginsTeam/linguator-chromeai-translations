@@ -1,24 +1,24 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Other\LMAT_Translation_Dashboard;
+use EasyWPTranslator\Includes\Other\EWT_Translation_Dashboard;
 
 /**
  * A class to manage admin notices
  * displayed only to admin, based on 'manage_options' capability
- * and only on dashboard, plugins and Linguator admin pages
+ * and only on dashboard, plugins and EasyWPTranslator admin pages
  *
  *  
  *   Dismissed notices are stored in an option instead of a user meta
  */
-class LMAT_Admin_Notices {
+class EWT_Admin_Notices {
 	/**
 	 * Stores the plugin options.
 	 *
@@ -39,15 +39,15 @@ class LMAT_Admin_Notices {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( $linguator ) {
-		$this->options = &$linguator->options;
+	public function __construct( $easywptranslator ) {
+		$this->options = &$easywptranslator->options;
 
 		add_action( 'admin_init', array( $this, 'hide_notice' ) );
 		add_action( 'admin_notices', array( $this, 'display_notices' ) );
 		
-		// Add inline CSS and JS for notice positioning on ?page=lmat
+		// Add inline CSS and JS for notice positioning on ?page=ewt
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_notice_positioning_inline' ) );
 	}
 
@@ -84,18 +84,18 @@ class LMAT_Admin_Notices {
 	 * @return bool
 	 */
 	public static function is_dismissed( $notice ) {
-		$dismissed = get_option( 'lmat_dismissed_notices', array() );
+		$dismissed = get_option( 'ewt_dismissed_notices', array() );
 
 		// Handle legacy user meta
-		$dismissed_meta = get_user_meta( get_current_user_id(), 'lmat_dismissed_notices', true );
+		$dismissed_meta = get_user_meta( get_current_user_id(), 'ewt_dismissed_notices', true );
 		if ( is_array( $dismissed_meta ) ) {
 			if ( array_diff( $dismissed_meta, $dismissed ) ) {
 				$dismissed = array_merge( $dismissed, $dismissed_meta );
-				update_option( 'lmat_dismissed_notices', $dismissed );
+				update_option( 'ewt_dismissed_notices', $dismissed );
 			}
 			if ( ! is_multisite() ) {
 				// Don't delete on multisite to avoid the notices to appear in other sites.
-				delete_user_meta( get_current_user_id(), 'lmat_dismissed_notices' );
+				delete_user_meta( get_current_user_id(), 'ewt_dismissed_notices' );
 			}
 		}
 
@@ -121,12 +121,12 @@ class LMAT_Admin_Notices {
 		}
 		
 		if ( empty( $allowed_screens ) ) {
-			$screen_id       = sanitize_title( __( 'Languages', 'easy-web-translator' ) );
+			$screen_id       = sanitize_title( __( 'Languages', 'easy-wp-translator' ) );
 			$allowed_screens = array(
 				'dashboard',
 				'plugins',
-				$screen_id . '_page_lmat_strings',
-				$screen_id . '_page_lmat_settings',
+				$screen_id . '_page_ewt_strings',
+				$screen_id . '_page_ewt_settings',
 			);
 		}
 
@@ -138,7 +138,7 @@ class LMAT_Admin_Notices {
 		 * @param bool   $display Whether the notice should be displayed or not.
 		 * @param string $notice  The notice name.
 		 */
-		return apply_filters( 'lmat_can_display_notice', in_array( $screen->id, $allowed_screens, true ), $notice );
+		return apply_filters( 'ewt_can_display_notice', in_array( $screen->id, $allowed_screens, true ), $notice );
 	}
 
 	/**
@@ -150,11 +150,11 @@ class LMAT_Admin_Notices {
 	 * @return void
 	 */
 	public static function dismiss( $notice ) {
-		$dismissed = get_option( 'lmat_dismissed_notices', array() );
+		$dismissed = get_option( 'ewt_dismissed_notices', array() );
 
 		if ( ! in_array( $notice, $dismissed ) ) {
 			$dismissed[] = $notice;
-			update_option( 'lmat_dismissed_notices', array_unique( $dismissed ) );
+			update_option( 'ewt_dismissed_notices', array_unique( $dismissed ) );
 		}
 	}
 
@@ -166,11 +166,11 @@ class LMAT_Admin_Notices {
 	 * @return void
 	 */
 	public function hide_notice() {
-		if ( isset( $_GET['lmat-hide-notice'], $_GET['_lmat_notice_nonce'] ) ) {
-			$notice = sanitize_key( $_GET['lmat-hide-notice'] );
-			check_admin_referer( $notice, '_lmat_notice_nonce' );
+		if ( isset( $_GET['ewt-hide-notice'], $_GET['_ewt_notice_nonce'] ) ) {
+			$notice = sanitize_key( $_GET['ewt-hide-notice'] );
+			check_admin_referer( $notice, '_ewt_notice_nonce' );
 			self::dismiss( $notice );
-			wp_safe_redirect( remove_query_arg( array( 'lmat-hide-notice', '_lmat_notice_nonce' ), wp_get_referer() ) );
+			wp_safe_redirect( remove_query_arg( array( 'ewt-hide-notice', '_ewt_notice_nonce' ), wp_get_referer() ) );
 			exit;
 		}
 	}
@@ -183,14 +183,14 @@ class LMAT_Admin_Notices {
 	 * @return void
 	 */
 	public function display_notices() {
-		// Check if we're on the specific ?page=lmat page and should suppress notices
+		// Check if we're on the specific ?page=ewt page and should suppress notices
 		if ( current_user_can( 'manage_options' ) ) {
 
 			// Custom notices
 			foreach ( static::get_notices() as $notice => $html ) {
 				if ( $this->can_display_notice( $notice ) && ! static::is_dismissed( $notice ) ) {
 					?>
-					<div class="lmat-notice notice notice-info">
+					<div class="ewt-notice notice notice-info">
 						<?php
 						$this->dismiss_button( $notice );
 						echo wp_kses_post( $html );
@@ -200,7 +200,7 @@ class LMAT_Admin_Notices {
 				}
 			}
 		}
-		if ( $this->is_lmat_page() ) {
+		if ( $this->is_ewt_page() ) {
 			// Don't display notices here, they will be captured and displayed later
 			return;
 		}
@@ -217,63 +217,63 @@ class LMAT_Admin_Notices {
 	public function dismiss_button( $name ) {
 		printf(
 			'<a class="notice-dismiss" href="%s"><span class="screen-reader-text">%s</span></a>',
-			esc_url( wp_nonce_url( add_query_arg( 'lmat-hide-notice', $name ), $name, '_lmat_notice_nonce' ) ),
+			esc_url( wp_nonce_url( add_query_arg( 'ewt-hide-notice', $name ), $name, '_ewt_notice_nonce' ) ),
 			/* translators: accessibility text */
-			esc_html__( 'Dismiss this notice.', 'easy-web-translator' )
+			esc_html__( 'Dismiss this notice.', 'easy-wp-translator' )
 		);
 	}
 
 	/**
-	 * Check if we're on the specific ?page=lmat page
+	 * Check if we're on the specific ?page=ewt page
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return bool
 	 */
-	private function is_lmat_page() {
+	private function is_ewt_page() {
 		$screen = get_current_screen();
 		if ( empty( $screen ) ) {
 			return false;
 		}
 		
-		// Check if we're specifically on the ?page=lmat page
-		return $screen->id === 'toplevel_page_lmat' || $screen->id === 'languages_page_lmat_settings';
+		// Check if we're specifically on the ?page=ewt page
+		return $screen->id === 'toplevel_page_ewt' || $screen->id === 'languages_page_ewt_settings';
 	}
 	/**
-	 * Add inline CSS and JavaScript for notice positioning on ?page=lmat
+	 * Add inline CSS and JavaScript for notice positioning on ?page=ewt
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
 	public function add_notice_positioning_inline() {
-		if ( ! $this->is_lmat_page() ) {
+		if ( ! $this->is_ewt_page() ) {
 			return;
 		}
 
 		// Add inline CSS
 		$css = "
-		/* Notice positioning for ?page=lmat */
-		body.toplevel_page_lmat .notice,
-		body.toplevel_page_lmat .error,
-		body.toplevel_page_lmat .updated,
-		body.toplevel_page_lmat .notice-error,
-		body.toplevel_page_lmat .notice-warning,
-		body.toplevel_page_lmat .notice-info,
-		body.toplevel_page_lmat .notice-success {
+		/* Notice positioning for ?page=ewt */
+		body.toplevel_page_ewt .notice,
+		body.toplevel_page_ewt .error,
+		body.toplevel_page_ewt .updated,
+		body.toplevel_page_ewt .notice-error,
+		body.toplevel_page_ewt .notice-warning,
+		body.toplevel_page_ewt .notice-info,
+		body.toplevel_page_ewt .notice-success {
 			display: none !important;
 			margin-left: 2rem;
 		}
 
 		/* Show notices after they are moved */
-		body.toplevel_page_lmat .lmat-moved-notice {
+		body.toplevel_page_ewt .ewt-moved-notice {
 			display: block !important;
 			margin-left: 2rem;
 			margin-right: 2rem;
 			width: auto;
 		}
 		";
-		wp_add_inline_style( 'linguator_admin', $css );
+		wp_add_inline_style( 'easywptranslator_admin', $css );
 
 		// Add inline JavaScript
 		$js = "
@@ -284,17 +284,17 @@ class LMAT_Admin_Notices {
 				var notices = $('.notice, .error, .updated, .notice-error, .notice-warning, .notice-info, .notice-success');
 				if (notices.length > 0) {
 					// Find the header container
-					var headerContainer = $('#lmat-settings-header');
+					var headerContainer = $('#ewt-settings-header');
 					if (headerContainer.length > 0) {
 						// Move notices after the header
 						notices.detach().insertAfter(headerContainer);
 						// Add class to make notices visible
-						notices.addClass('lmat-moved-notice');
+						notices.addClass('ewt-moved-notice');
 					}
 				}
 			}, 100);
 		});
 		";
-		wp_add_inline_script( 'lmat_admin', $js );
+		wp_add_inline_script( 'ewt_admin', $js );
 	}
 }

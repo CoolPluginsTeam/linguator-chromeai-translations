@@ -2,11 +2,11 @@
 /**
  * Elementor Display Conditions Integration
  *
- * @package           Linguator
+ * @package           EasyWPTranslator
  * @wordpress-plugin
  */
 
-namespace Linguator\Integrations\elementor;
+namespace EasyWPTranslator\Integrations\elementor;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,12 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class LMAT_Display_Conditions
+ * Class EWT_Display_Conditions
  *
  * Adds informational notes to Elementor's display conditions interface
  * to inform users about connected template conditions.
  */
-class LMAT_Display_Conditions {
+class EWT_Display_Conditions {
 	/**
 	 * Constructor
 	 *
@@ -42,7 +42,7 @@ class LMAT_Display_Conditions {
 		}
 
 		        // Check if this is a translated template
-        $translations = lmat_get_post_translations( $post->ID );
+        $translations = ewt_get_post_translations( $post->ID );
         if ( empty( $translations ) ) {
             return;
         }
@@ -53,7 +53,7 @@ class LMAT_Display_Conditions {
         $connected_ids   = array_values( array_unique( $connected_ids ) );
 		?>
 		<style>
-			.lmat-conditions-note {
+			.ewt-conditions-note {
 				text-align: center;
 				margin: 15px 0;
 				border-radius: 4px;
@@ -68,11 +68,11 @@ class LMAT_Display_Conditions {
             'use strict';
 
             // Connected template IDs for this group (current + translations)
-            var lmatConnectedIds = <?php echo wp_json_encode( $connected_ids ); ?>;
+            var ewtConnectedIds = <?php echo wp_json_encode( $connected_ids ); ?>;
 
             
             // Adds the note if the conflict message is present
-            var lmatAddConditionsNote = function() {
+            var ewtAddConditionsNote = function() {
                 // Target the specific Elementor theme builder conditions container
                 var conditionsContainer = $('#elementor-theme-builder-conditions');
                 if (conditionsContainer.length === 0) {
@@ -98,18 +98,18 @@ class LMAT_Display_Conditions {
                 });
 
                 // Decide visibility: show the note if ANY conflicting ID belongs to the connected set
-                var isConnectedConflict = conflictIds.some(function(id){ return lmatConnectedIds.indexOf(id) !== -1; });
+                var isConnectedConflict = conflictIds.some(function(id){ return ewtConnectedIds.indexOf(id) !== -1; });
                 if (!isConnectedConflict) {
                     return;
                 }
 
                 // Avoid duplicates
-                if (conditionsContainer.find('.lmat-conditions-note').length > 0) {
+                if (conditionsContainer.find('.ewt-conditions-note').length > 0) {
                     return;
                 }
 
 				// Create the note
-				var noteHtml = '<div class=\"lmat-conditions-note\">' +
+				var noteHtml = '<div class=\"ewt-conditions-note\">' +
 					'Note: The Conditions applied on its connected templates will be automatically applied to this template. So please ignore the below conflict notice.' +
 				'</div>';
 				// Prepend the note to the conditions container
@@ -118,7 +118,7 @@ class LMAT_Display_Conditions {
 			
 			// Watch for DOM changes
 			var observer = new MutationObserver(function(mutations) {
-				lmatAddConditionsNote();
+				ewtAddConditionsNote();
 			});
 			
 			observer.observe(document.body, {
@@ -128,14 +128,14 @@ class LMAT_Display_Conditions {
 			
 			// Run on document ready and bind to Add Condition button
 			$(document).ready(function() {
-				lmatAddConditionsNote();
+				ewtAddConditionsNote();
 			});
 			
 			// When user clicks the "+ Add condition" button, re-check for conflict and add note if present
 			$(document).on('click', '.elementor-button.elementor-repeater-add', function() {
-				setTimeout(lmatAddConditionsNote, 100);
-				setTimeout(lmatAddConditionsNote, 400);
-				setTimeout(lmatAddConditionsNote, 900);
+				setTimeout(ewtAddConditionsNote, 100);
+				setTimeout(ewtAddConditionsNote, 400);
+				setTimeout(ewtAddConditionsNote, 900);
 			});
 		});
 		</script>

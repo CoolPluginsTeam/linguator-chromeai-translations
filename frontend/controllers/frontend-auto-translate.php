@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Frontend\Controllers;
+namespace EasyWPTranslator\Frontend\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -19,16 +19,16 @@ use WP_Term;
  *
  *  
  */
-class LMAT_Frontend_Auto_Translate {
+class EWT_Frontend_Auto_Translate {
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
 	/**
 	 * Current language.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $curlang;
 
@@ -37,13 +37,13 @@ class LMAT_Frontend_Auto_Translate {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->model = &$linguator->model;
-		$this->curlang = &$linguator->curlang;
+	public function __construct( &$easywptranslator ) {
+		$this->model = &$easywptranslator->model;
+		$this->curlang = &$easywptranslator->curlang;
 
-		add_action( 'parse_query', array( $this, 'translate_included_ids_in_query' ), 100 ); // After all Linguator filters.
+		add_action( 'parse_query', array( $this, 'translate_included_ids_in_query' ), 100 ); // After all EasyWPTranslator filters.
 		add_filter( 'get_terms_args', array( $this, 'get_terms_args' ), 20, 2 );
 	}
 

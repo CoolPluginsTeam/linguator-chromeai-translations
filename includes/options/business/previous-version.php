@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -36,6 +36,6 @@ class Previous_Version extends Version {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( "Linguator's previous version.", 'easy-web-translator' );
+		return __( "EasyWPTranslator's previous version.", 'easy-wp-translator' );
 	}
 }

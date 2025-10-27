@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,9 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Sitemaps_Domain extends LMAT_Abstract_Sitemaps {
+class EWT_Sitemaps_Domain extends EWT_Abstract_Sitemaps {
 	/**
-	 * @var LMAT_Links_Abstract_Domain
+	 * @var EWT_Links_Abstract_Domain
 	 */
 	protected $links_model;
 
@@ -23,10 +23,10 @@ class LMAT_Sitemaps_Domain extends LMAT_Abstract_Sitemaps {
 	 *
 	 *  
 	 *
-	 * @param object $linguator Main Linguator object.
+	 * @param object $easywptranslator Main EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->links_model = &$linguator->links_model;
+	public function __construct( &$easywptranslator ) {
+		$this->links_model = &$easywptranslator->links_model;
 	}
 
 	/**

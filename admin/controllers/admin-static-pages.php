@@ -1,14 +1,14 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Controllers\LMAT_Static_Pages;
+use EasyWPTranslator\Includes\Controllers\EWT_Static_Pages;
 
 
 
@@ -17,9 +17,9 @@ use Linguator\Includes\Controllers\LMAT_Static_Pages;
  *
  *  
  */
-class LMAT_Admin_Static_Pages extends LMAT_Static_Pages {
+class EWT_Admin_Static_Pages extends EWT_Static_Pages {
 	/**
-	 * @var LMAT_Admin_Links|null
+	 * @var EWT_Admin_Links|null
 	 */
 	protected $links;
 
@@ -28,18 +28,18 @@ class LMAT_Admin_Static_Pages extends LMAT_Static_Pages {
 	 *
 	 *  
 	 *
-	 * @param object $linguator An array of attachment metadata.
+	 * @param object $easywptranslator An array of attachment metadata.
 	 */
-	public function __construct( &$linguator ) {
-		parent::__construct( $linguator );
+	public function __construct( &$easywptranslator ) {
+		parent::__construct( $easywptranslator );
 
-		$this->links = &$linguator->links;
+		$this->links = &$easywptranslator->links;
 
 		// Add post state for translations of the front page and posts page
 		add_filter( 'display_post_states', array( $this, 'display_post_states' ), 10, 2 );
 
 		// Refreshes the language cache when a static front page or page for for posts has been translated.
-		add_action( 'lmat_save_post', array( $this, 'lmat_save_post' ), 10, 3 );
+		add_action( 'ewt_save_post', array( $this, 'ewt_save_post' ), 10, 3 );
 
 		// Prevents WP resetting the option
 		add_filter( 'pre_update_option_show_on_front', array( $this, 'update_show_on_front' ), 10, 2 );
@@ -58,11 +58,11 @@ class LMAT_Admin_Static_Pages extends LMAT_Static_Pages {
 	 */
 	public function display_post_states( $post_states, $post ) {
 		if ( in_array( $post->ID, $this->model->get_languages_list( array( 'fields' => 'page_on_front' ) ) ) ) {
-			$post_states['page_on_front'] = __( 'Front Page', 'easy-web-translator' );
+			$post_states['page_on_front'] = __( 'Front Page', 'easy-wp-translator' );
 		}
 
 		if ( in_array( $post->ID, $this->model->get_languages_list( array( 'fields' => 'page_for_posts' ) ) ) ) {
-			$post_states['page_for_posts'] = __( 'Posts Page', 'easy-web-translator' );
+			$post_states['page_for_posts'] = __( 'Posts Page', 'easy-wp-translator' );
 		}
 
 		return $post_states;
@@ -78,7 +78,7 @@ class LMAT_Admin_Static_Pages extends LMAT_Static_Pages {
 	 * @param int[]   $translations Translations of the post being saved.
 	 * @return void
 	 */
-	public function lmat_save_post( $post_id, $post, $translations ) {
+	public function ewt_save_post( $post_id, $post, $translations ) {
 		if ( in_array( $this->page_on_front, $translations ) || in_array( $this->page_for_posts, $translations ) ) {
 			$this->model->clean_languages_cache();
 		}
@@ -112,7 +112,7 @@ class LMAT_Admin_Static_Pages extends LMAT_Static_Pages {
 	public function notice_must_translate() {
 		$screen = get_current_screen();
 
-		if ( ! empty( $screen ) && ( 'toplevel_page_lmat' === $screen->id || 'edit-page' === $screen->id ) ) {
+		if ( ! empty( $screen ) && ( 'toplevel_page_ewt' === $screen->id || 'edit-page' === $screen->id ) ) {
 			$message = $this->get_must_translate_message();
 
 			if ( ! empty( $message ) ) {
@@ -150,7 +150,7 @@ class LMAT_Admin_Static_Pages extends LMAT_Static_Pages {
 			if ( ! empty( $untranslated ) ) {
 				$message = sprintf(
 					/* translators: %s is a comma separated list of native language names */
-					esc_html__( 'You must translate your static front page in %s.', 'easy-web-translator' ),
+					esc_html__( 'You must translate your static front page in %s.', 'easy-wp-translator' ),
 					implode( ', ', $untranslated ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				);
 			}

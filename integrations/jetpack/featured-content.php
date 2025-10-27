@@ -1,14 +1,14 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\jetpack;
+namespace EasyWPTranslator\Integrations\jetpack;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Frontend\Controllers\LMAT_Frontend;
+use EasyWPTranslator\Frontend\Controllers\EWT_Frontend;
 use Featured_Content;
 
 
@@ -18,7 +18,7 @@ use Featured_Content;
  *
  *  
  */
-class LMAT_Featured_Content {
+class EWT_Featured_Content {
 	/**
 	 * Constructor
 	 *
@@ -78,7 +78,7 @@ class LMAT_Featured_Content {
 		}
 
 		// Get featured tag translations
-		$tags = LMAT()->model->term->get_translations( $term->term_id );
+		$tags = EWT()->model->term->get_translations( $term->term_id );
 		$ids = array();
 
 		// Query for featured posts in all languages
@@ -107,7 +107,7 @@ class LMAT_Featured_Content {
 		}
 
 		$ids = array_map( 'absint', $ids );
-		set_transient( 'lmat_featured_content_ids', $ids );
+		set_transient( 'ewt_featured_content_ids', $ids );
 
 		return $ids;
 	}
@@ -123,7 +123,7 @@ class LMAT_Featured_Content {
 	 * @return array modified $settings
 	 */
 	public function option_featured_content( $settings ) {
-		if ( $this->is_active() && LMAT() instanceof LMAT_Frontend && $settings['tag-id'] && $tr = lmat_get_term( $settings['tag-id'] ) ) {
+		if ( $this->is_active() && EWT() instanceof EWT_Frontend && $settings['tag-id'] && $tr = ewt_get_term( $settings['tag-id'] ) ) {
 			$settings['tag-id'] = $tr;
 		}
 

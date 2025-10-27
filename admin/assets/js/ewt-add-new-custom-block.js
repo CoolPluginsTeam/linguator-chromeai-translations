@@ -3,7 +3,7 @@
 (() => {
     const { createBlock } = wp.blocks;
     const { dispatch, select } = wp.data;
-    class lmatCreateNewBlock {
+    class ewtCreateNewBlock {
         constructor() {
             this.updateBlockStore = {};
             this.loaderRemove = null;
@@ -18,7 +18,7 @@
             // Create a new range object
             const range = document.createRange();
             // Select the contents of the copy text element
-            range.selectNodeContents(document.getElementById('lmat-copy-text'));
+            range.selectNodeContents(document.getElementById('ewt-copy-text'));
             // Remove any existing selections
             selection.removeAllRanges();
             // Add the new range to the selection
@@ -33,16 +33,16 @@
             dispatch("core/notices").createNotice('info', 'To enable translation, please include the Make This Content Available for Translation text in your block content. For help, watch the video and click <b>"Copy Text"</b> to use. Then, paste it into the section of your block you want automatically translated', 
                 {
                     isDismissible : false,
-                    id: 'lmat-notice-id',
+                    id: 'ewt-notice-id',
                     actions: [
                     {
                         label: 'Watch Video.',
-                        url: `${lmatAddBlockVars.lmat_demo_page_url}#custom-block-translate`,
+                        url: `${ewtAddBlockVars.ewt_demo_page_url}#custom-block-translate`,
                     },
                 ],
                 __unstableHTML: true
             }).then(()=>{
-                const targetAnchor=document.querySelector(`a[href^="${lmatAddBlockVars.lmat_demo_page_url}#custom-block-translate"]`);
+                const targetAnchor=document.querySelector(`a[href^="${ewtAddBlockVars.ewt_demo_page_url}#custom-block-translate"]`);
 
                 if(targetAnchor){
                     targetAnchor.addEventListener('click', (e)=>{
@@ -55,14 +55,14 @@
 
         copyBtnInitialize = () => { // Initialize the copy button
             const copyBtn = document.createElement('div'); // Create a new div element for the copy button
-            copyBtn.id = 'lmat-copy-btn'; // Set the ID of the copy button
+            copyBtn.id = 'ewt-copy-btn'; // Set the ID of the copy button
             copyBtn.innerHTML = 'Copy Text'; // Set the inner HTML of the copy button
             copyBtn.addEventListener('click', this.copyTranslateText); // Add click event listener to copy text
             copyBtn.ariaLabel = 'Copy Text'; // Set the aria-label for accessibility
             copyBtn.title = 'Click to copy the text "Make This Content Available for Translation"'; // Tooltip message
 
             const copyText = document.createElement('div'); // Create a new div element for the copy text
-            copyText.id = 'lmat-copy-text'; // Set the ID of the copy text div
+            copyText.id = 'ewt-copy-text'; // Set the ID of the copy text div
             copyText.innerHTML = 'Make This Content Available for Translation'; // Set the inner HTML of the copy text div
 
             document.body.appendChild(copyBtn); // Append the copy button to the document body
@@ -282,12 +282,12 @@
             const loader = document.createElement('div');
 
             const loaderContainer = () => {
-                const container = '<style>.lmat-loader-wrapper{position:absolute;width:100%;height:100%;top:0;left:0;z-index:99999;}.lmat-loader-container{width:100%;height:100%;}.lmat-loader-skeleton{--skbg:hsl(227deg, 13%, 50%, 0.2);display:grid;gap:20px;width:100%;height:100%;background:#ffffff;padding:15px;border-radius:8px;box-shadow:0 4px 12px rgba(0, 0, 0, 0.1);transition:transform 0.3s ease;transform:scale(1.02);}.lmat-loader-shimmer{display:flex;aspect-ratio:2/1;width:100%;height:100%;background:var(--skbg);border-radius:4px;overflow:hidden;position:relative;}.lmat-loader-shimmer::before{content:"";position:absolute;width:100%;height:100%;background-image:linear-gradient(-90deg,transparent 8%,rgba(255,255,255,0.28) 18%,transparent 33%);background-size:200%;animation:shimerAnimate 1.5s ease-in-out infinite;}@keyframes shimerAnimate{0%{background-position:100% 0;}100%{background-position:-100% 0;}}</style>'
+                const container = '<style>.ewt-loader-wrapper{position:absolute;width:100%;height:100%;top:0;left:0;z-index:99999;}.ewt-loader-container{width:100%;height:100%;}.ewt-loader-skeleton{--skbg:hsl(227deg, 13%, 50%, 0.2);display:grid;gap:20px;width:100%;height:100%;background:#ffffff;padding:15px;border-radius:8px;box-shadow:0 4px 12px rgba(0, 0, 0, 0.1);transition:transform 0.3s ease;transform:scale(1.02);}.ewt-loader-shimmer{display:flex;aspect-ratio:2/1;width:100%;height:100%;background:var(--skbg);border-radius:4px;overflow:hidden;position:relative;}.ewt-loader-shimmer::before{content:"";position:absolute;width:100%;height:100%;background-image:linear-gradient(-90deg,transparent 8%,rgba(255,255,255,0.28) 18%,transparent 33%);background-size:200%;animation:shimerAnimate 1.5s ease-in-out infinite;}@keyframes shimerAnimate{0%{background-position:100% 0;}100%{background-position:-100% 0;}}</style>'
 
-                return '<div class="lmat-loader-container">' + container + '<div class="lmat-loader-skeleton"><span class="lmat-loader-shimmer"></span></div></div>';
+                return '<div class="ewt-loader-container">' + container + '<div class="ewt-loader-skeleton"><span class="ewt-loader-shimmer"></span></div></div>';
             }
 
-            loader.className = 'lmat-loader-wrapper'; // Add the lmat class to the loader
+            loader.className = 'ewt-loader-wrapper'; // Add the ewt class to the loader
             loader.innerHTML = loaderContainer();
 
             this.loader = loader;
@@ -296,17 +296,17 @@
 
 
     window.addEventListener('load', () => {
-        const lmatCreateBlockObj = new lmatCreateNewBlock();
+        const ewtCreateBlockObj = new ewtCreateNewBlock();
 
-        lmatCreateBlockObj.copyBtnInitialize();
-        lmatCreateBlockObj.noticeInitialize();
+        ewtCreateBlockObj.copyBtnInitialize();
+        ewtCreateBlockObj.noticeInitialize();
 
         const urlParams = new URLSearchParams(window.location.search);
         let newBlock = '';
 
-        if (urlParams.has('lmat_new_block') && '' !== urlParams.get('lmat_new_block').trim()) {
-            newBlock = urlParams.get('lmat_new_block');
-            lmatCreateBlockObj.addBlockInitialize(newBlock);
+        if (urlParams.has('ewt_new_block') && '' !== urlParams.get('ewt_new_block').trim()) {
+            newBlock = urlParams.get('ewt_new_block');
+            ewtCreateBlockObj.addBlockInitialize(newBlock);
         }
     });
 })();

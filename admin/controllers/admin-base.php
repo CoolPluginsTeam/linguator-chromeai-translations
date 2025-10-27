@@ -1,19 +1,19 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Admin\Controllers;
+namespace EasyWPTranslator\Admin\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Base\LMAT_Base;
-use Linguator\Includes\Services\Links\LMAT_Links;
-use Linguator\Includes\Filters\LMAT_Filters_Links;
-use Linguator\Includes\Filters\LMAT_Filters_Widgets_Options;
-use Linguator\Includes\Other\LMAT_Language;
-use Linguator\Admin\Controllers\LMAT_Admin_Links;
+use EasyWPTranslator\Includes\Base\EWT_Base;
+use EasyWPTranslator\Includes\Services\Links\EWT_Links;
+use EasyWPTranslator\Includes\Filters\EWT_Filters_Links;
+use EasyWPTranslator\Includes\Filters\EWT_Filters_Widgets_Options;
+use EasyWPTranslator\Includes\Other\EWT_Language;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin_Links;
 use WP_Post;
 use WP_Term;
 
@@ -23,50 +23,50 @@ use WP_Term;
 
  */
 #[AllowDynamicProperties]
-abstract class LMAT_Admin_Base extends LMAT_Base {
+abstract class EWT_Admin_Base extends EWT_Base {
 	/**
 	 * Current language (used to filter the content).
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $curlang;
 
 	/**
 	 * Language selected in the admin language filter.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $filter_lang;
 
 	/**
 	 * Preferred language to assign to new contents.
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $pref_lang;
 
 	/**
-	 * @var LMAT_Filters_Links|null
+	 * @var EWT_Filters_Links|null
 	 */
 	public $filters_links;
 
 	/**
-	 * @var LMAT_Admin_Links|null
+	 * @var EWT_Admin_Links|null
 	 */
 	public $links;
 
 	/**
-	 * @var LMAT_Admin_Notices|null
+	 * @var EWT_Admin_Notices|null
 	 */
 	public $notices;
 
 	/**
-	 * @var LMAT_Admin_Static_Pages|null
+	 * @var EWT_Admin_Static_Pages|null
 	 */
 	public $static_pages;
 
 	/**
-	 * @var LMAT_Admin_Default_Term|null
+	 * @var EWT_Admin_Default_Term|null
 	 */
 	public $default_term;
 
@@ -74,7 +74,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 	 * Setups actions needed on all admin pages.
 	 *
 	 *
-	 * @param LMAT_Links_Model $links_model Reference to the links model.
+	 * @param EWT_Links_Model $links_model Reference to the links model.
 	 */
 	public function __construct( &$links_model ) {
 		parent::__construct( $links_model );
@@ -88,7 +88,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls_enqueue_scripts' ) );
 		// Early instantiated to be able to correctly initialize language properties.
-		$this->static_pages = new LMAT_Admin_Static_Pages( $this );
+		$this->static_pages = new EWT_Admin_Static_Pages( $this );
 		$this->model->set_languages_ready();
 	}
 
@@ -101,20 +101,20 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 	public function init() {
 		parent::init();
 
-		$this->notices = new LMAT_Admin_Notices( $this );
+		$this->notices = new EWT_Admin_Notices( $this );
 
-		$this->default_term = new LMAT_Admin_Default_Term( $this );
+		$this->default_term = new EWT_Admin_Default_Term( $this );
 		$this->default_term->add_hooks();
 
 		if ( ! $this->model->has_languages() ) {
 			return;
 		}
 
-		$this->links = new LMAT_Admin_Links( $this );
-		$this->filters_links = new LMAT_Filters_Links( $this );
+		$this->links = new EWT_Admin_Links( $this );
+		$this->filters_links = new EWT_Filters_Links( $this );
 
 		// Add view language links
-		new LMAT_Admin_View_Language_Links();
+		new EWT_Admin_View_Language_Links();
 
 		// Filter admin language for users
 		// We must not call user info before WordPress defines user roles in wp-settings.php
@@ -126,7 +126,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 	}
 
 	/**
-	 * Adds the link to the Linguator panel in the WordPress admin menu
+	 * Adds the link to the EasyWPTranslator panel in the WordPress admin menu
 	 *
 	 *  
 	 *
@@ -136,30 +136,30 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 		global $admin_page_hooks;
 
 		// Prepare the list of tabs
-		$tabs = array( 'lang' => __( 'Manage Languages', 'easy-web-translator' ) );
+		$tabs = array( 'lang' => __( 'Manage Languages', 'easy-wp-translator' ) );
 
 		// Only if at least one language has been created
 		$languages = $this->model->get_languages_list();
 		
 
-		$tabs['settings'] = __( 'Settings', 'easy-web-translator' );
+		$tabs['settings'] = __( 'Settings', 'easy-wp-translator' );
 
 		/**
-		 * Filter the list of tabs in Linguator settings
+		 * Filter the list of tabs in EasyWPTranslator settings
 		 *
 		 *  
 		 *
 		 * @param array $tabs list of tab names
 		 */
-		$tabs = apply_filters( 'lmat_settings_tabs', $tabs );
+		$tabs = apply_filters( 'ewt_settings_tabs', $tabs );
 
 		$parent = '';
 
 		foreach ( $tabs as $tab => $title ) {
-			$page = 'lang' === $tab ? 'lmat' : "lmat_$tab";
+			$page = 'lang' === $tab ? 'ewt' : "ewt_$tab";
 			if ( empty( $parent ) ) {
 				$parent = $page;
-				add_menu_page( $title, __( 'Linguator', 'easy-web-translator' ), 'manage_options', $page, '__return_null', 'dashicons-translation' );
+				add_menu_page( $title, __( 'EasyWPTranslator', 'easy-wp-translator' ), 'manage_options', $page, '__return_null', 'dashicons-translation' );
 				$admin_page_hooks[ $page ] = 'languages'; // Hack to avoid the localization of the hook name.
 			}
 
@@ -169,7 +169,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 
 	/**
 	 * Dummy method to display the 3 tabs pages: languages, strings translations, settings.
-	 * Overwritten in `LMAT_Settings`.
+	 * Overwritten in `EWT_Settings`.
 	 *
 	 *  
 	 *
@@ -186,16 +186,16 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 	 */
 	public function admin_enqueue_scripts() {
 		// Don't load admin scripts on wizard page as it has its own scripts
-		if ( \Linguator\Includes\Core\Linguator::is_wizard() ) {
+		if ( \EasyWPTranslator\Includes\Core\EasyWPTranslator::is_wizard() ) {
 			
 			return;
 		}
 
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_enqueue_script( 'lmat_admin', plugins_url( "admin/assets/js/build/admin{$suffix}.js", LINGUATOR_ROOT_FILE ), array( 'jquery' ), LINGUATOR_VERSION, true );
-		$inline_script = sprintf( 'let lmat_admin = %s;', wp_json_encode( array( 'ajax_filter' => $this->get_ajax_filter_data() ) ) );
-		wp_add_inline_script( 'lmat_admin', $inline_script, 'before' );
+		wp_enqueue_script( 'ewt_admin', plugins_url( "admin/assets/js/build/admin{$suffix}.js", EASY_WP_TRANSLATOR_ROOT_FILE ), array( 'jquery' ), EASY_WP_TRANSLATOR_VERSION, true );
+		$inline_script = sprintf( 'let ewt_admin = %s;', wp_json_encode( array( 'ajax_filter' => $this->get_ajax_filter_data() ) ) );
+		wp_add_inline_script( 'ewt_admin', $inline_script, 'before' );
 
 		$screen = get_current_screen();
 		if ( empty( $screen ) ) {
@@ -242,40 +242,40 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 
 		foreach ( $scripts as $script => $v ) {
 			if ( in_array( $screen->base, $v[0] ) && ( $v[2] || $this->model->has_languages() ) ) {
-				wp_enqueue_script( "lmat_{$script}", plugins_url( "admin/assets/js/build/{$script}{$suffix}.js", LINGUATOR_ROOT_FILE ), $v[1], LINGUATOR_VERSION, $v[3] );
+				wp_enqueue_script( "ewt_{$script}", plugins_url( "admin/assets/js/build/{$script}{$suffix}.js", EASY_WP_TRANSLATOR_ROOT_FILE ), $v[1], EASY_WP_TRANSLATOR_VERSION, $v[3] );
 				if ( 'classic-editor' === $script || 'block-editor' === $script ) {
-					wp_set_script_translations( "lmat_{$script}", 'linguator' );
+					wp_set_script_translations( "ewt_{$script}", 'easywptranslator' );
 				}
 			}
 		}
 
-		wp_register_style( 'linguator_admin', plugins_url( "admin/assets/css/build/admin{$suffix}.css", LINGUATOR_ROOT_FILE ), array( 'wp-jquery-ui-dialog' ), LINGUATOR_VERSION );
-		wp_enqueue_style( 'linguator_dialog', plugins_url( "admin/assets/css/build/dialog{$suffix}.css", LINGUATOR_ROOT_FILE ), array( 'linguator_admin' ), LINGUATOR_VERSION );
+		wp_register_style( 'easywptranslator_admin', plugins_url( "admin/assets/css/build/admin{$suffix}.css", EASY_WP_TRANSLATOR_ROOT_FILE ), array( 'wp-jquery-ui-dialog' ), EASY_WP_TRANSLATOR_VERSION );
+		wp_enqueue_style( 'easywptranslator_dialog', plugins_url( "admin/assets/css/build/dialog{$suffix}.css", EASY_WP_TRANSLATOR_ROOT_FILE ), array( 'easywptranslator_admin' ), EASY_WP_TRANSLATOR_VERSION );
 		
 		// Enqueue custom font for icons
-		$this->enqueue_linguator_font();
+		$this->enqueue_easywptranslator_font();
 
 		$this->add_inline_scripts();
 		$this->add_menu_redirect_script();
 	}
 
 	/**
-	 * Enqueues the Linguator custom font and its styles.
+	 * Enqueues the EasyWPTranslator custom font and its styles.
 	 * Centralized method to avoid loading the same CSS multiple times.
 	 *
 	 * @return void
 	 */
-	public function enqueue_linguator_font() {
+	public function enqueue_easywptranslator_font() {
 		// Only enqueue if not already enqueued
-		if ( ! wp_style_is( 'linguator-font', 'enqueued' ) ) {
-			wp_enqueue_style( 'linguator-font', plugins_url( 'assets/fonts/lmaticons.css', LINGUATOR_ROOT_FILE ), array(), LINGUATOR_VERSION );
+		if ( ! wp_style_is( 'easywptranslator-font', 'enqueued' ) ) {
+			wp_enqueue_style( 'easywptranslator-font', plugins_url( 'assets/fonts/ewticons.css', EASY_WP_TRANSLATOR_ROOT_FILE ), array(), EASY_WP_TRANSLATOR_VERSION );
 			
-			// Add custom CSS for the Linguator icon
+			// Add custom CSS for the EasyWPTranslator icon
 			$icon_css = "
 			/* Override dashicons-translation with custom font icon */
-			#adminmenu .toplevel_page_lmat .wp-menu-image:before,
-			#adminmenu .toplevel_page_lmat .dashicons-before:before {
-				font-family: 'linguator' !important;
+			#adminmenu .toplevel_page_ewt .wp-menu-image:before,
+			#adminmenu .toplevel_page_ewt .dashicons-before:before {
+				font-family: 'easywptranslator' !important;
 				content: '\\e900' !important;
 				font-size: 20px;
 				line-height: 1;
@@ -284,12 +284,12 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 			
 			/* Apply same icon to ab-icon class */
 			#wpadminbar #wp-admin-bar-languages .ab-icon:before {
-				font-family: 'linguator' !important;
+				font-family: 'easywptranslator' !important;
 				content: '\\e900' !important;
 				font-size: 20px;
 			}
 			";
-			wp_add_inline_style( 'linguator-font', $icon_css );
+			wp_add_inline_style( 'easywptranslator-font', $icon_css );
 		}
 	}
 
@@ -303,19 +303,19 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 	private function add_menu_redirect_script() {
 		$script = "
 		jQuery(document).ready(function($) {
-			// Find the main Linguator menu link (the one that points to the first submenu)
-			var mainMenuLink = $('a[href*=\"page=lmat\"][href*=\"admin.php\"]').first();
+			// Find the main EasyWPTranslator menu link (the one that points to the first submenu)
+			var mainMenuLink = $('a[href*=\"page=ewt\"][href*=\"admin.php\"]').first();
 			if (mainMenuLink.length) {
 				// Override the click event to redirect to settings
 				mainMenuLink.off('click').on('click', function(e) {
 					e.preventDefault();
-					window.location.href = '" . admin_url( 'admin.php?page=lmat_settings' ) . "';
+					window.location.href = '" . admin_url( 'admin.php?page=ewt_settings' ) . "';
 				});
 			}
 		});
 		";
 		
-		wp_add_inline_script( 'lmat_admin', $script );
+		wp_add_inline_script( 'ewt_admin', $script );
 	}
 
 	/**
@@ -328,7 +328,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 	 * @return bool True if the screen is a block editor, false otherwise.
 	 */
 	protected function is_block_editor( $screen ) {
-		return method_exists( $screen, 'is_block_editor' ) && $screen->is_block_editor() && !lmat_use_block_editor_plugin();
+		return method_exists( $screen, 'is_block_editor' ) && $screen->is_block_editor() && !ewt_use_block_editor_plugin();
 	}
 
 	/**
@@ -341,7 +341,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 	public function customize_controls_enqueue_scripts() {
 		if ( $this->model->has_languages() ) {
 			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-			wp_enqueue_script( 'lmat_widgets', plugins_url( 'admin/assets/js/build/widgets' . $suffix . '.js', LINGUATOR_ROOT_FILE ), array( 'jquery' ), LINGUATOR_VERSION, true );
+			wp_enqueue_script( 'ewt_widgets', plugins_url( 'admin/assets/js/build/widgets' . $suffix . '.js', EASY_WP_TRANSLATOR_ROOT_FILE ), array( 'jquery' ), EASY_WP_TRANSLATOR_VERSION, true );
 			$this->add_inline_scripts();
 		}
 	}
@@ -355,18 +355,18 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 	 * @return void
 	 */
 	private function add_inline_scripts() {
-		if ( wp_script_is( 'lmat_block-editor', 'enqueued' ) ) {
-			$default_lang_script = 'const lmatDefaultLanguage = ' . wp_json_encode( (string) $this->options['default_lang'] ) . ';';
+		if ( wp_script_is( 'ewt_block-editor', 'enqueued' ) ) {
+			$default_lang_script = 'const ewtDefaultLanguage = ' . wp_json_encode( (string) $this->options['default_lang'] ) . ';';
 			wp_add_inline_script(
-				'lmat_block-editor',
+				'ewt_block-editor',
 				$default_lang_script,
 				'before'
 			);
 		}
-		if ( wp_script_is( 'lmat_widgets', 'enqueued' ) ) {
+		if ( wp_script_is( 'ewt_widgets', 'enqueued' ) ) {
 			wp_localize_script(
-				'lmat_widgets',
-				'lmat_widgets',
+				'ewt_widgets',
+				'ewt_widgets',
 				array(
 					'flags' => wp_list_pluck( $this->model->get_languages_list(), 'flag', 'slug' ),
 				)
@@ -389,7 +389,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 	public function get_ajax_filter_data(): array {
 		global $post, $tag;
 
-		$params = array( 'lmat_ajax_backend' => 1 );
+		$params = array( 'ewt_ajax_backend' => 1 );
 		if ( $post instanceof WP_Post && $this->model->post_types->is_translated( $post->post_type ) ) {
 			$params['pll_post_id'] = $post->ID;
 		}
@@ -405,7 +405,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 		 *
 		 * @param array $params List of parameters to add to the admin ajax request.
 		 */
-		return (array) apply_filters( 'lmat_admin_ajax_params', $params );
+		return (array) apply_filters( 'ewt_admin_ajax_params', $params );
 	}
 
 	/**
@@ -419,7 +419,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 		$this->curlang = $this->filter_lang;
 
 		// Edit Post
-		if ( isset( $_REQUEST['lmat_post_id'] ) && $lang = $this->model->post->get_language( (int) $_REQUEST['lmat_post_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		if ( isset( $_REQUEST['ewt_post_id'] ) && $lang = $this->model->post->get_language( (int) $_REQUEST['ewt_post_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			$this->curlang = $lang;
 		} elseif ( 'post.php' === $GLOBALS['pagenow'] && isset( $_GET['post'] ) && $this->model->is_translated_post_type( get_post_type( (int) $_GET['post'] ) ) && $lang = $this->model->post->get_language( (int) $_GET['post'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			$this->curlang = $lang;
@@ -428,7 +428,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 		}
 
 		// Edit Term
-		elseif ( isset( $_REQUEST['lmat_term_id'] ) && $lang = $this->model->term->get_language( (int) $_REQUEST['lmat_term_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		elseif ( isset( $_REQUEST['ewt_term_id'] ) && $lang = $this->model->term->get_language( (int) $_REQUEST['ewt_term_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			$this->curlang = $lang;
 		} elseif ( in_array( $GLOBALS['pagenow'], array( 'edit-tags.php', 'term.php' ) ) && isset( $_GET['taxonomy'] ) && $this->model->is_translated_taxonomy( sanitize_key( $_GET['taxonomy'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			if ( isset( $_GET['tag_ID'] ) && $lang = $this->model->term->get_language( (int) $_GET['tag_ID'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
@@ -446,22 +446,22 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 		}
 
 		/**
-		 * Filters the current language used by Linguator in the admin context.
+		 * Filters the current language used by EasyWPTranslator in the admin context.
 		 *
 		 *  
 		 *
-		 * @param LMAT_Language|false|null $curlang  Instance of the current language.
-		 * @param LMAT_Admin_Base          $linguator Instance of the main Linguator's object.
+		 * @param EWT_Language|false|null $curlang  Instance of the current language.
+		 * @param EWT_Admin_Base          $easywptranslator Instance of the main EasyWPTranslator's object.
 		 */
-		$this->curlang = apply_filters( 'lmat_admin_current_language', $this->curlang, $this );
+		$this->curlang = apply_filters( 'ewt_admin_current_language', $this->curlang, $this );
 
 		// Inform that the admin language has been set.
-		if ( $this->curlang instanceof LMAT_Language ) {
+		if ( $this->curlang instanceof EWT_Language ) {
 			/** This action is documented in frontend/choose-lang.php */
-			do_action( 'lmat_language_defined', $this->curlang->slug, $this->curlang );
+			do_action( 'ewt_language_defined', $this->curlang->slug, $this->curlang );
 		} else {
-			/** This action is documented in include/class-linguator.php */
-			do_action( 'lmat_no_language_defined' ); // To load overridden textdomains.
+			/** This action is documented in include/class-easywptranslator.php */
+			do_action( 'ewt_no_language_defined' ); // To load overridden textdomains.
 		}
 	}
 
@@ -480,10 +480,10 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 		$is_edit_page = in_array( $GLOBALS['pagenow'], array( 'post.php', 'term.php' ) );
 		
 		if ( ! wp_doing_ajax() && ! empty( $_GET['lang'] ) && ! is_numeric( sanitize_key( $_GET['lang'] ) ) && ! $is_edit_page && current_user_can( 'edit_user', $user_id = get_current_user_id() ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-			update_user_meta( $user_id, 'lmat_filter_content', ( $lang = $this->model->get_language( sanitize_key( $_GET['lang'] ) ) ) ? $lang->slug : '' ); // phpcs:ignore WordPress.Security.NonceVerification
+			update_user_meta( $user_id, 'ewt_filter_content', ( $lang = $this->model->get_language( sanitize_key( $_GET['lang'] ) ) ) ? $lang->slug : '' ); // phpcs:ignore WordPress.Security.NonceVerification
 		}
 
-		$this->filter_lang = $this->model->get_language( get_user_meta( get_current_user_id(), 'lmat_filter_content', true ) );
+		$this->filter_lang = $this->model->get_language( get_user_meta( get_current_user_id(), 'ewt_filter_content', true ) );
 
 		// Set preferred language for use when saving posts and terms: must not be empty
 		$this->pref_lang = empty( $this->filter_lang ) ? $this->model->get_default_language() : $this->filter_lang;
@@ -494,9 +494,9 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 		 *
 		 *  
 		 *
-		 * @param LMAT_Language $pref_lang Preferred language.
+		 * @param EWT_Language $pref_lang Preferred language.
 		 */
-		$this->pref_lang = apply_filters( 'lmat_admin_preferred_language', $this->pref_lang );
+		$this->pref_lang = apply_filters( 'ewt_admin_preferred_language', $this->pref_lang );
 
 		$this->set_current_language();
 	}
@@ -527,7 +527,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 	public function admin_bar_menu( $wp_admin_bar ) {
 		$all_item = (object) array(
 			'slug' => 'all',
-			'name' => __( 'Show all languages', 'easy-web-translator' ),
+			'name' => __( 'Show all languages', 'easy-wp-translator' ),
 			'flag' => '<span class="ab-icon"></span>',
 		);
 
@@ -535,8 +535,8 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 
 		$title = sprintf(
 			'<span class="ab-label"%1$s><span class="screen-reader-text">%2$s</span>%3$s</span>',
-			$selected instanceof LMAT_Language ? sprintf( ' lang="%s"', esc_attr( $selected->get_locale( 'display' ) ) ) : '',
-			__( 'Filters content by language', 'easy-web-translator' ),
+			$selected instanceof EWT_Language ? sprintf( ' lang="%s"', esc_attr( $selected->get_locale( 'display' ) ) ) : '',
+			__( 'Filters content by language', 'easy-wp-translator' ),
 			esc_html( $selected->name )
 		);
 
@@ -553,7 +553,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 		 *
 		 * @param array $items The admin languages filter submenu items.
 		 */
-		$items = apply_filters( 'lmat_admin_languages_filter', $items, $all_items );
+		$items = apply_filters( 'ewt_admin_languages_filter', $items, $all_items );
 
 		if ( empty( $items ) ) {
 			return;
@@ -565,8 +565,8 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 				'title' => $selected->flag . $title,
 				'href'  => esc_url( add_query_arg( 'lang', $selected->slug, remove_query_arg( 'paged' ) ) ),
 				'meta'  => array(
-					'title' => __( 'Filters content by language', 'easy-web-translator' ),
-					'class' => 'all' === $selected->slug ? '' : 'lmat-filtered-languages',
+					'title' => __( 'Filters content by language', 'easy-wp-translator' ),
+					'class' => 'all' === $selected->slug ? '' : 'ewt-filtered-languages',
 				),
 			)
 		);
@@ -592,8 +592,8 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 	 * Remove the customize submenu when using a block theme.
 	 *
 	 * WordPress removes the Customizer menu if a block theme is activated and no other plugins interact with it.
-	 * As Linguator interacts with the Customizer, we have to delete this menu ourselves in the case of a block theme,
-	 * unless another plugin than Linguator interacts with the Customizer.
+	 * As EasyWPTranslator interacts with the Customizer, we have to delete this menu ourselves in the case of a block theme,
+	 * unless another plugin than EasyWPTranslator interacts with the Customizer.
 	 *
 	 *  
 	 *
@@ -615,7 +615,7 @@ abstract class LMAT_Admin_Base extends LMAT_Base {
 		}
 	}
 	/**
-	 * Tells if the Linguator's admin bar menu should be hidden for the current page.
+	 * Tells if the EasyWPTranslator's admin bar menu should be hidden for the current page.
 	 * Conventionally, it should be hidden on edition pages.
 	 *
 	 *

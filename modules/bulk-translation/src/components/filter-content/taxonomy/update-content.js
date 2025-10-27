@@ -7,7 +7,7 @@ import updateClassicContent from '../classic/update-content.js';
  */
 const updateTaxonomyContent=async ({source, lang, serviceProvider, postId})=>{
 
-    const postMetaSync = lmatBulkTranslationGlobal.postMetaSync === 'true' && lmatBulkTranslationGlobal.taxonomy_page !== 'taxonomy';
+    const postMetaSync = ewtBulkTranslationGlobal.postMetaSync === 'true' && ewtBulkTranslationGlobal.taxonomy_page !== 'taxonomy';
     
     if(postMetaSync){
         return source;

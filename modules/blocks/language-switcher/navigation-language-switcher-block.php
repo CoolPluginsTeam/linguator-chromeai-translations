@@ -1,21 +1,21 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Modules\Blocks;
+namespace EasyWPTranslator\Modules\Blocks;
 
 /**
  * Language switcher block for navigation.
  *
  */
-class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Switcher_Block {
+class EWT_Navigation_Language_Switcher_Block extends EWT_Abstract_Language_Switcher_Block {
 	/**
 	 * Placeholder used to add language name or flag after WordPress renders the link labels.
 	 *
 	 * @var string
 	 */
-	const PLACEHOLDER = '%lmat%';
+	const PLACEHOLDER = '%ewt%';
 
 	/**
 	 * Adds the required hooks specific to the navigation language switcher.
@@ -35,17 +35,17 @@ class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Swi
 	}
 
 	/**
-	 * Returns the navigation language switcher block name with the Linguator's namespace.
+	 * Returns the navigation language switcher block name with the EasyWPTranslator's namespace.
 	 *
 	 *
 	 * @return string The block name.
 	 */
 	protected function get_block_name() {
-		return 'linguator/navigation-language-switcher';
+		return 'easywptranslator/navigation-language-switcher';
 	}
 
 	/**
-	 * Returns the supported pieces of context for the 'linguator/navigation-language-switcher' block.
+	 * Returns the supported pieces of context for the 'easywptranslator/navigation-language-switcher' block.
 	 * This context will be inherited from the 'core/navigation' block.
 	 *
 	 *
@@ -72,7 +72,7 @@ class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Swi
 	}
 
 	/**
-	 * Renders the `linguator/navigation-language-switcher` block on server.
+	 * Renders the `easywptranslator/navigation-language-switcher` block on server.
 	 *
 
 	 *
@@ -83,7 +83,7 @@ class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Swi
 	 */
 	public function render( $attributes, $content, $block ) {
 		$attributes        = $this->set_attributes_for_block( $attributes );
-		$switcher          = new \Linguator\Includes\Controllers\LMAT_Switcher();
+		$switcher          = new \EasyWPTranslator\Includes\Controllers\EWT_Switcher();
 		$switcher_elements = (array) $switcher->the_languages( $this->links, array_merge( $attributes, array( 'raw' => true ) ) );
 
 		if ( empty( $switcher_elements ) ) {
@@ -155,10 +155,10 @@ class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Swi
 	public function register_switcher_menu_item_options_meta_rest_field() {
 		register_post_meta(
 			'nav_menu_item',
-			'_lmat_menu_item',
+			'_ewt_menu_item',
 			array(
 				'object_subtype' => 'nav_menu_item',
-				'description'    => __( 'Language switcher settings', 'easy-web-translator' ),
+				'description'    => __( 'Language switcher settings', 'easy-wp-translator' ),
 				'single'         => true,
 				'show_in_rest'   => array(
 					'schema' => array(
@@ -182,27 +182,27 @@ class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Swi
 	 */
 	public function register_custom_attributes( $metadata ) {
 		if ( 'core/navigation-link' === $metadata['name'] || 'core/navigation-submenu' === $metadata['name'] ) {
-			$lmat_attributes = array(
+			$ewt_attributes = array(
 				'hreflang'       => array(
 					'type' => 'string',
 				),
 				'lang'           => array(
 					'type' => 'string',
 				),
-				'lmat_show_flags' => array(
+				'ewt_show_flags' => array(
 					'type' => 'boolean',
 				),
-				'lmat_show_names' => array(
+				'ewt_show_names' => array(
 					'type' => 'boolean',
 				),
-				'lmat_flag'       => array(
+				'ewt_flag'       => array(
 					'type' => 'string',
 				),
-				'lmat_name'       => array(
+				'ewt_name'       => array(
 					'type' => 'string',
 				),
 			);
-			$metadata['attributes'] = array_merge( $metadata['attributes'], $lmat_attributes );
+			$metadata['attributes'] = array_merge( $metadata['attributes'], $ewt_attributes );
 		}
 
 		return $metadata;
@@ -221,10 +221,10 @@ class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Swi
 	 */
 	public function render_custom_attributes( $block_content, $block, $instance ) {
 		if ( ! isset(
-			$instance->attributes['lmat_show_flags'],
-			$instance->attributes['lmat_show_names'],
-			$instance->attributes['lmat_flag'],
-			$instance->attributes['lmat_name'],
+			$instance->attributes['ewt_show_flags'],
+			$instance->attributes['ewt_show_names'],
+			$instance->attributes['ewt_flag'],
+			$instance->attributes['ewt_name'],
 			$instance->attributes['lang'],
 			$instance->attributes['hreflang']
 		)
@@ -245,7 +245,7 @@ class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Swi
 					'aria-label',
 					str_replace(
 						static::PLACEHOLDER,
-						__( 'Languages', 'easy-web-translator' ),
+						__( 'Languages', 'easy-wp-translator' ),
 						(string) $content_tags->get_attribute( 'aria-label' )
 					)
 				);
@@ -259,12 +259,12 @@ class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Swi
 
 		$link_label = '';
 
-		if ( $instance->attributes['lmat_show_flags'] ) {
-			$link_label .= $instance->attributes['lmat_flag'];
+		if ( $instance->attributes['ewt_show_flags'] ) {
+			$link_label .= $instance->attributes['ewt_flag'];
 		}
 
-		if ( $instance->attributes['lmat_show_names'] ) {
-			$link_label .= $instance->attributes['lmat_show_flags'] ? ' ' . $instance->attributes['lmat_name'] : $instance->attributes['lmat_name'];
+		if ( $instance->attributes['ewt_show_names'] ) {
+			$link_label .= $instance->attributes['ewt_show_flags'] ? ' ' . $instance->attributes['ewt_name'] : $instance->attributes['ewt_name'];
 		}
 
 		return str_replace(
@@ -275,10 +275,10 @@ class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Swi
 	}
 
 	/**
-	 * Returns attributes that fit for core/navigation-link or core/navigation-submenu and specific to linguator/navigation-language-switcher.
+	 * Returns attributes that fit for core/navigation-link or core/navigation-submenu and specific to easywptranslator/navigation-language-switcher.
 	 *
 	 *
-	 * @param array $attributes    Array of linguator/navigation-language-switcher attributes.
+	 * @param array $attributes    Array of easywptranslator/navigation-language-switcher attributes.
 	 * @param array $switcher_item Array of a switcher item data.
 	 * @return array Attributes to be rendered by core.
 	 */
@@ -286,12 +286,12 @@ class LMAT_Navigation_Language_Switcher_Block extends LMAT_Abstract_Language_Swi
 		return array(
 			'label'          => static::PLACEHOLDER,
 			'url'            => $switcher_item['url'],
-			'lmat_show_flags' => $attributes['show_flags'],
-			'lmat_show_names' => $attributes['show_names'],
+			'ewt_show_flags' => $attributes['show_flags'],
+			'ewt_show_names' => $attributes['show_names'],
 			'lang'           => $switcher_item['locale'],
 			'hreflang'       => $switcher_item['locale'],
-			'lmat_flag'       => $switcher_item['flag'],
-			'lmat_name'       => $switcher_item['name'],
+			'ewt_flag'       => $switcher_item['flag'],
+			'ewt_name'       => $switcher_item['name'],
 			'className'      => trim( implode( ' ', (array) $switcher_item['classes'] ) ),
 		);
 	}

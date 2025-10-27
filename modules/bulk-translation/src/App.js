@@ -12,8 +12,8 @@ import Notice from './components/notice/index.js';
 
 const App = ({ onDestory, prefix, postIds }) => {
     const dispatch = useDispatch();
-    const { languageObject = {} } = lmatBulkTranslationGlobal || {};
-    const emptyPostIdsErrorMessage = sprintf(__('Please select at least one %s for translation.', 'easy-web-translator'), lmatBulkTranslationGlobal.post_label);
+    const { languageObject = {} } = ewtBulkTranslationGlobal || {};
+    const emptyPostIdsErrorMessage = sprintf(__('Please select at least one %s for translation.', 'easy-wp-translator'), ewtBulkTranslationGlobal.post_label);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [errorMessage, setErrorMessage] = useState(postIds.length === 0 ? emptyPostIdsErrorMessage : '');
     const [settingModalVisibility, setSettingModalVisibility] = useState(false);
@@ -34,7 +34,7 @@ const App = ({ onDestory, prefix, postIds }) => {
         const checkStatus = async () => {
             const status = await ChromeAiTranslator.languageSupportedStatus('en', 'hi', 'English', 'Hindi');
             if (status.type === 'browser-not-supported' || status.type === 'translation-api-not-available' || status.type === 'browser-not-supported') {
-                setLocalAiModalError(__(status.html[0].outerHTML, 'easy-web-translator'));
+                setLocalAiModalError(__(status.html[0].outerHTML, 'easy-wp-translator'));
             }
 
             setIsLoading(false);
@@ -51,7 +51,7 @@ const App = ({ onDestory, prefix, postIds }) => {
 
     const settingModalVisibilityHandler = async () => {
         if (selectedLanguages.length === 0 && !settingModalVisibility) {
-            setErrorMessage(__('Please select at least one language', 'easy-web-translator'));
+            setErrorMessage(__('Please select at least one language', 'easy-wp-translator'));
             setErrorModal(true);
             return;
         }
@@ -110,20 +110,20 @@ const App = ({ onDestory, prefix, postIds }) => {
 
         const notices = [];
       
-        const postMetaSync = lmatBulkTranslationGlobal.postMetaSync === 'true' && lmatBulkTranslationGlobal.taxonomy_page !== 'taxonomy';
+        const postMetaSync = ewtBulkTranslationGlobal.postMetaSync === 'true' && ewtBulkTranslationGlobal.taxonomy_page !== 'taxonomy';
 
           if (postMetaSync) {
             notices.push({
               className: `${prefix}-notice ${prefix}-notice-error`, message: <p>
-                {__('For accurate custom field translations, please disable the Custom Fields synchronization in ', 'easy-web-translator')}
+                {__('For accurate custom field translations, please disable the Custom Fields synchronization in ', 'easy-wp-translator')}
                 <a
-                  href={`${lmatBulkTranslationGlobal.admin_url}admin.php?page=lmat_settings`}
+                  href={`${ewtBulkTranslationGlobal.admin_url}admin.php?page=ewt_settings`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {__('Linguator settings', 'easy-web-translator')}
+                  {__('EasyWPTranslator settings', 'easy-wp-translator')}
                 </a>
-                {sprintf(__('. This may affect linked %s.', 'easy-web-translator'), lmatBulkTranslationGlobal.post_label)}
+                {sprintf(__('. This may affect linked %s.', 'easy-wp-translator'), ewtBulkTranslationGlobal.post_label)}
               </p>
             });
           }
@@ -163,11 +163,11 @@ const App = ({ onDestory, prefix, postIds }) => {
                 className={`${prefix}-language-container`}>
                 <div
                     className={`${prefix}-header`}>
-                    <h2>{__('Step 1: Select Languages', 'easy-web-translator')}</h2>
+                    <h2>{__('Step 1: Select Languages', 'easy-wp-translator')}</h2>
                     <span
                         className="close"
                         onClick={destroyApp}
-                        title={__('Close', 'easy-web-translator')}
+                        title={__('Close', 'easy-wp-translator')}
                     >
                         &times;
                     </span>
@@ -222,7 +222,7 @@ const App = ({ onDestory, prefix, postIds }) => {
                                 <label
                                     htmlFor="select-all-languages"
                                 >
-                                    {selectedLanguages.length === Object.keys(languageObject).length ? __('Unselect All', 'easy-web-translator') : __('Select All', 'easy-web-translator')}
+                                    {selectedLanguages.length === Object.keys(languageObject).length ? __('Unselect All', 'easy-wp-translator') : __('Select All', 'easy-wp-translator')}
                                 </label>
                             </div>
                         </div>
@@ -232,14 +232,14 @@ const App = ({ onDestory, prefix, postIds }) => {
                                 className={`${prefix}-footer-button button button-primary`}
                                 onClick={destroyApp}
                                 title={!postIds.length ? emptyPostIdsErrorMessage : ''}>
-                                {__('Close', 'easy-web-translator')}
+                                {__('Close', 'easy-wp-translator')}
                             </button>
                             <button
                                 className={`${prefix}-footer-button button button-primary`}
                                 onClick={settingModalVisibilityHandler}
                                 disabled={!postIds.length || !selectedLanguages.length}
-                                title={!postIds.length ? emptyPostIdsErrorMessage : (!selectedLanguages.length ? __('Please select at least one language', 'easy-web-translator') : '')}>
-                                {__('Translate', 'easy-web-translator')}
+                                title={!postIds.length ? emptyPostIdsErrorMessage : (!selectedLanguages.length ? __('Please select at least one language', 'easy-wp-translator') : '')}>
+                                {__('Translate', 'easy-wp-translator')}
                             </button>
                         </div>
                     </>}

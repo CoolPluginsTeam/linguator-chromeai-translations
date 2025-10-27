@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Models\Translated;
+namespace EasyWPTranslator\Includes\Models\Translated;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-use Linguator\Includes\Models\Translatable\LMAT_Translatable_Object;
-use Linguator\Includes\Other\LMAT_Model;
+use EasyWPTranslator\Includes\Models\Translatable\EWT_Translatable_Object;
+use EasyWPTranslator\Includes\Other\EWT_Model;
 use WP_Term;
 
 /**
@@ -20,7 +20,7 @@ use WP_Term;
  *
  *  
  */
-abstract class LMAT_Translated_Object extends LMAT_Translatable_Object {
+abstract class EWT_Translated_Object extends EWT_Translatable_Object {
 
 	/**
 	 * Taxonomy name for the translation groups.
@@ -36,9 +36,9 @@ abstract class LMAT_Translated_Object extends LMAT_Translatable_Object {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Model $model Instance of `LMAT_Model`.
+	 * @param EWT_Model $model Instance of `EWT_Model`.
 	 */
-	public function __construct( LMAT_Model $model ) {
+	public function __construct( EWT_Model $model ) {
 		parent::__construct( $model );
 
 		$this->tax_to_cache[] = $this->tax_translations;
@@ -65,7 +65,7 @@ abstract class LMAT_Translated_Object extends LMAT_Translatable_Object {
 				'public'                => false,
 				'query_var'             => false,
 				'rewrite'               => false,
-				'_lmat'                  => true,
+				'_ewt'                  => true,
 				'update_count_callback' => '_update_generic_term_count', // Count *all* objects to correctly detect unused terms.
 			)
 		);
@@ -90,7 +90,7 @@ abstract class LMAT_Translated_Object extends LMAT_Translatable_Object {
 	 *  
 	 *
 	 * @param int                     $id   Object ID.
-	 * @param LMAT_Language|string|int $lang Language to assign to the object.
+	 * @param EWT_Language|string|int $lang Language to assign to the object.
 	 * @return bool True when successfully assigned. False otherwise (or if the given language is already assigned to
 	 *              the object).
 	 */
@@ -187,7 +187,7 @@ abstract class LMAT_Translated_Object extends LMAT_Translatable_Object {
 
 		if ( empty( $term ) ) {
 			// Create a new term if necessary.
-			$group = uniqid( 'lmat_' );
+			$group = uniqid( 'ewt_' );
 			wp_insert_term( $group, $this->tax_translations, array( 'description' => maybe_serialize( $translations ) ) );
 		} else {
 			// Take care not to overwrite extra data stored in the description field, if any.
@@ -306,7 +306,7 @@ abstract class LMAT_Translated_Object extends LMAT_Translatable_Object {
 	 *  
 	 *
 	 * @param int                 $id   Object ID.
-	 * @param LMAT_Language|string $lang Language (slug or object).
+	 * @param EWT_Language|string $lang Language (slug or object).
 	 * @return int Object ID of the translation, `0` if there is none.
 	 *
 	 * @phpstan-return int<0, max>
@@ -330,7 +330,7 @@ abstract class LMAT_Translated_Object extends LMAT_Translatable_Object {
 	 *   Returns `0` instead of `false`.
 	 *
 	 * @param int                     $id   Object ID.
-	 * @param LMAT_Language|string|int $lang Language (object, slug, or term ID).
+	 * @param EWT_Language|string|int $lang Language (object, slug, or term ID).
 	 * @return int The translation object ID if exists. `0` if the passed object has no language or if not translated.
 	 *
 	 * @phpstan-return int<0, max>
@@ -383,7 +383,7 @@ abstract class LMAT_Translated_Object extends LMAT_Translatable_Object {
 		 *                         Defaults to true.
 		 * @param int       $id    The synchronization source object ID.
 		 */
-		$check = apply_filters( "lmat_pre_current_user_can_synchronize_{$this->type}", true, $id );
+		$check = apply_filters( "ewt_pre_current_user_can_synchronize_{$this->type}", true, $id );
 
 		if ( null !== $check ) {
 			return (bool) $check;
@@ -563,7 +563,7 @@ abstract class LMAT_Translated_Object extends LMAT_Translatable_Object {
 		$count       = array();
 
 		foreach ( $translations as $t ) {
-			$term = uniqid( 'lmat_' ); // The term name.
+			$term = uniqid( 'ewt_' ); // The term name.
 			$terms[] = array( $term, $term );
 			$slugs[] = $term;
 			$description[ $term ] = maybe_serialize( $t );

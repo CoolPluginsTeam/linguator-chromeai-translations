@@ -1,15 +1,15 @@
 <?php
 /**
- * @package Linguator 
+ * @package EasyWPTranslator 
  */
 
-namespace Linguator\Modules\Editors\Screens;
+namespace EasyWPTranslator\Modules\Editors\Screens;
 
-use Linguator\Includes\Other\LMAT_Model;
-use Linguator\Includes\Base\LMAT_Base;
+use EasyWPTranslator\Includes\Other\EWT_Model;
+use EasyWPTranslator\Includes\Base\EWT_Base;
 use WP_Screen;
-use Linguator\Includes\Other\LMAT_Language;
-use Linguator\Admin\Controllers\LMAT_Admin_Block_Editor;
+use EasyWPTranslator\Includes\Other\EWT_Language;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin_Block_Editor;
 
 /**
  * Class to manage Widget editor scripts.
@@ -39,7 +39,7 @@ class Widget extends Abstract_Screen {
 	}
 
 	/**
-	 * Method that allows legacy widgets in widget block editor previously removed by WP and hide legacy Linguator widget.
+	 * Method that allows legacy widgets in widget block editor previously removed by WP and hide legacy EasyWPTranslator widget.
 	 *
 	 *
 	 * @param array $widget_ids An array of hidden widget ids.
@@ -49,7 +49,7 @@ class Widget extends Abstract_Screen {
 		$widgets_to_show = array( 'custom_html' );
 		$widget_ids = array_diff( $widget_ids, $widgets_to_show );
 
-		$widgets_to_hide = array( 'linguator' );
+		$widgets_to_hide = array( 'easywptranslator' );
 		$widget_ids = array_merge( $widget_ids, $widgets_to_hide );
 
 		return $widget_ids;
@@ -77,12 +77,12 @@ class Widget extends Abstract_Screen {
 	 * Returns the language to use in the Widget editor.
 	 *
 	 *
-	 * @return LMAT_Language|null
+	 * @return EWT_Language|null
 	 */
-	protected function get_language(): ?LMAT_Language {
+	protected function get_language(): ?EWT_Language {
 		$language = $this->model->languages->get_default();
 
-		return $language instanceof LMAT_Language ? $language : null;
+		return $language instanceof EWT_Language ? $language : null;
 	}
 
 	/**

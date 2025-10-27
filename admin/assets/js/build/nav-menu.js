@@ -13,10 +13,10 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 /**
  * Handles the options in the language switcher nav menu metabox.
  *
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-var lmatNavMenu = {
+var ewtNavMenu = {
   /**
    * The element wrapping the menu elements.
    *
@@ -28,22 +28,22 @@ var lmatNavMenu = {
    */
   init: function init() {
     if (document.readyState !== 'loading') {
-      lmatNavMenu.ready();
+      ewtNavMenu.ready();
     } else {
-      document.addEventListener('DOMContentLoaded', lmatNavMenu.ready);
+      document.addEventListener('DOMContentLoaded', ewtNavMenu.ready);
     }
   },
   /**
    * Called when the DOM is ready. Attaches the events to the wrapper.
    */
   ready: function ready() {
-    lmatNavMenu.wrapper = document.getElementById('menu-to-edit');
-    if (!lmatNavMenu.wrapper) {
+    ewtNavMenu.wrapper = document.getElementById('menu-to-edit');
+    if (!ewtNavMenu.wrapper) {
       return;
     }
-    lmatNavMenu.wrapper.addEventListener('click', lmatNavMenu.printMetabox);
-    lmatNavMenu.wrapper.addEventListener('change', lmatNavMenu.ensureContent);
-    lmatNavMenu.wrapper.addEventListener('change', lmatNavMenu.showHideRows);
+    ewtNavMenu.wrapper.addEventListener('click', ewtNavMenu.printMetabox);
+    ewtNavMenu.wrapper.addEventListener('change', ewtNavMenu.ensureContent);
+    ewtNavMenu.wrapper.addEventListener('change', ewtNavMenu.showHideRows);
   },
   printMetabox: {
     /**
@@ -61,7 +61,7 @@ var lmatNavMenu = {
         // Should not happen.
         return;
       }
-      if (!metabox.querySelectorAll('input[value="#lmat_switcher"][type=text]').length) {
+      if (!metabox.querySelectorAll('input[value="#ewt_switcher"][type=text]').length) {
         // Not our metabox, or already replaced.
         return;
       }
@@ -72,20 +72,20 @@ var lmatNavMenu = {
           el.remove();
         }
       });
-      var t = lmatNavMenu.printMetabox;
+      var t = ewtNavMenu.printMetabox;
       var itemId = Number(metabox.id.replace('menu-item-settings-', ''));
-      metabox.append(t.createHiddenInput('title', itemId, lmat_data.title)); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.append
-      metabox.append(t.createHiddenInput('url', itemId, '#lmat_switcher')); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.append
-      metabox.append(t.createHiddenInput('lmat-detect', itemId, 1)); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.append
+      metabox.append(t.createHiddenInput('title', itemId, ewt_data.title)); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.append
+      metabox.append(t.createHiddenInput('url', itemId, '#ewt_switcher')); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.append
+      metabox.append(t.createHiddenInput('ewt-detect', itemId, 1)); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.append
 
       var ids = Array('hide_if_no_translation', 'hide_current', 'force_home', 'show_flags', 'show_names', 'dropdown'); // Reverse order.
-      var isValDefined = typeof lmat_data.val[itemId] !== 'undefined';
+      var isValDefined = typeof ewt_data.val[itemId] !== 'undefined';
       ids.forEach(function (optionName) {
         // Create the checkbox's wrapper.
         var inputWrapper = t.createElement('p', {
           class: 'description'
         });
-        if ('hide_current' === optionName && isValDefined && 1 === lmat_data.val[itemId].dropdown) {
+        if ('hide_current' === optionName && isValDefined && 1 === ewt_data.val[itemId].dropdown) {
           // Hide the `hide_current` checkbox if `dropdown` is checked.
           inputWrapper.classList.add('hidden');
         }
@@ -96,7 +96,7 @@ var lmatNavMenu = {
         var label = t.createElement('label', {
           'for': inputId
         });
-        label.innerText = " ".concat(lmat_data.strings[optionName]);
+        label.innerText = " ".concat(ewt_data.strings[optionName]);
         inputWrapper.append(label); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.append
 
         // Create the checkbox.
@@ -106,7 +106,7 @@ var lmatNavMenu = {
           name: "menu-item-".concat(optionName, "[").concat(itemId, "]"),
           value: 1
         });
-        if (isValDefined && 1 === lmat_data.val[itemId][optionName] || !isValDefined && 'show_names' === optionName) {
+        if (isValDefined && 1 === ewt_data.val[itemId][optionName] || !isValDefined && 'show_names' === optionName) {
           // `show_names` as default value.
           cb.checked = true;
         }
@@ -122,7 +122,7 @@ var lmatNavMenu = {
      * @return {HTMLElement} The input element.
      */
     createHiddenInput: function createHiddenInput(id, itemId, value) {
-      return lmatNavMenu.printMetabox.createElement('input', {
+      return ewtNavMenu.printMetabox.createElement('input', {
         type: 'hidden',
         id: "edit-menu-item-".concat(id, "-").concat(itemId),
         name: "menu-item-".concat(id, "[").concat(itemId, "]"),
@@ -159,7 +159,7 @@ var lmatNavMenu = {
         // Now checked, nothing to do.
         return;
       }
-      var matches = event.target.id.match(lmatNavMenu.ensureContent.regExpr);
+      var matches = event.target.id.match(ewtNavMenu.ensureContent.regExpr);
       if (!matches) {
         // Not the checkbox we want.
         return;
@@ -185,7 +185,7 @@ var lmatNavMenu = {
         // Not the checkbox we want.
         return;
       }
-      var matches = event.target.id.match(lmatNavMenu.showHideRows.regExpr);
+      var matches = event.target.id.match(ewtNavMenu.showHideRows.regExpr);
       if (!matches) {
         // Not the checkbox we want.
         return;
@@ -207,6 +207,6 @@ var lmatNavMenu = {
     }
   }
 };
-lmatNavMenu.init();
+ewtNavMenu.init();
 /******/ })()
 ;

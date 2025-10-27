@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\wpseo;
+namespace EasyWPTranslator\Integrations\wpseo;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -16,7 +16,7 @@ use Yoast\WP\SEO\Presenters\Abstract_Indexable_Presenter;
  *
  *  
  */
-final class LMAT_WPSEO_OGP extends Abstract_Indexable_Presenter {
+final class EWT_WPSEO_OGP extends Abstract_Indexable_Presenter {
 	/**
 	 * Facebook locale
 	 *

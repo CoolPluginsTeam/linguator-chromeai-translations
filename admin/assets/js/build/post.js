@@ -4,7 +4,7 @@ function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 /**
@@ -56,11 +56,11 @@ jQuery(function ($) {
          * Filters the category checklist.
          */
         function filter_terms(lang) {
-          if ("undefined" != typeof lmat_term_languages) {
-            $.each(lmat_term_languages, function (lg, term_tax) {
+          if ("undefined" != typeof ewt_term_languages) {
+            $.each(ewt_term_languages, function (lg, term_tax) {
               $.each(term_tax, function (tax, terms) {
                 $.each(terms, function (i) {
-                  var id = '#' + tax + '-' + lmat_term_languages[lg][tax][i];
+                  var id = '#' + tax + '-' + ewt_term_languages[lg][tax][i];
                   lang == lg ? $(id).show() : $(id).hide();
                 });
               });
@@ -72,10 +72,10 @@ jQuery(function ($) {
          * Filters the parent page dropdown list.
          */
         function filter_pages(lang) {
-          if ("undefined" != typeof lmat_page_languages) {
-            $.each(lmat_page_languages, function (lg, pages) {
+          if ("undefined" != typeof ewt_page_languages) {
+            $.each(ewt_page_languages, function (lg, pages) {
               $.each(pages, function (i) {
-                var v = $('#post_parent option[value="' + lmat_page_languages[lg][i] + '"]');
+                var v = $('#post_parent option[value="' + ewt_page_languages[lg][i] + '"]');
                 lang == lg ? v.show() : v.hide();
               });
             });
@@ -116,12 +116,12 @@ jQuery(function ($) {
         translations.push($(this).parent().parent().attr('id').substring(5));
       });
       var data = {
-        action: 'lmat_update_post_rows',
+        action: 'ewt_update_post_rows',
         post_id: post_id,
         translations: translations.join(','),
         post_type: $("input[name='post_type']").val(),
         screen: $("input[name='screen']").val(),
-        _lmat_nonce: $("input[name='_inline_edit']").val() // reuse quick edit nonce
+        _ewt_nonce: $("input[name='_inline_edit']").val() // reuse quick edit nonce
       };
 
       // get the modified rows in ajax and update them
@@ -129,12 +129,12 @@ jQuery(function ($) {
         if (response) {
           // Since WP changeset #52710 parseAjaxResponse() return content to notice the user in a HTML tag with ajax-response id.
           // Not to disturb this behaviour by executing another ajax request in the ajaxSuccess event, we need to target another unexisting id.
-          var res = wpAjax.parseAjaxResponse(response, 'lmat-ajax-response');
+          var res = wpAjax.parseAjaxResponse(response, 'ewt-ajax-response');
           $.each(res.responses, function () {
             if ('row' == this.what) {
               // data is built with a call to WP_Posts_List_Table::single_row method
               // which uses internally other WordPress methods which escape correctly values.
-              // For Linguator language columns the HTML code is correctly escaped in LMAT_Admin_Filters_Columns::post_column method.
+              // For EasyWPTranslator language columns the HTML code is correctly escaped in EWT_Admin_Filters_Columns::post_column method.
               $("#post-" + this.supplemental.post_id).replaceWith(this.data); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.replaceWith
             }
           });

@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Models;
+namespace EasyWPTranslator\Includes\Models;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,12 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-use Linguator\Includes\Models\Translated\LMAT_Translated_Term;
+use EasyWPTranslator\Includes\Models\Translated\EWT_Translated_Term;
 
 
 
 /**
- * Model for taxonomies filtered/translated by Linguator.
+ * Model for taxonomies filtered/translated by EasyWPTranslator.
  *
  *  
  */
@@ -24,7 +24,7 @@ class Taxonomies {
 	/**
 	 * Translated term model.
 	 *
-	 * @var LMAT_Translated_Term
+	 * @var EWT_Translated_Term
 	 */
 	public $translated_object;
 
@@ -33,9 +33,9 @@ class Taxonomies {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Translated_Term $translated_object Terms model.
+	 * @param EWT_Translated_Term $translated_object Terms model.
 	 */
-	public function __construct( LMAT_Translated_Term $translated_object ) {
+	public function __construct( EWT_Translated_Term $translated_object ) {
 		$this->translated_object = $translated_object;
 	}
 
@@ -48,14 +48,14 @@ class Taxonomies {
 	 *  
 	 *
 	 * @param bool $filter True if we should return only valid registered taxonomies.
-	 * @return string[] Array of registered taxonomy names for which Linguator manages languages and translations.
+	 * @return string[] Array of registered taxonomy names for which EasyWPTranslator manages languages and translations.
 	 */
 	public function get_translated( $filter = true ): array {
 		return $this->translated_object->get_translated_object_types( $filter );
 	}
 
 	/**
-	 * Returns true if Linguator manages languages and translations for this taxonomy.
+	 * Returns true if EasyWPTranslator manages languages and translations for this taxonomy.
 	 *
 	 *  
 	 *
@@ -96,16 +96,16 @@ class Taxonomies {
 			 *  
 			 *
 			 * @param string[] $taxonomies  List of taxonomy names.
-			 * @param bool     $is_settings True when displaying the list of custom taxonomies in Linguator settings.
+			 * @param bool     $is_settings True when displaying the list of custom taxonomies in EasyWPTranslator settings.
 			 */
-			$taxonomies = apply_filters( 'lmat_filtered_taxonomies', $taxonomies, false );
+			$taxonomies = apply_filters( 'ewt_filtered_taxonomies', $taxonomies, false );
 		}
 
 		return $filter ? array_intersect( $taxonomies, get_taxonomies() ) : $taxonomies;
 	}
 
 	/**
-	 * Returns true if Linguator filters this taxonomy per language.
+	 * Returns true if EasyWPTranslator filters this taxonomy per language.
 	 *
 	 *  
 	 *

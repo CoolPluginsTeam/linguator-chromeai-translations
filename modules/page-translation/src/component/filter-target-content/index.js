@@ -1,13 +1,13 @@
 const FilterTargetContent = (props) => {
     const skipTags = props.skipTags || [];
-    const OpenSpanPlaceholder = '#lmat_page_translation_open_translate_span#';
-    const CloseSpanPlaceholder = '#lmat_page_translation_close_translate_span#';
-    const OpenTempTagPlaceholder = '#lmat_page_translation_temp_tag_open#';
-    const CloseTempTagPlaceholder = '#lmat_page_translation_temp_tag_close#';
-    const LessThanSymbol = '#lmat_page_translation_less_then_symbol#';
-    const GreaterThanSymbol = '#lmat_page_translation_greater_then_symbol#';
-    const entityOpenPlaceholder = '#lmat_page_translation_entity_open_translate_span#';
-    const entityClosePlaceholder = '#lmat_page_translation_entity_close_translate_span#';
+    const OpenSpanPlaceholder = '#ewt_page_translation_open_translate_span#';
+    const CloseSpanPlaceholder = '#ewt_page_translation_close_translate_span#';
+    const OpenTempTagPlaceholder = '#ewt_page_translation_temp_tag_open#';
+    const CloseTempTagPlaceholder = '#ewt_page_translation_temp_tag_close#';
+    const LessThanSymbol = '#ewt_page_translation_less_then_symbol#';
+    const GreaterThanSymbol = '#ewt_page_translation_greater_then_symbol#';
+    const entityOpenPlaceholder = '#ewt_page_translation_entity_open_translate_span#';
+    const entityClosePlaceholder = '#ewt_page_translation_entity_close_translate_span#';
 
     const removeInnerSpanPlaceholder = (content) => {
         return content.replace(new RegExp(OpenSpanPlaceholder, 'g'), '').replace(new RegExp(CloseSpanPlaceholder, 'g'), '');
@@ -33,8 +33,8 @@ const FilterTargetContent = (props) => {
         let match;
 
         while ((match = tagRegex.exec(content)) !== null) {
-            const [fullMatch, tagName] = match;
-            const isClosingTag = fullMatch.startsWith('</');
+            const [fulEWTch, tagName] = match;
+            const isClosingTag = fulEWTch.startsWith('</');
             const currentIndex = match.index;
 
             // Append content before this tag
@@ -45,17 +45,17 @@ const FilterTargetContent = (props) => {
             if (!isClosingTag) {
                 // Opening tag: push to stack
                 stack.push({ tag: tagName });
-                result += fullMatch;
+                result += fulEWTch;
             } else {
                 // Closing tag
                 const openIndex = stack.findIndex(t => t.tag === tagName);
                 if (openIndex !== -1) {
                     // Match found: remove opening from stack
                     stack.splice(openIndex, 1);
-                    result += fullMatch;
+                    result += fulEWTch;
                 } else {
                     // No opening tag: insert missing opening tag before closing
-                    result += `${OpenTempTagPlaceholder}<${tagName}>${CloseTempTagPlaceholder}` + fullMatch;
+                    result += `${OpenTempTagPlaceholder}<${tagName}>${CloseTempTagPlaceholder}` + fulEWTch;
                 }
             }
 
@@ -429,7 +429,7 @@ const FilterTargetContent = (props) => {
                 content.map((data, index) => {
                     const notTranslate = notTranslatePattern.test(data);
                     if (notTranslate) {
-                        return <span key={index} className="notranslate lmat-page-translation-notraslate-tag" translate="no">{filterContent(data)}</span>;
+                        return <span key={index} className="notranslate ewt-page-translation-notraslate-tag" translate="no">{filterContent(data)}</span>;
                     } else {
                         return data;
                     }

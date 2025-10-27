@@ -1,5 +1,5 @@
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 // Translations autocomplete input box.
@@ -7,16 +7,16 @@ export function initMetaboxAutoComplete() {
 	jQuery('.tr_lang').each(
 		function () {
 			var tr_lang = jQuery(this).attr('id').substring(8);
-			var td = jQuery(this).parent().parent().siblings('.lmat-edit-column');
+			var td = jQuery(this).parent().parent().siblings('.ewt-edit-column');
 
 			jQuery(this).autocomplete(
 				{
 					minLength: 0,
-					source: ajaxurl + '?action=lmat_posts_not_translated' +
+					source: ajaxurl + '?action=ewt_posts_not_translated' +
 						'&post_language=' + jQuery('.post_lang_choice').val() +
 						'&translation_language=' + tr_lang +
 						'&post_type=' + jQuery('#post_type').val() +
-						'&_lmat_nonce=' + jQuery('#_lmat_nonce').val(),
+						'&_ewt_nonce=' + jQuery('#_ewt_nonce').val(),
 					select: function (event, ui) {
 						jQuery('#htr_lang_' + tr_lang).val(ui.item.id);
 						// ui.item.link is built and come from server side and is well escaped when necessary

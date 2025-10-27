@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Models\Translated;
+namespace EasyWPTranslator\Includes\Models\Translated;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,12 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-use Linguator\Includes\Options\Options;
-use Linguator\Includes\Models\Translatable\LMAT_Translatable_Object_With_Types_Interface;
-use Linguator\Includes\Models\Translatable\LMAT_Translatable_Object_With_Types_Trait;
-use Linguator\Includes\Other\LMAT_Model;
-use Linguator\Includes\Other\LMAT_Language;
-use Linguator\Includes\Other\LMAT_Switch_Language;
+use EasyWPTranslator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Models\Translatable\EWT_Translatable_Object_With_Types_Interface;
+use EasyWPTranslator\Includes\Models\Translatable\EWT_Translatable_Object_With_Types_Trait;
+use EasyWPTranslator\Includes\Other\EWT_Model;
+use EasyWPTranslator\Includes\Other\EWT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Switch_Language;
 use WP_Error;
 use WP_Post;
 
@@ -27,9 +27,9 @@ use WP_Post;
  *
  *  
  *
- * @phpstan-import-type DBInfoWithType from LMAT_Translatable_Object_With_Types_Interface
+ * @phpstan-import-type DBInfoWithType from EWT_Translatable_Object_With_Types_Interface
  */
-class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Translatable_Object_With_Types_Interface {
+class EWT_Translated_Post extends EWT_Translated_Object implements EWT_Translatable_Object_With_Types_Interface {
 
 	/**
 	 * Taxonomy name for the languages.
@@ -38,7 +38,7 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 	 *
 	 * @phpstan-var non-empty-string
 	 */
-	protected $tax_language = 'lmat_language';
+	protected $tax_language = 'ewt_language';
 
 	/**
 	 * Identifier that must be unique for each type of content.
@@ -66,16 +66,16 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 	 *
 	 * @phpstan-var non-empty-string
 	 */
-	protected $tax_translations = 'lmat_post_translations';
+	protected $tax_translations = 'ewt_post_translations';
 
 	/**
 	 * Constructor.
 	 *
 	 *  
 	 *
-	 * @param LMAT_Model $model Instance of `LMAT_Model`.
+	 * @param EWT_Model $model Instance of `EWT_Model`.
 	 */
-	public function __construct( LMAT_Model $model ) {
+	public function __construct( EWT_Model $model ) {
 		parent::__construct( $model );
 
 		$this->init();
@@ -98,9 +98,9 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 				'show_ui'            => false, // Hide the taxonomy on admin side, needed for WP 4.4.x.
 				'show_in_nav_menus'  => false, // No metabox for nav menus, needed for WP 4.4.x.
 				'publicly_queryable' => true, // Since WP 4.5.
-				'query_var'          => 'lmat_lang', // See `add_language_taxonomy_query_var()`.
+				'query_var'          => 'ewt_lang', // See `add_language_taxonomy_query_var()`.
 				'rewrite'            => false, // Rewrite rules are added through filters when needed.
-				'_lmat'               => true, // Linguator taxonomy.
+				'_ewt'               => true, // EasyWPTranslator taxonomy.
 			)
 		);
 
@@ -116,7 +116,7 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 	 * @return void
 	 */
 	public function add_language_taxonomy_query_var(): void {
-		$GLOBALS['wp']->add_query_var( 'lmat_lang' );
+		$GLOBALS['wp']->add_query_var( 'ewt_lang' );
 	}
 
 	/**
@@ -162,7 +162,7 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 	 *  
 	 *
 	 * @param bool $filter True if we should return only valid registered object types.
-	 * @return string[] Object type names for which Linguator manages languages.
+	 * @return string[] Object type names for which EasyWPTranslator manages languages.
 	 *
 	 * @phpstan-return array<non-empty-string, non-empty-string>
 	 */
@@ -192,9 +192,9 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 			 *  
 			 *
 			 * @param string[] $post_types  List of post type names (as array keys and values).
-			 * @param bool     $is_settings True when displaying the list of custom post types in Linguator settings.
+			 * @param bool     $is_settings True when displaying the list of custom post types in EasyWPTranslator settings.
 			 */
-			$post_types = (array) apply_filters( 'lmat_get_post_types', $post_types, false );
+			$post_types = (array) apply_filters( 'ewt_get_post_types', $post_types, false );
 
 			if ( did_action( 'after_setup_theme' ) && ! doing_action( 'switch_blog' ) ) {
 				$this->cache->set( 'post_types', $post_types );
@@ -206,7 +206,7 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 	}
 
 	/**
-	 * Returns true if Linguator manages languages for this object type.
+	 * Returns true if EasyWPTranslator manages languages for this object type.
 	 *
 	 *  
 	 *
@@ -331,7 +331,7 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 	 *  
 	 *
 	 * @param int                 $post_id Original attachment id.
-	 * @param string|LMAT_Language $lang    New translation language.
+	 * @param string|EWT_Language $lang    New translation language.
 	 * @return int Attachment id of the translated media.
 	 */
 	public function create_media_translation( $post_id, $lang ) {
@@ -352,18 +352,18 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 		}
 
 		// Create a new attachment ( translate attachment parent if exists ).
-		add_filter( 'lmat_enable_duplicate_media', '__return_false', 99 ); // Avoid a conflict with automatic duplicate at upload.
+		add_filter( 'ewt_enable_duplicate_media', '__return_false', 99 ); // Avoid a conflict with automatic duplicate at upload.
 		unset( $post['ID'] ); // Will force the creation.
 		if ( ! empty( $post['post_parent'] ) ) {
 			$post['post_parent'] = (int) $this->get_translation( $post['post_parent'], $lang->slug );
 		}
-		$post['tax_input'] = array( 'lmat_language' => array( $lang->slug ) ); // Assigns the language.
+		$post['tax_input'] = array( 'ewt_language' => array( $lang->slug ) ); // Assigns the language.
 
 		// Loads the strings translations with the attachment's target language.
-		LMAT()->load_strings_translations( $lang->slug );
+		EWT()->load_strings_translations( $lang->slug );
 
 		$tr_id = wp_insert_attachment( wp_slash( $post ) );
-		remove_filter( 'lmat_enable_duplicate_media', '__return_false', 99 ); // Restore automatic duplicate at upload.
+		remove_filter( 'ewt_enable_duplicate_media', '__return_false', 99 ); // Restore automatic duplicate at upload.
 
 		// Copy metadata.
 		$data = wp_get_attachment_metadata( $post_id, true ); // Unfiltered.
@@ -387,7 +387,7 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 		$translations[ $lang->slug ] = $tr_id;
 		$this->save_translations( $tr_id, $translations );
 
-		$switch_language = new LMAT_Switch_Language();
+		$switch_language = new EWT_Switch_Language();
 		$switch_language->switch_language( $lang );
 
 		/**
@@ -399,11 +399,11 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 		 * @param int    $tr_id   Post id of the new media translation.
 		 * @param string $slug    Language code of the new translation.
 		 */
-		do_action( 'lmat_translate_media', $post_id, $tr_id, $lang->slug );
+		do_action( 'ewt_translate_media', $post_id, $tr_id, $lang->slug );
 
 		// Restores the strings translations with the current language.
-		if ( LMAT()->curlang instanceof LMAT_Language ) {
-			LMAT()->load_strings_translations( LMAT()->curlang->slug );
+		if ( EWT()->curlang instanceof EWT_Language ) {
+			EWT()->load_strings_translations( EWT()->curlang->slug );
 		}
 
 		return $tr_id;
@@ -415,12 +415,12 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 	 *  
 	 *
 	 * @param string       $type            Post type.
-	 * @param LMAT_Language $untranslated_in The language the posts must not be translated in.
-	 * @param LMAT_Language $lang            Language of the searched posts.
+	 * @param EWT_Language $untranslated_in The language the posts must not be translated in.
+	 * @param EWT_Language $lang            Language of the searched posts.
 	 * @param string       $search          Limit the results to the posts matching this string.
 	 * @return WP_Post[] Array of posts.
 	 */
-	public function get_untranslated( $type, LMAT_Language $untranslated_in, LMAT_Language $lang, $search = '' ) {
+	public function get_untranslated( $type, EWT_Language $untranslated_in, EWT_Language $lang, $search = '' ) {
 		global $wpdb;
 
 		$args = array( 'numberposts' => 20 ); // Limit to 20 posts by default.
@@ -433,7 +433,7 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 		 *
 		 * @param array $args WP_Query arguments
 		 */
-		$args = apply_filters( 'lmat_ajax_posts_not_translated_args', $args );
+		$args = apply_filters( 'ewt_ajax_posts_not_translated_args', $args );
 
 		$limit             = $args['numberposts'];
 		$search_like       = '%' . $wpdb->esc_like( $search ) . '%';
@@ -467,7 +467,7 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 		$posts = array();
 		foreach ( $all_posts as $post ) {
 			// Check if this post already has translations
-			$translation_terms = wp_get_object_terms( $post->ID, 'lmat_post_translations', array( 'fields' => 'all' ) );
+			$translation_terms = wp_get_object_terms( $post->ID, 'ewt_post_translations', array( 'fields' => 'all' ) );
 			$has_translations = false;
 			
 			if ( ! is_wp_error( $translation_terms ) && ! empty( $translation_terms ) ) {
@@ -502,20 +502,20 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 	 * Returns the description to use for the "language properties" in the REST API.
 	 *
 	 *  
-	 * @see Linguator\modules\REST\V2\Languages::get_item_schema()
+	 * @see EasyWPTranslator\modules\REST\V2\Languages::get_item_schema()
 	 *
 	 * @return string
 	 */
 	public function get_rest_description(): string {
-		return __( 'Language taxonomy properties for post types.', 'easy-web-translator' );
+		return __( 'Language taxonomy properties for post types.', 'easy-wp-translator' );
 	}
 
 	/**
 	 * Returns database-related information that can be used in some of this class methods.
 	 * These are specific to the table containing the objects.
 	 *
-	 * @see LMAT_Translatable_Object::join_clause()
-	 * @see LMAT_Translatable_Object::get_raw_objects_with_no_lang()
+	 * @see EWT_Translatable_Object::join_clause()
+	 * @see EWT_Translatable_Object::get_raw_objects_with_no_lang()
 	 *
 	 *  
 	 *
@@ -547,10 +547,10 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 	 *
 	 *     @type string[] $translations The translation group to assign to the post with language slug as keys and post ID as values.
 	 * }
-	 * @param LMAT_Language $language The post language object.
+	 * @param EWT_Language $language The post language object.
 	 * @return int|WP_Error The post ID on success. The value `WP_Error` on failure.
 	 */
-	public function insert( array $postarr, LMAT_Language $language ) {
+	public function insert( array $postarr, EWT_Language $language ) {
 		$post_id = wp_insert_post( $postarr, true );
 		if ( is_wp_error( $post_id ) ) {
 			// Something went wrong!
@@ -575,7 +575,7 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 	 *     Optional. An array of elements that make up a post to update.
 	 *     @See wp_insert_post() for accepted arguments.
 	 *
-	 *     @type LMAT_Language|string $lang         The post language object or slug.
+	 *     @type EWT_Language|string $lang         The post language object or slug.
 	 *     @type string[]            $translations The translation group to assign to the post with language slug as keys and post ID as values.
 	 * }
 	 * @return int|WP_Error The post ID on success. The value `WP_Error` on failure.
@@ -584,12 +584,12 @@ class LMAT_Translated_Post extends LMAT_Translated_Object implements LMAT_Transl
 		if ( ! empty( $postarr['lang'] ) ) {
 			$post = get_post( $postarr['ID'] );
 			if ( ! $post instanceof WP_Post ) {
-				return new WP_Error( 'invalid_post', __( 'Invalid post ID.', 'easy-web-translator' ) );
+				return new WP_Error( 'invalid_post', __( 'Invalid post ID.', 'easy-wp-translator' ) );
 			}
 
 			$language = $this->languages->get( $postarr['lang'] );
-			if ( ! $language instanceof LMAT_Language ) {
-				return new WP_Error( 'invalid_language', __( 'Please provide a valid language.', 'easy-web-translator' ) );
+			if ( ! $language instanceof EWT_Language ) {
+				return new WP_Error( 'invalid_language', __( 'Please provide a valid language.', 'easy-wp-translator' ) );
 			}
 
 			$this->set_language( $postarr['ID'], $language );

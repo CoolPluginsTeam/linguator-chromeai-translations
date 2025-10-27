@@ -1,13 +1,13 @@
 <?php
-namespace Linguator\Admin\Views;
+namespace EasyWPTranslator\Admin\Views;
 /**
  * Displays the translations fields for media
  * Needs WP 3.5+
  *
- * @package Linguator
+ * @package EasyWPTranslator
  *
- * @var LMAT_Admin_Classic_Editor $this    LMAT_Admin_Classic_Editor object.
- * @var LMAT_Language             $lang    The media language. Default language if no language assigned yet.
+ * @var EWT_Admin_Classic_Editor $this    EWT_Admin_Classic_Editor object.
+ * @var EWT_Language             $lang    The media language. Default language if no language assigned yet.
  * @var int                      $post_ID The media Id.
  */
 
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 ?>
-<p><strong><?php esc_html_e( 'Translations', 'easy-web-translator' ); ?></strong></p>
+<p><strong><?php esc_html_e( 'Translations', 'easy-wp-translator' ); ?></strong></p>
 <table>
 	<?php
 	foreach ( $this->model->get_languages_list() as $language ) {
@@ -26,8 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 		?>
 		<tr>
-			<td class = "lmat-media-language-column"><span class = "lmat-translation-flag"><?php echo $language->flag ? wp_kses( $language->flag, array( 'img' => array( 'src' => true, 'alt' => true, 'class' => true, 'width' => true, 'height' => true, 'style' => true ), 'span' => array( 'class' => true ), 'abbr' => array() ), array_merge( wp_allowed_protocols(), array( 'data' ) ) ) : ''; ?></span><?php echo esc_html( $language->name ); ?></td>
-			<td class = "lmat-media-edit-column">
+			<td class = "ewt-media-language-column"><span class = "ewt-translation-flag"><?php echo $language->flag ? wp_kses( $language->flag, array( 'img' => array( 'src' => true, 'alt' => true, 'class' => true, 'width' => true, 'height' => true, 'style' => true ), 'span' => array( 'class' => true ), 'abbr' => array() ), array_merge( wp_allowed_protocols(), array( 'data' ) ) ) : ''; ?></span><?php echo esc_html( $language->name ); ?></td>
+			<td class = "ewt-media-edit-column">
 				<?php
 				$translation_id = $this->model->post->get_translation( $post_ID, $language );
 				if ( ! empty( $translation_id ) && $translation_id !== $post_ID ) {

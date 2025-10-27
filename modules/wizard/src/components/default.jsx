@@ -9,21 +9,21 @@ import apiFetch from '@wordpress/api-fetch'
 import { toast } from 'sonner'
 import { RenderedLanguage } from './languages'
 const Default = () => {
-  const { setupProgress, setSetupProgress, selectedLanguageData, setSelectedLanguageData, data, setData, showUntranslatedContent, setShowUntranslatedContent, lmat_all_languages } = React.useContext(setupContext) //get context
+  const { setupProgress, setSetupProgress, selectedLanguageData, setSelectedLanguageData, data, setData, showUntranslatedContent, setShowUntranslatedContent, ewt_all_languages } = React.useContext(setupContext) //get context
   
   // Ensure selectedLanguageData is always an array
   const languagesArray = Array.isArray(selectedLanguageData) ? selectedLanguageData : [];
   
   const [defaultLanguage, setDefaultLanguage] = React.useState(languagesArray.find((lang) => lang.locale?.toLowerCase() === data.default_lang) || languagesArray.find((language) => language.is_default) || null)
-  let [validLanguages, setValidLanguages] = React.useState(languagesArray.length > 0 ? languagesArray : lmat_all_languages.filter((language) => (language?.name && language?.flag)))
-  const originalListLanguages = React.useRef(languagesArray.length > 0 ? languagesArray : lmat_all_languages.filter((language) => (language?.name && language?.flag)))
+  let [validLanguages, setValidLanguages] = React.useState(languagesArray.length > 0 ? languagesArray : ewt_all_languages.filter((language) => (language?.name && language?.flag)))
+  const originalListLanguages = React.useRef(languagesArray.length > 0 ? languagesArray : ewt_all_languages.filter((language) => (language?.name && language?.flag)))
   const [defaultLoader, setDefaultLoader] = React.useState(false)
   const previousDefaultLanguage = React.useRef(defaultLanguage)
   async function saveDefault() {
     setDefaultLoader(true)
     try {
       if (defaultLanguage === null) {
-        throw new Error(__('Please select a default language', 'easy-web-translator'))
+        throw new Error(__('Please select a default language', 'easy-wp-translator'))
       }
       
       let updatedLanguages = languagesArray;
@@ -36,7 +36,7 @@ const Default = () => {
             default_lang: defaultLanguage.slug
           }
           const response = await apiFetch({
-            path: 'lmat/v1/settings',
+            path: 'ewt/v1/settings',
             method: 'POST',
             'headers': {
               'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ const Default = () => {
           
           // Get updated languages list from server
           const languageResponse = await apiFetch({
-            path: 'lmat/v1/languages',
+            path: 'ewt/v1/languages',
             method: 'GET',
             'headers': {
               'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ const Default = () => {
           // No existing languages - create the first one
           const apiBody = { ...defaultLanguage, slug: defaultLanguage.code }
           const languageResponse = await apiFetch({
-            path: 'lmat/v1/languages',
+            path: 'ewt/v1/languages',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ const Default = () => {
         
         if (languageToAssign) {
           await apiFetch({
-            path: 'lmat/v1/languages/assign-language',
+            path: 'ewt/v1/languages/assign-language',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -112,9 +112,9 @@ const Default = () => {
     <div className='mx-auto p-10 max-w-[600px] min-h-[40vh] bg-white shadow-sm flex flex-col'>
       <div className='flex-grow'>
         <div className='flex-grow'>
-          <h2>{__('Default Language', 'easy-web-translator')}</h2>
-          <p className='m-0 text-sm/6'>{__('Set your website’s default language here.', 'easy-web-translator')}</p>
-          <p className='m-0 text-sm/6'>{__('This language will be shown to visitors if their preferred language isn’t available.', 'easy-web-translator')}</p>
+          <h2>{__('Default Language', 'easy-wp-translator')}</h2>
+          <p className='m-0 text-sm/6'>{__('Set your website’s default language here.', 'easy-wp-translator')}</p>
+          <p className='m-0 text-sm/6'>{__('This language will be shown to visitors if their preferred language isn’t available.', 'easy-wp-translator')}</p>
           <Select
             combobox
             onChange={(value) => setDefaultLanguage(value)}
@@ -130,8 +130,8 @@ const Default = () => {
             by="locale"
           >
             <Select.Button
-              label={__("Choose the language to be assigned", 'easy-web-translator')}
-              placeholder={__("Select an option", 'easy-web-translator')}
+              label={__("Choose the language to be assigned", 'easy-wp-translator')}
+              placeholder={__("Select an option", 'easy-wp-translator')}
               render={() => <RenderedLanguage languageName={defaultLanguage?.name} languageFlag={defaultLanguage?.flag} flagUrl={true} languageLocale={defaultLanguage?.locale} />}
             />
             <Select.Options>
@@ -163,7 +163,7 @@ const Default = () => {
               Loading...
             </SetupContinueButton>
             :
-            <SetupContinueButton SaveSettings={saveDefault} >{__('Continue', 'easy-web-translator')}</SetupContinueButton>
+            <SetupContinueButton SaveSettings={saveDefault} >{__('Continue', 'easy-wp-translator')}</SetupContinueButton>
         }
       </div>
 

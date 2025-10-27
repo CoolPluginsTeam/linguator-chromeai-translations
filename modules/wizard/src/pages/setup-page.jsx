@@ -13,15 +13,15 @@ export const setupContext = React.createContext(null)
 const SetupPage = () => {
   const [setupSteps, setSetupSteps] = React.useState([])  // Initialize as empty array
   const [loading, setLoading] = React.useState(true) // Loader state tracker
-  const [selectedLanguageData, setSelectedLanguageData] = React.useState(Array.isArray(window.lmat_setup.languages) ? window.lmat_setup.languages : []) //Store Selected Language state in database
+  const [selectedLanguageData, setSelectedLanguageData] = React.useState(Array.isArray(window.ewt_setup.languages) ? window.ewt_setup.languages : []) //Store Selected Language state in database
   const [selectedLanguage, setSelectedLanguage] = React.useState({ id: 'none', name: 'None', flag: null, locale: null }) //Selected Langugae from dropdown of Languages tab
   const [currentSelectedLanguage, setCurrentSelectedLanguage] = React.useState([]) //get the current selected language in the languages tab: it will be multiple language so its an array
   const [data, setData] = React.useState([]) // General Settings Data
   const [setupProgress, setSetupProgress] = React.useState("default") //Track Setup Progress
   const [languageDialog, setLanguageDialog] = React.useState(false) // handle open and close of Language Dialog
   const [LanguageLoader, setLanguageLoader] = React.useState(false) // Loader in the continue button on languages tab
-  const lmat_setup_data = window.lmat_setup; //get the localized setup data
-  const [showUntranslatedContent, setShowUntranslatedContent] = React.useState(lmat_setup_data.untranslated_contents) // state for the condotion weather to show or not the content without language in the Languages tab
+  const ewt_setup_data = window.ewt_setup; //get the localized setup data
+  const [showUntranslatedContent, setShowUntranslatedContent] = React.useState(ewt_setup_data.untranslated_contents) // state for the condotion weather to show or not the content without language in the Languages tab
   const [languageDeleteConfirmer, setLanguageDeleteConfirmer] = React.useState(false)
   const [languageToDelete, setLanguageToDelete] = React.useState({ id: 'none', name: 'None', flag: null, locale: null })
   const [contentSelectedLanguage, setContentSelectedLanguage] = React.useState(null) // Add missing content selected language state
@@ -30,11 +30,11 @@ const SetupPage = () => {
   const [showWizard, setShowWizard] = React.useState(false) // Track if user clicked "Get Started"
 
   //turning all languages into array format from object format
-  let lmat_all_languages = [];
-  for (const key in lmat_setup_data.all_languages) {
-    lmat_all_languages.push(lmat_setup_data.all_languages[key])
+  let ewt_all_languages = [];
+  for (const key in ewt_setup_data.all_languages) {
+    ewt_all_languages.push(ewt_setup_data.all_languages[key])
   }
-  lmat_all_languages = lmat_all_languages.sort((a, b) => {
+  ewt_all_languages = ewt_all_languages.sort((a, b) => {
     return a.code.localeCompare(b.code);
   });
 
@@ -43,7 +43,7 @@ const SetupPage = () => {
     //Handle which tab to go according to reload and redirt from other page
     if (localStorage.getItem("setupProgress") && performance.getEntriesByType("navigation")[0].type === "reload") {
       let setup = localStorage.getItem("setupProgress")
-      if (lmat_setup_data[setup] === "1") {
+      if (ewt_setup_data[setup] === "1") {
         setSetupProgress((localStorage.getItem("setupProgress")))
       } else if (localStorage.getItem("setupProgress") === "ready" || localStorage.getItem("setupProgress") === "default" || localStorage.getItem("setupProgress") === "languages" || localStorage.getItem("setupProgress") === "url" || localStorage.getItem("setupProgress") === "media" || localStorage.getItem("setupProgress") === "translation_configuration" || localStorage.getItem("setupProgress") === "language_switcher") {
         setSetupProgress(localStorage.getItem("setupProgress"))
@@ -62,7 +62,7 @@ const SetupPage = () => {
 
       //API call to get general settings data
       const responseData = await apiFetch({
-        path: 'lmat/v1/settings',
+        path: 'ewt/v1/settings',
         method: 'GET',
         'headers': {
           'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ const SetupPage = () => {
         apiBody.push({ ...currentSelectedLanguage[apicalls], slug: currentSelectedLanguage[apicalls].code })
       }
       languageResponse = await apiFetch({
-        path: 'lmat/v1/languages',
+        path: 'ewt/v1/languages',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ const SetupPage = () => {
       }
 
       setLanguageDialog(false)
-      setSelectedLanguage({ id: 'none', name: __('None', 'easy-web-translator'), flag: null, locale: null })
+      setSelectedLanguage({ id: 'none', name: __('None', 'easy-wp-translator'), flag: null, locale: null })
       setLanguageLoader(false)
       //Dynamic routing of next button accordingly
       handleNavigate()
@@ -147,7 +147,7 @@ const SetupPage = () => {
           apiBody.push({ ...currentSelectedLanguage[apicalls], slug: currentSelectedLanguage[apicalls].code })
         }
         languageResponse = await apiFetch({
-          path: 'lmat/v1/languages',
+          path: 'ewt/v1/languages',
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ const SetupPage = () => {
         }
 
         setLanguageDialog(false)
-        setSelectedLanguage({ id: 'none', name: __('None', 'easy-web-translator'), flag: null, locale: null })
+        setSelectedLanguage({ id: 'none', name: __('None', 'easy-wp-translator'), flag: null, locale: null })
         setLanguageLoader(false)
         setShowUntranslatedContent("")
         handleNavigate()
@@ -191,7 +191,7 @@ const SetupPage = () => {
     else if (selectedLanguageData.length > 0) {
       //Dynamic routing of next button accordingly
       setLanguageDialog(false)
-      setSelectedLanguage({ id: 'none', name: __('None', 'easy-web-translator'), flag: null, locale: null })
+      setSelectedLanguage({ id: 'none', name: __('None', 'easy-wp-translator'), flag: null, locale: null })
       setLanguageLoader(false)
       handleNavigate()
     } else {
@@ -210,7 +210,7 @@ const SetupPage = () => {
     setLanguageDeleteLoader(true)
     try {
       const responseData = await apiFetch({
-        path: 'lmat/v1/languages/' + languageToDelete.term_id,
+        path: 'ewt/v1/languages/' + languageToDelete.term_id,
         method: 'DELETE',
         'headers': {
           'Content-Type': 'application/json',
@@ -231,7 +231,7 @@ const SetupPage = () => {
 
   }
   return (
-    <setupContext.Provider value={{ setupSteps, setSetupSteps,loading, data, setData, selectedLanguageData, setSelectedLanguageData, setupProgress, setSetupProgress, setLanguageDialog, selectedLanguage, setSelectedLanguage, lmat_all_languages, currentSelectedLanguage, setCurrentSelectedLanguage, LanguageLoader, setLanguageLoader, showUntranslatedContent, setShowUntranslatedContent, languageDeleteConfirmer, setLanguageDeleteConfirmer, languageToDelete, setLanguageToDelete, contentSelectedLanguage, setContentSelectedLanguage, showWizard, setShowWizard, languageDialog }}>
+    <setupContext.Provider value={{ setupSteps, setSetupSteps,loading, data, setData, selectedLanguageData, setSelectedLanguageData, setupProgress, setSetupProgress, setLanguageDialog, selectedLanguage, setSelectedLanguage, ewt_all_languages, currentSelectedLanguage, setCurrentSelectedLanguage, LanguageLoader, setLanguageLoader, showUntranslatedContent, setShowUntranslatedContent, languageDeleteConfirmer, setLanguageDeleteConfirmer, languageToDelete, setLanguageToDelete, contentSelectedLanguage, setContentSelectedLanguage, showWizard, setShowWizard, languageDialog }}>
       <div className='bg-background-secondary m-0 pt-4 setup-body'>
         <Dialog
           design="simple"
@@ -247,7 +247,7 @@ const SetupPage = () => {
               <div className="flex items-center justify-between">
                 <Dialog.Title className='flex gap-2 items-center leading-[0px]'>
                   <IoIosWarning className='size-10 text-yellow-500' />
-                  <h4 className='leading-[0px] text-lg'>{__("A language wasn't added.", "easy-web-translator")}</h4>
+                  <h4 className='leading-[0px] text-lg'>{__("A language wasn't added.", "easy-wp-translator")}</h4>
                 </Dialog.Title>
                 <Dialog.CloseButton onClick={() => { setLanguageDialog(false); setLanguageLoader(false); setLanguageAddLoader(false) }} />
               </div>
@@ -256,8 +256,8 @@ const SetupPage = () => {
             </Dialog.Header>
             <Dialog.Body>
               <div className="m-0 text-text-secondary">
-                <p className='text-base m-0'> {__("You selected", "easy-web-translator")} {selectedLanguage && <RenderedLanguage languageName={selectedLanguage.name} languageFlag={selectedLanguage.flag} flagUrl={false} languageLocale={selectedLanguage.locale} />}{__(", but you didn't add it to the list before continuing to the next step.", "easy-web-translator")}</p>
-                <p className='text-sm'>{__("Do you want to add this language before continuing to the next step?", "easy-web-translator")}</p>
+                <p className='text-base m-0'> {__("You selected", "easy-wp-translator")} {selectedLanguage && <RenderedLanguage languageName={selectedLanguage.name} languageFlag={selectedLanguage.flag} flagUrl={false} languageLocale={selectedLanguage.locale} />}{__(", but you didn't add it to the list before continuing to the next step.", "easy-wp-translator")}</p>
+                <p className='text-sm'>{__("Do you want to add this language before continuing to the next step?", "easy-wp-translator")}</p>
                 <ul>
                   {selectedLanguageData.length === 0 && currentSelectedLanguage.length === 0 && <li>{__("Note: You cannot continue this page without adding a language")} </li>}
                 </ul>
@@ -273,13 +273,13 @@ const SetupPage = () => {
                     </svg>
                   </Button> :
                   <Button onClick={handleLanguageAdd}>
-                    {__("Add Language & continue", "easy-web-translator")}
+                    {__("Add Language & continue", "easy-wp-translator")}
                   </Button>
               }
               {
                 (selectedLanguageData.length > 0 || currentSelectedLanguage.length > 0) &&
                 <Button variant='outline' onClick={handleLanguageDontAdd}>
-                  {__("Discard & Continue", "easy-web-translator")}
+                  {__("Discard & Continue", "easy-wp-translator")}
                 </Button>
               }
             </Dialog.Footer>
@@ -299,12 +299,12 @@ const SetupPage = () => {
               <div className="flex items-center justify-between">
                 <Dialog.Title className='flex gap-2 items-center leading-[0px]'>
                   <GoTrash className='size-8 text-yellow-500' />
-                  <h4 className='leading-[0px] text-lg'>{__("Confirm Language Deletion", "easy-web-translator")}</h4>
+                  <h4 className='leading-[0px] text-lg'>{__("Confirm Language Deletion", "easy-wp-translator")}</h4>
                 </Dialog.Title>
                 <Dialog.CloseButton onClick={() => { setLanguageDeleteConfirmer(false) }} />
               </div>
               <Dialog.Description>
-                <p className='text-base leading-[0px] m-0'>{__("On Confirmation, ", "easy-web-translator")}<RenderedLanguage languageName={languageToDelete.name} languageFlag={languageToDelete.flag} flagUrl={true} languageLocale={languageToDelete.locale} /> {__(" will be deleted. ", "easy-web-translator")}</p>
+                <p className='text-base leading-[0px] m-0'>{__("On Confirmation, ", "easy-wp-translator")}<RenderedLanguage languageName={languageToDelete.name} languageFlag={languageToDelete.flag} flagUrl={true} languageLocale={languageToDelete.locale} /> {__(" will be deleted. ", "easy-wp-translator")}</p>
               </Dialog.Description>
             </Dialog.Header>
             <Dialog.Body className='flex justify-center items-center gap-3'>
@@ -317,13 +317,13 @@ const SetupPage = () => {
                     </svg>
                   </Button>:
                   <Button className='w-[100%]' onClick={handleLanguageDelete}>
-                {__("Yes", "easy-web-translator")}
+                {__("Yes", "easy-wp-translator")}
               </Button>
               }
               
               {
                 <Button className='w-[100%]' variant='outline' onClick={() => { setLanguageDeleteConfirmer(false); }}>
-                  {__("No", "easy-web-translator")}
+                  {__("No", "easy-wp-translator")}
                 </Button>
               }
             </Dialog.Body>
@@ -342,11 +342,11 @@ const SetupPage = () => {
                   icon={<LoaderPinwheel className="animate-spin" />}
                   size="md"
                   variant="primary"
-                /></h1> <h1 className='m-0'>{__("Loading", "easy-web-translator")}</h1>
+                /></h1> <h1 className='m-0'>{__("Loading", "easy-wp-translator")}</h1>
             </div> :
             <>
-            <h1 style={{paddingTop: "30px"}} className='bg-background-secondary text-center m-0'>{__("Easy Web Translator – On-Device Chrome AI Translation ", "easy-web-translator")}</h1>
-              <SetupProgress lmat_setup_data={lmat_setup_data} />
+            <h1 style={{paddingTop: "30px"}} className='bg-background-secondary text-center m-0'>{__("Easy WP Translator – On-Device Chrome AI Translation ", "easy-wp-translator")}</h1>
+              <SetupProgress ewt_setup_data={ewt_setup_data} />
             </>
         }
 

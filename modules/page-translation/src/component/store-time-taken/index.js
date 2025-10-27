@@ -8,7 +8,7 @@ const StoreTimeTaken = ({ prefix = false, start = false, end = false, translateS
     if (prefix) {
         data.provider = prefix;
         if (start && end) {
-            const oldTimeTaken = select('block-lmatPageTranslation/translate').getTranslationInfo().translateData[prefix]?.timeTaken || 0;
+            const oldTimeTaken = select('block-ewtPageTranslation/translate').getTranslationInfo().translateData[prefix]?.timeTaken || 0;
             data.timeTaken = timeTaken + oldTimeTaken;
         }
 
@@ -16,7 +16,7 @@ const StoreTimeTaken = ({ prefix = false, start = false, end = false, translateS
             data.translateStatus = true;
         }
 
-        dispatch('block-lmatPageTranslation/translate').translationInfo(data);
+        dispatch('block-ewtPageTranslation/translate').translationInfo(data);
     }
 }
 

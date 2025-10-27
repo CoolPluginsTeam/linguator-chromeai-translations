@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Modules\REST;
+namespace EasyWPTranslator\Modules\REST;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -16,9 +16,9 @@ require_once __DIR__ . '/v1/settings.php';
 require_once __DIR__ . '/v1/bulk-translation.php';
 
 add_action(
-	'lmat_init',
-	function ( $linguator ) {
-		$linguator->rest = new API( $linguator->model );
-		add_action( 'rest_api_init', array( $linguator->rest, 'init' ) );
+	'ewt_init',
+	function ( $easywptranslator ) {
+		$easywptranslator->rest = new API( $easywptranslator->model );
+		add_action( 'rest_api_init', array( $easywptranslator->rest, 'init' ) );
 	}
 );

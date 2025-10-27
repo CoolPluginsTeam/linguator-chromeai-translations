@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -8,14 +8,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_action(
-	'lmat_init',
-	function ( $linguator ) {
+	'ewt_init',
+	function ( $easywptranslator ) {
 
-		if ( $linguator->model->has_languages() && lmat_use_block_editor_plugin() ) {
+		if ( $easywptranslator->model->has_languages() && ewt_use_block_editor_plugin() ) {
 			// Only register blocks if 'block' switcher is enabled
-			if ( lmat_is_switcher_type_enabled( 'block' ) ) {
-				$linguator->switcher_block   = ( new \Linguator\Modules\Blocks\LMAT_Language_Switcher_Block( $linguator ) )->init();
-				$linguator->navigation_block = ( new \Linguator\Modules\Blocks\LMAT_Navigation_Language_Switcher_Block( $linguator ) )->init();
+			if ( ewt_is_switcher_type_enabled( 'block' ) ) {
+				$easywptranslator->switcher_block   = ( new \EasyWPTranslator\Modules\Blocks\EWT_Language_Switcher_Block( $easywptranslator ) )->init();
+				$easywptranslator->navigation_block = ( new \EasyWPTranslator\Modules\Blocks\EWT_Navigation_Language_Switcher_Block( $easywptranslator ) )->init();
 			}
 		}
 	}

@@ -1,13 +1,13 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations;
+namespace EasyWPTranslator\Integrations;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-use Linguator\Includes\Core\Linguator;
+use EasyWPTranslator\Includes\Core\EasyWPTranslator;
 
 
 
@@ -16,14 +16,14 @@ use Linguator\Includes\Core\Linguator;
  * This class is available as soon as the plugin is loaded.
  *
  *  
- *   Renamed from LMAT_Plugins_Compat to LMAT_Integrations.
+ *   Renamed from EWT_Plugins_Compat to EWT_Integrations.
  */
 #[AllowDynamicProperties]
-class LMAT_Integrations {
+class EWT_Integrations {
 	/**
 	 * Singleton instance.
 	 *
-	 * @var LMAT_Integrations|null
+	 * @var EWT_Integrations|null
 	 */
 	protected static $instance = null;
 
@@ -136,4 +136,4 @@ class LMAT_Integrations {
 	}
 }
 
-class_alias( 'Linguator\Integrations\LMAT_Integrations', 'LMAT_Integrations' ); // For global access.
+class_alias( 'EasyWPTranslator\Integrations\EWT_Integrations', 'EWT_Integrations' ); // For global access.

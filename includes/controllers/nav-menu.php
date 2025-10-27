@@ -1,16 +1,16 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Controllers;
+namespace EasyWPTranslator\Includes\Controllers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 
-use Linguator\Includes\Options\Options;
+use EasyWPTranslator\Includes\Options\Options;
 
 
 
@@ -20,7 +20,7 @@ use Linguator\Includes\Options\Options;
  *
  *  	
  */
-class LMAT_Nav_Menu {
+class EWT_Nav_Menu {
 	/**
 	 * Stores the plugin options.
 	 *
@@ -29,7 +29,7 @@ class LMAT_Nav_Menu {
 	public $options;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
@@ -52,11 +52,11 @@ class LMAT_Nav_Menu {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->model = &$linguator->model;
-		$this->options = &$linguator->options;
+	public function __construct( &$easywptranslator ) {
+		$this->model = &$easywptranslator->model;
+		$this->options = &$easywptranslator->options;
 
 		$this->theme = get_option( 'stylesheet' );
 
@@ -78,9 +78,9 @@ class LMAT_Nav_Menu {
 	 * @return stdClass
 	 */
 	public function wp_setup_nav_menu_item( $item ) {
-		if ( isset( $item->url ) && '#lmat_switcher' === $item->url ) {
-			$item->post_title = __( 'Languages', 'easy-web-translator' );
-			$item->type_label = __( 'Language switcher', 'easy-web-translator' );
+		if ( isset( $item->url ) && '#ewt_switcher' === $item->url ) {
+			$item->post_title = __( 'Languages', 'easy-wp-translator' );
+			$item->type_label = __( 'Language switcher', 'easy-wp-translator' );
 		}
 		return $item;
 	}
@@ -96,14 +96,14 @@ class LMAT_Nav_Menu {
 	public function create_nav_menu_locations() {
 		static $once;
 		global $_wp_registered_nav_menus;
-		global $linguator;
+		global $easywptranslator;
 		$arr = array();
 
 		if ( isset( $_wp_registered_nav_menus ) && ! $once ) {
 			foreach ( $_wp_registered_nav_menus as $loc => $name ) {
 				// Get languages to show - check if we're in admin with language filter
 				$languages_to_show = $this->model->get_languages_list();
-				$filter_lang = ! empty( $linguator->filter_lang ) ? $linguator->filter_lang : null;
+				$filter_lang = ! empty( $easywptranslator->filter_lang ) ? $easywptranslator->filter_lang : null;
 					
 				// Determine which languages to show based on filter
 				if ( $filter_lang ) {
@@ -126,7 +126,7 @@ class LMAT_Nav_Menu {
 	 *  
 	 *
 	 * @param string       $loc  Nav menu location.
-	 * @param LMAT_Language $lang Language object.
+	 * @param EWT_Language $lang Language object.
 	 * @return string
 	 */
 	public function combine_location( $loc, $lang ) {

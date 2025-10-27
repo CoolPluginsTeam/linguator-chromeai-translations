@@ -41,7 +41,7 @@ const updateGutenbergContent=async ({source, lang, translatedContent, servicePro
      * @param {string} key
      */
     const updateInnerHtmlContent=(key)=>{
-        const staticKey = key.replace(/(_lmat_bulk_content_temp_\d+)$/, '');
+        const staticKey = key.replace(/(_ewt_bulk_content_temp_\d+)$/, '');
        
         const duplicateKey=Object.keys(translatedContent).filter(item=>item.includes(staticKey));
 
@@ -49,7 +49,7 @@ const updateGutenbergContent=async ({source, lang, translatedContent, servicePro
 
         const values=[];
         duplicateKey.forEach(key=>{
-            let keyArray=key.split('_lmat_bulk_content_temp_');
+            let keyArray=key.split('_ewt_bulk_content_temp_');
             let currentBlock = source.content;
             const translateValue = getTransaltedValue(key);
             let parentBlock = null;
@@ -75,7 +75,7 @@ const updateGutenbergContent=async ({source, lang, translatedContent, servicePro
         let parentKey=null;
         let currentBlock = source.content;
 
-        staticKey.split('_lmat_bulk_content_temp_').slice(1).forEach(key=>{
+        staticKey.split('_ewt_bulk_content_temp_').slice(1).forEach(key=>{
             parentBlock = currentBlock;
             parentKey = key;
             currentBlock = currentBlock[key];
@@ -130,7 +130,7 @@ const updateGutenbergContent=async ({source, lang, translatedContent, servicePro
         const customInnerBlockKeys=[];
 
         Object.keys(translation).forEach(key=>{
-            const keys=key.split('_lmat_bulk_content_temp_');
+            const keys=key.split('_ewt_bulk_content_temp_');
             if(keys[0] === 'title'){
                 updateTitle(source, translation[keys[0]]);
             }else if(keys[0] === 'post_name'){
@@ -155,7 +155,7 @@ const updateGutenbergContent=async ({source, lang, translatedContent, servicePro
                     let innerContentKey=null;
                     let innerContentCurrentBlock=source.content;
 
-                    const joinBlockKey=blockKey.join('_lmat_bulk_content_temp_');
+                    const joinBlockKey=blockKey.join('_ewt_bulk_content_temp_');
 
                     
                     if(!customInnerBlockKeys.includes(joinBlockKey)){
@@ -198,10 +198,10 @@ const updateGutenbergContent=async ({source, lang, translatedContent, servicePro
     }
 
     const updateCustomBlockInnerHtml=(key)=>{
-        const existingKeys=Object.keys(sourceEntries).filter(item=>item.startsWith('content_lmat_bulk_content_temp_'+key+'_lmat_bulk_content_temp_innerContent'));
+        const existingKeys=Object.keys(sourceEntries).filter(item=>item.startsWith('content_ewt_bulk_content_temp_'+key+'_ewt_bulk_content_temp_innerContent'));
 
         if(existingKeys.length > 0) return;
-        let currentBlockKeys=Object.keys(sourceEntries).filter(item=>item.startsWith('content_lmat_bulk_content_temp_'+key+'_lmat_bulk_content_temp_'+'attrs'));
+        let currentBlockKeys=Object.keys(sourceEntries).filter(item=>item.startsWith('content_ewt_bulk_content_temp_'+key+'_ewt_bulk_content_temp_'+'attrs'));
 
         let translatedStrings={};
         
@@ -220,7 +220,7 @@ const updateGutenbergContent=async ({source, lang, translatedContent, servicePro
             .reduce((acc, [k, v]) => { acc[k] = v; return acc; }, {});
 
 
-        let blockKey=key.split('_lmat_bulk_content_temp_');
+        let blockKey=key.split('_ewt_bulk_content_temp_');
 
         let currentBlock=source.content;
         let parentBlock=null;
@@ -295,7 +295,7 @@ const updateGutenbergContent=async ({source, lang, translatedContent, servicePro
 
     updateContent(source, translatedContent);
 
-    if("false" === lmatBulkTranslationGlobal.postMetaSync && source.metaFields && Object.keys(source.metaFields).length > 0){
+    if("false" === ewtBulkTranslationGlobal.postMetaSync && source.metaFields && Object.keys(source.metaFields).length > 0){
       source.metaFields=updateMetaFields(source.metaFields, lang, serviceProvider, postId);
     }
     

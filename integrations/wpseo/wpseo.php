@@ -1,16 +1,16 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Integrations\wpseo;
+namespace EasyWPTranslator\Integrations\wpseo;
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Options\LMAT_Translate_Option;
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Options\EWT_Translate_Option;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 use WPSEO_Options;
-use Linguator\Frontend\Controllers\LMAT_Frontend;
+use EasyWPTranslator\Frontend\Controllers\EWT_Frontend;
 use WPSEO_Meta_Columns;
 use WPSEO_Sitemaps;
 
@@ -22,7 +22,7 @@ use WPSEO_Sitemaps;
  *
  *  
  */
-class LMAT_WPSEO {
+class EWT_WPSEO {
 	/**
 	 * Cached active languages for sitemap generation
 	 *
@@ -39,7 +39,7 @@ class LMAT_WPSEO {
 		add_action( 'wp_loaded', array( $this, 'wpseo_translate_options' ) );
 		add_filter( 'wpseo_dynamic_permalinks_enabled', '__return_true', 999 );
 
-		if ( LMAT() instanceof LMAT_Frontend ) {
+		if ( EWT() instanceof EWT_Frontend ) {
 			// Filters sitemap queries to remove inactive language or to get
 			// one sitemap per language when using multiple domains or subdomains
 			// because WPSEO does not accept several domains or subdomains in one sitemap
@@ -48,7 +48,7 @@ class LMAT_WPSEO {
 			add_filter( 'wpseo_typecount_join', array( $this, 'wpseo_posts_join' ), 10, 2 );
 			add_filter( 'wpseo_typecount_where', array( $this, 'wpseo_posts_where' ), 10, 2 );
 
-			if ( LMAT()->options['force_lang'] > 1 ) {
+			if ( EWT()->options['force_lang'] > 1 ) {
 				add_filter( 'wpseo_enable_xml_sitemap_transient_caching', '__return_false' ); // Disable cache! otherwise WPSEO keeps only one domain
 				add_filter( 'home_url', array( $this, 'wpseo_home_url' ), 10, 2 ); // Fix home_url
 				add_action( 'setup_theme', array( $this, 'maybe_deactivate_sitemap' ) ); // Deactivate sitemaps for inactive languages.
@@ -59,18 +59,18 @@ class LMAT_WPSEO {
 				add_action( 'pre_get_posts', array( $this, 'cache_active_languages_for_sitemap' ), -1 ); // Cache languages before sitemap
 			}
 
-			add_filter( 'lmat_home_url_white_list', array( $this, 'wpseo_home_url_white_list' ) );
+			add_filter( 'ewt_home_url_white_list', array( $this, 'wpseo_home_url_white_list' ) );
 			add_filter( 'wpseo_frontend_presenters', array( $this, 'wpseo_frontend_presenters' ) );
 			add_filter( 'wpseo_canonical', array( $this, 'wpseo_canonical' ) );
 			add_filter( 'wpseo_frontend_presentation', array( $this, 'frontend_presentation' ) );
 			add_filter( 'wpseo_breadcrumb_indexables', array( $this, 'breadcrumb_indexables' ) );
 		} else {
-			add_filter( 'lmat_copy_post_metas', array( $this, 'copy_post_metas' ), 10, 4 );
-			add_filter( 'lmat_translate_post_meta', array( $this, 'translate_post_meta' ), 10, 3 );
-			add_filter( 'lmat_post_metas_to_export', array( $this, 'export_post_metas' ) );
+			add_filter( 'ewt_copy_post_metas', array( $this, 'copy_post_metas' ), 10, 4 );
+			add_filter( 'ewt_translate_post_meta', array( $this, 'translate_post_meta' ), 10, 3 );
+			add_filter( 'ewt_post_metas_to_export', array( $this, 'export_post_metas' ) );
 
-			// Yoast SEO adds the columns hooks only for the 'inline-save' action. We need them for 'lmat_update_post_rows' too.
-			if ( wp_doing_ajax() && isset( $_POST['action'] ) && 'lmat_update_post_rows' === $_POST['action'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			// Yoast SEO adds the columns hooks only for the 'inline-save' action. We need them for 'ewt_update_post_rows' too.
+			if ( wp_doing_ajax() && isset( $_POST['action'] ) && 'ewt_update_post_rows' === $_POST['action'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				$GLOBALS['wpseo_meta_columns'] = new WPSEO_Meta_Columns();
 			}
 		}
@@ -103,14 +103,14 @@ class LMAT_WPSEO {
 			'social-description-*',
 		);
 
-		new LMAT_Translate_Option( 'wpseo_titles', array_fill_keys( $keys, 1 ), array( 'context' => 'wordpress-seo' ) );
+		new EWT_Translate_Option( 'wpseo_titles', array_fill_keys( $keys, 1 ), array( 'context' => 'wordpress-seo' ) );
 
 		$keys = array(
 			'og_frontpage_title',
 			'og_frontpage_desc',
 		);
 
-		new LMAT_Translate_Option( 'wpseo_social', array_fill_keys( $keys, 1 ), array( 'context' => 'wordpress-seo' ) );
+		new EWT_Translate_Option( 'wpseo_social', array_fill_keys( $keys, 1 ), array( 'context' => 'wordpress-seo' ) );
 	}
 
 	/**
@@ -125,11 +125,11 @@ class LMAT_WPSEO {
 	 */
 	public function wpseo_home_url( $url, $path ) {
 		if ( empty( $path ) ) {
-			$path = ltrim( (string) wp_parse_url( lmat_get_requested_url(), PHP_URL_PATH ), '/' );
+			$path = ltrim( (string) wp_parse_url( ewt_get_requested_url(), PHP_URL_PATH ), '/' );
 		}
 
 		if ( preg_match( '#sitemap(_index)?\.xml|([^\/]+?)-?sitemap([0-9]+)?\.xml|([a-z]+)?-?sitemap\.xsl#', $path ) ) {
-			$url = LMAT()->links_model->switch_language_in_link( $url, LMAT()->curlang );
+			$url = EWT()->links_model->switch_language_in_link( $url, EWT()->curlang );
 		}
 
 		return $url;
@@ -143,7 +143,7 @@ class LMAT_WPSEO {
 	 * @return array list of active language slugs, empty if all languages are active
 	 */
 	protected function wpseo_get_active_languages() {
-		$languages = LMAT()->model->get_languages_list();
+		$languages = EWT()->model->get_languages_list();
 		if ( wp_list_filter( $languages, array( 'active' => false ) ) ) {
 			return wp_list_pluck( wp_list_filter( $languages, array( 'active' => false ), 'NOT' ), 'slug' );
 		}
@@ -160,7 +160,7 @@ class LMAT_WPSEO {
 	 * @return string
 	 */
 	public function wpseo_posts_join( $sql, $post_type ) {
-		return lmat_is_translated_post_type( $post_type ) ? $sql . LMAT()->model->post->join_clause() : $sql;
+		return ewt_is_translated_post_type( $post_type ) ? $sql . EWT()->model->post->join_clause() : $sql;
 	}
 
 	/**
@@ -173,21 +173,21 @@ class LMAT_WPSEO {
 	 * @return string
 	 */
 	public function wpseo_posts_where( $sql, $post_type ) {
-		if ( ! lmat_is_translated_post_type( $post_type ) ) {
+		if ( ! ewt_is_translated_post_type( $post_type ) ) {
 			return $sql;
 		}
 
-		if ( LMAT()->options['force_lang'] > 1 && LMAT()->curlang instanceof LMAT_Language ) {
-			return $sql . LMAT()->model->post->where_clause( LMAT()->curlang );
+		if ( EWT()->options['force_lang'] > 1 && EWT()->curlang instanceof EWT_Language ) {
+			return $sql . EWT()->model->post->where_clause( EWT()->curlang );
 		}
 
 		$languages = $this->wpseo_get_active_languages();
 
 		if ( empty( $languages ) ) { // Empty when all languages are active.
-			$languages = lmat_languages_list();
+			$languages = ewt_languages_list();
 		}
 
-		return $sql . LMAT()->model->post->where_clause( $languages );
+		return $sql . EWT()->model->post->where_clause( $languages );
 	}
 
 	/**
@@ -199,7 +199,7 @@ class LMAT_WPSEO {
 	public function cache_active_languages_for_sitemap( $query ) {
 		if ( isset( $query->query['sitemap'] ) ) {
 			// Get active languages directly from the languages model to avoid get_terms() calls
-			$languages = LMAT()->model->languages->get_list();
+			$languages = EWT()->model->languages->get_list();
 			$active_languages = array();
 			
 			foreach ( $languages as $lang ) {
@@ -246,7 +246,7 @@ class LMAT_WPSEO {
 
 		if ( isset( $wpseo_sitemaps ) ) {
 			$active_languages = $this->wpseo_get_active_languages();
-			if ( ! empty( $active_languages ) && ! in_array( lmat_current_language(), $active_languages ) ) {
+			if ( ! empty( $active_languages ) && ! in_array( ewt_current_language(), $active_languages ) ) {
 				remove_action( 'pre_get_posts', array( $wpseo_sitemaps, 'redirect' ), 1 );
 			}
 		}
@@ -264,7 +264,7 @@ class LMAT_WPSEO {
 
 		// Add the post post type archives in all languages to the sitemap
 		// Add the homepages for all languages to the sitemap when the front page displays posts
-		if ( $type && lmat_is_translated_post_type( $type ) && ( 'post' !== $type || ! get_option( 'page_on_front' ) ) ) {
+		if ( $type && ewt_is_translated_post_type( $type ) && ( 'post' !== $type || ! get_option( 'page_on_front' ) ) ) {
 			add_filter( "wpseo_sitemap_{$type}_content", array( $this, 'add_post_type_archive' ) );
 		}
 	}
@@ -302,16 +302,16 @@ class LMAT_WPSEO {
 	public function add_post_type_archive( $str ) {
 		$post_type     = substr( substr( current_filter(), 14 ), 0, -8 );
 		$post_type_obj = get_post_type_object( $post_type );
-		$languages     = wp_list_filter( LMAT()->model->get_languages_list(), array( 'active' => false ), 'NOT' );
+		$languages     = wp_list_filter( EWT()->model->get_languages_list(), array( 'active' => false ), 'NOT' );
 
 		if ( 'post' === $post_type ) {
-			if ( ! empty( LMAT()->options['hide_default'] ) ) {
+			if ( ! empty( EWT()->options['hide_default'] ) ) {
 				// The home url is of course already added by WPSEO.
-				$languages = wp_list_filter( $languages, array( 'slug' => lmat_default_language() ), 'NOT' );
+				$languages = wp_list_filter( $languages, array( 'slug' => ewt_default_language() ), 'NOT' );
 			}
 
 			foreach ( $languages as $lang ) {
-				$str .= $this->format_sitemap_url( lmat_home_url( $lang->slug ), $post_type );
+				$str .= $this->format_sitemap_url( ewt_home_url( $lang->slug ), $post_type );
 			}
 		} elseif ( $post_type_obj->has_archive ) {
 			// Exclude cases where a post type archive is attached to a page (ex: WooCommerce).
@@ -319,10 +319,10 @@ class LMAT_WPSEO {
 
 			if ( ! wpcom_vip_get_page_by_path( $slug ) ) {
 				// The post type archive in the current language is already added by WPSEO.
-				$languages = wp_list_filter( $languages, array( 'slug' => lmat_current_language() ), 'NOT' );
+				$languages = wp_list_filter( $languages, array( 'slug' => ewt_current_language() ), 'NOT' );
 
 				foreach ( $languages as $lang ) {
-					LMAT()->curlang = $lang; // Switch the language to get the correct archive link.
+					EWT()->curlang = $lang; // Switch the language to get the correct archive link.
 					$link = get_post_type_archive_link( $post_type );
 					$str .= $this->format_sitemap_url( $link, $post_type );
 				}
@@ -354,8 +354,8 @@ class LMAT_WPSEO {
 	protected function get_ogp_alternate_languages() {
 		$alternates = array();
 
-		foreach ( LMAT()->model->get_languages_list() as $language ) {
-			if ( isset( LMAT()->curlang ) && LMAT()->curlang->slug !== $language->slug && LMAT()->links->get_translation_url( $language ) && isset( $language->facebook ) ) {
+		foreach ( EWT()->model->get_languages_list() as $language ) {
+			if ( isset( EWT()->curlang ) && EWT()->curlang->slug !== $language->slug && EWT()->links->get_translation_url( $language ) && isset( $language->facebook ) ) {
 				$alternates[] = $language->facebook;
 			}
 		}
@@ -379,7 +379,7 @@ class LMAT_WPSEO {
 			$_presenters[] = $presenter;
 			if ( $presenter instanceof Yoast\WP\SEO\Presenters\Open_Graph\Locale_Presenter ) {
 				foreach ( $this->get_ogp_alternate_languages() as $lang ) {
-					$_presenters[] = new LMAT_WPSEO_OGP( $lang );
+					$_presenters[] = new EWT_WPSEO_OGP( $lang );
 				}
 			}
 		}
@@ -416,7 +416,7 @@ class LMAT_WPSEO {
 				break;
 
 			case 'post-type-archive':
-				if ( lmat_is_translated_post_type( $presentation->model->object_sub_type ) ) {
+				if ( ewt_is_translated_post_type( $presentation->model->object_sub_type ) ) {
 					$presentation->model->title = WPSEO_Options::get( 'title-ptarchive-' . $presentation->model->object_sub_type );
 					$presentation->model->description = WPSEO_Options::get( 'metadesc-ptarchive-' . $presentation->model->object_sub_type );
 				}
@@ -451,16 +451,16 @@ class LMAT_WPSEO {
 		foreach ( $indexables as &$indexable ) {
 			if ( 'home-page' === $indexable->object_type || ( 'post' === $indexable->object_type && 'page' === $indexable->object_sub_type && get_option( 'page_on_front' ) === $indexable->object_id ) ) {
 				// Handles both when the front page displays the list of posts or a static page.
-				$indexable->permalink = lmat_home_url();
-				$indexable->breadcrumb_title = lmat__( WPSEO_Options::get( 'breadcrumbs-home' ) );
+				$indexable->permalink = ewt_home_url();
+				$indexable->breadcrumb_title = ewt__( WPSEO_Options::get( 'breadcrumbs-home' ) );
 			} elseif ( 'post' === $indexable->object_type && 'page' === $indexable->object_sub_type && get_option( 'page_for_posts' ) === $indexable->object_id ) {
 				$indexable->permalink = get_permalink( $indexable->object_id );
-			} elseif ( 'post-type-archive' === $indexable->object_type && lmat_is_translated_post_type( $indexable->object_sub_type ) ) {
+			} elseif ( 'post-type-archive' === $indexable->object_type && ewt_is_translated_post_type( $indexable->object_sub_type ) ) {
 				$indexable->permalink = get_post_type_archive_link( $indexable->object_sub_type );
 				$breadcrumb_title = WPSEO_Options::get( 'bctitle-ptarchive-' . $indexable->object_sub_type );
 				$breadcrumb_title = $breadcrumb_title ?: $indexable->breadcrumb_title; // The option may be empty.
-				$indexable->breadcrumb_title = lmat__( $breadcrumb_title );
-			} elseif ( 'term' === $indexable->object_type && lmat_is_translated_taxonomy( $indexable->object_sub_type ) ) {
+				$indexable->breadcrumb_title = ewt__( $breadcrumb_title );
+			} elseif ( 'term' === $indexable->object_type && ewt_is_translated_taxonomy( $indexable->object_sub_type ) ) {
 				$indexable->permalink = get_term_link( $indexable->object_id );
 			}
 		}
@@ -500,7 +500,7 @@ class LMAT_WPSEO {
 			)
 		);
 
-		$sync_taxonomies = LMAT()->sync->taxonomies->get_taxonomies_to_copy( $sync, $from, $to );
+		$sync_taxonomies = EWT()->sync->taxonomies->get_taxonomies_to_copy( $sync, $from, $to );
 
 		$taxonomies = array_intersect( $taxonomies, $sync_taxonomies );
 
@@ -527,11 +527,11 @@ class LMAT_WPSEO {
 		}
 
 		$taxonomy = str_replace( '_yoast_wpseo_primary_', '', $key );
-		if ( ! LMAT()->model->is_translated_taxonomy( $taxonomy ) ) {
+		if ( ! EWT()->model->is_translated_taxonomy( $taxonomy ) ) {
 			return $value;
 		}
 
-		return lmat_get_term( $value, $lang );
+		return ewt_get_term( $value, $lang );
 	}
 
 	/**

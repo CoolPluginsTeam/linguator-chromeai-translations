@@ -1,16 +1,16 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Helpers;
+namespace EasyWPTranslator\Includes\Helpers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Other\LMAT_Model;
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Model;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 use WP_Term;
 
 
@@ -20,10 +20,10 @@ use WP_Term;
  *
  *  
  */
-class LMAT_Term_Slug {
+class EWT_Term_Slug {
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	private $model;
 
@@ -48,7 +48,7 @@ class LMAT_Term_Slug {
 	private $term_id;
 
 	/**
-	 * @var LMAT_Language
+	 * @var EWT_Language
 	 */
 	private $lang;
 
@@ -62,13 +62,13 @@ class LMAT_Term_Slug {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Model $model    Instance of LMAT_Model.
+	 * @param EWT_Model $model    Instance of EWT_Model.
 	 * @param string    $slug     The term slug.
 	 * @param string    $taxonomy The term taxonomy.
 	 * @param string    $name     The term name.
 	 * @param int       $term_id  The term ID if exists, or 0 if there's no need to know that we are editing an existing term.
 	 */
-	public function __construct( LMAT_Model $model, string $slug, string $taxonomy, string $name, int $term_id = 0 ) {
+	public function __construct( EWT_Model $model, string $slug, string $taxonomy, string $name, int $term_id = 0 ) {
 		$this->model    = $model;
 		$this->slug     = $slug;
 		$this->taxonomy = $taxonomy;
@@ -89,12 +89,12 @@ class LMAT_Term_Slug {
 		 *
 		 *  
 		 *
-		 * @param LMAT_Language|null $lang     Found language object, null otherwise.
+		 * @param EWT_Language|null $lang     Found language object, null otherwise.
 		 * @param string            $taxonomy Term taxonomy.
 		 * @param string            $slug     Term slug
 		 */
-		$lang = apply_filters( 'lmat_inserted_term_language', null, $this->taxonomy, $this->slug );
-		if ( ! $lang instanceof LMAT_Language ) {
+		$lang = apply_filters( 'ewt_inserted_term_language', null, $this->taxonomy, $this->slug );
+		if ( ! $lang instanceof EWT_Language ) {
 			return false;
 		}
 		$this->lang = $lang;
@@ -110,7 +110,7 @@ class LMAT_Term_Slug {
 			 * @param string       $taxonomy Term taxonomy.
 			 * @param string       $slug     Term slug
 			 */
-			$this->parent = apply_filters( 'lmat_inserted_term_parent', 0, $this->taxonomy, $this->slug );
+			$this->parent = apply_filters( 'ewt_inserted_term_parent', 0, $this->taxonomy, $this->slug );
 
 			$this->slug .= $this->maybe_get_parent_suffix();
 		}

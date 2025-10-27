@@ -1,17 +1,17 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
-namespace Linguator\Settings\Tables;
+namespace EasyWPTranslator\Settings\Tables;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Admin\Controllers\LMAT_Admin_Strings;
-use Linguator\Includes\Helpers\LMAT_MO;
-use Linguator\Includes\Other\LMAT_Language;
-use Linguator\Settings\Controllers\LMAT_Settings;
+use EasyWPTranslator\Admin\Controllers\EWT_Admin_Strings;
+use EasyWPTranslator\Includes\Helpers\EWT_MO;
+use EasyWPTranslator\Includes\Other\EWT_Language;
+use EasyWPTranslator\Settings\Controllers\EWT_Settings;
 use WP_List_Table;
 use WP_Error;
 
@@ -25,11 +25,11 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  *
  *  
  */
-class LMAT_Table_String extends WP_List_Table {
+class EWT_Table_String extends WP_List_Table {
 	/**
 	 * The list of languages.
 	 *
-	 * @var LMAT_Language[]
+	 * @var EWT_Language[]
 	 */
 	protected $languages;
 
@@ -59,7 +59,7 @@ class LMAT_Table_String extends WP_List_Table {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language[] $languages List of languages.
+	 * @param EWT_Language[] $languages List of languages.
 	 */
 	public function __construct( $languages ) {
 		parent::__construct(
@@ -70,7 +70,7 @@ class LMAT_Table_String extends WP_List_Table {
 		);
 
 		$this->languages = $languages;
-		$this->strings = LMAT_Admin_Strings::get_strings();
+		$this->strings = EWT_Admin_Strings::get_strings();
 		$this->groups = array_unique( wp_list_pluck( $this->strings, 'context' ) );
 
 		$this->selected_group = -1;
@@ -82,7 +82,7 @@ class LMAT_Table_String extends WP_List_Table {
 			}
 		}
 
-		add_action( 'lmat_action_string-translation', array( $this, 'save_translations' ) );
+		add_action( 'ewt_action_string-translation', array( $this, 'save_translations' ) );
 	}
 
 	/**
@@ -111,7 +111,7 @@ class LMAT_Table_String extends WP_List_Table {
 			'<label class="screen-reader-text" for="cb-select-%1$s">%2$s</label><input id="cb-select-%1$s" type="checkbox" name="strings[]" value="%1$s" %3$s />',
 			esc_attr( isset( $item['row'] ) ? $item['row'] : '' ),
 			/* translators:  accessibility text, %s is a string potentially in any language */
-			sprintf( __( 'Select %s', 'linguator-multilingual-ai-translation' ), format_to_edit( $item['string'] ) ),
+			sprintf( __( 'Select %s', 'easy-wp-translator' ), format_to_edit( $item['string'] ) ),
 			empty( $item['icl'] ) ? 'disabled' : '' // Only strings registered with WPML API can be removed.
 		);
 	}
@@ -173,10 +173,10 @@ class LMAT_Table_String extends WP_List_Table {
 	public function get_columns() {
 		return array(
 			'cb'           => '<input type="checkbox" />', // Checkbox.
-			'string'       => esc_html__( 'String', 'linguator-multilingual-ai-translation' ),
-			'name'         => esc_html__( 'Name', 'linguator-multilingual-ai-translation' ),
-			'context'      => esc_html__( 'Group', 'linguator-multilingual-ai-translation' ),
-			'translations' => esc_html__( 'Translations', 'linguator-multilingual-ai-translation' ),
+			'string'       => esc_html__( 'String', 'easy-wp-translator' ),
+			'name'         => esc_html__( 'Name', 'easy-wp-translator' ),
+			'context'      => esc_html__( 'Group', 'easy-wp-translator' ),
+			'translations' => esc_html__( 'Translations', 'easy-wp-translator' ),
 		);
 	}
 
@@ -211,7 +211,7 @@ class LMAT_Table_String extends WP_List_Table {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language[] $languages An array of language objects.
+	 * @param EWT_Language[] $languages An array of language objects.
 	 * @param string         $s         Searched string.
 	 * @return string[] Found strings.
 	 */
@@ -219,7 +219,7 @@ class LMAT_Table_String extends WP_List_Table {
 		$founds = array();
 
 		foreach ( $languages as $language ) {
-			$mo = new LMAT_MO();
+			$mo = new EWT_MO();
 			$mo->import_from_db( $language );
 			foreach ( wp_list_pluck( $mo->entries, 'translations' ) as $string => $translation ) {
 				if ( false !== stripos( $translation[0], $s ) ) {
@@ -261,7 +261,7 @@ class LMAT_Table_String extends WP_List_Table {
 	 */
 	public function prepare_items() {
 		// Is admin language filter active?
-		if ( $lg = get_user_meta( get_current_user_id(), 'lmat_filter_content', true ) ) {
+		if ( $lg = get_user_meta( get_current_user_id(), 'ewt_filter_content', true ) ) {
 			$languages = wp_list_filter( $this->languages, array( 'slug' => $lg ) );
 		} else {
 			$languages = $this->languages;
@@ -291,7 +291,7 @@ class LMAT_Table_String extends WP_List_Table {
 		uasort( $data, array( $this, 'usort_reorder' ) );
 
 		// Paging
-		$per_page = $this->get_items_per_page( 'lmat_strings_per_page' );
+		$per_page = $this->get_items_per_page( 'ewt_strings_per_page' );
 		$this->_column_headers = array( $this->get_columns(), array(), $this->get_sortable_columns() );
 
 		$total_items = count( $data );
@@ -308,7 +308,7 @@ class LMAT_Table_String extends WP_List_Table {
 		// Translate strings
 		// Kept for the end as it is a slow process
 		foreach ( $languages as $language ) {
-			$mo = new LMAT_MO();
+			$mo = new EWT_MO();
 			$mo->import_from_db( $language );
 			foreach ( $this->items as $key => $row ) {
 				$this->items[ $key ]['translations'][ $language->slug ] = $mo->translate_if_any( $row['string'] );
@@ -348,13 +348,13 @@ class LMAT_Table_String extends WP_List_Table {
 		printf(
 			'<label class="screen-reader-text" for="select-group" >%s</label>',
 			/* translators: accessibility text */
-			esc_html__( 'Filter by group', 'linguator-multilingual-ai-translation' )
+			esc_html__( 'Filter by group', 'easy-wp-translator' )
 		);
 		echo '<select id="select-group" name="group">' . "\n";
 		printf(
 			'<option value="-1"%s>%s</option>' . "\n",
 			selected( $this->selected_group, -1, false ),
-			esc_html__( 'View all groups', 'linguator-multilingual-ai-translation' )
+			esc_html__( 'View all groups', 'easy-wp-translator' )
 		);
 
 		foreach ( $this->groups as $group ) {
@@ -367,7 +367,7 @@ class LMAT_Table_String extends WP_List_Table {
 		}
 		echo '</select>' . "\n";
 
-		submit_button( __( 'Filter', 'linguator-multilingual-ai-translation' ), 'button', 'filter_action', false, array( 'id' => 'post-query-submit' ) );
+		submit_button( __( 'Filter', 'easy-wp-translator' ), 'button', 'filter_action', false, array( 'id' => 'post-query-submit' ) );
 		echo '</div>';
 	}
 
@@ -390,24 +390,24 @@ class LMAT_Table_String extends WP_List_Table {
 				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized below with sanitize_textarea_field
 				$translations = array_map( 'sanitize_textarea_field', array_map( 'trim', (array) wp_unslash( $_POST['translation'][ $language->slug ] ) ) );
 
-				$mo = new LMAT_MO();
+				$mo = new EWT_MO();
 				$mo->import_from_db( $language );
 
 				foreach ( $translations as $key => $translation ) {
 					/**
 					 * Filters the string translation before it is saved in DB.
-					 * Allows to sanitize strings registered with lmat_register_string().
+					 * Allows to sanitize strings registered with ewt_register_string().
 					 *
 					 *  
 					 *   The translation passed to the filter is unslashed.
 					 *   Add original string as 4th parameter.
 					 *
 					 * @param string $translation The string translation.
-					 * @param string $name        The name as defined in lmat_register_string.
-					 * @param string $context     The context as defined in lmat_register_string.
+					 * @param string $name        The name as defined in ewt_register_string.
+					 * @param string $context     The context as defined in ewt_register_string.
 					 * @param string $original    The original string to translate.
 					 */
-					$translation = apply_filters( 'lmat_sanitize_string_translation', $translation, $this->strings[ $key ]['name'], $this->strings[ $key ]['context'], $this->strings[ $key ]['string'] );
+					$translation = apply_filters( 'ewt_sanitize_string_translation', $translation, $this->strings[ $key ]['name'], $this->strings[ $key ]['context'], $this->strings[ $key ]['string'] );
 					$mo->add_entry(
 						$mo->make_entry(
 							$this->strings[ $key ]['string'],
@@ -418,7 +418,7 @@ class LMAT_Table_String extends WP_List_Table {
 
 				// Clean database ( removes all strings which were registered some day but are no more )
 				if ( ! empty( $_POST['clean'] ) ) {
-					$new_mo = new LMAT_MO();
+					$new_mo = new EWT_MO();
 
 					foreach ( $this->strings as $string ) {
 						$new_mo->add_entry( $mo->make_entry( $string['string'], $mo->translate( $string['string'] ) ) );
@@ -428,14 +428,14 @@ class LMAT_Table_String extends WP_List_Table {
 				isset( $new_mo ) ? $new_mo->export_to_db( $language ) : $mo->export_to_db( $language );
 			}
 
-			lmat_add_notice( new WP_Error( 'lmat_strings_translations_updated', __( 'Translations updated.', 'linguator-multilingual-ai-translation' ), 'success' ) );
+			ewt_add_notice( new WP_Error( 'ewt_strings_translations_updated', __( 'Translations updated.', 'easy-wp-translator' ), 'success' ) );
 
 			/**
 			 * Fires after the strings translations are saved in DB
 			 *
 			 *  
 			 */
-			do_action( 'lmat_save_strings_translations' );
+			do_action( 'ewt_save_strings_translations' );
 		}
 
 		// Unregisters strings registered through WPML API
@@ -453,6 +453,6 @@ class LMAT_Table_String extends WP_List_Table {
 		if ( ! empty( $args['s'] ) ) {
 			$args['s'] = urlencode( $args['s'] ); // Searched string needs to be encoded as it comes from $_POST
 		}
-		LMAT_Settings::redirect( $args );
+		EWT_Settings::redirect( $args );
 	}
 }

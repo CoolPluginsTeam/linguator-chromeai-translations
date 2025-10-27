@@ -24,7 +24,7 @@ export default class ElementorTranslator extends Marionette.Behavior {
 
     ui() {
         return {
-            translatorWrapper: `.lmat-et-translator-wrapper`,
+            translatorWrapper: `.ewt-et-translator-wrapper`,
         };
     }
 
@@ -55,12 +55,12 @@ export default class ElementorTranslator extends Marionette.Behavior {
     onRender() {
         const buttonLabel = this.getOption('buttonLabel');
 
-        const $button=jQuery(`<div class="lmat-et-translator-wrapper ${styles.lmatEtTranslatorWrapper}">`);
+        const $button=jQuery(`<div class="ewt-et-translator-wrapper ${styles.ewtEtTranslatorWrapper}">`);
 
         let iconElement = document.createElement('div');
-        iconElement.className=styles.lmatEtTranslatorContainer;
+        iconElement.className=styles.ewtEtTranslatorContainer;
         iconElement.title="Chrome built-in translator AI";
-        ReactDom.createRoot(iconElement).render(<RiTranslateAi2Compat className={styles.lmatEtTranslatorIcon} />);
+        ReactDom.createRoot(iconElement).render(<RiTranslateAi2Compat className={styles.ewtEtTranslatorIcon} />);
         $button.html(iconElement);
 
         iconElement=null;

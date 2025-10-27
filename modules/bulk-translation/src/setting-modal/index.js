@@ -7,10 +7,10 @@ import { __ } from "@wordpress/i18n";
 import ErrorModalBox from "../components/error-modal-box/index.js";
 
 const SettingModal = (props) => {
-    const prefix=props.prefix || 'lmat-bulk-translate';
-    const imgFolder = lmatBulkTranslationGlobal.lmat_url + 'admin/assets/images/';
+    const prefix=props.prefix || 'ewt-bulk-translate';
+    const imgFolder = ewtBulkTranslationGlobal.ewt_url + 'admin/assets/images/';
     const [errorModal, setErrorModal] = useState(false);
-    const providers=lmatBulkTranslationGlobal.providers;
+    const providers=ewtBulkTranslationGlobal.providers;
 
     useEffect(()=>{
         if(providers.length < 2 && providers[0]){
@@ -65,7 +65,7 @@ const SettingModal = (props) => {
 
     return (
         <>
-            {errorModal ? <ErrorModalBox message={errorModal} onDestroy={props.onDestory} onClose={closeErrorModal} Title='Linguator Multilingual AI Translation' prefix={prefix} /> :
+            {errorModal ? <ErrorModalBox message={errorModal} onDestroy={props.onDestory} onClose={closeErrorModal} Title='Easy WP Translator – On-Device Chrome AI Translation' prefix={prefix} /> :
             (providers.length > 1 && <div id={`${prefix}-setting-modal-container`}>
                 <div className={`${prefix}-setting-modal-content`}>
                     <SettingModalHeader

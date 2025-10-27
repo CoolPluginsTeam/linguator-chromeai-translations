@@ -1,20 +1,20 @@
 <?php
-namespace Linguator\Includes\Walkers;
+namespace EasyWPTranslator\Includes\Walkers;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 /**
  * Displays languages in a dropdown list
  *
  *  
- *   Extends `LMAT_Walker` now.
+ *   Extends `EWT_Walker` now.
  */
-class LMAT_Walker_Dropdown extends LMAT_Walker {
+class EWT_Walker_Dropdown extends EWT_Walker {
 	/**
 	 * Database fields to use.
 	 *
@@ -71,12 +71,12 @@ class LMAT_Walker_Dropdown extends LMAT_Walker {
 	 * class    => the class attribute
 	 * disabled => disables the dropdown if set to 1
 	 *
-	 * @param array $elements  An array of `LMAT_language` or `stdClass` elements.
+	 * @param array $elements  An array of `EWT_language` or `stdClass` elements.
 	 * @param int   $max_depth The maximum hierarchical depth.
 	 * @param mixed ...$args   Additional arguments.
 	 * @return string The hierarchical item output.
 	 *
-	 * @phpstan-param array<LMAT_Language|stdClass> $elements
+	 * @phpstan-param array<EWT_Language|stdClass> $elements
 	 */
 	public function walk( $elements, $max_depth, ...$args ) { // // phpcs:ignore WordPressVIPMinimum.Classes.DeclarationCompatibility.DeclarationCompatibility
 		$output = '';
@@ -90,7 +90,7 @@ class LMAT_Walker_Dropdown extends LMAT_Walker {
 			$lang = reset( $current );
 			if ( $lang && is_object( $lang ) ) {
 				$output = sprintf(
-					'<span class="lmat-select-flag">%s</span>',
+					'<span class="ewt-select-flag">%s</span>',
 					empty( $lang->flag ) ? esc_html( $lang->slug ) : $lang->flag
 				);
 			}

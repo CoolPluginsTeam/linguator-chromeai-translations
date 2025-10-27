@@ -1,15 +1,15 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Services\Links;
+namespace EasyWPTranslator\Includes\Services\Links;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Other\LMAT_Language;
+use EasyWPTranslator\Includes\Other\EWT_Language;
 
 
 
@@ -18,7 +18,7 @@ use Linguator\Includes\Other\LMAT_Language;
  *
  *  
  */
-class LMAT_Links {
+class EWT_Links {
 	/**
 	 * Stores the plugin options.
 	 *
@@ -27,21 +27,21 @@ class LMAT_Links {
 	public $options;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	public $model;
 
 	/**
-	 * Instance of a child class of LMAT_Links_Model.
+	 * Instance of a child class of EWT_Links_Model.
 	 *
-	 * @var LMAT_Links_Model
+	 * @var EWT_Links_Model
 	 */
 	public $links_model;
 
 	/**
 	 * Current language (used to filter the content).
 	 *
-	 * @var LMAT_Language|null
+	 * @var EWT_Language|null
 	 */
 	public $curlang;
 
@@ -50,12 +50,12 @@ class LMAT_Links {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->links_model = &$linguator->links_model;
-		$this->model = &$linguator->model;
-		$this->options = &$linguator->options;
+	public function __construct( &$easywptranslator ) {
+		$this->links_model = &$easywptranslator->links_model;
+		$this->model = &$easywptranslator->model;
+		$this->options = &$easywptranslator->options;
 	}
 
 	/**
@@ -63,12 +63,12 @@ class LMAT_Links {
 	 *
 	 *  
 	 *
-	 * @param LMAT_Language|string $language  The language.
+	 * @param EWT_Language|string $language  The language.
 	 * @param bool                $is_search Optional, whether we need the home url for a search form, defaults to false.
 	 * @return string
 	 */
 	public function get_home_url( $language, $is_search = false ) {
-		if ( ! $language instanceof LMAT_Language ) {
+		if ( ! $language instanceof EWT_Language ) {
 			$language = $this->model->get_language( $language );
 		}
 

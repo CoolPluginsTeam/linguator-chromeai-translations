@@ -12,15 +12,15 @@ import { __, sprintf } from '@wordpress/i18n';
         const [modalVisible, setModalVisible] = useState(false);
         const [postIds, setPostIds] = useState([]);
         const prefix=props.prefix;
-        const providers=lmatBulkTranslationGlobal.providers;
+        const providers=ewtBulkTranslationGlobal.providers;
 
         const [providerConfigError, setProviderConfigError] = useState(false);
         let providerConfigMsg = sprintf(__(
             '%sYou have not enabled any translation provider. Please enable at least one service provider to use bulk translation. Go to the %sTranslation Settings%s to configure a translation provider.%s',
-            'easy-web-translator'
+            'easy-wp-translator'
         ),
         '<p>',
-        `<strong><a href='${lmatBulkTranslationGlobal.admin_url}admin.php?page=lmat_settings&tab=translation' target='_blank' rel='noopener noreferrer'>`,
+        `<strong><a href='${ewtBulkTranslationGlobal.admin_url}admin.php?page=ewt_settings&tab=translation' target='_blank' rel='noopener noreferrer'>`,
         '</a></strong>',
         '</p>');
 
@@ -28,7 +28,7 @@ import { __, sprintf } from '@wordpress/i18n';
             e.preventDefault();
             let checkboxClass='table.widefat input[name="post[]"]:checked';
 
-            if(lmatBulkTranslationGlobal.taxonomy_page && '' !== lmatBulkTranslationGlobal.taxonomy_page){
+            if(ewtBulkTranslationGlobal.taxonomy_page && '' !== ewtBulkTranslationGlobal.taxonomy_page){
                 checkboxClass='table.widefat input[name="delete_tags[]"]:checked';
             }
 
@@ -81,7 +81,7 @@ import { __, sprintf } from '@wordpress/i18n';
     }
     
     window.addEventListener('load', async () => {
-        const prefix='lmat-bulk-translate';
+        const prefix='ewt-bulk-translate';
 
         await new Promise(resolve => setTimeout(resolve, 500));
 

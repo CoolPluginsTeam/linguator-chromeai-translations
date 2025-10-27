@@ -7,14 +7,14 @@ import { dispatch, select } from '@wordpress/data';
 const SaveTranslation = ({type, key, translateContent, source, provider, AllowedMetaFields}) => {
     if (['title', 'excerpt', 'slug'].includes(type)) {
         const action = `${type}SaveTranslate`;
-        dispatch('block-lmatPageTranslation/translate')[action](translateContent, provider);
+        dispatch('block-ewtPageTranslation/translate')[action](translateContent, provider);
     } else if (['metaFields'].includes(type)) {
 
         if(Object.keys(AllowedMetaFields).includes(key)){
-            dispatch('block-lmatPageTranslation/translate').metaFieldsSaveTranslate(key, translateContent, source, provider);
+            dispatch('block-ewtPageTranslation/translate').metaFieldsSaveTranslate(key, translateContent, source, provider);
         }
     } else {
-        dispatch('block-lmatPageTranslation/translate').contentSaveTranslate(key, translateContent, source, provider);
+        dispatch('block-ewtPageTranslation/translate').contentSaveTranslate(key, translateContent, source, provider);
     }
 }
 

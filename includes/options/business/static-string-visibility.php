@@ -1,15 +1,15 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
-namespace Linguator\Includes\Options\Business;
+namespace EasyWPTranslator\Includes\Options\Business;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use Linguator\Includes\Options\Abstract_Option;
+use EasyWPTranslator\Includes\Options\Abstract_Option;
 
 /**
  * Class defining static strings visibility option.
@@ -65,7 +65,7 @@ class Static_Strings_Visibility extends Abstract_Option {
 	 * @param Options $options All options.
 	 * @return bool|WP_Error The sanitized value. An instance of `WP_Error` in case of blocking error.
 	 */
-	protected function sanitize( $value, \Linguator\Includes\Options\Options $options ) {
+	protected function sanitize( $value, \EasyWPTranslator\Includes\Options\Options $options ) {
 		return filter_var( $value, FILTER_VALIDATE_BOOLEAN );
 	}
 
@@ -77,6 +77,6 @@ class Static_Strings_Visibility extends Abstract_Option {
 	 * @return string
 	 */
 	protected function get_description(): string {
-		return __( 'Show or hide the Static Strings tab in the admin menu.', 'easy-web-translator' );
+		return __( 'Show or hide the Static Strings tab in the admin menu.', 'easy-wp-translator' );
 	}
 }

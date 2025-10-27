@@ -1,5 +1,5 @@
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 import {
@@ -124,12 +124,12 @@ jQuery(
 				dialogResult.then(
 					() => {
 						var data = {
-							action:     'lmat_post_lang_choice',
+							action:     'ewt_post_lang_choice',
 							lang:       selectedOption.value,
 							post_type:  $( '#post_type' ).val(),
 							taxonomies: taxonomies,
 							post_id:    $( '#post_ID' ).val(),
-							_lmat_nonce: $( '#_lmat_nonce' ).val()
+							_ewt_nonce: $( '#_ewt_nonce' ).val()
 						}
 
 						$.post(
@@ -137,7 +137,7 @@ jQuery(
 							data,
 							function ( response ) {
 								// Target a non existing WP HTML id to avoid a conflict with WP ajax requests.
-								var res = wpAjax.parseAjaxResponse( response, 'lmat-ajax-response' );
+								var res = wpAjax.parseAjaxResponse( response, 'ewt-ajax-response' );
 								$.each(
 									res.responses,
 									function () {
@@ -155,7 +155,7 @@ jQuery(
 												// @see wp_popular_terms_checklist https://github.com/WordPress/WordPress/blob/5.2.2/wp-admin/includes/template.php#L236
 												$( '#' + tax + 'checklist-pop' ).html( this.supplemental.populars ); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.html
 												// @see wp_dropdown_categories https://github.com/WordPress/WordPress/blob/5.5.1/wp-includes/category-template.php#L336
-												// which is called by LMAT_Admin_Classic_Editor::post_lang_choice to generate supplemental.dropdown
+												// which is called by EWT_Admin_Classic_Editor::post_lang_choice to generate supplemental.dropdown
 												$( '#new' + tax + '_parent' ).replaceWith( this.supplemental.dropdown ); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.replaceWith
 												$( '#' + tax + '-lang' ).val( $( '.post_lang_choice' ).val() ); // hidden field
 											break;
@@ -166,7 +166,7 @@ jQuery(
 											break;
 											case 'flag': // flag in front of the select dropdown
 												// Data is built and come from server side and is well escaped when necessary
-												$( '.lmat-select-flag' ).html( this.data ); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.html
+												$( '.ewt-select-flag' ).html( this.data ); // phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.html
 											break;
 											case 'permalink': // Sample permalink
 												var div = $( '#edit-slug-box' );
@@ -222,12 +222,12 @@ jQuery(
 
 				// Modifies the text direction.
 				let dir = e.detail.lang.is_rtl ? 'rtl' : 'ltr'
-				$( 'body' ).removeClass( 'lmat-dir-rtl' ).removeClass( 'lmat-dir-ltr' ).addClass( 'lmat-dir-' + dir );
+				$( 'body' ).removeClass( 'ewt-dir-rtl' ).removeClass( 'ewt-dir-ltr' ).addClass( 'ewt-dir-' + dir );
 				$( '#content_ifr' ).contents().find( 'html' ).attr( 'lang', e.detail.lang.locale ).attr( 'dir', dir );
 				$( '#content_ifr' ).contents().find( 'body' ).attr( 'dir', dir );
 
 				// Refresh media libraries.
-				lmat.media.resetAllAttachmentsCollections();
+				ewt.media.resetAllAttachmentsCollections();
 			}
 		);
 
@@ -237,24 +237,24 @@ jQuery(
 
 /**
  *
- * @namespace lmat
+ * @namespace ewt
  */
-var lmat = window.lmat || {};
+var ewt = window.ewt || {};
 
 /**
  *
- * @namespace lmat.media
+ * @namespace ewt.media
  */
-_.extend( lmat, { media: {} } );
+_.extend( ewt, { media: {} } );
 
 /**
  *
- * @alias lmat.media
- * @memberOf lmat
+ * @alias ewt.media
+ * @memberOf ewt
  * @namespace
  */
 var media = _.extend(
-	lmat.media, /** @lends lmat.media.prototype */
+	ewt.media, /** @lends ewt.media.prototype */
 	{
 		/**
 		 * TODO: Find a way to delete references to Attachments collections that are not used anywhere else.
@@ -270,9 +270,9 @@ var media = _.extend(
 		 * @return {wp.media.model.Attachments}
 		 */
 		query: function ( props ) {
-			var attachments = lmat.media.query.delegate( props );
+			var attachments = ewt.media.query.delegate( props );
 
-			lmat.media.attachmentsCollections.push( attachments );
+			ewt.media.attachmentsCollections.push( attachments );
 
 			return attachments;
 		},
@@ -301,10 +301,10 @@ if ( 'undefined' !== typeof wp && 'undefined' !== typeof wp.media ) {
 
 	/**
 	 *
-	 * @memberOf lmat.media
+	 * @memberOf ewt.media
 	 */
 	media.query = _.extend(
-		media.query, /** @lends lmat.media.query prototype */
+		media.query, /** @lends ewt.media.query prototype */
 		{
 			/**
 			 * @type Function References WordPress { @see wp.media.query } constructor

@@ -3,11 +3,11 @@ import { useEffect } from 'react';
 const Notice = (props) => {
 
     const updateNoticeWrapperHeight = () => {
-        const parentNoticeWrapper = document.querySelector('.lmat-page-translation-body-notice-wrapper');
+        const parentNoticeWrapper = document.querySelector('.ewt-page-translation-body-notice-wrapper');
         if(parentNoticeWrapper){
             const height= parentNoticeWrapper.offsetHeight + parentNoticeWrapper.offsetTop;
 
-            parentNoticeWrapper.closest('.modal-body').style.setProperty('--lmat-page-translation-notice-wrapper-height', `${height}px`);
+            parentNoticeWrapper.closest('.modal-body').style.setProperty('--ewt-page-translation-notice-wrapper-height', `${height}px`);
         }
     }
 

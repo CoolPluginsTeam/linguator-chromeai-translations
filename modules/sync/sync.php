@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Linguator
+ * @package EasyWPTranslator
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,19 +12,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *  
  */
-class LMAT_Sync {
+class EWT_Sync {
 	/**
-	 * @var LMAT_Sync_Tax
+	 * @var EWT_Sync_Tax
 	 */
 	public $taxonomies;
 
 	/**
-	 * @var LMAT_Sync_Post_Metas
+	 * @var EWT_Sync_Post_Metas
 	 */
 	public $post_metas;
 
 	/**
-	 * @var LMAT_Sync_Term_Metas
+	 * @var EWT_Sync_Term_Metas
 	 */
 	public $term_metas;
 
@@ -36,7 +36,7 @@ class LMAT_Sync {
 	protected $options;
 
 	/**
-	 * @var LMAT_Model
+	 * @var EWT_Model
 	 */
 	protected $model;
 
@@ -45,28 +45,28 @@ class LMAT_Sync {
 	 *
 	 *  
 	 *
-	 * @param object $linguator The Linguator object.
+	 * @param object $easywptranslator The EasyWPTranslator object.
 	 */
-	public function __construct( &$linguator ) {
-		$this->model   = &$linguator->model;
-		$this->options = &$linguator->options;
+	public function __construct( &$easywptranslator ) {
+		$this->model   = &$easywptranslator->model;
+		$this->options = &$easywptranslator->options;
 
-		$this->taxonomies = new LMAT_Sync_Tax( $linguator );
-		$this->post_metas = new LMAT_Sync_Post_Metas( $linguator );
-		$this->term_metas = new LMAT_Sync_Term_Metas( $linguator );
+		$this->taxonomies = new EWT_Sync_Tax( $easywptranslator );
+		$this->post_metas = new EWT_Sync_Post_Metas( $easywptranslator );
+		$this->term_metas = new EWT_Sync_Term_Metas( $easywptranslator );
 
 		add_filter( 'wp_insert_post_parent', array( $this, 'can_sync_post_parent' ), 10, 3 );
 		add_filter( 'wp_insert_post_data', array( $this, 'can_sync_post_data' ), 10, 2 );
 
-		add_action( 'lmat_save_post', array( $this, 'lmat_save_post' ), 10, 3 );
+		add_action( 'ewt_save_post', array( $this, 'ewt_save_post' ), 10, 3 );
 		add_action( 'created_term', array( $this, 'sync_term_parent' ), 10, 3 );
 		add_action( 'edited_term', array( $this, 'sync_term_parent' ), 10, 3 );
 
-		add_action( 'lmat_duplicate_term', array( $this->term_metas, 'copy' ), 10, 3 );
+		add_action( 'ewt_duplicate_term', array( $this->term_metas, 'copy' ), 10, 3 );
 
 		if ( $this->options['media_support'] ) {
-			add_action( 'lmat_translate_media', array( $this->taxonomies, 'copy' ), 10, 3 );
-			add_action( 'lmat_translate_media', array( $this->post_metas, 'copy' ), 10, 3 );
+			add_action( 'ewt_translate_media', array( $this->taxonomies, 'copy' ), 10, 3 );
+			add_action( 'ewt_translate_media', array( $this->post_metas, 'copy' ), 10, 3 );
 			add_action( 'edit_attachment', array( $this, 'edit_attachment' ) );
 		}
 
@@ -157,7 +157,7 @@ class LMAT_Sync {
 	 * @param int[]   $translations Post translations.
 	 * @return void
 	 */
-	public function lmat_save_post( $post_id, $post, $translations ) {
+	public function ewt_save_post( $post_id, $post, $translations ) {
 		global $wpdb;
 
 		if ( $this->model->post->current_user_can_synchronize( $post_id ) ) {
@@ -252,7 +252,7 @@ class LMAT_Sync {
 	 * @return void
 	 */
 	public function edit_attachment( $post_id ) {
-		$this->lmat_save_post( $post_id, get_post( $post_id ), $this->model->post->get_translations( $post_id ) );
+		$this->ewt_save_post( $post_id, get_post( $post_id ), $this->model->post->get_translations( $post_id ) );
 	}
 
 	/**

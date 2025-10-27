@@ -1,4 +1,4 @@
-=== Easy Web Translator – On-Device Chrome AI Translation  ===
+=== Easy WP Translator – On-Device Chrome AI Translation  ===
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: translation, multilingual, language, ai translation 
 Requires at least: 6.2
@@ -7,52 +7,52 @@ Requires PHP: 7.2
 Stable tag: 0.0.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Translate your WordPress website into multiple languages with AI. Linguator makes creating multilingual sites simple, fast, and SEO-friendly.
+Translate your WordPress website into multiple languages with AI. EasyWPTranslator makes creating multilingual sites simple, fast, and SEO-friendly.
 == Description ==
 https://youtu.be/TNSWCCmHQPg?si=LQXRkszBIFPMG9vg
-**Linguator**  is a powerful multilingual plugin that helps you create and manage multilingual content on your WordPress website. Easily translate your **posts, pages, menus,** and **categories** into different languages using AI and connect with visitors worldwide.
+**EasyWPTranslator**  is a powerful multilingual plugin that helps you create and manage multilingual content on your WordPress website. Easily translate your **posts, pages, menus,** and **categories** into different languages using AI and connect with visitors worldwide.
 **Create a Multilingual WordPress Website 10X Faster – Powered by AI, Built for Global Reach.**
-**Note:** Linguator is currently in **Beta**, and we’re actively improving features and performance based on user feedback.
+**Note:** EasyWPTranslator is currently in **Beta**, and we’re actively improving features and performance based on user feedback.
 https://youtu.be/20MbjUb6AnM?si=-1qipV1fFH89KtgT
-### Why Use Linguator?
-Linguator makes it simple to create and manage multilingual websites directly inside WordPress — no coding or external service needed. It’s the easiest way to go global using the power of AI, right from your dashboard.
-With Linguator, you can:
-* **Simple and Familiar Interface** – Built with WordPress standards in mind, Linguator feels natural and easy to use, even for beginners.
+### Why Use EasyWPTranslator?
+EasyWPTranslator makes it simple to create and manage multilingual websites directly inside WordPress — no coding or external service needed. It’s the easiest way to go global using the power of AI, right from your dashboard.
+With EasyWPTranslator, you can:
+* **Simple and Familiar Interface** – Built with WordPress standards in mind, EasyWPTranslator feels natural and easy to use, even for beginners.
 * **AI Power Without Extra Cost** – Leverage AI translation features for free — no need to pay for costly external AI credits.
 * **Reliable Customer Support** – Your satisfaction matters most to us. Our support team responds to every query within 24 hours to help you quickly resolve any issue
-* **No Monthly Fees or SaaS Dependency** – Linguator runs fully inside WordPress — once installed, it’s yours! No external API or subscription required.
+* **No Monthly Fees or SaaS Dependency** – EasyWPTranslator runs fully inside WordPress — once installed, it’s yours! No external API or subscription required.
 * **Fully Compatible with Elementor & Gutenberg** – Translate visually designed pages effortlessly without breaking layouts.
 * **Save Time with AI-Powered Translation** – Instantly translate your posts, pages, and menus using advanced AI translation technology.
 * **Reach a Global Audience** – Translate your content into multiple languages and expand your website’s reach worldwide.
 * **Build Trust with Localized Content** – Speak to visitors in their own language to increase engagement and conversions.
 * **SEO-Optimized for Multilingual Sites** – Generate search-friendly URLs for every language to improve visibility in Google.
-* **Lightweight & Optimized for Speed** – Linguator is built with performance in mind and doesn’t slow down your pages or website loading time.
+* **Lightweight & Optimized for Speed** – EasyWPTranslator is built with performance in mind and doesn’t slow down your pages or website loading time.
 ### Key Features
-* **AI-Powered Automatic Translation:**   Save hours of manual work!. Linguator uses powerful AI translation engines to automatically translate your posts and pages into multiple languages — giving you high-quality, natural translations in one click.
+* **AI-Powered Automatic Translation:**   Save hours of manual work!. EasyWPTranslator uses powerful AI translation engines to automatically translate your posts and pages into multiple languages — giving you high-quality, natural translations in one click.
 * **SEO-Friendly Multilingual URLs:** Each language gets its own unique, SEO-friendly URL structure — helping your site rank better in Google for multiple languages and attract global visitors.
-* **Manual + Automatic Translation Control:** Translate your content automatically using AI, or fine-tune it manually for complete accuracy — Linguator gives you both options for full flexibility.
+* **Manual + Automatic Translation Control:** Translate your content automatically using AI, or fine-tune it manually for complete accuracy — EasyWPTranslator gives you both options for full flexibility.
 * **Add & Manage Languages:** Without any limit on the number of languages, translate your WordPress website content into multiple languages.
 * **Elementor Page Translation:** Translate entire Elementor pages, including all sections, widgets, and content, without losing styles or design.
 * **Gutenberg Block Compatibility:** Automatically translate content within Gutenberg blocks, including core blocks and popular third-party blocks like Spectra, Kadence, Stackable, Otter, and Essential.
 * **Bulk Translation:** Instantly translate multiple posts, pages, or products at once with a single click, saving time and effort.
 * **Inline Translation:** Translate specific widgets or blocks of content directly within the editor, without translating the entire page, using advanced AI-powered translation tools.
-* **Custom Post Type Translation:** If your site uses custom post types **(like "Events", "Portfolios", "Testimonials", etc.)**, using Linguator, you can translate all of them.
+* **Custom Post Type Translation:** If your site uses custom post types **(like "Events", "Portfolios", "Testimonials", etc.)**, using EasyWPTranslator, you can translate all of them.
 * **Media Translation Management:** Translate image titles, captions, alt text, and descriptions to match each language.
 * **Menu Translation:** Create separate navigation menus per language and let visitors switch between them.
-* **Taxonomy Translation:** Linguator plugin supports the translation of default WordPress taxonomies (like categories and tags) or custom ones, ensuring content stays organized in every language.
+* **Taxonomy Translation:** EasyWPTranslator plugin supports the translation of default WordPress taxonomies (like categories and tags) or custom ones, ensuring content stays organized in every language.
 * **Language Switcher:** Add a language switcher to your site with multiple display options, including Classic, Block-based, and Elementor widget styles, to easily switch languages.
-* **RTL Language Support:** Linguator offers full support for right-to-left (RTL) languages like Arabic and Hebrew. It automatically adjusts text direction, alignment, and layout to ensure your multilingual site displays correctly in every supported language.
+* **RTL Language Support:** EasyWPTranslator offers full support for right-to-left (RTL) languages like Arabic and Hebrew. It automatically adjusts text direction, alignment, and layout to ensure your multilingual site displays correctly in every supported language.
 * **Browser Language Detection:** Automatically display your site in the visitor's preferred language based on their browser settings.
-* **Supports Popular Page Builders:** Linguator works smoothly with page builders like Elementor and Gutenberg — making it easy to translate visually designed pages without breaking layouts.
- **Note:** Linguator is currently in **Beta**, and we’re actively improving features and performance based on user feedback.
+* **Supports Popular Page Builders:** EasyWPTranslator works smoothly with page builders like Elementor and Gutenberg — making it easy to translate visually designed pages without breaking layouts.
+ **Note:** EasyWPTranslator is currently in **Beta**, and we’re actively improving features and performance based on user feedback.
 #### Service Provider 
 This plugin offers AI translation services via Chrome's built-in AI APIs. Learn more about Chrome AI using the links below.
 * [Chrome Built-in AI APIs Documentation](https://developer.chrome.com/docs/ai/built-in-apis)
 * [Chrome Summarizer API Documentation](https://developer.chrome.com/docs/ai/summarizer-api)
 * [Chrome Prompt API Documentation for Extensions](https://developer.chrome.com/docs/extensions/ai/prompt-api)
-[Linguator on GitHub.](https://github.com/CoolPluginsTeam/linguator-multilingual-ai-translation) 
+[EasyWPTranslator on GitHub.](https://github.com/CoolPluginsTeam/easywptranslator-multilingual-ai-translation) 
 == Screenshots ==
-1. Linguator Language Switcher Preview.
+1. EasyWPTranslator Language Switcher Preview.
 2. Bulk Pages/Post Translation Preview.
 3. Gutenberg Page Translation Preview.
 4. Elementor Page Translation Preview.
@@ -60,11 +60,11 @@ This plugin offers AI translation services via Chrome's built-in AI APIs. Learn 
 == Installation ==
 1. Log in to your WordPress dashboard.
 2. Navigate to the Plugins section.
-3. Search for "Linguator".
+3. Search for "EasyWPTranslator".
 4. Click Install and then Activate the plugin.
-That's it! Easy Web Translator – On-Device Chrome AI Translation (Beta Version) is now installed and activated. You can start translating your website automatically using the power of AI.
+That's it! Easy WP Translator – On-Device Chrome AI Translation (Beta Version) is now installed and activated. You can start translating your website automatically using the power of AI.
 **Language Configuration**
-When you first activate Linguator, a simple Setup Wizard will guide you through configuring your multilingual website.
+When you first activate EasyWPTranslator, a simple Setup Wizard will guide you through configuring your multilingual website.
 Follow these steps to complete the setup:
 1. Choose the main language for your website. This will be the fallback language shown when a visitor's preferred language isn't available.
 2. Select additional languages you want to support from the list of available languages.
@@ -73,40 +73,40 @@ Follow these steps to complete the setup:
 5. Choose your preferred translation source — Chrome's built-in AI translator — to handle your translations.
 6. Choose how and where the language switcher will appear on your website so visitors can easily switch between languages.
 That's it! The setup configuration has been successfully completed. You can now start translating your website content and make it fully multilingual.
- **Note:** Linguator is currently in **Beta**, and we’re actively improving features and performance based on user feedback.
+ **Note:** EasyWPTranslator is currently in **Beta**, and we’re actively improving features and performance based on user feedback.
 == Frequently Asked Questions ==
 = Which languages are supported? =
-Linguator supports all languages that WordPress supports, including RTL languages.
+EasyWPTranslator supports all languages that WordPress supports, including RTL languages.
 = Is it compatible with all WordPress themes? =
-Yes, Linguator is designed to work with any properly coded WordPress theme.
+Yes, EasyWPTranslator is designed to work with any properly coded WordPress theme.
 = Does it work with Elementor and Gutenberg? =
-Yes, the Linguator plugin fully supports the translation of page editors like Gutenberg and Elementor. You can translate your content directly within these editors.
+Yes, the EasyWPTranslator plugin fully supports the translation of page editors like Gutenberg and Elementor. You can translate your content directly within these editors.
 = Can I create different menus for each language? =
 Yes. You can create and manage separate navigation menus for each language and let visitors switch between them.
 = Where can I place the Language Switcher on my site? =
 You can place it in menus, sidebars, headers, footers, or any widget-ready area. If you use Elementor, you can add it directly to your page or template using the Elementor widget.
 = Can I translate media, such as images and videos? =
-Yes. Linguator allows you to translate media metadata, including image titles, alt text, captions, and descriptions, ensuring your content is fully localized.
+Yes. EasyWPTranslator allows you to translate media metadata, including image titles, alt text, captions, and descriptions, ensuring your content is fully localized.
 = Can it detect the visitor's browser language? =
-Yes. Linguator includes an option to automatically detect the visitor's browser language and display the site in that language.
-= How many languages can I add with Linguator? =
-There is no limit. You can add as many languages as you want to your website using Linguator.
+Yes. EasyWPTranslator includes an option to automatically detect the visitor's browser language and display the site in that language.
+= How many languages can I add with EasyWPTranslator? =
+There is no limit. You can add as many languages as you want to your website using EasyWPTranslator.
 = How can I report security bugs? =
-You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage, and handle any security vulnerabilities. [Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/linguator-multilingual-ai-translation/vdp).
-= Why Use Linguator? =
-* **Simple and Familiar Interface** – Built with WordPress standards in mind, Linguator feels natural and easy to use, even for beginners.
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage, and handle any security vulnerabilities. [Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/easywptranslator-multilingual-ai-translation/vdp).
+= Why Use EasyWPTranslator? =
+* **Simple and Familiar Interface** – Built with WordPress standards in mind, EasyWPTranslator feels natural and easy to use, even for beginners.
 * **AI Power Without Extra Cost** – Leverage AI translation features for free — no need to pay for costly external AI credits.
-* **No Monthly Fees or SaaS Dependency** – Linguator runs fully inside WordPress — once installed, it’s yours! No external API or subscription required.
+* **No Monthly Fees or SaaS Dependency** – EasyWPTranslator runs fully inside WordPress — once installed, it’s yours! No external API or subscription required.
 * **Fully Compatible with Elementor & Gutenberg** – Translate visually designed pages effortlessly without breaking layouts.
 * **Save Time with AI-Powered Translation** – Instantly translate your posts, pages, and menus using advanced AI translation technology.
 * **Reach a Global Audience** – Translate your content into multiple languages and expand your website’s reach worldwide.
 * **Build Trust with Localized Content** – Speak to visitors in their own language to increase engagement and conversions.
 * **SEO-Optimized for Multilingual Sites** – Generate search-friendly URLs for every language to improve visibility in Google.
-* **Lightweight & Optimized for Speed** – Linguator is built with performance in mind and doesn’t slow down your pages or website loading time.
-=Is Linguator still in beta? =
-Yes, Linguator is currently in its beta stage. This means the core features are ready to use, but we’re still improving stability, performance, and adding more integrations based on user feedback.
+* **Lightweight & Optimized for Speed** – EasyWPTranslator is built with performance in mind and doesn’t slow down your pages or website loading time.
+=Is EasyWPTranslator still in beta? =
+Yes, EasyWPTranslator is currently in its beta stage. This means the core features are ready to use, but we’re still improving stability, performance, and adding more integrations based on user feedback.
 == Changelog ==
-**Note:** Linguator is currently in **Beta**, and we’re actively improving features and performance based on user feedback.
+**Note:** EasyWPTranslator is currently in **Beta**, and we’re actively improving features and performance based on user feedback.
 = Version 0.0.6 (Beta) | 23/10/2025 =
 * **Fixed:** Missing JavaScript file issue.
 = Version 0.0.5 (Beta) | 15/10/2025 =
