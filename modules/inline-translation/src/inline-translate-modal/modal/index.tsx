@@ -21,9 +21,6 @@ import {
   SelectControl,
 } from "@wordpress/components";
 
-console.log(Skeleton);
-
-
 import { createElement } from "@wordpress/element";
 
 export const ModalCompat = (props: any) =>
