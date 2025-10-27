@@ -1,5 +1,5 @@
 {
-    "name": "easywptranslator/easywptranslator",
+    "name": "easy-wp-translator/easy-wp-translator",
     "require": {
         "php": ">=7.2"
     },

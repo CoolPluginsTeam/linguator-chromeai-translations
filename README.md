@@ -48,7 +48,7 @@ With EasyWPTranslator, you can:
 
 ## 🧩 Installation
 
-1. Upload the plugin files to the `/wp-content/plugins/easywptranslator-multilingual-ai-translation` directory or install via the WordPress Plugin screen.  
+1. Upload the plugin files to the `/wp-content/plugins/easy-wp-translator` directory or install via the WordPress Plugin screen.  
 2. Activate the plugin through the **Plugins** menu in WordPress.  
 3. Follow the setup wizard to configure your languages.  
 4. Go to **EasyWPTranslator → Settings** to adjust options.  
@@ -57,10 +57,10 @@ With EasyWPTranslator, you can:
 
 ## 💻 Development Info
 
-- **jQuery Source:** `easywptranslator/assets/js/src`  
-- **React (Settings Tab):** `easywptranslator/admin/settings/view/src`  
-- **React (Setup Wizard):** `easywptranslator/modules/wizard/src`  
-- **Build Files:** `easywptranslator/admin/assets`  
+- **jQuery Source:** `easy-wp-translator/assets/js/src`  
+- **React (Settings Tab):** `easy-wp-translator/admin/settings/view/src`  
+- **React (Setup Wizard):** `easy-wp-translator/modules/wizard/src`  
+- **Build Files:** `easy-wp-translator/admin/assets`  
 
 ---
 
