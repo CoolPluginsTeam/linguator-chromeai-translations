@@ -50,28 +50,57 @@ const Ready = () => {
     <div className='mx-auto max-w-[600px] min-h-[40vh] bg-white shadow-lg p-10 flex flex-col gap-6'>
       <h2 className='m-0'>{__("You're ready to translate your Site!", 'easy-wp-translator')}</h2>
       <div>
-        <p className='m-0 text-sm/6' style={{ color: "#6b7280" }}>{__("You're now able to translate your content such as posts, pages, categories and tags. Start by exploring the options below to manage your translations.", 'easy-wp-translator')}</p>
-      </div>
-      <div className='flex gap-4 flex-wrap items-center justify-center'>
-        {
-          nextSteps.map((step, index) => (
-            <div key={index}>
-              <a href={step.href}>
-                <Button
-                  className=""
-                  iconPosition="left"
-                  size="sm"
-                  tag="button"
-                  type="button"
-                  onClick={() => { }}
-                  variant={step.variant}
-                >
-                  {step.button}
-                </Button>
-              </a>
-            </div>
-          ))
-        }
+      <p className='m-0 text-sm/6' style={{ color: "#6b7280" }}>{__("You're now able to translate your content such as posts, pages, categories and tags. You can learn how to use EasyWPTranslator by watching the video tutorial.", 'easy-wp-translator')}</p>
+
+      <table className='ready-table'>
+        <tbody>
+          
+          <tr className="ready-table-data">
+            <td  className="flex justify-center items-center">
+              <iframe 
+                width="560" 
+                height="315" 
+                src="https://www.youtube-nocookie.com/embed/ZSmnfMqmoDo?si=jFSw9b5-GcjsVlIF"
+                title="YouTube video player" 
+                frameBorder="0" 
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerPolicy="strict-origin-when-cross-origin" 
+                allowFullScreen>
+              </iframe>
+            </td>
+          </tr>
+          
+              <tr className="ready-table-data">
+                <td >
+                  <div className='flex gap-4 flex-wrap items-center '>
+                  {
+            nextSteps.map((step, index) => (
+                    <div key={index}>
+                      <a href={step.href}>
+                        <Button
+                          className=""
+                          iconPosition="left"
+                          size="sm"
+                          tag="button"
+                          type="button"
+                          onClick={() => { }}
+                          variant={step.variant}
+                        >
+                          {step.button}
+                        </Button>
+                      </a>
+
+                    </div>
+                    ))
+                  }
+                  </div>
+                </td>
+              </tr>
+            
+          
+        </tbody>
+      </table>
       </div>
     </div>
   )
