@@ -98,7 +98,7 @@ class EWT_Filters_Links {
 		if(preg_match($pattern, $url) && function_exists('EWT') && property_exists(EWT(), 'curlang')) {
 			$current_lang = $this->curlang;
 
-			if(property_exists($current_lang, 'slug')) {
+			if($current_lang && is_object($current_lang) && property_exists($current_lang, 'slug')) {
 				$current_lang = $current_lang->slug;
 				
 				$current_lang_pattern="#/{$current_lang}/#";
