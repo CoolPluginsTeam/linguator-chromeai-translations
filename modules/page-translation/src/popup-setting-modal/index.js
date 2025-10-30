@@ -5,7 +5,7 @@ import ChromeLocalAiTranslator from "../component/translate-provider/local-ai-tr
 import SettingModalHeader from "./header.js";
 import SettingModalBody from "./body.js";
 import SettingModalFooter from "./footer.js";
-import { __ , sprintf } from "@wordpress/i18n";
+import { __, sprintf } from "@wordpress/i18n";
 import ErrorModalBox from "../component/error-modal-box/index.js";
 import TranslateService from "../component/translate-provider/index.js";
 
@@ -53,7 +53,7 @@ const SettingModal = (props) => {
         }
     }
 
-    const handleMetaFieldBtnClick = (e) => {
+    const handleMetaFieldBtnClick = async (e) => {
         e.preventDefault();
 
         if (providers.length > 1) {
@@ -61,6 +61,12 @@ const SettingModal = (props) => {
         } else if (providers.length < 1) {
             openErrorModalHandler('providerNotConfigured');
         } else {
+            const errors = await providerErrors();
+
+            if(errors && errors[providers[0]]){
+                return;
+            }
+
             openModelHandler(providers[0]);
         }
     }
@@ -88,40 +94,41 @@ const SettingModal = (props) => {
         }
     }, [serviceModalErrors])
 
+    const providerErrors = async () => {
+        let errors = {};
+        const localAiSupportStatus = async () => {
+            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName);
+
+            if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
+                setChromeAiBtnDisabled(true);
+
+                errors.localAiTranslator = { message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'easy-wp-translator') };
+
+                setServiceModalErrors(prev => ({ ...prev, localAiTranslator: errors.localAiTranslator }));
+            }
+        };
+
+        if (providers.includes('localAiTranslator')) {
+            await localAiSupportStatus();
+        }
+
+        if (providers.length < 2 && providers[0]) {
+            const providerId = providers[0];
+
+            if (serviceModalErrors && (serviceModalErrors[providerId] || errors[providerId])) {
+                openErrorModalHandler(providerId);
+            } else {
+                openModelHandler(providerId);
+            }
+        }
+
+        return errors;
+    }
+
     /**
      * useEffect hook to check if the local AI translator is supported.
      */
     useEffect(() => {
-        const providerErrors = async () => {
-            let errors = {};
-            const localAiSupportStatus = async () => {
-            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName);
-
-
-                if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
-                setChromeAiBtnDisabled(true);
-    
-                    errors.localAiTranslator = { message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'easy-wp-translator') };
-
-                    setServiceModalErrors(prev => ({ ...prev, localAiTranslator: errors.localAiTranslator }));
-            }
-        };
-
-            if (providers.includes('localAiTranslator')) {
-                await localAiSupportStatus();
-            }
-
-            if (providers.length < 2 && providers[0]) {
-                const providerId = providers[0];
-
-                if (serviceModalErrors && (serviceModalErrors[providerId] || errors[providerId])) {
-                    openErrorModalHandler(providerId);
-                } else {
-                    openModelHandler(providerId);
-                }
-            }
-        }
-
         if (providers.length < 1) {
             let providerConfigMsg = sprintf(__(
                 '%sYou have not enabled any translation provider. Please enable at least one service provider to use automatic translation. Go to the %sTranslation Settings%s to configure a translation provider.%s',
@@ -200,7 +207,7 @@ const SettingModal = (props) => {
                 return;
             }
         }
-        
+
         setModalRender(prev => prev + 1);
         setActiveService(dataService);
     };
@@ -212,7 +219,7 @@ const SettingModal = (props) => {
     return (
         <>
             {errorModalVisibility && serviceModalErrors[errorModalVisibility] &&
-                <ErrorModalBox onClose={closeErrorModal} {...serviceModalErrors[errorModalVisibility]}/>
+                <ErrorModalBox onClose={closeErrorModal} {...serviceModalErrors[errorModalVisibility]} />
             }
             {settingVisibility && providers.length > 1 &&
                 <div className="modal-container" style={{ display: settingVisibility ? 'flex' : 'none' }}>
